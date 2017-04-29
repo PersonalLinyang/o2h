@@ -1,0 +1,102 @@
+/* 共通bodyタグ */
+body {
+	min-width: 1000px;
+	margin: 0px;
+}
+
+p {
+	margin: 0px;
+}
+
+#header {
+	width: 100%;
+	background-color: #FAFAFA;
+	border-bottom: 1px solid #FFFFFF;
+	box-shadow: 3px 3px 3px #A4A4A4;
+	height: 90px;
+	position: fixed;
+	z-index: 100;
+	user-select: none;
+}
+
+#header div.inner {
+	margin: 0px auto;
+	width: 1000px;
+	color: #FFFFFF;
+	font-size: 11px;
+	position: relative;
+}
+
+#header div.inner img.header-logo {
+	margin-top: 15px;
+}
+
+#header div.inner ul {
+	float: right;
+	color: black;
+	list-style: none;
+	margin-left: 50px;
+}
+
+#header div.inner ul li {
+	float: left;
+	text-align: center;
+	line-height: 16px;
+	font-weight: bold;
+}
+
+#header div.inner ul li a {
+	color: #000000;
+	text-decoration: none;
+}
+
+#header div.inner ul.header-language li {
+	width: 90px;
+}
+
+#header div.inner ul.header-language li a {
+	color: #BDBDBD;
+}
+
+#header div.inner ul.header-language li a img {
+	filter: grayscale(100%); 
+	opacity: 0.7;
+}
+
+#header div.inner ul.header-language li a:hover {
+	color: #000000;
+}
+
+#header div.inner ul.header-language li a:hover img {
+	filter: none; 
+	opacity: 1;
+}
+
+#header div.inner ul.header-menu li {
+	width: 80px;
+}
+
+#header div.inner ul.header-menu li a:hover img {
+	opacity: 0.6;
+}
+
+#header-shadow {
+	height: 90px;
+}
+
+#footer {
+	width: 100%;
+	background-color: #8181F7;
+}
+
+#footer div.inner {
+	margin: 0px auto;
+	width: 1000px;
+	text-align: center;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	color: #FFFFFF;
+	font-size: 11px;
+	user-select: none;
+	cursor: default;
+}

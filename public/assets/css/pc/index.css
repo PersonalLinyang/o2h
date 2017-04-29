@@ -1,0 +1,251 @@
+/* メインビジュアル */
+#mainv {
+	background: no-repeat;
+	background-image: url(/assets/img/index/mainv_bg.jpg);
+	background-size: 100%;
+	height: 470px;
+}
+
+#mainv div.inner {
+	width: 1000px;
+	margin: 0px auto;
+	position: relative;
+}
+
+#mainv div.inner p.main-text {
+	position: absolute;
+	top: 180px;
+	right: 30px;
+	background-color: rgba(0, 0, 0, 0.6);
+	padding-top: 20px;
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-bottom: 20px;
+	color: #FFFFFF;
+	font-size: 22px;
+	border-radius: 10px;
+	height: 144px;
+	user-select: none;
+	cursor: default;
+}
+
+/* Mission 目標 */
+#mission div.inner {
+	width: 1000px;
+	margin: 0px auto;
+	text-align: center;
+	padding-top: 80px;
+	padding-bottom: 80px;
+}
+
+#mission div.inner .mission-title-en {
+	font-size: 40px;
+	font-weight: bold;
+	line-height: 60px;
+	letter-spacing: 2px;
+}
+
+#mission div.inner .mission-title {
+	font-size: 25px;
+	font-weight: bold;
+	line-height: 50px;
+	letter-spacing: 10px;
+}
+
+#mission div.inner .mission-sub-title-en {
+	font-size: 23px;
+	font-weight: bold;
+	line-height: 45px;
+	letter-spacing: 2px;
+	margin-top: 40px;
+}
+
+#mission div.inner .mission-sub-title {
+	font-size: 20px;
+	font-weight: bold;
+	line-height: 40px;
+	letter-spacing: 2px;
+}
+
+#mission div.inner .mission-text {
+	margin-top: 40px;
+	line-height: 35px;
+	letter-spacing: 2px;
+	font-size: 17px;
+}
+
+/* Project プロジェクト */
+#project {
+	background: no-repeat;
+	background-image: url(/assets/img/index/project_bg.jpg);
+	background-size: 100%;
+	height: 690px;
+}
+
+#project div.inner {
+	width: 1000px;
+	margin: 0px auto;
+	padding-top: 75px;
+	position: relative;
+	height: 615px;
+}
+
+#project div.inner .project-top {
+	background-color: rgba(255, 255, 255, 0.85);
+	padding-top: 60px;
+	padding-bottom: 60px;
+	padding-left: 80px;
+	padding-right: 80px;
+	border-radius: 20px;
+}
+
+#project div.inner .project-top.active {
+	cursor: pointer;
+	user-select: none;
+}
+
+#project div.inner .project-top .title {
+	font-size: 40px;
+	font-weight: bold;
+	line-height: 60px;
+	letter-spacing: 2px;
+}
+
+#project div.inner .project-top .title span {
+	padding-left: 25px;
+	font-size: 22px;
+}
+
+#project div.inner .project-top .sub-title {
+	font-size: 20px;
+	font-weight: bold;
+	line-height: 40px;
+	letter-spacing: 2px;
+	margin-top: 30px;
+}
+
+#project div.inner .project-top .content {
+	margin-top: 40px;
+	line-height: 35px;
+	letter-spacing: 2px;
+	font-size: 17px;
+	text-align: center;
+}
+
+#project div.inner .project-slide {
+	position: absolute;
+	width: 490px;
+}
+
+#project div.inner .project-left {
+	bottom: 0px;
+	left: 0px;
+}
+
+#project div.inner .project-right {
+	bottom: 0px;
+	right: 0px;
+}
+
+#project div.inner .project-slide .project-slide-title {
+	background-color: #5882FA;
+	color: #FFFFFF;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	font-size: 20px;
+	font-weight: bold;
+	padding-left: 40px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	cursor: pointer;
+	position: relative;
+	user-select: none;
+}
+
+#project div.inner .project-slide .project-slide-title:before {
+	content: "";
+	border-top: 0px;
+	border-bottom: 16px solid #FFFFFF;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	position: absolute;
+	top: 12px;
+	left: 12px;
+	z-index: 100;
+}
+
+#project div.inner .project-slide .project-slide-title.active:before {
+	content: "";
+	border-top: 16px solid #FFFFFF;
+	border-bottom: 0px;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	position: absolute;
+	top: 12px;
+	left: 12px;
+	z-index: 100;
+}
+
+#project div.inner .project-slide .project-slide-content {
+	background-color: rgba(255, 255, 255, 0.85);
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	line-height: 35px;
+	letter-spacing: 2px;
+	font-size: 17px;
+	height: 210px;
+	display: none;
+}
+
+/* Company 会社概要 */
+#company div.inner {
+	width: 1000px;
+	margin: 0px auto;
+	text-align: center;
+	padding-top: 80px;
+	padding-bottom: 80px;
+}
+
+#company div.inner .company-title-en {
+	font-size: 40px;
+	font-weight: bold;
+	line-height: 60px;
+	letter-spacing: 2px;
+}
+
+#company div.inner .company-title {
+	font-size: 25px;
+	font-weight: bold;
+	line-height: 50px;
+	letter-spacing: 10px;
+}
+
+#company div.inner .company-table {
+	margin-top: 40px;
+	width: 1000px;
+}
+
+#company div.inner .company-table th {
+	text-align: right;
+	background-color: #819FF7;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-right: 30px;
+	padding-left: 30px;
+	width: 200px;
+	line-height: 35px;
+	letter-spacing: 2px;
+}
+
+#company div.inner .company-table td {
+	text-align: left;
+	background-color: #E0E6F8;
+	letter-spacing: 2px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-left: 30px;
+	padding-right: 30px;
+	line-height: 35px;
+}

@@ -1,0 +1,113 @@
+/* 共通bodyタグ */
+body {
+	margin: 0px;
+}
+
+p {
+	margin: 0px;
+}
+
+#header-follow {
+	width: 100%;
+	background-color: #FAFAFA;
+	border-bottom: 1px solid #FFFFFF;
+	box-shadow: 3px 3px 3px #A4A4A4;
+	height: 65px;
+	position: fixed;
+	z-index: 100;
+	user-select: none;
+}
+
+#header-follow div.header-logo-area {
+	margin: 0px auto;
+	padding: 10px;
+}
+
+#header-follow div.header-logo-area div.header-logo {
+	float: left;
+}
+
+#header-follow div.header-logo-area div.header-logo img {
+	height: 45px;
+}
+
+#header-follow div.header-logo-area div.header-language {
+	float: right;
+	color: black;
+	font-size: 12px;
+	text-align: center;
+	line-height: 15px;
+}
+
+#header-follow div.header-logo-area div.header-language img {
+	height: 30px;
+}
+
+#header-follow div.header-guide-area {
+	clear: both;
+}
+
+#header-shadow {
+	height: 65px;
+}
+
+.parting-line {
+    width: 100%;
+    height: 3px;
+    background-color: #D8D8D8;
+    border-color: #6E6E6E;
+    border-style: solid;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+}
+
+#footer {
+	background-color: #8181F7;
+	color: #FFFFFF;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	font-size: 12px;
+	text-align: center;
+}
+
+#footer-follow {
+	width: 100%;
+	background-color: #FAFAFA;
+	border-top: 1px solid #FFFFFF;
+	box-shadow: 3px -3px 3px #A4A4A4;
+	height: 65px;
+	position: fixed;
+	z-index: 100;
+	user-select: none;
+	bottom: 0px;
+}
+
+#footer-follow ul {
+	color: black;
+	list-style: none;
+	padding-left: 0px;
+	margin-top: 10px;
+}
+
+#footer-follow ul li {
+	float: left;
+	text-align: center;
+	line-height: 15px;
+	font-size: 12px;
+	width: 25%;
+}
+
+#footer-follow ul li a {
+	color: #000000;
+	text-decoration: none;
+}
+
+#footer-follow ul li img {
+	height: 30px;
+}
+
+#footer-shadow {
+	height: 65px;
+}
