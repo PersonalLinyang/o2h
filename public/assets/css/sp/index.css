@@ -1,14 +1,14 @@
 /* メインビジュアル */
 #mainv {
-	background-image: url(/assets/img/index/mainv_bg.jpg);
+	background-image: url(/assets/img/index/mainv_bg_sp.jpg);
 	width: 100%;
-	background-size: auto 200px;
+	background-size: auto 250px;
 	background-position: center top;
-	height: 180px;
+	height: 250px;
 }
 
 #mainv div.inner {
-	width: 300px;
+	width: 310px;
 	margin: 0px auto;
 	position: relative;
 }
@@ -26,10 +26,7 @@
 	border-radius: 10px;
 	user-select: none;
 	cursor: default;
-}
-
-#mainv div.inner p.main-text img {
-	width: 260px;
+	line-height: 25px;
 }
 
 /* Mission 目標 */

@@ -1,6 +1,7 @@
 /* 共通bodyタグ */
 body {
 	margin: 0px;
+	-webkit-text-size-adjust: 100%;
 }
 
 p {

@@ -4,7 +4,7 @@
 	<table class="company-table">
 		<tr>
 			<th>公司名</th>
-			<td>O2H有限公司</td>
+			<td>O2H股份责任有限公司</td>
 		</tr>
 		<tr>
 			<th>事业内容</th>
