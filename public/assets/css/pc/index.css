@@ -248,3 +248,8 @@
 	padding-right: 30px;
 	line-height: 35px;
 }
+
+#company div.inner .company-table td.td-img {
+	padding: 0px;
+	line-height: 0px;
+}

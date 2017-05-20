@@ -139,3 +139,12 @@
 	padding-right: 5px;
 	line-height: 20px;
 }
+
+#company .company-table td.td-img {
+	line-height: 0px;
+	padding: 0px;
+}
+
+#company .company-table td.td-img img {
+	width: 100%;
+}

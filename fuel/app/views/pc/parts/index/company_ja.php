@@ -32,5 +32,10 @@
 				・取締役　　　張　冬
 			</td>
 		</tr>
+		<tr>
+			<td colspan="2" class="td-img">
+				<img src="/assets/img/index/company.png" alt="We are o2h the oppertunity to happiness">
+			</td>
+		</tr>
 	</table>
 </div>
