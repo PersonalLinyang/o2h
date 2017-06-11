@@ -14,27 +14,22 @@
 </head>
 <body>
 	<?php echo $header; ?>
-	<div class="parting-line"></div>
 	<div id="mainv">
 		<!-- メインビジュアルアリア -->
 		<?php echo $mainv; ?>
 	</div>
-	<div class="parting-line"></div>
 	<div id="mission">
 		<!-- 目標アリア -->
 		<?php echo $mission; ?>
 	</div>
-	<div class="parting-line"></div>
 	<div id="project">
 		<!-- 目標アリア -->
 		<?php echo $project; ?>
 	</div>
-	<div class="parting-line"></div>
 	<div id="company">
 		<!-- 会社概要 -->
 		<?php echo $company; ?>
 	</div>
-	<div class="parting-line"></div>
 	<?php echo $footer; ?>
 </body>
 </html>

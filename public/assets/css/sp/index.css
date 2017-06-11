@@ -1,10 +1,11 @@
 /* メインビジュアル */
 #mainv {
-	background-image: url(/assets/img/index/mainv_bg_sp.jpg);
+	background-image: url(/assets/img/sp/index/mainv_bg.jpg);
 	width: 100%;
 	background-size: auto 250px;
 	background-position: center top;
 	height: 250px;
+	box-shadow: 0 -30px 30px -10px #FFFFFF inset;
 }
 
 #mainv div.inner {
@@ -31,14 +32,68 @@
 
 /* Mission 目標 */
 #mission {
-	margin: 0px auto;
-	text-align: center;
-	padding-top: 20px;
-	padding-bottom: 20px;
-	padding-left: 5px;
-	padding-right: 5px;
+	margin: 20px auto;
 }
 
+#mission .area-mission {
+	background-image: url(/assets/img/sp/index/mission_bg.jpg);
+	background-size: cover;
+	background-position: left center;
+	box-shadow: 0 -50px 50px -10px #FFFFFF inset;
+	position: relative;
+}
+
+#mission .area-mission-title {
+	background-image: url(/assets/img/sp/index/title_background_left.png);
+	height: 80px;
+	background-size: 100% 80px;
+	position: absolute;
+	width: 100%;
+}
+
+#mission .mission-title {
+	background-color: #b600f1;
+	height: 40px;
+	width: 35%;
+	min-width: 130px;
+	margin-top: 10px;
+	border-radius: 20px;
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 15px;
+	line-height: 40px;
+	padding-left: 20px;
+	padding-right: 20px;
+	position: absolute;
+	left: 3%;
+	text-align: center;
+}
+
+#mission .mission-title span {
+	font-size: 20px;
+}
+
+#mission .area-mission-content {
+	background-color: rgba(182, 0, 241, 0.7);
+	margin-left: 30%;
+	margin-right: 5%;
+	box-shadow: 0 -50px 50px -10px #FFFFFF inset;
+	font-size: 14px;
+	color: #FFFFFF;
+	padding-top: 80px;
+	line-height: 20px;
+	padding-bottom: 50px;
+	padding-left: 3%;
+	padding-right: 3%;
+}
+
+#mission .area-mission-content .sub-title {
+	font-size: 15px;
+	line-height: 26px;
+	font-weight: bold;
+}
+
+/*
 #mission .mission-title-en {
 	font-size: 20px;
 	font-weight: bold;
@@ -71,8 +126,121 @@
 	line-height: 26px;
 	font-size: 14px;
 }
-
+*/
 /* Project プロジェクト */
+#project {
+	margin: 0px auto;
+}
+
+#project .area-project {
+	background-image: url(/assets/img/sp/index/project_bg.jpg);
+	background-size: cover;
+	background-position: center center;
+	box-shadow: 0 -50px 50px -10px #FFFFFF inset;
+	position: relative;
+}
+
+#project .area-project-title {
+	background-image: url(/assets/img/sp/index/title_background_right.png);
+	height: 80px;
+	background-size: 100% 80px;
+	position: absolute;
+	width: 100%;
+}
+
+#project .project-title {
+	background-color: #0080e0;
+	height: 40px;
+	width: 35%;
+	min-width: 130px;
+	margin-top: 10px;
+	border-radius: 20px;
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 15px;
+	line-height: 40px;
+	padding-left: 20px;
+	padding-right: 20px;
+	position: absolute;
+	right: 3%;
+	text-align: center;
+}
+
+#project .project-title span {
+	font-size: 20px;
+}
+
+#project .area-project-content {
+	background-color: rgba(0, 128, 224, 0.7);
+	margin-left: 5%;
+	margin-right: 30%;
+	box-shadow: 0 -50px 50px -10px #FFFFFF inset;
+	font-size: 14px;
+	color: #FFFFFF;
+	padding-top: 60px;
+	line-height: 20px;
+	padding-bottom: 50px;
+	padding-left: 3%;
+	padding-right: 3%;
+}
+
+#project .area-project-content .sub-title {
+	font-size: 15px;
+	line-height: 26px;
+	font-weight: bold;
+}
+
+#project .area-sub-project {
+	background-image: url(/assets/img/sp/index/sub_project_bg.jpg);
+	background-size: cover;
+	background-position: left center;
+	position: relative;
+}
+
+#project .area-sub-project-top {
+	box-shadow: 0 50px 50px -10px #FFFFFF inset;
+	font-size: 14px;
+	color: #FFFFFF;
+	line-height: 20px;
+}
+
+#project .area-sub-project-top .area-sub-project-content {
+	padding-top: 50px;
+	box-shadow: 0 50px 50px -10px #FFFFFF inset;
+}
+
+#project .area-sub-project-bottom {
+	box-shadow: 0 -50px 50px -10px #FFFFFF inset;
+	font-size: 14px;
+	color: #FFFFFF;
+	line-height: 20px;
+}
+
+#project .area-sub-project-bottom .area-sub-project-content {
+	padding-bottom: 50px;
+	box-shadow: 0 -50px 50px -10px #FFFFFF inset;
+}
+
+#project .area-sub-project-content {
+	background-color: rgba(0, 128, 224, 0.7);
+	margin-left: 30%;
+	margin-right: 5%;
+	padding-left: 5%;
+	padding-right: 5%;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+#project .area-sub-project-content .sub-title {
+	font-size: 15px;
+	line-height: 26px;
+	font-weight: bold;
+}
+
+
+
+
+/*
 #project div.project-slide-title {
 	background-color: #5882FA;
 	color: #FFFFFF;
@@ -97,8 +265,8 @@
 	font-size: 14px;
 	line-height: 20px;
 }
-
-/* Company 会社概要 */
+*/
+/*// Company 会社概要 
 #company {
 	padding-top: 20px;
 	text-align: center;
@@ -145,6 +313,103 @@
 	padding: 0px;
 }
 
-#company .company-table td.td-img img {
+#company .inner img {
+	width: 100%;
+}*/
+
+
+
+
+
+
+/* Company 会社概要 */
+#company {
+	margin: 0px auto;
+}
+
+#company .area-company {
+	background-image: url(/assets/img/sp/index/company_bg.jpg);
+	background-size: cover;
+	background-position: center center;
+	box-shadow: 0 -50px 50px -10px #FFFFFF inset;
+	position: relative;
+}
+
+#company .area-company-title {
+	height: 200px;
+	background: transparent;
+	box-shadow: 0 100px 50px -10px #FFFFFF inset;
+	position: absolute;
+	width: 100%;
+}
+
+#company .company-title {
+	background-color: #0ED575;
+	height: 40px;
+	margin: 10px auto;
+	width: 230px;
+	border-radius: 20px;
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 15px;
+	line-height: 40px;
+	padding-left: 20px;
+	padding-right: 20px;
+	text-align: center;
+}
+
+#company .company-title span {
+	font-size: 20px;
+}
+
+#company .area-company-content {
+	width: 100%;
+	box-shadow: 0 -50px 50px -10px #FFFFFF inset;
+	font-size: 14px;
+	color: #FFFFFF;
+	padding-top: 100px;
+	line-height: 20px;
+	padding-bottom: 50px;
+}
+
+#company .area-company-content .company-table {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#company .area-company-content .company-table tr th {
+	width: 70px;
+	vertical-align: top;
+}
+
+#company .area-company-content .company-table tr th p {
+	background-color: #0ED575;
+	border-radius: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+#company .area-company-content .company-table tr td {
+	border:1px #FFFFFF solid;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 8px;
+	padding-right: 8px;
+	background-color: rgba(35, 180, 60, 0.7);
+	border-radius: 10px;
+}
+
+#company .area-company-content .company-table tr td ul {
+	margin: 0px;
+	padding-left: 20px;
+}
+
+#company .area-company-content .company-table tr td ul li {
+	padding: 0px;
+}
+
+#company img {
 	width: 100%;
 }

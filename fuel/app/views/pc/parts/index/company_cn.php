@@ -9,7 +9,7 @@
 		<tr>
 			<th>事业内容</th>
 			<td>
-				・Only for you 医疗旅行定制行程<br/>
+				・Only for you 医疗和旅行定制行程<br/>
 				・面向中国旅客的商务旅游咨询
 			</td>
 		</tr>
@@ -19,7 +19,7 @@
 		</tr>
 		<tr>
 			<th>E-mail</th>
-			<td>info@o2h.jp</td>
+			<td>www.ltdo2h@gmail.com</td>
 		</tr>
 		<tr>
 			<th>成立时间</th>

@@ -19,7 +19,7 @@
 		</tr>
 		<tr>
 			<th>メール</th>
-			<td>info@o2h.jp</td>
+			<td>www.ltdo2h@gmail.com</td>
 		</tr>
 		<tr>
 			<th>設立</th>
