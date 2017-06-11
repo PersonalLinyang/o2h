@@ -375,6 +375,7 @@
 #company .area-company-content .company-table {
 	padding-left: 10px;
 	padding-right: 10px;
+	margin: 0px auto;
 }
 
 #company .area-company-content .company-table tr th {
