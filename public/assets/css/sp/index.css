@@ -1,6 +1,6 @@
 /* メインビジュアル */
 #mainv {
-	background-image: url(/assets/img/sp/index/mainv_bg.jpg);
+	background-image: url(/assets/img/sp/index/mainv_bg.png);
 	width: 100%;
 	background-size: auto 250px;
 	background-position: center top;
@@ -30,56 +30,59 @@
 	line-height: 25px;
 }
 
-/* Mission 目標 */
-#mission {
-	margin: 20px auto;
-}
+/* 共通部分 */
 
-#mission .area-mission {
-	background-image: url(/assets/img/sp/index/mission_bg.jpg);
+/* メインコンテンツ */
+.area-maincontent {
 	background-size: cover;
-	background-position: left center;
 	box-shadow: 0 -50px 50px -10px #FFFFFF inset;
 	position: relative;
 }
 
-#mission .area-mission-title {
-	background-image: url(/assets/img/sp/index/title_background_left.png);
+.area-maincontent .area-maincontent-title {
 	height: 80px;
 	background-size: 100% 80px;
 	position: absolute;
 	width: 100%;
-}
+} 
 
-#mission .mission-title {
-	background-color: #b600f1;
-	height: 40px;
-	width: 35%;
+.area-maincontent .area-maincontent-title .maincontent-title {
+	width: 30%;
 	min-width: 130px;
-	margin-top: 10px;
-	border-radius: 20px;
-	color: #FFFFFF;
+	border-radius: 30px;
 	font-weight: bold;
-	font-size: 15px;
-	line-height: 40px;
-	padding-left: 20px;
-	padding-right: 20px;
+	font-size: 13px;
+	padding-top: 4px;
+	padding-bottom: 4px;
 	position: absolute;
-	left: 3%;
 	text-align: center;
 }
 
-#mission .mission-title span {
-	font-size: 20px;
+.area-maincontent .area-maincontent-title.left {
+	background-image: url(/assets/img/sp/index/title_background_left.png);
+} 
+
+.area-maincontent .area-maincontent-title.left .maincontent-title {
+	left: 8%;
 }
 
-#mission .area-mission-content {
-	background-color: rgba(182, 0, 241, 0.7);
-	margin-left: 30%;
-	margin-right: 5%;
+
+.area-maincontent .area-maincontent-title.right {
+	background-image: url(/assets/img/sp/index/title_background_right.png);
+} 
+
+.area-maincontent .area-maincontent-title.right .maincontent-title {
+	right: 8%;
+}
+
+
+.area-maincontent .area-maincontent-title .maincontent-title span {
+	font-size: 16px;
+} 
+
+.area-maincontent .area-maincontent-content {
 	box-shadow: 0 -50px 50px -10px #FFFFFF inset;
-	font-size: 14px;
-	color: #FFFFFF;
+	font-size: 12px;
 	padding-top: 80px;
 	line-height: 20px;
 	padding-bottom: 50px;
@@ -87,240 +90,160 @@
 	padding-right: 3%;
 }
 
-#mission .area-mission-content .sub-title {
+.area-maincontent .area-maincontent-content .title {
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.area-maincontent .area-maincontent-content .title {
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.area-maincontent .area-maincontent-content.left {
+	margin-left: 5%;
+	margin-right: 30%;
+}
+
+.area-maincontent .area-maincontent-content.right {
+	margin-left: 30%;
+	margin-right: 5%;
+}
+
+.area-maincontent .area-maincontent-content p {
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+/* サブコンテンツ */
+.area-subcontent {
+	background-size: cover;
+	position: relative;
+}
+
+.area-subcontent .area-subcontent-top {
+	box-shadow: 0 50px 50px -10px #FFFFFF inset;
+	background-color: transparent;
+	width: 100%;
+	height: 80px;
+	top: 0px;
+	z-index: 3;
+	position: absolute;
+}
+
+.area-subcontent .area-subcontent-bottom {
+	box-shadow: 0 -50px 50px -10px #FFFFFF inset;
+	background-color: transparent;
+	width: 100%;
+	height: 80px;
+	bottom: 0px;
+	z-index: 3;
+	position: absolute;
+}
+
+.area-subcontent .area-subcontent-content {
+	line-height: 20px;
+	padding-left: 5%;
+	padding-right: 5%;
+	padding-top: 40px;
+	padding-bottom: 40px;
+	font-size: 12px;
+}
+
+.area-subcontent .area-subcontent-content.left {
+	margin-left: 5%;
+	margin-right: 30%;
+}
+
+.area-subcontent .area-subcontent-content.right {
+	margin-left: 30%;
+	margin-right: 5%;
+}
+
+.area-subcontent .area-subcontent-content p {
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+.area-subcontent .area-subcontent-content .title {
 	font-size: 15px;
-	line-height: 26px;
 	font-weight: bold;
 }
 
-/*
-#mission .mission-title-en {
-	font-size: 20px;
+.area-subcontent .area-subcontent-content .subtitle {
+	font-size: 13px;
 	font-weight: bold;
-	line-height: 35px;
-	letter-spacing: 2px;
 }
 
-#mission .mission-title {
-	font-size: 18px;
-	font-weight: bold;
-	line-height: 30px;
-	letter-spacing: 2px;
+/* Mission 目標 */
+#mission {
+	margin: 20px auto;
 }
 
-#mission .mission-sub-title-en {
-	font-size: 16px;
-	font-weight: bold;
-	line-height: 26px;
-	margin-top: 15px;
+#mission .area-maincontent {
+	background-image: url(/assets/img/sp/index/mission_bg.png);
+	background-position: left center;
 }
 
-#mission .mission-sub-title {
-	font-size: 14px;
-	font-weight: bold;
-	line-height: 26px;
+#mission .area-maincontent .area-maincontent-title .maincontent-title {
+	background-color: #b600f1;
+	color: #FFFFFF;
 }
 
-#mission .mission-text {
-	margin-top: 15px;
-	line-height: 26px;
-	font-size: 14px;
+#mission .area-maincontent-content {
+	background-color: rgba(182, 0, 241, 0.7);
+	color: #FFFFFF;
 }
-*/
+
+#mission .area-subcontent {
+	background-image: url(/assets/img/sp/index/sub_mission_bg.png);
+	background-position: center center;
+}
+
+#mission .area-subcontent .area-subcontent-content {
+	background-color: rgba(182, 0, 241, 0.7);
+	color: #FFFFFF;
+}
+
 /* Project プロジェクト */
 #project {
 	margin: 0px auto;
 }
 
-#project .area-project {
-	background-image: url(/assets/img/sp/index/project_bg.jpg);
-	background-size: cover;
+#project .area-maincontent {
+	background-image: url(/assets/img/sp/index/project_bg.png);
 	background-position: center center;
-	box-shadow: 0 -50px 50px -10px #FFFFFF inset;
-	position: relative;
 }
 
-#project .area-project-title {
-	background-image: url(/assets/img/sp/index/title_background_right.png);
-	height: 80px;
-	background-size: 100% 80px;
-	position: absolute;
-	width: 100%;
-}
-
-#project .project-title {
+#project .area-maincontent .area-maincontent-title .maincontent-title {
 	background-color: #0080e0;
-	height: 40px;
-	width: 35%;
-	min-width: 130px;
-	margin-top: 10px;
-	border-radius: 20px;
 	color: #FFFFFF;
-	font-weight: bold;
-	font-size: 15px;
-	line-height: 40px;
-	padding-left: 20px;
-	padding-right: 20px;
-	position: absolute;
-	right: 3%;
-	text-align: center;
 }
 
-#project .project-title span {
-	font-size: 20px;
-}
-
-#project .area-project-content {
+#project .area-maincontent-content {
 	background-color: rgba(0, 128, 224, 0.7);
-	margin-left: 5%;
-	margin-right: 30%;
-	box-shadow: 0 -50px 50px -10px #FFFFFF inset;
-	font-size: 14px;
 	color: #FFFFFF;
-	padding-top: 60px;
-	line-height: 20px;
-	padding-bottom: 50px;
-	padding-left: 3%;
-	padding-right: 3%;
 }
 
-#project .area-project-content .sub-title {
-	font-size: 15px;
-	line-height: 26px;
-	font-weight: bold;
-}
-
-#project .area-sub-project {
-	background-image: url(/assets/img/sp/index/sub_project_bg.jpg);
-	background-size: cover;
+#project .area-subcontent.subcontent1 {
+	background-image: url(/assets/img/sp/index/sub_project_bg1.png);
 	background-position: left center;
-	position: relative;
 }
 
-#project .area-sub-project-top {
-	box-shadow: 0 50px 50px -10px #FFFFFF inset;
-	font-size: 14px;
-	color: #FFFFFF;
-	line-height: 20px;
+#project .area-subcontent.subcontent2 {
+	background-image: url(/assets/img/sp/index/sub_project_bg2.png);
+	background-position: right center;
 }
 
-#project .area-sub-project-top .area-sub-project-content {
-	padding-top: 50px;
-	box-shadow: 0 50px 50px -10px #FFFFFF inset;
+#project .area-subcontent.subcontent3 {
+	background-image: url(/assets/img/sp/index/sub_project_bg3.png);
+	background-position: left center;
 }
 
-#project .area-sub-project-bottom {
-	box-shadow: 0 -50px 50px -10px #FFFFFF inset;
-	font-size: 14px;
-	color: #FFFFFF;
-	line-height: 20px;
-}
-
-#project .area-sub-project-bottom .area-sub-project-content {
-	padding-bottom: 50px;
-	box-shadow: 0 -50px 50px -10px #FFFFFF inset;
-}
-
-#project .area-sub-project-content {
+#project .area-subcontent .area-subcontent-content {
 	background-color: rgba(0, 128, 224, 0.7);
-	margin-left: 30%;
-	margin-right: 5%;
-	padding-left: 5%;
-	padding-right: 5%;
-	padding-top: 10px;
-	padding-bottom: 10px;
-}
-
-#project .area-sub-project-content .sub-title {
-	font-size: 15px;
-	line-height: 26px;
-	font-weight: bold;
-}
-
-
-
-
-/*
-#project div.project-slide-title {
-	background-color: #5882FA;
 	color: #FFFFFF;
-	font-weight: bold;
-	font-size: 14px;
-	padding: 5px;
-	text-align: center;
 }
-
-#project div.project-slide-title .title {
-	font-size: 20px;
-	margin-bottom: 5px;
-	letter-spacing: 2px;
-}
-
-#project div.project-slide-title .title span {
-	font-size: 16px;
-}
-
-#project div.project-slide-content {
-	padding: 5px;
-	font-size: 14px;
-	line-height: 20px;
-}
-*/
-/*// Company 会社概要 
-#company {
-	padding-top: 20px;
-	text-align: center;
-}
-
-#company .company-title-en {
-	font-size: 20px;
-	font-weight: bold;
-	line-height: 35px;
-	letter-spacing: 2px;
-}
-
-#company .company-title {
-	font-size: 18px;
-	font-weight: bold;
-	line-height: 30px;
-	letter-spacing: 2px;
-}
-
-#company .company-table {
-	margin-top: 15px;
-	font-size: 14px;
-	width: 100%;
-}
-
-#company .company-table th {
-	padding-left: 5px;
-	padding-right: 5px;
-	width: 24%;
-	text-align: right;
-	background-color: #819FF7;
-}
-
-#company .company-table td {
-	text-align: left;
-	background-color: #E0E6F8;
-	padding-left: 5px;
-	padding-right: 5px;
-	line-height: 20px;
-}
-
-#company .company-table td.td-img {
-	line-height: 0px;
-	padding: 0px;
-}
-
-#company .inner img {
-	width: 100%;
-}*/
-
-
-
-
-
 
 /* Company 会社概要 */
 #company {
@@ -351,7 +274,7 @@
 	border-radius: 20px;
 	color: #FFFFFF;
 	font-weight: bold;
-	font-size: 15px;
+	font-size: 13px;
 	line-height: 40px;
 	padding-left: 20px;
 	padding-right: 20px;
@@ -359,13 +282,13 @@
 }
 
 #company .company-title span {
-	font-size: 20px;
+	font-size: 16px;
 }
 
 #company .area-company-content {
 	width: 100%;
 	box-shadow: 0 -50px 50px -10px #FFFFFF inset;
-	font-size: 14px;
+	font-size: 12px;
 	color: #FFFFFF;
 	padding-top: 100px;
 	line-height: 20px;
