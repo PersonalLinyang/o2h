@@ -11,6 +11,7 @@
 	<?php echo Asset::css('sp/index.css'); ?>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 	<?php echo Asset::js('sp/common.js'); ?>
+	<?php echo Asset::js('sp/google-analytics.js'); ?>
 </head>
 <body>
 	<?php echo $header; ?>

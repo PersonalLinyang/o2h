@@ -11,6 +11,7 @@
 	<?php echo Asset::css('pc/index.css'); ?>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 	<?php echo Asset::js('pc/common.js'); ?>
+	<?php echo Asset::js('pc/google-analytics.js'); ?>
 	<?php echo Asset::js('pc/index.js'); ?>
 </head>
 <body>
