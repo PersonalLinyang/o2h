@@ -1,0 +1,191 @@
+/* 共通bodyタグ */
+.body-common {
+	font-family: "微软正黑";
+	background: #FBEFBF;
+	color: #713E00;
+}
+
+/* 共通ヘッダ区域 */
+.header-area {
+	width: 1200px;
+	position: relative;
+	z-index: 1;
+	margin: auto;
+}
+
+/* 共通ヘッダメイン部分 */
+.header-main {
+	width: 1190px;
+	height: 60px;
+	background: #F4D59F;
+	border-style: solid;
+	border-color: #713E00;
+	border-width: 5px;
+	border-radius: 10px;
+	overflow: hidden;
+}
+.header-main div.title {
+	float: left;
+	font-size: 40px;
+	font-weight: bold;
+	line-height: 40px;
+	width: 790px;
+	height: 100%;
+	padding-left: 40px;
+	padding-top: 12px;
+}
+.header-main div.content {
+	float: left;
+	text-align: right;
+	width: 320px;
+	padding-right: 40px;
+	padding-top: 10px;
+}
+.header-main div.content div.button {
+	font-size: 14px;
+	line-height: 16px;
+	overflow: hidden;
+}
+.header-main div.content div.button div.profile {
+	float: right;
+	width: 100px;
+}
+.header-main div.content div.button div.logout {
+	float: right;
+	width: 100px;
+}
+.header-main div.content div.button div a {
+	color: #713E00;
+	text-decoration: none;
+	cursor: pointer;
+}
+.header-main div.content div.button div a:hover {
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+
+/* 共通ヘッダサイトナビ部分 メインナビ */
+.header-navi {
+	margin-top: 10px;
+}
+.header-navi ul {
+	font-size: 0px;
+	margin-left: 2px;
+	padding: 0px;
+    user-select:none;
+}
+.header-navi ul li {
+	list-style-type: none;
+	display: inline-block;
+	font-size: 18px;
+	font-weight: bold;
+	margin-left: 7px;
+	margin-right: 7px;
+	width: 177px;
+	height:	26px;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 26px;
+	background: #F4D59F;
+	border-radius: 10px;
+	border-style: solid;
+	border-width: 4px;
+	border-top-color: #713E00;
+}
+.header-navi ul li a.main-navi-link {
+	color: #713E00;
+	width: 100%;
+	display: block;
+	text-decoration: none;
+}
+.header-navi ul li.active {
+	background: #713E00;
+	border-style: solid;
+	border-color: #713E00;
+	color: #F4D59F;
+}
+.header-navi ul li.active a.main-navi-link {
+	color: #F4D59F;
+	width: 100%;
+	height: 100%;
+	display: block;
+	text-decoration: none;
+}
+.header-navi ul li.active-sub {
+	font-size: 18px;
+	height:	30px;
+	background: #713E00;
+	border-style: solid;
+	border-color: #713E00;
+	border-width: 4px;
+	border-bottom-width: 0px;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+.header-navi ul li.active-sub a.main-navi-link {
+	color: #F4D59F;
+	width: 100%;
+	height: 100%;
+	display: block;
+	text-decoration: none;
+}
+
+/* 共通ヘッダサイトナビ部分 サブナビ */
+.header-sub-navi {
+	margin-left: -4px;
+	margin-right: -4px;
+	background-color: #713E00;
+	padding-bottom: 12px;
+	border-style: solid;
+	border-color: #713E00;
+	border-width: 4px;
+	border-top-width: 0px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	display: none;
+}
+.header-sub-navi ul li {
+	width: 130px;
+	margin-top: 3px;
+	margin-left: 0px;
+	font-size: 16px;
+	height: 24px;
+	line-height: 24px;
+	border-width: 3px;
+}
+.header-sub-navi ul li.active {
+	border-color: #F4D59F;
+}
+.header-sub-navi ul li a.sub-navi-link {
+	color: #713E00;
+	width: 100%;
+	height: 100%;
+	display: block;
+	text-decoration: none;
+}
+.header-sub-navi ul li.active a.sub-navi-link {
+	color: #F4D59F;
+	width: 100%;
+	height: 100%;
+	display: block;
+	text-decoration: none;
+}
+
+/* 共通内容エリア */
+.content-area {
+	width: 1200px;
+	margin: auto;
+}
+
+/* 共通内容メイン部分 */
+.content-main {
+	width: 1190px;
+	background: #F4D59F;
+	border-style: solid;
+	border-color: #713E00;
+	border-width: 5px;
+	border-radius: 10px;
+	overflow: hidden;
+	margin-top: 10px;
+}

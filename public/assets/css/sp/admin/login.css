@@ -1,0 +1,67 @@
+/* 管理画面ログインページ */
+.area-login {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: #F4D59F;
+    width: 206px;
+    height: 312px;
+    margin-left: -103px;
+    margin-top: -156px;
+    border-color: #713E00;
+    border-style: solid;
+    border-width: 5px;
+    border-radius: 10px;
+}
+.area-login div.login-head {
+	color: #F4D59F;
+	background: #713E00;
+	font-weight: bold;
+	font-size: 18px;
+	line-height: 40px;
+	text-align: center;
+    user-select:none;
+}
+.area-login div.login-body {
+	padding: 10px;
+	width: 180px;
+}
+.area-login div.login-body form div.error-message {
+	color: #FF0000;
+	font-size: 12px;
+	text-align: center;
+	height: 8px;
+}
+.area-login div.login-body form div.form-table {
+	margin-top: 5px;
+}
+.area-login div.login-body form div.form-table table {
+	width: 100%;
+}
+.area-login div.login-body form div.form-table table tr td input[type="text"] {
+	height: 23px;
+	border-radius: 5px;
+	width: 100%;
+}
+.area-login div.login-body form div.form-table table tr td input[type="password"] {
+	height: 23px;
+	border-radius: 5px;
+	width: 100%;
+}
+.area-login div.login-body form div.form-table table tr td.td-submit {
+	height: 46px;
+}
+.area-login div.login-body form div.form-table table tr td p.login-button {
+	padding-top: 3px;
+	padding-bottom: 3px;
+	text-align: center;
+	font-weight: bold;
+    cursor: pointer;
+    user-select:none;
+	background: #713E00;
+	border-radius: 5px;
+	border-style: solid;
+	border-width: 3px;
+	color: #F4D59F;
+	border-color: #713E00;
+}
