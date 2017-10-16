@@ -1,4 +1,4 @@
-/* エラーのアイコン */
+/* error警示图标 */
 .error-icon {
 	font-size: 80px;
 	line-height: 100px;
@@ -14,7 +14,7 @@
 	text-align: center;
 }
 
-/* エラーのテキスト */
+/* error警示文字 */
 .error-text {
 	font-size: 18px;
 	font-weight: bold;

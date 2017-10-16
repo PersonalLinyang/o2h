@@ -1,6 +1,6 @@
 <?php
 /* 
- * ホームページ
+ * 登陆页
  */
 
 class Controller_Admin_Login extends Controller_App
@@ -16,6 +16,7 @@ class Controller_Admin_Login extends Controller_App
 		session_start();
 		$data = array();
 		
+		//登陆信息确认
 		if(isset($_POST['user_email']) && isset($_POST['user_password'])) {
 			if(!$_POST['user_email']) {
 				$data['error_message'] = '※请输入邮箱※';
@@ -37,7 +38,7 @@ class Controller_Admin_Login extends Controller_App
 			}
 		}
 		
-		//View呼び出す
+		//调用View
 		return Response::forge(View::forge($this->template . '/admin/login', $data, false));
 	}
 	

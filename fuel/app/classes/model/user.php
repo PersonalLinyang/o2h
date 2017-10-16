@@ -8,17 +8,17 @@ class Model_User extends Model
 	public $user_permission;
 	
 	/*
-	 * ユーザーログイン
+	 * 用户登陆
 	 */
 	public static function Login($user_email, $user_password) {
-		//ログインユーザー検索
+		//根据登陆信息检索用户
 		$sql_user = "SELECT * FROM t_user WHERE user_email = :user_email AND user_password = :user_password AND delete_flag = 0";
 		$query_user = DB::query($sql_user);
 		$query_user->param('user_email', $user_email);
 		$query_user->param('user_password', md5(sha1($user_password)));
 		$result_user = $query_user->execute()->as_array();
 		
-		//リスポンス処理
+		//返回信息整理
 		if(count($result_user) == 1) {
 			$user = new Model_User();
 			$user->user_id = $result_user[0]["user_id"];

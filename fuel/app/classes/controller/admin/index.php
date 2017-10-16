@@ -1,6 +1,6 @@
 <?php
 /* 
- * 管理画面ホームページ
+ * 首页
  */
 
 class Controller_Admin_Index extends Controller_Admin_App
@@ -13,10 +13,12 @@ class Controller_Admin_Index extends Controller_Admin_App
 	 */
 	public function action_index($param = null)
 	{
-		//共通ヘッダー取得
+		$data = array();
+		
+		//调用共用Header
 		$data['header'] = Request::forge('admin/common/header')->execute()->response();
 		
-		//View呼び出す
+		//调用View
 		return Response::forge(View::forge($this->template . '/admin/index', $data, false));
 	}
 	

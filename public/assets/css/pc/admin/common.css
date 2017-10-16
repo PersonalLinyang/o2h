@@ -1,11 +1,11 @@
-/* 共通bodyタグ */
+/* 通用body */
 .body-common {
 	font-family: "微软正黑";
 	background: #FBEFBF;
 	color: #713E00;
 }
 
-/* 共通ヘッダ区域 */
+/* 顶部区域 */
 .header-area {
 	width: 1200px;
 	position: relative;
@@ -13,7 +13,7 @@
 	margin: auto;
 }
 
-/* 共通ヘッダメイン部分 */
+/* 顶部主体部分 */
 .header-main {
 	width: 1190px;
 	height: 60px;
@@ -65,7 +65,7 @@
 }
 
 
-/* 共通ヘッダサイトナビ部分 メインナビ */
+/* 顶部菜单部分 主菜单 */
 .header-navi {
 	margin-top: 10px;
 }
@@ -131,7 +131,7 @@
 	text-decoration: none;
 }
 
-/* 共通ヘッダサイトナビ部分 サブナビ */
+/* 顶部菜单部分 子菜单 */
 .header-sub-navi {
 	margin-left: -4px;
 	margin-right: -4px;
@@ -172,13 +172,13 @@
 	text-decoration: none;
 }
 
-/* 共通内容エリア */
+/* 内容区域 */
 .content-area {
 	width: 1200px;
 	margin: auto;
 }
 
-/* 共通内容メイン部分 */
+/* 内容主体部分 */
 .content-main {
 	width: 1190px;
 	background: #F4D59F;
