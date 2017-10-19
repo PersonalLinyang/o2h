@@ -1,0 +1,46 @@
+.permission-mastergroup{
+	padding-left: 30px;
+	overflow: hidden;
+}
+
+.permission-subgroup {
+	padding-left: 60px;
+	overflow: hidden;
+}
+
+.permission-function {
+	padding-left: 90px;
+	overflow: hidden;
+}
+
+.permission-authority {
+	padding-left: 120px;
+	overflow: hidden;
+}
+
+.permission-id {
+	width: 100px;
+	float: left;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.btn-controller {
+	float: right;
+	width: 100px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.popup-add-mg {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 200;
+	background: #fff;
+	width: 500px;
+	height: 100px;
+	display: none;
+}
