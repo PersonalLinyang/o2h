@@ -1,13 +1,13 @@
 <?php
 /* 
- * 权限管理页
+ * 修改功能名称页
  */
 
 class Controller_Admin_User_Modifyfunction extends Controller_Admin_App
 {
 
 	/**
-	 *
+	 * 修改功能名称
 	 * @access  public
 	 * @return  Response
 	 */
@@ -15,7 +15,8 @@ class Controller_Admin_User_Modifyfunction extends Controller_Admin_App
 	{
 		$data = array();
 		
-//		$data['header'] = Request::forge('admin/common/header')->execute()->response();
+		//调用共用Header
+		$data['header'] = Request::forge('admin/common/header')->execute()->response();
 		
 //		if(isset($_SESSION['login_user']['permission'][5][7][1])) {
 			$data['input_name'] = '';
@@ -24,6 +25,7 @@ class Controller_Admin_User_Modifyfunction extends Controller_Admin_App
 			$data['function_name'] = '';
 			$data['error_message'] = '';
 			
+			//页面参数检查
 			if(!isset($_GET['function_id'])) {
 				return Response::forge(View::forge($this->template . '/admin/error/access_error', $data, false));
 				exit;
@@ -45,9 +47,11 @@ class Controller_Admin_User_Modifyfunction extends Controller_Admin_App
 						'function_id' => $_GET['function_id'],
 						'function_name' => trim($_POST['name']),
 					);
+					//输入内容检查
 					$result_check = Model_Function::CheckUpdateFunction($params_update);
 					
 					if($result_check['result']) {
+						//数据更新
 						$result_update = Model_Function::UpdateFunction($params_update);
 						
 						if($result_update) {
@@ -55,29 +59,27 @@ class Controller_Admin_User_Modifyfunction extends Controller_Admin_App
 							header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/permission_list/');
 							exit;
 						} else {
-							$data['error_message'] = '失敗';
+							$data['error_message'] = '数据库错误：数据更新失败';
 						}
 					} else {
 						foreach($result_check['error'] as $update_error) {
 							$error_message_list = array();
 							switch($update_error) {
 								case 'noset_id':
-									$error_message_list[] = 'ID未設定';
+								case 'noset_name':
+									$error_message_list[] = '系统错误：请勿修改表单中的控件名称';
 									break;
 								case 'nonum_id':
-									$error_message_list[] = 'ID数字';
-									break;
-								case 'noset_name':
-									$error_message_list[] = '名前システム変更';
+									$error_message_list[] = '功能编号不是数字';
 									break;
 								case 'empty_name':
-									$error_message_list[] = '名前未入力';
+									$error_message_list[] = '请输入修改后功能名称';
 									break;
 								case 'nomodify':
-									$error_message_list[] = '未変更';
+									$error_message_list[] = '请输入与原名称不同的功能名称';
 									break;
 								case 'duplication':
-									$error_message_list[] = '重複データ有り';
+									$error_message_list[] = '该副功能组中已存在该名称的功能，无法重复设定';
 									break;
 								default:
 									break;
@@ -93,6 +95,7 @@ class Controller_Admin_User_Modifyfunction extends Controller_Admin_App
 				}
 			}
 			
+			//调用View
 			return Response::forge(View::forge($this->template . '/admin/user/modify_function', $data, false));
 //		} else {
 //			return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));

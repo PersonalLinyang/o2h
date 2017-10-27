@@ -29,7 +29,7 @@ class Model_Function extends Model
 		$query_fdelete->param(':function_id', $function_id);
 		$result_fdelete = $query_fdelete->execute();
 		
-		return $result_fgdelete;
+		return $result_fdelete;
 	}
 
 	public static function UpdateFunction($params) {
@@ -156,7 +156,7 @@ class Model_Function extends Model
 		if($result['result']) {
 			$sql_exist = "SELECT * FROM m_function WHERE function_id = :function_id";
 			$query_exist = DB::query($sql_exist);
-			$query_exist->param(':function_id', $params['function_id']);
+			$query_exist->param(':function_id', $function_id);
 			$result_exist = $query_exist->execute()->as_array();
 			
 			if(!count($result_exist)) {

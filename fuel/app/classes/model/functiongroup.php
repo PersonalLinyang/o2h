@@ -288,7 +288,7 @@ class Model_Functiongroup extends Model
 		if($result['result']) {
 			$sql_exist = "SELECT * FROM m_function_group WHERE function_group_id = :function_group_id AND function_group_parent IS NULL";
 			$query_exist = DB::query($sql_exist);
-			$query_exist->param(':function_group_id', $params['function_group_id']);
+			$query_exist->param(':function_group_id', $function_group_id);
 			$result_exist = $query_exist->execute()->as_array();
 			
 			if(!count($result_exist)) {
@@ -314,7 +314,7 @@ class Model_Functiongroup extends Model
 		if($result['result']) {
 			$sql_exist = "SELECT * FROM m_function_group WHERE function_group_id = :function_group_id AND function_group_parent IS NOT NULL";
 			$query_exist = DB::query($sql_exist);
-			$query_exist->param(':function_group_id', $params['function_group_id']);
+			$query_exist->param(':function_group_id', $function_group_id);
 			$result_exist = $query_exist->execute()->as_array();
 			
 			if(!count($result_exist)) {

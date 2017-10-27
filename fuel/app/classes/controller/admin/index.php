@@ -7,7 +7,7 @@ class Controller_Admin_Index extends Controller_Admin_App
 {
 
 	/**
-	 *
+	 * 管理系统首页
 	 * @access  public
 	 * @return  Response
 	 */

@@ -50,20 +50,21 @@
 						</ul>
 					</div>
 				</li>
-				<?php if(isset($login_user_permission[5][7])) : ?>
+				<?php //if(isset($login_user_permission[5][7])) : ?>
 				<li class="js-navi-sub">
 					<a class="main-navi-link">人事管理</a>
 					<div class="header-sub-navi">
 						<ul>
-							<?php if(isset($login_user_permission[5][7][1])) : ?>
+							<?php //if(isset($login_user_permission[5][7][1])) : ?>
 							<li><a href="/admin/user_list/" class="sub-navi-link">公司成员管理</a></li>
-							<?php endif; ?>
+							<?php //endif; ?>
 							<li><a href="/admin/" class="sub-navi-link">新员工注册</a></li>
+							<li><a href="/admin/permission_list/" class="sub-navi-link">系统权限管理</a></li>
 							<li><a href="/admin/" class="sub-navi-link">业务权限管理</a></li>
 						</ul>
 					</div>
 				</li>
-				<?php endif; ?>
+				<?php //endif; ?>
 				<li class="js-navi-sub">
 					<a class="main-navi-link">企业管理</a>
 					<div class="header-sub-navi">

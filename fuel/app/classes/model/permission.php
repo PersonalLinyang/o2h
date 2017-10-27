@@ -4,7 +4,7 @@ class Model_Permission extends Model
 {
 
 	/*
-	 * 
+	 * 获取全部系统权限列表
 	 */
 	public static function GetPermissionListAll() {
 		$permission_list = array();

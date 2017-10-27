@@ -26,7 +26,7 @@ class Model_User extends Model
 
 			$permission_list = array();
 			$sql_permission = "SELECT tp.* FROM t_permission tp WHERE tp.position_id IN "
-							. "(SELECT position_id FROM r_user_position rup WHERE rup.user_id = :user_id)) ";
+							. "(SELECT position_id FROM r_user_position rup WHERE rup.user_id = :user_id) ";
 			$query_permission = DB::query($sql_permission);
 			$query_permission->param('user_id', $result_user[0]["user_id"]);
 			$result_permission = $query_permission->execute()->as_array();

@@ -1,13 +1,13 @@
 <?php
 /* 
- * 权限管理页
+ * 添加权限页
  */
 
 class Controller_Admin_User_Addauthority extends Controller_Admin_App
 {
 
 	/**
-	 *
+	 * 添加权限
 	 * @access  public
 	 * @return  Response
 	 */
@@ -16,7 +16,7 @@ class Controller_Admin_User_Addauthority extends Controller_Admin_App
 		$data = array();
 		
 		//调用共用Header
-//		$data['header'] = Request::forge('admin/common/header')->execute()->response();
+		$data['header'] = Request::forge('admin/common/header')->execute()->response();
 		
 //		if(isset($_SESSION['login_user']['permission'][5][7][1])) {
 			$data['input_name'] = '';
@@ -25,6 +25,7 @@ class Controller_Admin_User_Addauthority extends Controller_Admin_App
 			$data['function_name'] = '';
 			$data['error_message'] = '';
 			
+			//页面参数检查
 			if(!isset($_GET['function_id'])) {
 				return Response::forge(View::forge($this->template . '/admin/error/access_error', $data, false));
 				exit;
@@ -46,9 +47,11 @@ class Controller_Admin_User_Addauthority extends Controller_Admin_App
 						'authority_name' => trim($_POST['name']),
 						'function_id' => $_GET['function_id'],
 					);
+					//输入内容检查
 					$result_check = Model_Authority::CheckInsertAuthority($params_insert);
 					
 					if($result_check['result']) {
+						//数据添加
 						$result_insert = Model_Authority::InsertAuthority($params_insert);
 						
 						if($result_insert) {
@@ -56,26 +59,26 @@ class Controller_Admin_User_Addauthority extends Controller_Admin_App
 							header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/permission_list/');
 							exit;
 						} else {
-							$data['error_message'] = '失敗';
+							$data['error_message'] = '数据库错误：数据添加失败';
 						}
 					} else {
 						foreach($result_check['error'] as $insert_error) {
 							$error_message_list = array();
 							switch($insert_error) {
 								case 'noset_name':
-									$error_message_list[] = '名前システム変更';
+									$error_message_list[] = '系统错误：请勿修改表单中的控件名称';
 									break;
 								case 'empty_name':
-									$error_message_list[] = '名前未入力';
+									$error_message_list[] = '请输入权限名称';
 									break;
 								case 'noset_function':
-									$error_message_list[] = '親設定してない';
+									$error_message_list[] = '请设定所属功能';
 									break;
 								case 'nonum_function':
-									$error_message_list[] = '親数字じゃない';
+									$error_message_list[] = '功能编号不是数字';
 									break;
 								case 'duplication':
-									$error_message_list[] = '重複データ有り';
+									$error_message_list[] = '该功能中已存在该名称的权限，无法重复添加';
 									break;
 								default:
 									break;
@@ -91,6 +94,7 @@ class Controller_Admin_User_Addauthority extends Controller_Admin_App
 				}
 			}
 			
+			//调用View
 			return Response::forge(View::forge($this->template . '/admin/user/add_authority', $data, false));
 //		} else {
 //			return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));

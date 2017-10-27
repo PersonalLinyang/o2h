@@ -24,7 +24,7 @@ class Model_Authority extends Model
 		$query_adelete->param(':authority_id', $authority_id);
 		$result_adelete = $query_adelete->execute();
 		
-		return $result_fgdelete;
+		return $result_adelete;
 	}
 
 	public static function UpdateAuthority($params) {
@@ -153,7 +153,7 @@ class Model_Authority extends Model
 		if($result['result']) {
 			$sql_exist = "SELECT * FROM m_authority WHERE authority_id = :authority_id";
 			$query_exist = DB::query($sql_exist);
-			$query_exist->param(':authority_id', $params['authority_id']);
+			$query_exist->param(':authority_id', $authority_id);
 			$result_exist = $query_exist->execute()->as_array();
 			
 			if(!count($result_exist)) {
