@@ -1,12 +1,12 @@
 <?php
 /* 
- * 前サイトページの共通親
+ * 管理系统共用父Controller
  */
 
 class Controller_Admin_App extends Controller 
 {
 
-	//デフォルトでPCのthemeを使う
+	//默认为PC
 	public $template = 'pc';
 	
 	/**
@@ -17,7 +17,7 @@ class Controller_Admin_App extends Controller
 
 		$ua = $_SERVER['HTTP_USER_AGENT'];
 		
-		//PC、SPを判別してSPまたはFPならthemeをきりかえる
+		//根据登陆终端切换显示内容
 		if ((strpos($ua, 'iPhone') !== false)
 	    || (strpos($ua, 'Windows Phone') !== false)
 	    || (strpos($ua, 'DoCoMo') !== false)
@@ -29,14 +29,14 @@ class Controller_Admin_App extends Controller
 			$this->template = 'sp';
 		}
 
-		//時間を日本時間に調整
+		//日本时间
 		date_default_timezone_set('Asia/Tokyo');
 
 		
 		session_start();
 		$data = array();
 		
-		//未ログインとときログインページに遷移
+		//未登陆时向登陆页跳转
 		if(!isset($_SESSION['login_user'])){
 			header( 'Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/login.php' );
 			exit;

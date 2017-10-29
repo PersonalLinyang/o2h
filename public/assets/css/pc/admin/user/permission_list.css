@@ -1,0 +1,42 @@
+/* 权限一览中的一行 */
+.permission-line {
+	overflow: hidden;
+	border-bottom: 1px dotted #713E00;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+.permission-line:last-child {
+	border-bottom: none;
+}
+
+/* 权限编号 */
+.permission-id {
+	float: left;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 20px;
+	padding-right: 20px;
+	font-weight: bold;
+	position: relative;
+}
+
+/* 权限名称 */
+.permission-name {
+	float: left;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+/* 权限一览中根据类别显示错位 */
+.permission-subgroup .permission-id {
+	margin-left: 30px;
+}
+.permission-function .permission-id {
+	margin-left: 60px;
+}
+.permission-authority .btn-delete {
+	margin-left: 111px;
+}
+.permission-authority .permission-id {
+	margin-left: 90px;
+}

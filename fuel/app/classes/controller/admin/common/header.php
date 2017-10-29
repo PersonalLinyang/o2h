@@ -1,6 +1,6 @@
 <?php
 /* 
- * 共通パーツ - ヘッダー
+ * 共用Header
  */
 
 class Controller_Admin_Common_Header extends Controller_App
@@ -14,7 +14,7 @@ class Controller_Admin_Common_Header extends Controller_App
 	{
 		$data = array();
 		
-		//ログアウト
+		//退出登陆
 		if(isset($_POST['logout'])) {
 			unset($_SESSION['login_user']);
 			header( 'Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/login.php' );
