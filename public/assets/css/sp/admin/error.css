@@ -1,0 +1,23 @@
+/* 错误提示图标 */
+.error-icon {
+	font-size: 60px;
+	line-height: 80px;
+	background-color: #713E00;
+	color: #FBEFBF;
+	margin: auto;
+	margin-top: 40px;
+	margin-bottom: 20px;
+	width: 80px;
+	height: 80px;
+	border-radius: 40px;
+	vertical-align: middle;
+	text-align: center;
+}
+
+/* 错误提示文字 */
+.error-text {
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 40px;
+}
