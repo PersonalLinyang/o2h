@@ -6,6 +6,11 @@ return array(
 	//管理画面
 	'admin' => 'admin/index',
 	
+	//景点管理
+	'admin/spot_list'                => 'admin/service/spotlist/index',
+	'admin/add_spot'                 => 'admin/service/addspot/index',
+	
+	//系统权限管理
 	'admin/permission_list'          => 'admin/user/permissionlist/index',
 	'admin/add_master_group'         => 'admin/user/addmastergroup/index',
 	'admin/add_sub_group'            => 'admin/user/addsubgroup/index',

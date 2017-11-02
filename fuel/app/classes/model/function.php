@@ -2,7 +2,9 @@
 
 class Model_Function extends Model
 {
-
+	/*
+	 * 添加功能
+	 */
 	public static function InsertFunction($params) {
 		$sql_insert = "INSERT INTO m_function(function_name, function_group_id) VALUES(:function_name, :function_group_id)";
 		$query_insert = DB::query($sql_insert);
@@ -13,6 +15,9 @@ class Model_Function extends Model
 		return $result_insert;
 	}
 	
+	/*
+	 * 根据ID删除功能
+	 */
 	public static function DeleteFunctionById($function_id) {
 		$sql_pdelete = "DELETE FROM t_permission WHERE function_id = :function_id";
 		$query_pdelete = DB::query($sql_pdelete);
@@ -32,6 +37,9 @@ class Model_Function extends Model
 		return $result_fdelete;
 	}
 
+	/*
+	 * 更新功能
+	 */
 	public static function UpdateFunction($params) {
 		$sql_update = "UPDATE m_function SET function_name = :function_name WHERE function_id = :function_id";
 		$query_update = DB::query($sql_update);
@@ -42,6 +50,9 @@ class Model_Function extends Model
 		return $result_update;
 	}
 	
+	/*
+	 * 根据ID获取功能信息
+	 */
 	public static function SelectFunctionById($function_id) {
 		if(!is_numeric($function_id)) {
 			return false;
@@ -61,6 +72,9 @@ class Model_Function extends Model
 		}
 	}
 	
+	/*
+	 * 添加功能前添加信息查验
+	 */
 	public static function CheckInsertFunction($params) {
 		$result = array(
 			'result' => true,
@@ -99,6 +113,9 @@ class Model_Function extends Model
 		return $result;
 	}
 	
+	/*
+	 * 更新功能前更新信息查验
+	 */
 	public static function CheckUpdateFunction($params) {
 		$result = array(
 			'result' => true,
@@ -142,6 +159,9 @@ class Model_Function extends Model
 		return $result;
 	}
 	
+	/*
+	 * 删除功能前删除ID查验
+	 */
 	public static function CheckDeleteFunctionById($function_id) {
 		$result = array(
 			'result' => true,

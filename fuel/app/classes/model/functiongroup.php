@@ -2,7 +2,9 @@
 
 class Model_Functiongroup extends Model
 {
-
+	/*
+	 * 添加主功能组
+	 */
 	public static function InsertMasterGroup($params) {
 		$sql_insert = "INSERT INTO m_function_group(function_group_name) VALUES(:function_group_name)";
 		$query_insert = DB::query($sql_insert);
@@ -12,6 +14,9 @@ class Model_Functiongroup extends Model
 		return $result_insert;
 	}
 	
+	/*
+	 * 添加副功能组
+	 */
 	public static function InsertSubGroup($params) {
 		$sql_insert = "INSERT INTO m_function_group(function_group_name, function_group_parent) VALUES(:function_group_name, :function_group_parent)";
 		$query_insert = DB::query($sql_insert);
@@ -22,6 +27,9 @@ class Model_Functiongroup extends Model
 		return $result_insert;
 	}
 	
+	/*
+	 * 根据ID删除主功能组
+	 */
 	public static function DeleteMasterGroupById($function_group_id) {
 		$sql_pdelete = "DELETE FROM t_permission WHERE master_group_id = :function_group_id";
 		$query_pdelete = DB::query($sql_pdelete);
@@ -49,6 +57,9 @@ class Model_Functiongroup extends Model
 		return $result_fgdelete;
 	}
 	
+	/*
+	 * 根据ID删除副功能组
+	 */
 	public static function DeleteSubGroupById($function_group_id) {
 		$sql_pdelete = "DELETE FROM t_permission WHERE sub_group_id = :function_group_id";
 		$query_pdelete = DB::query($sql_pdelete);
@@ -74,6 +85,9 @@ class Model_Functiongroup extends Model
 		return $result_fgdelete;
 	}
 	
+	/*
+	 * 更新功能组名称
+	 */
 	public static function UpdateFunctionGroup($params) {
 		$sql_update = "UPDATE m_function_group SET function_group_name = :function_group_name WHERE function_group_id = :function_group_id";
 		$query_update = DB::query($sql_update);
@@ -84,6 +98,9 @@ class Model_Functiongroup extends Model
 		return $result_update;
 	}
 	
+	/*
+	 * 根据ID获取主功能组信息
+	 */
 	public static function SelectMasterGroupById($function_group_id) {
 		if(!is_numeric($function_group_id)) {
 			return false;
@@ -101,6 +118,9 @@ class Model_Functiongroup extends Model
 		}
 	}
 	
+	/*
+	 * 根据ID获取副功能组信息
+	 */
 	public static function SelectSubGroupById($sub_group_id) {
 		if(!is_numeric($sub_group_id)) {
 			return false;
@@ -120,6 +140,9 @@ class Model_Functiongroup extends Model
 		}
 	}
 	
+	/*
+	 * 添加主功能组前添加信息查验
+	 */
 	public static function CheckInsertMasterGroup($params) {
 		$result = array(
 			'result' => true,
@@ -149,6 +172,9 @@ class Model_Functiongroup extends Model
 		return $result;
 	}
 	
+	/*
+	 * 添加副功能组前添加信息查验
+	 */
 	public static function CheckInsertSubGroup($params) {
 		$result = array(
 			'result' => true,
@@ -187,6 +213,9 @@ class Model_Functiongroup extends Model
 		return $result;
 	}
 	
+	/*
+	 * 更新主功能组前更新信息查验
+	 */
 	public static function CheckUpdateMasterGroup($params) {
 		$result = array(
 			'result' => true,
@@ -229,6 +258,9 @@ class Model_Functiongroup extends Model
 		return $result;
 	}
 	
+	/*
+	 * 更新副功能组前更新信息查验
+	 */
 	public static function CheckUpdateSubGroup($params) {
 		$result = array(
 			'result' => true,
@@ -274,6 +306,9 @@ class Model_Functiongroup extends Model
 		return $result;
 	}
 	
+	/*
+	 * 删除主功能组前删除ID查验
+	 */
 	public static function CheckDeleteMasterGroupById($function_group_id) {
 		$result = array(
 			'result' => true,
@@ -300,6 +335,9 @@ class Model_Functiongroup extends Model
 		return $result;
 	}
 	
+	/*
+	 * 删除副功能组前删除ID查验
+	 */
 	public static function CheckDeleteSubGroupById($function_group_id) {
 		$result = array(
 			'result' => true,
