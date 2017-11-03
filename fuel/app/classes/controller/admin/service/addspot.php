@@ -124,14 +124,14 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 						}
 						
 						//输入内容检查
-						$result_check_spot = Model_Spot::CheckInsertSpot($param_insert_spot);
+						$result_check = Model_Spot::CheckInsertSpot($param_insert_spot);
 						
-						if($result_check_spot['result']) {
+						if($result_check['result']) {
 							//数据添加
-							$result_insert_spot = Model_Spot::InsertSpot($param_insert_spot);
+							$result_insert = Model_Spot::InsertSpot($param_insert_spot);
 							
-							if($result_insert_spot) {
-								$spot_id = $result_insert_spot[0];
+							if($result_insert) {
+								$spot_id = $result_insert[0];
 								
 								//将图片临时文件转存至景点图片文件夹
 								foreach($detail_num_list as $detail_num) {
@@ -168,7 +168,6 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 							}
 						} else {
 							foreach($result_check['error'] as $insert_error) {
-								$error_message_list = array();
 								switch($insert_error) {
 									case 'empty_name':
 										$error_message_list[] = '景点名不能为空';

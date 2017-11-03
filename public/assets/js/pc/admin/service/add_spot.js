@@ -26,15 +26,13 @@ $(function(){
 		var html = [];
 		
 		html.push('<div class="spot-image-block">');
-			html.push('<div id="thumb-' + detail_id + '-' + area_id + '"></div>');
-			html.push('<div class="upload">');
+			html.push('<div class="thumb-area" id="thumb-' + detail_id + '-' + area_id + '"></div>');
+			html.push('<div class="upload-area">');
 			html.push('<label>');
 				html.push('<input type="file" name="spot_images_' + detail_id + '[]" id="spot-images-' + detail_id + '-' + area_id + '" multiple="multiple" accept="image/jpeg,image/png" />');
-				html.push('<p>上传图片</p>');
+				html.push('<p class="btn-thumb-upload">上传</p>');
 			html.push('</label>');
-			if(area_id) {
-				html.push('<p id="thumb-delete-' + detail_id + '-' + area_id + '" class="btn-thumb-delete">删除</p>');
-			}
+			html.push('<p id="thumb-delete-' + detail_id + '-' + area_id + '" class="btn-thumb-delete">删除</p>');
 			html.push('</div>');
 		html.push('</div>');
 		
@@ -60,7 +58,7 @@ $(function(){
 		var html = [];
 		
 		html.push('<div class="spot-detail-block">');
-			html.push('<table>');
+			html.push('<table class="content-form-talbe-inner">');
 				html.push('<tr>');
 					html.push('<th>景点详情名</th>');
 					html.push('<td><input type="text" name="spot_detail_name_' + detail_id + '" /></td>');
@@ -71,16 +69,16 @@ $(function(){
 				html.push('</tr>');
 				html.push('<tr>');
 					html.push('<th>景点图片</th>');
-					html.push('<td class="spot-image-area">');
-						html.push('<div id="spot-image-area-' + detail_id + '" data-imagenum="1">');
+					html.push('<td>');
+						html.push('<div class="spot-image-area" id="spot-image-area-' + detail_id + '" data-imagenum="1">');
 							html.push(html_image_area(detail_id, 0));
 						html.push('</div>');
-						html.push('<div id="spot-image-add-' + detail_id + '" class="btn-spot-image-add" data-detailnum="' + detail_id + '"><p>+</p></div>');
+						html.push('<div id="spot-image-add-' + detail_id + '" class="btn-spot-image-add" data-detailnum="' + detail_id + '"><p>添加图片</p></div>');
 					html.push('</td>');
 				html.push('</tr>');
 				html.push('<tr>');
 					html.push('<th>详情公开期</th>');
-					html.push('<td>');
+					html.push('<td class="td-se-time">');
 						html.push('<input type="checkbox" name="two_year_flag_' + detail_id + '" id="two-year-flag-' + detail_id + '" />');
 						html.push('<label for="two-year-flag-' + detail_id + '">跨年</label>');
 						html.push('<select name="spot_start_month_' + detail_id + '">');
