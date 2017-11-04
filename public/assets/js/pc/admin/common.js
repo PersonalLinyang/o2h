@@ -35,4 +35,20 @@ $(function(){
 		$('.popup-shadow').hide();
 		$('.popup').hide();
 	});
+	
+	//单选按钮点击事件
+	$('.lbl-for-radio').click(function(){
+		var name = $(this).attr('data-for');
+		$('[data-for="' + name + '"]').removeClass("active");
+		$(this).addClass('active');
+	});
+	
+	//点选按钮点击事件
+	$('.lbl-for-check').click(function(){
+		if($(this).hasClass('active')) {
+			$(this).removeClass('active');
+		} else {
+			$(this).addClass('active');
+		}
+	});
 });

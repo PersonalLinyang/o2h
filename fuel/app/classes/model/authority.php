@@ -2,7 +2,9 @@
 
 class Model_Authority extends Model
 {
-
+	/*
+	 * 添加权限
+	 */
 	public static function InsertAuthority($params) {
 		$sql_insert = "INSERT INTO m_authority(authority_name, function_id) VALUES(:authority_name, :function_id)";
 		$query_insert = DB::query($sql_insert);
@@ -13,6 +15,9 @@ class Model_Authority extends Model
 		return $result_insert;
 	}
 	
+	/*
+	 * 根据ID删除权限
+	 */
 	public static function DeleteAuthorityById($authority_id) {
 		$sql_pdelete = "DELETE FROM t_permission WHERE authority_id = :authority_id";
 		$query_pdelete = DB::query($sql_pdelete);
@@ -27,6 +32,9 @@ class Model_Authority extends Model
 		return $result_adelete;
 	}
 
+	/*
+	 * 更新权限
+	 */
 	public static function UpdateAuthority($params) {
 		$sql_update = "UPDATE m_authority SET authority_name = :authority_name WHERE authority_id = :authority_id";
 		$query_update = DB::query($sql_update);
@@ -37,6 +45,9 @@ class Model_Authority extends Model
 		return $result_update;
 	}
 	
+	/*
+	 * 根据ID获取权限信息
+	 */
 	public static function SelectAuthorityById($authority_id) {
 		if(!is_numeric($authority_id)) {
 			return false;
@@ -58,6 +69,9 @@ class Model_Authority extends Model
 		}
 	}
 	
+	/*
+	 * 添加权限前添加信息查验
+	 */
 	public static function CheckInsertAuthority($params) {
 		$result = array(
 			'result' => true,
@@ -96,6 +110,9 @@ class Model_Authority extends Model
 		return $result;
 	}
 	
+	/*
+	 * 更新权限前更新信息查验
+	 */
 	public static function CheckUpdateAuthority($params) {
 		$result = array(
 			'result' => true,
@@ -139,6 +156,9 @@ class Model_Authority extends Model
 		return $result;
 	}
 	
+	/*
+	 * 删除权限前删除ID查验
+	 */
 	public static function CheckDeleteAuthorityById($authority_id) {
 		$result = array(
 			'result' => true,
