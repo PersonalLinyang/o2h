@@ -100,6 +100,7 @@
 .upload-area {
 	padding-left: 22px;
 	padding-right: 22px;
+	padding-bottom: 10px;
 }
 
 /* 图片上传按钮区域(只有删除按钮) */

@@ -270,8 +270,8 @@ p {
 /* 内容主体用form */
 .content-form input[type="text"] {
 	width: 100%;
-	height: 24px;
-	line-height: 24px;
+	height: 30px;
+	line-height: 30px;
 	border: 2px solid #713E00;
 	border-radius: 5px;
 	padding-left: 10px;
@@ -396,6 +396,7 @@ p {
 .content-form-talbe-col2 th {
 	width: 200px;
 	vertical-align: top;
+	padding-top: 4px;
 }
 
 /* form用嵌套内层表格 */

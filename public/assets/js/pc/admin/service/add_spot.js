@@ -53,6 +53,15 @@ $(function(){
 		$('#spot-image-area-' + detail_id).attr('data-imagenum', image_num);
 	}
 	
+	//使景点详情有效期点选按钮有效
+	function bind_lbl_for_check(detail_id) {
+		if($('#lbl-for-check-' + detail_id).hasClass('active')) {
+			$('#lbl-for-check-' + detail_id).removeClass('active');
+		} else {
+			$('#lbl-for-check-' + detail_id).addClass('active');
+		}
+	}
+	
 	//生成一个景点详情输入框
 	function html_detail_area(detail_id) {
 		var html = [];
@@ -80,7 +89,7 @@ $(function(){
 					html.push('<th>详情公开期</th>');
 					html.push('<td class="td-se-time">');
 						html.push('<input type="checkbox" name="two_year_flag_' + detail_id + '" id="two-year-flag-' + detail_id + '" />');
-						html.push('<label for="two-year-flag-' + detail_id + '">跨年</label>');
+						html.push('<label for="two-year-flag-' + detail_id + '" class="lbl-for-check" id="lbl-for-check-' + detail_id + '">跨年</label>');
 						html.push('<select name="spot_start_month_' + detail_id + '">');
 							html.push('<option value=""></option>');
 							for(var i = 1; i < 13; i++){
@@ -134,6 +143,7 @@ $(function(){
 		//添加一个新的详情输入框
 		$('#spot-detail-area').append(html_detail_area(detail_num));
 		$('#spot-image-add-' + detail_num).click(function(){bind_image_add(detail_num);});
+		$('#lbl-for-check-' + detail_num).click(function(){bind_lbl_for_check(detail_num);});
 		bind_delete_detail(detail_num);
 		bind_file_thumb(detail_num, 0);
 		bind_delete_thumb(detail_num, 0);
