@@ -15,7 +15,8 @@ class Model_Permission extends Model
 					. "FROM (SELECT * FROM m_function_group WHERE function_group_parent IS NULL) mg " 
 					. "LEFT JOIN (SELECT * FROM m_function_group WHERE function_group_parent IS NOT NULL) sg ON sg.function_group_parent = mg.function_group_id "
 					. "LEFT JOIN m_function f ON f.function_group_id = sg.function_group_id " 
-					. "LEFT JOIN m_authority a ON a.function_id = f.function_id ";
+					. "LEFT JOIN m_authority a ON a.function_id = f.function_id "
+					. "ORDER BY master_group_id, sub_group_id, function_id, authority_id";
 		$query_permission = DB::query($sql_permission);
 		$result_permission = $query_permission->execute()->as_array();
 		
