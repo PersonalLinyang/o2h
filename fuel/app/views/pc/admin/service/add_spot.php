@@ -67,10 +67,10 @@
 					<tr>
 						<th>公开状态</th>
 						<td>
-							<input type="radio" name="display_flag" value="0" id="display-flag-0" <?php echo $input_display_flag == '1' ? '' : 'checked '; ?>/>
-							<label class="lbl-for-radio<?php echo $input_display_flag == '1' ? '' : ' active'; ?>" for="display-flag-0" data-for="chk-display-flag">编辑</label>
-							<input type="radio" name="display_flag" value="1" id="display-flag-1" <?php echo $input_display_flag == '1' ? 'checked ' : ''; ?>/>
-							<label class="lbl-for-radio<?php echo $input_display_flag == '1' ? ' active' : ''; ?>" for="display-flag-1" data-for="chk-display-flag">公开</label>
+							<input type="radio" name="spot_status" value="0" id="spot-status-0" <?php echo $input_spot_status == '1' ? '' : 'checked '; ?>/>
+							<label class="lbl-for-radio<?php echo $input_spot_status == '1' ? '' : ' active'; ?>" for="spot-status-0" data-for="chk-spot-status">未公开</label>
+							<input type="radio" name="spot_status" value="1" id="spot-status-1" <?php echo $input_spot_status == '1' ? 'checked ' : ''; ?>/>
+							<label class="lbl-for-radio<?php echo $input_spot_status == '1' ? ' active' : ''; ?>" for="spot-status-1" data-for="chk-spot-status">公开</label>
 						</td>
 					</tr>
 					<tr>

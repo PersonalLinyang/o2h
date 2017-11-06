@@ -29,7 +29,7 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 			$data['input_spot_type'] = '';
 			$data['input_free_flag'] = '';
 			$data['input_price'] = '';
-			$data['input_display_flag'] = '';
+			$data['input_spot_status'] = '';
 			$data['input_detail_list'] = array();
 			
 			if(isset($_POST['page'])) {
@@ -39,7 +39,7 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 				//数据来源检验
 				if($_POST['page'] == 'add_spot') {
 					if(isset($_POST['spot_name']) && isset($_POST['spot_area']) && isset($_POST['spot_type']) 
-							&& isset($_POST['free_flag']) && isset($_POST['price']) && isset($_POST['display_flag'])) {
+							&& isset($_POST['free_flag']) && isset($_POST['price']) && isset($_POST['spot_status'])) {
 						//获取添加的景点详情数量
 						$param_insert_spot['detail_list'] = array();
 						$detail_num_list = array();
@@ -100,7 +100,7 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 							'spot_type' => $_POST['spot_type'],
 							'free_flag' => $_POST['free_flag'],
 							'price' => $_POST['free_flag'] == '1' ? 0 : $_POST['price'],
-							'display_flag' => $_POST['display_flag'],
+							'spot_status' => $_POST['spot_status'],
 						);
 						
 						//添加景点详情用数据生成
@@ -189,7 +189,7 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 									case 'nonum_type':
 										$error_message_list[] = '请选择景点类型';
 										break;
-									case 'nobool_displayflag':
+									case 'nobool_spotstatus':
 										$error_message_list[] = '请选择公开状态';
 										break;
 									case 'nobool_freeflag':
@@ -228,7 +228,7 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 					$data['input_spot_area'] = isset($_POST['spot_area']) ? $_POST['spot_area'] : '';
 					$data['input_spot_type'] = isset($_POST['spot_type']) ? $_POST['spot_type'] : '';
 					$data['input_free_flag'] = isset($_POST['free_flag']) ? $_POST['free_flag'] : '';
-					$data['input_display_flag'] = isset($_POST['display_flag']) ? $_POST['display_flag'] : '';
+					$data['input_spot_status'] = isset($_POST['spot_status']) ? $_POST['spot_status'] : '';
 					$price = isset($_POST['price']) ? $_POST['price'] : '';
 					$data['input_price'] = isset($_POST['free_flag']) ? ($_POST['free_flag'] == '1' ? '' : $price) : $price;
 					//反映景点详情

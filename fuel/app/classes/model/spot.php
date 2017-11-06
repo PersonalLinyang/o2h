@@ -7,14 +7,14 @@ class Model_Spot extends Model
 	 */
 	public static function InsertSpot($params) {
 		//添加景点
-		$sql_insert_spot = "INSERT INTO t_spot(spot_name, spot_area, spot_type, free_flag, price, display_flag, created_at, modified_at) "
-						. "VALUES(:spot_name, :spot_area, :spot_type, :free_flag, :price, :display_flag, now(), now())";
+		$sql_insert_spot = "INSERT INTO t_spot(spot_name, spot_area, spot_type, free_flag, price, spot_status, created_at, modified_at) "
+						. "VALUES(:spot_name, :spot_area, :spot_type, :free_flag, :price, :spot_status, now(), now())";
 		$query_insert_spot = DB::query($sql_insert_spot);
 		$query_insert_spot->param(':spot_name', $params['spot_name']);
 		$query_insert_spot->param(':spot_area', $params['spot_area']);
 		$query_insert_spot->param(':spot_type', $params['spot_type']);
 		$query_insert_spot->param(':free_flag', $params['free_flag']);
-		$query_insert_spot->param(':display_flag', $params['display_flag']);
+		$query_insert_spot->param(':spot_status', $params['spot_status']);
 		$query_insert_spot->param(':price', $params['price']);
 		$result_insert_spot = $query_insert_spot->execute();
 		
@@ -44,6 +44,69 @@ class Model_Spot extends Model
 		}
 		
 		return $result_insert_spot;
+	}
+
+	/*
+	 * 更新景点状态
+	 */
+	public static function UpdateSpotStatusById($params) {
+		$sql_update = "UPDATE t_spot SET spot_status = :spot_status WHERE spot_id = :spot_id";
+		$query_update = DB::query($sql_update);
+		$query_update->param(':spot_id', $params['spot_id']);
+		$query_update->param(':spot_status', $params['spot_status']);
+		$result_update = $query_update->execute();
+		
+		return $result_update;
+	}
+	
+	/*
+	 * 根据ID获取景点详细信息`
+	 */
+	public static function SelectSpotDetailById($spot_id) {
+		if(!is_numeric($spot_id)) {
+			return false;
+		}
+		
+		$sql_spot = "SELECT ts.spot_id, ts.spot_name, ts.spot_area spot_area_id, ma.area_name spot_area_name, ma.area_description spot_area_description, " 
+				. "ts.spot_type spot_type_id, mst.spot_type_name, ts.free_flag, ts.price, ts.spot_status, ts.created_at, ts.modified_at " 
+				. "FROM t_spot ts " 
+				. "LEFT JOIN m_area ma ON ts.spot_area = ma.area_id " 
+				. "LEFT JOIN m_spot_type mst ON ts.spot_type = mst.spot_type_id " 
+				. "WHERE ts.spot_id = :spot_id ";
+		$query_spot = DB::query($sql_spot);
+		$query_spot->param(':spot_id', $spot_id);
+		$result_spot = $query_spot->execute()->as_array();
+		
+		if(count($result_spot) == 1) {
+			$result = $result_spot[0];
+			$result['detail_list'] = array();
+			
+			$sql_spot_detail = "SELECT tsd.spot_sort_id, tsd.spot_detail_name, tsd.spot_description_text, tsd.image_list, tsd.two_year_flag, tsd.spot_start_month, tsd.spot_end_month "
+								. "FROM t_spot_detail tsd "
+								. "WHERE tsd.spot_id = :spot_id " 
+								. "ORDER BY spot_sort_id ASC ";
+			$query_spot_detail = DB::query($sql_spot_detail);
+			$query_spot_detail->param(':spot_id', $spot_id);
+			$result_spot_detail = $query_spot_detail->execute()->as_array();
+			
+			if(count($result_spot_detail)) {
+				foreach($result_spot_detail as $detail_info) {
+					$result['detail_list'][] = array(
+						'spot_sort_id' => $detail_info['spot_sort_id'],
+						'spot_detail_name' => $detail_info['spot_detail_name'],
+						'spot_description_text' => $detail_info['spot_description_text'],
+						'image_list' => explode(',', $detail_info['image_list']),
+						'two_year_flag' => $detail_info['two_year_flag'],
+						'spot_start_month' => $detail_info['spot_start_month'],
+						'spot_end_month' => $detail_info['spot_end_month'],
+					);
+				}
+			}
+			
+			return $result;
+		} else {
+			return false;
+		}
 	}
 	
 	/*
@@ -84,9 +147,9 @@ class Model_Spot extends Model
 			}
 		}
 		//公开状态
-		if(!in_array($params['display_flag'], array('0', '1'))) {
+		if(!in_array($params['spot_status'], array('0', '1'))) {
 			$result['result'] = false;
-			$result['error'][] = 'nobool_displayflag';
+			$result['error'][] = 'nobool_spotstatus';
 		}
 		//景点详情
 		if(!count($params['detail_list'])) {
@@ -147,6 +210,39 @@ class Model_Spot extends Model
 					$result['result'] = false;
 					$result['error'][] = 'nonum_se_time';
 				}
+			}
+		}
+		
+		return $result;
+	}
+	
+	/*
+	 * 更新景点公开状态前更新信息查验
+	 */
+	public static function CheckUpdateSpotStatusById($params) {
+		$result = array(
+			'result' => true,
+			'error' => array(),
+		);
+		
+		if(!in_array($params['spot_status'], array('0', '1'))) {
+			$result['result'] = false;
+			$result['error'][] = 'nobool_spot_status';
+		}
+		if(!is_numeric($params['spot_id'])) {
+			$result['result'] = false;
+			$result['error'][] = 'nonum_spot_id';
+		}
+		
+		if($result['result']) {
+			$sql_exist = "SELECT * FROM t_spot WHERE spot_id = :spot_id";
+			$query_exist = DB::query($sql_exist);
+			$query_exist->param(':spot_id', $params['spot_id']);
+			$result_exist = $query_exist->execute()->as_array();
+			
+			if(count($result_exist) != 1) {
+				$result['result'] = false;
+				$result['error'][] = 'noexist_spot_id';
 			}
 		}
 		

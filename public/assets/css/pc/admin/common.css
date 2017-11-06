@@ -262,9 +262,17 @@ p {
 	padding-left: 20px;
 	padding-right: 20px;
 }
+
 .content-main h1 {
 	text-align: center;
 	font-size: 24px;
+}
+
+.content-main h3 {
+	padding-left: 8px;
+	border-left: 10px solid #713E00;
+	border-top: 4px solid transparent;
+	font-size: 20px;
 }
 
 /* 内容主体用form */
@@ -385,6 +393,37 @@ p {
 .content-form .button-group {
 	padding-top: 15px;
 	padding-bottom: 15px;
+}
+
+/* 内容主体部分详细页面用表格 */
+.tb-content-detail {
+	width: 100%;
+	border: 4px solid #713E00;
+	border-collapse: collapse;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.tb-content-detail th {
+	width: 200px;
+	vertical-align: top;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	background: #EBCF89;
+	border: 2px solid #713E00;
+}
+
+.tb-content-detail td {
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 10px;
+	padding-right: 10px;
+	border: 2px solid #713E00;
+}
+
+.tb-content-detail td img {
+	border: 2px solid transparent;
+	margin: 3px;
 }
 
 /* form用双列表格 */
