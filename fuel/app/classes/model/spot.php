@@ -7,13 +7,14 @@ class Model_Spot extends Model
 	 */
 	public static function InsertSpot($params) {
 		//添加景点
-		$sql_insert_spot = "INSERT INTO t_spot(spot_name, spot_area, spot_type, free_flag, price) "
-						. "VALUES(:spot_name, :spot_area, :spot_type, :free_flag, :price)";
+		$sql_insert_spot = "INSERT INTO t_spot(spot_name, spot_area, spot_type, free_flag, price, display_flag, created_at, modified_at) "
+						. "VALUES(:spot_name, :spot_area, :spot_type, :free_flag, :price, :display_flag, now(), now())";
 		$query_insert_spot = DB::query($sql_insert_spot);
 		$query_insert_spot->param(':spot_name', $params['spot_name']);
 		$query_insert_spot->param(':spot_area', $params['spot_area']);
 		$query_insert_spot->param(':spot_type', $params['spot_type']);
 		$query_insert_spot->param(':free_flag', $params['free_flag']);
+		$query_insert_spot->param(':display_flag', $params['display_flag']);
 		$query_insert_spot->param(':price', $params['price']);
 		$result_insert_spot = $query_insert_spot->execute();
 		
@@ -81,6 +82,11 @@ class Model_Spot extends Model
 					$result['error'][] = 'minus_price';
 				}
 			}
+		}
+		//公开状态
+		if(!in_array($params['display_flag'], array('0', '1'))) {
+			$result['result'] = false;
+			$result['error'][] = 'nobool_displayflag';
 		}
 		//景点详情
 		if(!count($params['detail_list'])) {

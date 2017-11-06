@@ -65,6 +65,15 @@
 						<td><input type="text" name="price" value="<?php echo $input_price; ?>" <?php echo $input_free_flag == '0' ? '' : 'class="readonly" readonly="readonly" '; ?>/></td>
 					</tr>
 					<tr>
+						<th>公开状态</th>
+						<td>
+							<input type="radio" name="display_flag" value="0" id="display-flag-0" <?php echo $input_display_flag == '1' ? '' : 'checked '; ?>/>
+							<label class="lbl-for-radio<?php echo $input_display_flag == '1' ? '' : ' active'; ?>" for="display-flag-0" data-for="chk-display-flag">编辑</label>
+							<input type="radio" name="display_flag" value="1" id="display-flag-1" <?php echo $input_display_flag == '1' ? 'checked ' : ''; ?>/>
+							<label class="lbl-for-radio<?php echo $input_display_flag == '1' ? ' active' : ''; ?>" for="display-flag-1" data-for="chk-display-flag">公开</label>
+						</td>
+					</tr>
+					<tr>
 						<th>景点详情</th>
 						<td>
 							<div id="spot-detail-area" data-detailnum="<?php echo count($input_detail_list) + 1; ?>">
