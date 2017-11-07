@@ -97,20 +97,20 @@
 													<div class="spot-image-block">
 														<div class="thumb-area"><img class="thumb" src="/assets/img/tmp/<?php echo $_SESSION['login_user']['id']; ?>/spot/<?php echo $input_image; ?>"></div>
 														<div class="upload-area delete-only">
-															<input type="hidden" name="spot_image_tmp_<?php echo $input_detail['spot_sort_id']; ?>[]" value="<?php echo $input_image; ?>" />
 															<p class="btn-thumb-delete">删除</p>
 														</div>
+														<input type="hidden" name="spot_image_tmp_<?php echo $input_detail['spot_sort_id']; ?>[]" value="<?php echo $input_image; ?>" />
 													</div>
 													<?php endforeach; ?>
 												<?php else: ?>
 													<div class="spot-image-block">
 														<div class="thumb-area" id="thumb-<?php echo $input_detail['spot_sort_id']; ?>-0"></div>
 														<div class="upload-area">
-														<label>
-															<input type="file" name="spot_images_<?php echo $input_detail['spot_sort_id']; ?>[]" id="spot-images-<?php echo $input_detail['spot_sort_id']; ?>-0" multiple="multiple" accept="image/jpeg,image/png" />
-															<p class="btn-thumb-upload">上传</p>
-														</label>
-														<p class="btn-thumb-delete">删除</p>
+															<label>
+																<input type="file" name="spot_images_<?php echo $input_detail['spot_sort_id']; ?>[]" id="spot-images-<?php echo $input_detail['spot_sort_id']; ?>-0" multiple="multiple" accept="image/jpeg,image/png" />
+																<p class="btn-thumb-upload">上传</p>
+															</label>
+															<p class="btn-thumb-delete">删除</p>
 														</div>
 													</div>
 												<?php endif; ?>

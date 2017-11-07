@@ -421,9 +421,52 @@ p {
 	border: 2px solid #713E00;
 }
 
-.tb-content-detail td img {
-	border: 2px solid transparent;
+/* 内容主体部分详细页面用表格 图片列表 */
+.tb-content-detail td .image-list {
+	overflow: hidden;
+}
+
+.tb-content-detail td .image-list .image-block {
+	border: 8px solid transparent;
 	margin: 3px;
+	width: 160px;
+	max-height: 160px;
+	overflow: hidden;
+	vertical-align: middle;
+	float: left;
+	line-height: 0px;
+}
+
+.tb-content-detail td .image-list .image-block.main {
+	border-color: #713E00;
+	position: relative;
+}
+
+.tb-content-detail td .image-list .image-block.main:before {
+	content: " ";
+	width: 0;
+	height: 0;
+	position: absolute;
+	border-top: 20px solid #713E00;
+	border-right: 20px solid #713E00;
+	border-left: 20px solid transparent;
+	border-bottom: 20px solid transparent;
+	top: 0px;
+	right: 0px;
+}
+
+.tb-content-detail td .image-list .image-block.main:after {
+	content: "M";
+	position: absolute;
+	font-family: 'Century';
+	font-weight: bold;
+	color: #FFFFFF;
+	top: 8px;
+	right: 0px;
+}
+
+.tb-content-detail td img {
+	width: 160px;
 }
 
 /* form用双列表格 */

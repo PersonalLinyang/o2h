@@ -131,9 +131,9 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 						if($result_check['result']) {
 							//数据添加
 							$result_insert = Model_Spot::InsertSpot($param_insert_spot);
+							$spot_id = $result_insert[0];
 							
 							if($result_insert) {
-								$spot_id = $result_insert[0];
 								
 								//将图片临时文件转存至景点图片文件夹
 								foreach($detail_num_list as $detail_num) {
@@ -146,7 +146,7 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 											mkdir($file_directory_pc, 0777, TRUE);
 										}
 										$result_resize_pc = $this->ImageResizeToJpg($file_name_tmp, 800, $file_directory_pc . $key_tmp . '_main.jpg');
-										$result_thumb_pc = $this->ImageResizeToJpg($file_name_tmp, 300, $file_directory_pc . $key_tmp . '_thumb.jpg');
+										$result_thumb_pc = $this->ImageResizeToJpg($file_name_tmp, 200, $file_directory_pc . $key_tmp . '_thumb.jpg');
 										
 										//调整SP用图片尺寸
 										$file_directory_sp = DOCROOT . 'assets/img/sp/upload/spot/' . $spot_id . '/' . $detail_num . '/';
@@ -163,7 +163,7 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 								
 								//添加成功 页面跳转
 								$_SESSION['add_spot_success'] = true;
-								header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/spot_list/');
+								header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/spot_detail/' . $spot_id . '/');
 								exit;
 							} else {
 								$error_message_list[] = '数据库错误：数据添加失败';
@@ -290,6 +290,9 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 		//获取图片信息并计算调整后的图片高度
 		$result = getimagesize($orig_file);
 		list($orig_width, $orig_height, $image_type) = $result;
+		if($orig_width < $resize_width) {
+			$resize_width = $orig_width;
+		}
 		$resize_height = intval(($orig_height * $resize_width) / $orig_width);
 		
 		// 复制图片至内存

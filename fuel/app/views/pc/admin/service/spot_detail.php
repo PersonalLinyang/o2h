@@ -78,10 +78,14 @@
 					<th>景点图片</th>
 					<td>
 						<p>共计<span class="strong"><?php echo count($detail_info['image_list']); ?></span>张图片</p>
-						<?php foreach($detail_info['image_list'] as $image_id): ?>
-						<img src="/assets/img/sp/upload/spot/<?php echo $spot_info['spot_id']; ?>/<?php echo $detail_info['spot_sort_id']; ?>/<?php echo $image_id; ?>_thumb.jpg" 
-							 alt="<?php echo $spot_info['spot_name']; ?>-<?php echo $detail_info['spot_detail_name']; ?>-<?php echo $image_id; ?>" />
-						<?php endforeach; ?>
+						<div class="image-list">
+							<?php foreach($detail_info['image_list'] as $image_key => $image_id): ?>
+							<div class="image-block<?php echo $image_key == 0 ? ' main' : '';?>">
+								<img src="/assets/img/pc/upload/spot/<?php echo $spot_info['spot_id']; ?>/<?php echo $detail_info['spot_sort_id']; ?>/<?php echo $image_id; ?>_thumb.jpg" 
+									alt="<?php echo $spot_info['spot_name']; ?>-<?php echo $detail_info['spot_detail_name']; ?>-<?php echo $image_id; ?>" />
+							</div>
+							<?php endforeach; ?>
+						</div>
 					</td>
 				</tr>
 				<tr>

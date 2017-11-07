@@ -35,6 +35,10 @@ class Controller_Admin_Service_Spotdetail extends Controller_Admin_App
 					$data['error_message'] = '景点公开状态更新失敗 请重新尝试';
 					unset($_SESSION['modify_spot_status_error']);
 				}
+				if(isset($_SESSION['add_spot_success'])) {
+					$data['success_message'] = '景点添加成功';
+					unset($_SESSION['add_spot_success']);
+				}
 				
 				//调用View
 				return Response::forge(View::forge($this->template . '/admin/service/spot_detail', $data, false));
