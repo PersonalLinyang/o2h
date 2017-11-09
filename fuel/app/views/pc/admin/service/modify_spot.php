@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>添加景点 - O2H管理系统</title>
+	<title>景点信息修改 - O2H管理系统</title>
 	<?php echo Asset::css('pc/admin/common.css'); ?>
 	<?php echo Asset::css('pc/admin/service/edit_spot.css'); ?>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
@@ -11,14 +11,14 @@
 	<?php echo Asset::js('pc/admin/service/edit_spot.js'); ?>
 </head>
 <body class="body-common">
-	<?php //echo $header; ?>
+	<?php echo $header; ?>
 	<div class="content-area">
 		<?php if($error_message): ?>
 		<div class="content-error"><?php echo $error_message; ?></div>
 		<?php endif; ?>
 		
 		<div class="content-main">
-			<h1>添加景点</h1>
+			<!--<h1>景点信息修改</h1>-->
 			<form method="post" action="" class="content-form" enctype="multipart/form-data">
 				<table class="content-form-talbe-col2">
 					<tr>
@@ -91,9 +91,29 @@
 										<tr>
 											<th>景点图片</th>
 											<td>
-												<div class="spot-image-area" id="spot-image-area-<?php echo $input_detail['spot_sort_id']; ?>" data-imagenum="<?php echo count($input_detail['image_list']) + 1;?>">
-												<?php if(count($input_detail['image_list'])): ?>
-													<?php foreach($input_detail['image_list'] as $input_image): ?>
+												<?php if(count($input_detail['image_list_db'])): ?>
+												<div class="spot-image-area">
+													<p class="center strong">已上传图片排序</p>
+													<?php foreach($input_detail['image_list_db'] as $input_image): ?>
+													<div class="spot-image-block">
+														<div class="thumb-area">
+															<img class="thumb" src="/assets/img/pc/upload/spot/<?php echo $spot_id; ?>/<?php echo $input_detail['spot_sort_id']; ?>/<?php echo $input_image; ?>_thumb.jpg">
+															<input type="hidden" name="spot_image_sort_<?php echo $input_detail['spot_sort_id']; ?>[]" value="<?php echo $input_image; ?>" />
+														</div>
+														<div class="upload-area three-button">
+															<p class="btn-thumb-prev"></p>
+															<p class="btn-thumb-next"></p>
+															<p class="btn-thumb-delete">删除</p>
+														</div>
+													</div>
+													<?php endforeach; ?>
+												</div>
+												<?php endif; ?>
+												<div class="spot-image-area" id="spot-image-area-<?php echo $input_detail['spot_sort_id']; ?>" 
+														data-imagenum="<?php echo count($input_detail['image_list_db']) + count($input_detail['image_list_upload']) + 1;?>">
+													<p class="center strong">图片添加</p>
+												<?php if(count($input_detail['image_list_upload'])): ?>
+													<?php foreach($input_detail['image_list_upload'] as $input_image): ?>
 													<div class="spot-image-block">
 														<div class="thumb-area"><img class="thumb" src="/assets/img/tmp/<?php echo $_SESSION['login_user']['id']; ?>/spot/<?php echo $input_image; ?>"></div>
 														<div class="upload-area one-button">
@@ -157,7 +177,7 @@
 						</td>
 					</tr>
 				</table>
-				<input type="hidden" name="page" value="add_spot" />
+				<input type="hidden" name="page" value="modify_spot" />
 			</form>
 		</div>
 	</div>

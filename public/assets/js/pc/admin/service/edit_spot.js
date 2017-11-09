@@ -163,4 +163,28 @@ $(function(){
 			$('input[name="price"]:text').val('');
 		}
 	});
+	
+	//图片向前移动
+	$('.btn-thumb-prev').click(function(){
+		var image_block = $(this).closest('.spot-image-block');
+		var image_block_prev = image_block.prev();
+		if(image_block_prev.hasClass('spot-image-block')) {
+			var html = image_block.find('.thumb-area')[0].innerHTML;
+			var html_prev = image_block_prev.find('.thumb-area')[0].innerHTML;
+			image_block.find('.thumb-area').html(html_prev);
+			image_block_prev.find('.thumb-area').html(html);
+		}
+	});
+	
+	//图片向后移动
+	$('.btn-thumb-next').click(function(){
+		var image_block = $(this).closest('.spot-image-block');
+		var image_block_next = image_block.next();
+		if(image_block_next.hasClass('spot-image-block')) {
+			var html = image_block.find('.thumb-area')[0].innerHTML;
+			var html_next = image_block_next.find('.thumb-area')[0].innerHTML;
+			image_block.find('.thumb-area').html(html_next);
+			image_block_next.find('.thumb-area').html(html);
+		}
+	});
 });

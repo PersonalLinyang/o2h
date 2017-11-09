@@ -263,9 +263,17 @@ p {
 	padding-left: 20px;
 	padding-right: 20px;
 }
+
 .content-main h1 {
 	text-align: center;
 	font-size: 24px;
+}
+
+.content-main h3 {
+	padding-left: 8px;
+	border-left: 10px solid #713E00;
+	border-top: 4px solid transparent;
+	font-size: 20px;
 }
 
 /* 内容主题一览类表格 */
@@ -426,6 +434,80 @@ p {
 .content-form .button-group {
 	padding-top: 15px;
 	padding-bottom: 15px;
+}
+
+/* 内容主体部分详细页面用表格 */
+.tb-content-detail {
+	width: 100%;
+	border: 4px solid #713E00;
+	border-collapse: collapse;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.tb-content-detail th {
+	width: 200px;
+	vertical-align: top;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	background: #EBCF89;
+	border: 2px solid #713E00;
+}
+
+.tb-content-detail td {
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 10px;
+	padding-right: 10px;
+	border: 2px solid #713E00;
+}
+
+/* 内容主体部分详细页面用表格 图片列表 */
+.tb-content-detail td .image-list {
+	overflow: hidden;
+}
+
+.tb-content-detail td .image-list .image-block {
+	border: 8px solid transparent;
+	margin: 3px;
+	width: 160px;
+	max-height: 160px;
+	overflow: hidden;
+	vertical-align: middle;
+	float: left;
+	line-height: 0px;
+}
+
+.tb-content-detail td .image-list .image-block.main {
+	border-color: #713E00;
+	position: relative;
+}
+
+.tb-content-detail td .image-list .image-block.main:before {
+	content: " ";
+	width: 0;
+	height: 0;
+	position: absolute;
+	border-top: 20px solid #713E00;
+	border-right: 20px solid #713E00;
+	border-left: 20px solid transparent;
+	border-bottom: 20px solid transparent;
+	top: 0px;
+	right: 0px;
+}
+
+.tb-content-detail td .image-list .image-block.main:after {
+	content: "M";
+	position: absolute;
+	font-family: 'Century';
+	font-weight: bold;
+	color: #FFFFFF;
+	top: 8px;
+	right: 0px;
+}
+
+.tb-content-detail td img {
+	width: 160px;
 }
 
 /* form用双列表格 */

@@ -20,7 +20,6 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 		
 //		if(isset($_SESSION['login_user']['permission'][5][7][1])) {
 			//设定View所需变量
-			$data['success_message'] = '';
 			$data['error_message'] = '';
 			$data['area_list'] = Model_Area::GetAreaListAll();
 			$data['spot_type_list'] = Model_SpotType::GetSpotTypeListAll();
@@ -29,6 +28,7 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 			$data['input_spot_type'] = '';
 			$data['input_free_flag'] = '';
 			$data['input_price'] = '';
+			$data['input_spot_status'] = '';
 			$data['input_detail_list'] = array();
 			
 			if(isset($_POST['page'])) {
@@ -37,17 +37,16 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 				
 				//数据来源检验
 				if($_POST['page'] == 'add_spot') {
-					if(isset($_POST['spot_name']) && isset($_POST['spot_area']) && isset($_POST['spot_type']) 
-							&& isset($_POST['free_flag']) && isset($_POST['price'])) {
-						//获取添加的景点详情数量
-						$param_insert_spot['detail_list'] = array();
-						$detail_num_list = array();
-						foreach($_POST as $key => $value) {
-							if(preg_match('/^spot_detail_name_[0-9]+$/', $key)) {
-								$detail_num_list[] = str_replace('spot_detail_name_', '', $key);
-							}
+					//获取添加的景点详情数量
+					$detail_num_list = array();
+					foreach($_POST as $key => $value) {
+						if(preg_match('/^spot_detail_name_[0-9]+$/', $key)) {
+							$detail_num_list[] = str_replace('spot_detail_name_', '', $key);
 						}
-						
+					}
+					
+					if(isset($_POST['spot_name']) && isset($_POST['spot_area']) && isset($_POST['spot_type']) 
+							&& isset($_POST['free_flag']) && isset($_POST['price']) && isset($_POST['spot_status'])) {
 						//上传图片暂时保存
 						foreach($detail_num_list as $detail_num) {
 							$file_tmp_count = 0;
@@ -99,6 +98,8 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 							'spot_type' => $_POST['spot_type'],
 							'free_flag' => $_POST['free_flag'],
 							'price' => $_POST['free_flag'] == '1' ? 0 : $_POST['price'],
+							'spot_status' => $_POST['spot_status'],
+							'detail_list' => array(),
 						);
 						
 						//添加景点详情用数据生成
@@ -129,9 +130,9 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 						if($result_check['result']) {
 							//数据添加
 							$result_insert = Model_Spot::InsertSpot($param_insert_spot);
+							$spot_id = $result_insert[0];
 							
 							if($result_insert) {
-								$spot_id = $result_insert[0];
 								
 								//将图片临时文件转存至景点图片文件夹
 								foreach($detail_num_list as $detail_num) {
@@ -144,7 +145,7 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 											mkdir($file_directory_pc, 0777, TRUE);
 										}
 										$result_resize_pc = $this->ImageResizeToJpg($file_name_tmp, 800, $file_directory_pc . $key_tmp . '_main.jpg');
-										$result_thumb_pc = $this->ImageResizeToJpg($file_name_tmp, 300, $file_directory_pc . $key_tmp . '_thumb.jpg');
+										$result_thumb_pc = $this->ImageResizeToJpg($file_name_tmp, 160, $file_directory_pc . $key_tmp . '_thumb.jpg');
 										
 										//调整SP用图片尺寸
 										$file_directory_sp = DOCROOT . 'assets/img/sp/upload/spot/' . $spot_id . '/' . $detail_num . '/';
@@ -161,7 +162,7 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 								
 								//添加成功 页面跳转
 								$_SESSION['add_spot_success'] = true;
-								header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/spot_list/');
+								header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/spot_detail/' . $spot_id . '/');
 								exit;
 							} else {
 								$error_message_list[] = '数据库错误：数据添加失败';
@@ -186,6 +187,9 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 										break;
 									case 'nonum_type':
 										$error_message_list[] = '请选择景点类型';
+										break;
+									case 'nobool_spotstatus':
+										$error_message_list[] = '请选择公开状态';
 										break;
 									case 'nobool_freeflag':
 										$error_message_list[] = '请选择收费/免费';
@@ -223,6 +227,7 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 					$data['input_spot_area'] = isset($_POST['spot_area']) ? $_POST['spot_area'] : '';
 					$data['input_spot_type'] = isset($_POST['spot_type']) ? $_POST['spot_type'] : '';
 					$data['input_free_flag'] = isset($_POST['free_flag']) ? $_POST['free_flag'] : '';
+					$data['input_spot_status'] = isset($_POST['spot_status']) ? $_POST['spot_status'] : '';
 					$price = isset($_POST['price']) ? $_POST['price'] : '';
 					$data['input_price'] = isset($_POST['free_flag']) ? ($_POST['free_flag'] == '1' ? '' : $price) : $price;
 					//反映景点详情
@@ -284,6 +289,9 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 		//获取图片信息并计算调整后的图片高度
 		$result = getimagesize($orig_file);
 		list($orig_width, $orig_height, $image_type) = $result;
+		if($orig_width < $resize_width) {
+			$resize_width = $orig_width;
+		}
 		$resize_height = intval(($orig_height * $resize_width) / $orig_width);
 		
 		// 复制图片至内存

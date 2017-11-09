@@ -14,7 +14,7 @@
 		<div class="content-main">
 			<p class="error-icon">！</p>
 			<p class="error-text">
-				对不起，您所访问的页面发生系统错误<br/>
+				对不起，您所访问的页面发生错误<br/>
 				请勿修改页面表单中的控件名称<br/>
 				并检查所访问的页面网址是否正确
 			</p>
