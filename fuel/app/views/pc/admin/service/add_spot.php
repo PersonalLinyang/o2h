@@ -8,7 +8,7 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 	<?php echo Asset::js('common/jquery.uploadThumbs.js'); ?>
 	<?php echo Asset::js('pc/admin/common.js'); ?>
-	<?php echo Asset::js('pc/admin/service/add_spot.js'); ?>
+	<?php echo Asset::js('pc/admin/service/edit_spot.js'); ?>
 </head>
 <body class="body-common">
 	<?php //echo $header; ?>
@@ -18,7 +18,7 @@
 		<?php endif; ?>
 		
 		<div class="content-main">
-			<!--<h1>添加景点</h1>-->
+			<h1>添加景点</h1>
 			<form method="post" action="" class="content-form" enctype="multipart/form-data">
 				<table class="content-form-talbe-col2">
 					<tr>

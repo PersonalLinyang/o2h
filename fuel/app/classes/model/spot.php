@@ -46,6 +46,29 @@ class Model_Spot extends Model
 	}
 	
 	/*
+	 * 按条件获得景点列表
+	 */
+	public static function SelectSpotList($param) {
+		$sql = "SELECT ts.spot_id, ts.spot_name, ts.spot_area spot_area_id, ma.area_name spot_area_name, ts.spot_type spot_type_id, mst.spot_type_name, " 
+				. "ts.free_flag, ts.price, ts.created_at, ts.modified_at, COUNT(tsd.spot_detail_id) detail_number " 
+				. "FROM t_spot ts " 
+				. "LEFT JOIN m_area ma ON ts.spot_area = ma.area_id "
+				. "LEFT JOIN m_spot_type mst ON ts.spot_type = mst.spot_type_id "
+				. "LEFT JOIN t_spot_detail tsd ON ts.spot_id = tsd.spot_id "
+				. "GROUP BY spot_id, spot_name, spot_area_id, spot_area_name, spot_type_id, spot_type_name, " 
+				. "free_flag, price, created_at "
+				. "ORDER BY spot_id DESC ";
+		$query = DB::query($sql);
+		$result = $query->execute()->as_array();
+		
+		if(count($result)) {
+			return $result;
+		} else {
+			return false;
+		}
+	}
+	
+	/*
 	 * 添加景点前添加信息查验
 	 */
 	public static function CheckInsertSpot($params) {

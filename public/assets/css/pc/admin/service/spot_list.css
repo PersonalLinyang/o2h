@@ -1,0 +1,22 @@
+/* 景点一览表 */
+.tb-content-list th.th-delete {
+	width: 84px;
+}
+.tb-content-list th.th-name {
+	width: auto;
+}
+.tb-content-list th.th-area {
+	width: 180px;
+}
+.tb-content-list th.th-type {
+	width: 180px;
+}
+.tb-content-list th.th-price {
+	width: 180px;
+}
+.tb-content-list th.th-modified-at {
+	width: 106px;
+}
+.tb-content-list th.th-detail {
+	width: 74px;
+}
