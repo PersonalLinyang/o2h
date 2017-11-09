@@ -39,6 +39,10 @@ class Controller_Admin_Service_Spotdetail extends Controller_Admin_App
 					$data['success_message'] = '景点添加成功';
 					unset($_SESSION['add_spot_success']);
 				}
+				if(isset($_SESSION['modify_spot_success'])) {
+					$data['success_message'] = '景点信息修改成功';
+					unset($_SESSION['modify_spot_success']);
+				}
 				
 				//调用View
 				return Response::forge(View::forge($this->template . '/admin/service/spot_detail', $data, false));

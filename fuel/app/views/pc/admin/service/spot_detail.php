@@ -13,7 +13,7 @@
 	<div class="content-area">
 		<div class="content-menu">
 			<ul class="content-menu-list">
-				<li class="content-menu-button"><a href="/admin/modify_spot/?spot_id=<?php echo $spot_info['spot_id']; ?>">信息修改</a></li>
+				<li class="content-menu-button"><a href="/admin/modify_spot/<?php echo $spot_info['spot_id']; ?>/">信息修改</a></li>
 				<?php if($spot_info['spot_status'] == '1'): ?>
 				<li class="content-menu-button btn-spot-status">设为未公开</li>
 				<?php else: ?>
@@ -52,7 +52,7 @@
 				</tr>
 				<tr>
 					<th>公开状态</th>
-					<td><?php echo $spot_info['spot_status'] == '1' ? '公开' : '编辑'; ?></td>
+					<td><?php echo $spot_info['spot_status'] == '1' ? '公开' : '未公开'; ?></td>
 				</tr>
 				<tr>
 					<th>登录时间</th>

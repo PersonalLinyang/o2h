@@ -11,6 +11,7 @@ return array(
 	'admin/add_spot'                 => 'admin/service/addspot/index',
 	'admin/spot_detail/(:spot_id)'   => 'admin/service/spotdetail/index/$1',
 	'admin/modify_spot_status'       => 'admin/service/spotdetail/modifyspotstatus',
+	'admin/modify_spot/(:spot_id)'   => 'admin/service/modifyspot/index/$1',
 	
 	//系统权限管理
 	'admin/permission_list'          => 'admin/user/permissionlist/index',

@@ -20,7 +20,6 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 		
 //		if(isset($_SESSION['login_user']['permission'][5][7][1])) {
 			//设定View所需变量
-			$data['success_message'] = '';
 			$data['error_message'] = '';
 			$data['area_list'] = Model_Area::GetAreaListAll();
 			$data['spot_type_list'] = Model_SpotType::GetSpotTypeListAll();
@@ -38,17 +37,16 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 				
 				//数据来源检验
 				if($_POST['page'] == 'add_spot') {
+					//获取添加的景点详情数量
+					$detail_num_list = array();
+					foreach($_POST as $key => $value) {
+						if(preg_match('/^spot_detail_name_[0-9]+$/', $key)) {
+							$detail_num_list[] = str_replace('spot_detail_name_', '', $key);
+						}
+					}
+					
 					if(isset($_POST['spot_name']) && isset($_POST['spot_area']) && isset($_POST['spot_type']) 
 							&& isset($_POST['free_flag']) && isset($_POST['price']) && isset($_POST['spot_status'])) {
-						//获取添加的景点详情数量
-						$param_insert_spot['detail_list'] = array();
-						$detail_num_list = array();
-						foreach($_POST as $key => $value) {
-							if(preg_match('/^spot_detail_name_[0-9]+$/', $key)) {
-								$detail_num_list[] = str_replace('spot_detail_name_', '', $key);
-							}
-						}
-						
 						//上传图片暂时保存
 						foreach($detail_num_list as $detail_num) {
 							$file_tmp_count = 0;
@@ -101,6 +99,7 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 							'free_flag' => $_POST['free_flag'],
 							'price' => $_POST['free_flag'] == '1' ? 0 : $_POST['price'],
 							'spot_status' => $_POST['spot_status'],
+							'detail_list' => array(),
 						);
 						
 						//添加景点详情用数据生成
@@ -146,7 +145,7 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 											mkdir($file_directory_pc, 0777, TRUE);
 										}
 										$result_resize_pc = $this->ImageResizeToJpg($file_name_tmp, 800, $file_directory_pc . $key_tmp . '_main.jpg');
-										$result_thumb_pc = $this->ImageResizeToJpg($file_name_tmp, 200, $file_directory_pc . $key_tmp . '_thumb.jpg');
+										$result_thumb_pc = $this->ImageResizeToJpg($file_name_tmp, 160, $file_directory_pc . $key_tmp . '_thumb.jpg');
 										
 										//调整SP用图片尺寸
 										$file_directory_sp = DOCROOT . 'assets/img/sp/upload/spot/' . $spot_id . '/' . $detail_num . '/';

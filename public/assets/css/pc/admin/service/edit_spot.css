@@ -72,6 +72,10 @@
 	padding-left: 8px;
 	padding-right: 8px;
 	background: #E5C395;
+	margin-top: 5px;
+}
+.spot-image-area:first-child {
+	margin-top: 0;
 }
 
 /* 景点图片上传框 */
@@ -96,15 +100,21 @@
 	vertical-align:bottom;
 }
 
-/* 图片上传按钮区域 */
+/* 图片按钮区域(正常:上传与删除双按钮) */
 .upload-area {
 	padding-left: 22px;
 	padding-right: 22px;
 }
 
-/* 图片上传按钮区域(只有删除按钮) */
-.upload-area.delete-only {
+/* 图片按钮区域(只有删除按钮) */
+.upload-area.one-button {
 	padding-right: 60px;
+}
+
+/* 图片按钮区域(向前 向后与删除三按钮) */
+.upload-area.three-button {
+	padding-left: 6px;
+	padding-right: 6px;
 }
 
 /* 图片上传按钮 */
@@ -154,6 +164,83 @@
 	border: 2px solid #FE2E2E;
 	cursor: pointer;
 	float: right;
+}
+
+/* 图片向前移动按钮 */
+.spot-image-block .upload-area .btn-thumb-prev {
+	font-size: 16px;
+	width: 40px;
+	height: 26px;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 26px;
+	background: #EBCF89;
+	border-radius: 15px;
+	border: 2px solid #713E00;
+	cursor: pointer;
+	float: left;
+	position: relative;
+}
+.spot-image-block .upload-area .btn-thumb-prev:before {
+	content: " ";
+	border-right: 10px solid #713E00;
+	border-top: 8px solid transparent;
+	border-bottom: 8px solid transparent;
+	position: absolute;
+	top: 5px;
+	left: 6px;
+}
+.spot-image-block .upload-area .btn-thumb-prev:after {
+	content: " ";
+	border-left: 20px solid #713E00;
+	border-right: 0;
+	border-top: 3px solid #713E00;
+	border-bottom: 3px solid #713E00;
+	position: absolute;
+	top: 10px;
+	left: 10px;
+}
+.spot-image-block:first-of-type .upload-area .btn-thumb-prev {
+	visibility:hidden;
+}
+
+/* 图片向后移动按钮 */
+.spot-image-block .upload-area .btn-thumb-next {
+	font-size: 16px;
+	width: 40px;
+	height: 26px;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 26px;
+	background: #EBCF89;
+	border-radius: 15px;
+	border: 2px solid #713E00;
+	cursor: pointer;
+	float: right;
+	margin-left: 8px;
+	position: relative;
+}
+.spot-image-block .upload-area .btn-thumb-next:before {
+	content: " ";
+	border-left: 10px solid #713E00;
+	border-top: 8px solid transparent;
+	border-bottom: 8px solid transparent;
+	position: absolute;
+	top: 5px;
+	right: 6px;
+}
+.spot-image-block .upload-area .btn-thumb-next:after {
+	content: " ";
+	border-right: 20px solid #713E00;
+	border-left: 0;
+	border-top: 3px solid #713E00;
+	border-bottom: 3px solid #713E00;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+.spot-image-block:last-of-type .upload-area .btn-thumb-next {
+	visibility:hidden;
 }
 
 /* 图片上传框添加按钮 */
