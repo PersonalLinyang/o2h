@@ -1,3 +1,11 @@
+/* 内容菜单按钮部分 筛选部分 */
+.content-menu-select table th {
+	width: 120px;
+}
+.content-menu-select table th.th-parent {
+	width: 100px;
+}
+
 /* 景点一览表 */
 .tb-content-list th.th-delete {
 	width: 84px;

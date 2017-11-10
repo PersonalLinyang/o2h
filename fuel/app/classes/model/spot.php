@@ -112,20 +112,54 @@ class Model_Spot extends Model
 	/*
 	 * 按条件获得景点列表
 	 */
-	public static function SelectSpotList($param) {
-		$sql = "SELECT ts.spot_id, ts.spot_name, ts.spot_area spot_area_id, ma.area_name spot_area_name, ts.spot_type spot_type_id, mst.spot_type_name, " 
+	public static function SelectSpotList($params) {
+		$sql_where = "";
+		$sql_order_column = "spot_id";
+		$sql_order_method = "DESC";
+		$sql_offset = 0;
+		$sql_limit = 20;
+		foreach($params as $key => $value) {
+			switch($key) {
+				case 'page':
+					if(is_numeric($value)) {
+						$num_per_page = $sql_limit;
+						if(isset($params['num_per_page'])) {
+							if(is_numeric($params['num_per_page'])) {
+								$num_per_page = intval($params['num_per_page']);
+							}
+						}
+						$sql_offset = (intval($value) - 1) * $num_per_page;
+					}
+					break;
+				case 'num_per_page':
+					if(is_numeric($value)) {
+						$sql_limit = intval($value);
+					}
+					break;
+				case '':
+					break;
+			}
+		}
+		$sql_select = "SELECT ts.spot_id, ts.spot_name, ts.spot_area spot_area_id, ma.area_name spot_area_name, ts.spot_type spot_type_id, mst.spot_type_name, " 
 				. "ts.free_flag, ts.price, ts.created_at, ts.modified_at, COUNT(tsd.spot_sort_id) detail_number " 
 				. "FROM t_spot ts " 
 				. "LEFT JOIN m_area ma ON ts.spot_area = ma.area_id "
 				. "LEFT JOIN m_spot_type mst ON ts.spot_type = mst.spot_type_id "
 				. "LEFT JOIN t_spot_detail tsd ON ts.spot_id = tsd.spot_id "
+				. "WHERE 1=1 " . $sql_where
 				. "GROUP BY spot_id, spot_name, spot_area_id, spot_area_name, spot_type_id, spot_type_name, " 
 				. "free_flag, price, created_at "
-				. "ORDER BY spot_id DESC ";
-		$query = DB::query($sql);
-		$result = $query->execute()->as_array();
+				. "ORDER BY " . $sql_order_column . " " . $sql_order_method . " "
+				. "LIMIT " . $sql_limit . " OFFSET " . $sql_offset;
+		$query_select = DB::query($sql_select);
+		$result_select = $query_select->execute()->as_array();
 		
-		if(count($result)) {
+		if(count($result_select)) {
+			$result = array(
+				'spot_list' => $result_select,
+				'start_number' => $sql_offset + 1,
+				'end_number' => count($result_select) + $sql_offset,
+			);
 			return $result;
 		} else {
 			return false;
@@ -176,6 +210,21 @@ class Model_Spot extends Model
 				}
 			}
 			return $result;
+		} else {
+			return false;
+		}
+	}
+
+	/*
+	 * 获得全部景点数
+	 */
+	public static function GetSpotTotalCount() {
+		$sql = "SELECT count(*) spot_count FROM t_spot";
+		$query = DB::query($sql);
+		$result = $query->execute()->as_array();
+		
+		if(count($result) == 1) {
+			return intval($result[0]['spot_count']);
 		} else {
 			return false;
 		}

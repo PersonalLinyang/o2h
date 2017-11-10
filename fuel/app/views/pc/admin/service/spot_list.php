@@ -10,17 +10,17 @@
 	<?php echo Asset::js('pc/admin/service/spot_list.js'); ?>
 </head>
 <body class="body-common">
-	<?php echo $header; ?>
+	<?php //echo $header; ?>
 	<div class="content-area">
 		<div class="content-menu">
 			<ul class="content-menu-list">
 				<li class="content-menu-button"><a href="/admin/add_spot/">添加景点</a></li>
 				<li class="content-menu-button">筛选排序</li>
 			</ul>
-			<div>
+			<div class="content-menu-select">
 				<table>
 					<tr>
-						<th rowspan="4">筛选条件</th>
+						<th rowspan="4" class="th-parent">筛选条件</th>
 						<th>景点名</th>
 						<td><input type="text" name="select_name" /></td>
 					</tr>
@@ -29,7 +29,7 @@
 						<td>
 							<?php foreach($area_list as $area): ?>
 							<input type="checkbox" name="select_area" value="<?php echo $area['area_id']; ?>" id="chb-select-area-<?php echo $area['area_id']; ?>" />
-							<label for="chb-select-area-<?php echo $area['area_id']; ?>"><?php echo $area['area_name']; ?></label>
+							<label class="lbl-for-check" for="chb-select-area-<?php echo $area['area_id']; ?>"><p><?php echo $area['area_name']; ?></p></label>
 							<?php endforeach; ?>
 						</td>
 					</tr>
@@ -38,7 +38,7 @@
 						<td>
 							<?php foreach($spot_type_list as $spot_type): ?>
 							<input type="checkbox" name="select_spot_type" value="<?php echo $spot_type['spot_type_id']; ?>" id="chb-select-type-<?php echo $spot_type['spot_type_id']; ?>" />
-							<label for="chb-select-type-<?php echo $spot_type['spot_type_id']; ?>"><?php echo $spot_type['spot_type_name']; ?></label>
+							<label class="lbl-for-check" for="chb-select-type-<?php echo $spot_type['spot_type_id']; ?>"><p><?php echo $spot_type['spot_type_name']; ?></p></label>
 							<?php endforeach; ?>
 						</td>
 					</tr>
@@ -46,39 +46,39 @@
 						<th>收费状况</th>
 						<td>
 							<input type="checkbox" name="select_free_flag" value="0" id="chk-free-flag-0" />
-							<label for="chk-free-flag-0">收费</label>
+							<label class="lbl-for-check" for="chk-free-flag-0"><p>收费</p></label>
 							<input type="checkbox" name="select_free_flag" value="1" id="chk-free-flag-1" />
-							<label for="chk-free-flag-1">免费</label>
-							<span>票价 <input type="number" name="select_price" />～<input type="number" name="select_price" />元</span>
+							<label class="lbl-for-check" for="chk-free-flag-1"><p>免费</p></label>
+							<span>票价 <input type="text" name="select_price" class="price" />～<input type="text" name="select_price" class="price" />元</span>
 						</td>
 					</tr>
 				</table>
 				<table>
 					<tr>
-						<th rowspan="2">排序条件</th>
+						<th rowspan="2" class="th-parent">排序条件</th>
 						<th>排序项目</th>
 						<td>
-							<input type="radio" name="sort-column" value="name" id="rdb-sort-name" />
-							<label for="rdb-sort-name">景点名</label>
-							<input type="radio" name="sort-column" value="area" id="rdb-sort-area" />
-							<label for="rdb-sort-area">景点所属地区</label>
-							<input type="radio" name="sort-column" value="type" id="rdb-sort-type" />
-							<label for="rdb-sort-type">景点类型</label>
-							<input type="radio" name="sort-column" value="price" id="rdb-sort-price" />
-							<label for="rdb-sort-price">收费状况</label>
-							<input type="radio" name="sort-column" value="modified_at" id="rdb-sort-modified-at" />
-							<label for="rdb-sort-modified-at">更新日</label>
-							<input type="radio" name="sort-column" value="detail" id="rdb-sort-detail" />
-							<label for="rdb-sort-detail">详情数</label>
+							<input type="radio" name="sort_column" value="name" id="rdb-sort-name" />
+							<label class="lbl-for-radio" for="rdb-sort-name" data-for="rdb-sort-column"><p>景点名</p></label>
+							<input type="radio" name="sort_column" value="area" id="rdb-sort-area" />
+							<label class="lbl-for-radio" for="rdb-sort-area" data-for="rdb-sort-column"><p>景点所属地区</p></label>
+							<input type="radio" name="sort_column" value="type" id="rdb-sort-type" />
+							<label class="lbl-for-radio" for="rdb-sort-type" data-for="rdb-sort-column"><p>景点类型</p></label>
+							<input type="radio" name="sort_column" value="price" id="rdb-sort-price" />
+							<label class="lbl-for-radio" for="rdb-sort-price" data-for="rdb-sort-column"><p>收费状况</p></label>
+							<input type="radio" name="sort_column" value="modified_at" id="rdb-sort-modified-at" />
+							<label class="lbl-for-radio" for="rdb-sort-modified-at" data-for="rdb-sort-column"><p>更新日</p></label>
+							<input type="radio" name="sort_column" value="detail" id="rdb-sort-detail" />
+							<label class="lbl-for-radio" for="rdb-sort-detail" data-for="rdb-sort-column"><p>详情数</p></label>
 						</td>
 					</tr>
 					<tr>
 						<th>排序方式</th>
 						<td>
-							<input type="radio" name="sort-method" value="asc" id="rdb-sort-asc" />
-							<label for="rdb-sort-asc">升序</label>
-							<input type="radio" name="sort-method" value="desc" id="rdb-sort-desc" />
-							<label for="rdb-sort-desc">降序</label>
+							<input type="radio" name="sort_method" value="asc" id="rdb-sort-asc" />
+							<label class="lbl-for-radio" for="rdb-sort-asc" data-for="rdb-sort-method"><p>升序</p></label>
+							<input type="radio" name="sort_method" value="desc" id="rdb-sort-desc" />
+							<label class="lbl-for-radio" for="rdb-sort-desc" data-for="rdb-sort-method"><p>降序</p></label>
 						</td>
 					</tr>
 				</table>
@@ -98,8 +98,8 @@
 		<?php endif; ?>
 		
 		<div class="content-main">
-			<h1>景点一览</h1>
-			<p>共为您检索到<span class="strong"><?php echo count($spot_list); ?></span>条景点信息 </p>
+			<!-- <h1>景点一览</h1> -->
+			<p>共为您检索到<span class="strong"><?php echo $spot_count; ?></span>条景点信息　目前显示的是其中的第<?php echo $start_number; ?>～<?php echo $end_number; ?>条</p>
 			<div>
 				<table class="tb-content-list">
 					<tr>
@@ -124,6 +124,31 @@
 					<?php endforeach; ?>
 				</table>
 			</div>
+			<?php if($page_number > 1): ?>
+			<ul class="ul-list-pager">
+				<?php if($page > 1): ?>
+				<li class="li-link"><a href="/admin/spot_list/<?php echo ($page - 1); ?>/">上一页</a></li>
+				<li class="li-link"><a href="/admin/spot_list/">1</a></li>
+				<?php endif; ?>
+				<?php if($page > 3): ?>
+				<li>...</li>
+				<?php endif;?>
+				<?php if($page > 2): ?>
+				<li class="li-link"><a href="/admin/spot_list/<?php echo ($page - 1); ?>/"><?php echo ($page - 1); ?></a></li>
+				<?php endif; ?>
+				<li class="active"><?php echo $page; ?></li>
+				<?php if($page < ($page_number - 1)): ?>
+				<li class="li-link"><a href="/admin/spot_list/<?php echo ($page + 1); ?>/"><?php echo ($page + 1); ?></a></li>
+				<?php endif;?>
+				<?php if($page < ($page_number - 2)): ?>
+				<li>...</li>
+				<?php endif;?>
+				<?php if($page < $page_number): ?>
+				<li class="li-link"><a href="/admin/spot_list/<?php echo $page_number; ?>/"><?php echo $page_number; ?></a></li>
+				<li class="li-link"><a href="/admin/spot_list/<?php echo ($page + 1); ?>/">下一页</a></li>
+				<?php endif; ?>
+			</ul>
+			<?php endif; ?>
 		</div>
 		
 		<div class="popup-shadow"></div>

@@ -8,6 +8,7 @@ return array(
 	
 	//景点管理
 	'admin/spot_list'                => 'admin/service/spotlist/index',
+	'admin/spot_list/(:page)'        => 'admin/service/spotlist/index/$1',
 	'admin/add_spot'                 => 'admin/service/addspot/index',
 	'admin/spot_detail/(:spot_id)'   => 'admin/service/spotdetail/index/$1',
 	'admin/modify_spot_status'       => 'admin/service/spotdetail/modifyspotstatus',
