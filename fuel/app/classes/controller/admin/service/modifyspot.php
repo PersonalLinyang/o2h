@@ -21,7 +21,7 @@ class Controller_Admin_Service_Modifyspot extends Controller_Admin_App
 //		if(isset($_SESSION['login_user']['permission'][5][7][1])) {
 			$data['error_message'] = '';
 			
-			$spot_info = Model_Spot::SelectSpotDetailById($spot_id);
+			$spot_info = Model_Spot::SelectSpotDetailBySpotId($spot_id);
 			
 			if($spot_info) {
 				$data['spot_id'] = $spot_id;
@@ -196,15 +196,21 @@ class Controller_Admin_Service_Modifyspot extends Controller_Admin_App
 											if(!file_exists($file_directory_pc)) {
 												mkdir($file_directory_pc, 0777, TRUE);
 											}
-											$result_resize_pc = $this->ImageResizeToJpg($file_name_tmp, 800, $file_directory_pc . $image_id . '_main.jpg');
-											$result_thumb_pc = $this->ImageResizeToJpg($file_name_tmp, 160, $file_directory_pc . $image_id . '_thumb.jpg');
+											$image_option_list_pc = Model_Imageoptimize::SelectImageOptionList(array('image_type' => 'spot_detail_image', 'image_device' => 'pc'));
+											foreach($image_option_list_pc as $image_option_pc) {
+												Model_Imageoptimize::ImageResizeToJpg($file_name_tmp, $image_option_pc['max_width'], $image_option_pc['max_height'], 
+														$file_directory_pc . $key_tmp . '_' . $image_option_pc['image_option_slug'] . '.jpg');
+											}
 											
 											//调整SP用图片尺寸
 											if(!file_exists($file_directory_sp)) {
 												mkdir($file_directory_sp, 0777, TRUE);
 											}
-											$result_resize_sp = $this->ImageResizeToJpg($file_name_tmp, 500, $file_directory_sp . $image_id . '_main.jpg');
-											$result_thumb_sp = $this->ImageResizeToJpg($file_name_tmp, 100, $file_directory_sp . $image_id . '_thumb.jpg');
+											$image_option_list_sp = Model_Imageoptimize::SelectImageOptionList(array('image_type' => 'spot_detail_image', 'image_device' => 'sp'));
+											foreach($image_option_list_sp as $image_option_sp) {
+												Model_Imageoptimize::ImageResizeToJpg($file_name_tmp, $image_option_sp['max_width'], $image_option_sp['max_height'], 
+														$file_directory_sp . $key_tmp . '_' . $image_option_sp['image_option_slug'] . '.jpg');
+											}
 											
 											//删除图片临时文件
 											unlink($file_name_tmp);
@@ -351,65 +357,6 @@ class Controller_Admin_Service_Modifyspot extends Controller_Admin_App
 //		} else {
 //			return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
 //		}
-	}
-	
-	/**
-	 * 调整图片尺寸并另存为
-	 */
-	function ImageResizeToJpg($orig_file, $resize_width, $new_fname)
-	{
-		// 检测是否安装了gd拓展包
-		if (!extension_loaded('gd')) {
-			return false;	
-		}
-		
-		//获取图片信息并计算调整后的图片高度
-		$result = getimagesize($orig_file);
-		list($orig_width, $orig_height, $image_type) = $result;
-		if($orig_width < $resize_width) {
-			$resize_width = $orig_width;
-		}
-		$resize_height = intval(($orig_height * $resize_width) / $orig_width);
-		
-		// 复制图片至内存
-		switch ($image_type) {
-			// 2 IMAGETYPE_JPEG
-			// 3 IMAGETYPE_PNG
-			case 2: $im = imagecreatefromjpeg($orig_file);  break;
-			case 3: $im = imagecreatefrompng($orig_file); break;
-			default:
-				return false;
-		}
-		
-		//生成保存后图片文件(空白图片)
-		$new_image = imagecreatetruecolor($resize_width, $resize_height);
-		
-		// PNG图片的透过处理
-		if (($image_type == 1) OR ($image_type==3)) {
-			imagealphablending($new_image, false);
-			imagesavealpha($new_image, true);
-			$transparent = imagecolorallocatealpha($new_image, 255, 255, 255, 127);
-			imagefilledrectangle($new_image, 0, 0, $resize_width, $resize_height, $transparent);
-		}
-
-		//制成制定尺寸的图片
-		if (!imagecopyresampled($new_image, $im, 0, 0, 0, 0, $resize_width, $resize_height, $orig_width, $orig_height)) {
-			imagedestroy($im);
-			imagedestroy($new_image);
-			return false;
-		}
-		
-		//保存图片文件
-		$result = imagejpeg($new_image, $new_fname);
-		
-		if (!$result) {
-			imagedestroy($im);
-			imagedestroy($new_image);
-			return false;
-		}
-		
-		imagedestroy($im);
-		imagedestroy($new_image);
 	}
 
 }

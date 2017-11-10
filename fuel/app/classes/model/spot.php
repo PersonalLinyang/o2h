@@ -114,7 +114,7 @@ class Model_Spot extends Model
 	 */
 	public static function SelectSpotList($param) {
 		$sql = "SELECT ts.spot_id, ts.spot_name, ts.spot_area spot_area_id, ma.area_name spot_area_name, ts.spot_type spot_type_id, mst.spot_type_name, " 
-				. "ts.free_flag, ts.price, ts.created_at, ts.modified_at, COUNT(tsd.spot_detail_id) detail_number " 
+				. "ts.free_flag, ts.price, ts.created_at, ts.modified_at, COUNT(tsd.spot_sort_id) detail_number " 
 				. "FROM t_spot ts " 
 				. "LEFT JOIN m_area ma ON ts.spot_area = ma.area_id "
 				. "LEFT JOIN m_spot_type mst ON ts.spot_type = mst.spot_type_id "
@@ -135,7 +135,7 @@ class Model_Spot extends Model
 	/*
 	 * 根据ID获取景点详细信息`
 	 */
-	public static function SelectSpotDetailById($spot_id) {
+	public static function SelectSpotDetailBySpotId($spot_id) {
 		if(!is_numeric($spot_id)) {
 			return false;
 		}

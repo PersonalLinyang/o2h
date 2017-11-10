@@ -22,7 +22,7 @@ class Controller_Admin_Service_Spotdetail extends Controller_Admin_App
 			$data['success_message'] = '';
 			$data['error_message'] = '';
 			
-			$spot_info = Model_Spot::SelectSpotDetailById($spot_id);
+			$spot_info = Model_Spot::SelectSpotDetailBySpotId($spot_id);
 			
 			if($spot_info) {
 				$data['spot_info'] = $spot_info;
