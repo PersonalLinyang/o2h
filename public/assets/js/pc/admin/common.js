@@ -51,4 +51,24 @@ $(function(){
 			$(this).addClass('active');
 		}
 	});
+
+	//一览页筛选排序按钮点击事件
+	$('#btn-content-menu-select').click(function(){
+		if($(this).hasClass('active')) {
+			$(this).removeClass('active');
+			$('#div-content-menu-select').slideUp();
+		} else {
+			$(this).addClass('active');
+			$('#div-content-menu-select').slideDown();
+		}
+	});
+	//一览页筛选排序取消按钮点击事件
+	$('#btn-content-menu-select-cancel').click(function(){
+		$('#btn-content-menu-select').removeClass('active');
+		$('#div-content-menu-select').slideUp();
+	});
+	//一览页筛选排序区域筛选排序按钮点击事件
+	$('#btn-content-menu-select-submit').click(function(){
+		$('#form-content-menu-select').submit();
+	});
 });

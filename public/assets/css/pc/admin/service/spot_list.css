@@ -6,25 +6,64 @@
 	width: 100px;
 }
 
+#area-select-price {
+	margin-left: 30px;
+	float: left;
+}
+
 /* 景点一览表 */
+.tb-content-list th.th-check {
+	width: 34px;
+}
 .tb-content-list th.th-delete {
-	width: 84px;
+	width: 62px;
+}
+.tb-content-list th.th-modify {
+	width: 62px;
 }
 .tb-content-list th.th-name {
 	width: auto;
 }
+.tb-content-list th.th-status {
+	width: 60px;
+}
 .tb-content-list th.th-area {
-	width: 180px;
+	width: 100px;
 }
 .tb-content-list th.th-type {
-	width: 180px;
+	width: 160px;
 }
 .tb-content-list th.th-price {
-	width: 180px;
+	width: 100px;
+}
+.tb-content-list th.th-created-at {
+	width: 100px;
 }
 .tb-content-list th.th-modified-at {
-	width: 106px;
+	width: 100px;
 }
 .tb-content-list th.th-detail {
-	width: 74px;
+	width: 60px;
+}
+.tb-content-list td .lbl-for-check {
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.tb-content-list td .btn-delete {
+	width: 50px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.tb-content-list td .btn-modify {
+	width: 50px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+/* 筛选部分票价显隐 */
+#area-select-price {
+	display: none;
+}
+#area-select-price.active {
+	display: block;
 }

@@ -114,12 +114,99 @@ class Model_Spot extends Model
 	 */
 	public static function SelectSpotList($params) {
 		$sql_where = "";
-		$sql_order_column = "spot_id";
-		$sql_order_method = "DESC";
+		$sql_order_column = "created_at";
+		$sql_order_method = "desc";
+		$sql_params = array();
 		$sql_offset = 0;
 		$sql_limit = 20;
 		foreach($params as $key => $value) {
 			switch($key) {
+				case 'spot_name':
+					$sql_where_list_name = array();
+					foreach($value as $name_counter => $name) {
+						$sql_where_list_name[] = "spot_name LIKE :spot_name_" . $name_counter;
+						$sql_params[':spot_name_' . $name_counter] = '%' . $name . '%';
+					}
+					if(count($sql_where_list_name)) {
+						$sql_where .= " AND (" . implode(' OR ', $sql_where_list_name) . ") ";
+					}
+					break;
+				case 'spot_status':
+					$sql_where_list_status = array();
+					foreach($value as $status_counter => $status) {
+						if(is_numeric($status)) {
+							$sql_where_list_status[] = ":spot_status_" . $status_counter;
+							$sql_params[':spot_status_' . $status_counter] = intval($status);
+						}
+					}
+					if(count($sql_where_list_status)) {
+						$sql_where .= " AND ts.spot_status IN (" . implode(', ', $sql_where_list_status) . ") ";
+					}
+					break;
+				case 'spot_area':
+					$sql_where_list_area = array();
+					foreach($value as $area_counter => $area) {
+						if(is_numeric($area)) {
+							$sql_where_list_area[] = ":spot_area_id_" . $area_counter;
+							$sql_params[':spot_area_id_' . $area_counter] = intval($area);
+						}
+					}
+					if(count($sql_where_list_area)) {
+						$sql_where .= " AND ts.spot_area IN (" . implode(', ', $sql_where_list_area) . ") ";
+					}
+					break;
+				case 'spot_type':
+					$sql_where_list_type = array();
+					foreach($value as $type_counter => $type) {
+						if(is_numeric($type)) {
+							$sql_where_list_type[] = ":spot_type_id_" . $type_counter;
+							$sql_params[':spot_type_id_' . $type_counter] = intval($type);
+						}
+					}
+					if(count($sql_where_list_type)) {
+						$sql_where .= " AND ts.spot_type IN (" . implode(', ', $sql_where_list_type) . ") ";
+					}
+					break;
+				case 'free_flag':
+					$sql_where_list_free_flag = array();
+					$sql_where_list_price = array();
+					if(in_array('1', $value)) {
+						$sql_where_list_free_flag[] = "free_flag = 1";
+					}
+					if(in_array('0', $value)) {
+						if(isset($params['price_min'])) {
+							if(is_numeric($params['price_min'])) {
+								$sql_where_list_price[] = "price >= :price_min";
+								$sql_params[':price_min'] = floatval($params['price_min']);
+							}
+						}
+						if(isset($params['price_max'])) {
+							if(is_numeric($params['price_max'])) {
+								$sql_where_list_price[] = "price <= :price_max";
+								$sql_params[':price_max'] = floatval($params['price_max']);
+							}
+						}
+						if(count($sql_where_list_price)) {
+							$sql_where_list_free_flag[] = "(free_flag = 0 AND " . implode(" AND ", $sql_where_list_price) . ")";
+						} else {
+							$sql_where_list_free_flag[] = "free_flag = 0";
+						}
+					}
+					if(count($sql_where_list_free_flag)) {
+						$sql_where .= " AND (" . implode(' OR ', $sql_where_list_free_flag) . ") ";
+					}
+					break;
+				case 'sort_column':
+					$sort_column_list = array('spot_name', 'spot_area_id', 'spot_type_id', 'spot_status', 'price', 'created_at', 'modified_at', 'detail_number');
+					if(in_array($value, $sort_column_list)) {
+						$sql_order_column = $value;
+					}
+					break;
+				case 'sort_method':
+					if(in_array($value, array('asc', 'desc'))) {
+						$sql_order_method = $value;
+					}
+					break;
 				case 'page':
 					if(is_numeric($value)) {
 						$num_per_page = $sql_limit;
@@ -140,30 +227,49 @@ class Model_Spot extends Model
 					break;
 			}
 		}
-		$sql_select = "SELECT ts.spot_id, ts.spot_name, ts.spot_area spot_area_id, ma.area_name spot_area_name, ts.spot_type spot_type_id, mst.spot_type_name, " 
-				. "ts.free_flag, ts.price, ts.created_at, ts.modified_at, COUNT(tsd.spot_sort_id) detail_number " 
-				. "FROM t_spot ts " 
-				. "LEFT JOIN m_area ma ON ts.spot_area = ma.area_id "
-				. "LEFT JOIN m_spot_type mst ON ts.spot_type = mst.spot_type_id "
-				. "LEFT JOIN t_spot_detail tsd ON ts.spot_id = tsd.spot_id "
-				. "WHERE 1=1 " . $sql_where
-				. "GROUP BY spot_id, spot_name, spot_area_id, spot_area_name, spot_type_id, spot_type_name, " 
-				. "free_flag, price, created_at "
-				. "ORDER BY " . $sql_order_column . " " . $sql_order_method . " "
-				. "LIMIT " . $sql_limit . " OFFSET " . $sql_offset;
-		$query_select = DB::query($sql_select);
-		$result_select = $query_select->execute()->as_array();
-		
-		if(count($result_select)) {
-			$result = array(
-				'spot_list' => $result_select,
-				'start_number' => $sql_offset + 1,
-				'end_number' => count($result_select) + $sql_offset,
-			);
-			return $result;
-		} else {
-			return false;
+
+		$sql_count = "SELECT COUNT(DISTINCT ts.spot_id) spot_count FROM t_spot ts LEFT JOIN t_spot_detail tsd ON ts.spot_id = tsd.spot_id WHERE 1=1 " . $sql_where;
+		$query_count = DB::query($sql_count);
+		foreach ($sql_params as $key => $value) {
+			$query_count->param($key, $value);
 		}
+		$result_count = $query_count->execute()->as_array();
+
+		if(count($result_count)) {
+			$spot_count = intval($result_count[0]['spot_count']);
+
+			if($spot_count) {
+				$sql_select = "SELECT ts.spot_id, ts.spot_name, ts.spot_status, ts.spot_area spot_area_id, ma.area_name spot_area_name, " 
+						. "ts.spot_type spot_type_id, mst.spot_type_name, ts.free_flag, ts.price, ts.created_at, ts.modified_at, " 
+						. "COUNT(tsd.spot_sort_id) detail_number " 
+						. "FROM t_spot ts " 
+						. "LEFT JOIN m_area ma ON ts.spot_area = ma.area_id "
+						. "LEFT JOIN m_spot_type mst ON ts.spot_type = mst.spot_type_id "
+						. "LEFT JOIN t_spot_detail tsd ON ts.spot_id = tsd.spot_id "
+						. "WHERE 1=1 " . $sql_where
+						. "GROUP BY spot_id, spot_name, spot_status, spot_area_id, spot_area_name, spot_type_id, spot_type_name, " 
+						. "free_flag, price, created_at, modified_at "
+						. "ORDER BY " . $sql_order_column . " " . $sql_order_method . " "
+						. "LIMIT " . $sql_limit . " OFFSET " . $sql_offset;
+				$query_select = DB::query($sql_select);
+				foreach ($sql_params as $key => $value) {
+					$query_select->param($key, $value);
+				}
+				$result_select = $query_select->execute()->as_array();
+
+				if(count($result_select)) {
+					$result = array(
+						'spot_count' => $spot_count,
+						'spot_list' => $result_select,
+						'start_number' => $sql_offset + 1,
+						'end_number' => count($result_select) + $sql_offset,
+					);
+					return $result;
+				}
+			}
+		}
+
+		return false;
 	}
 	
 	/*

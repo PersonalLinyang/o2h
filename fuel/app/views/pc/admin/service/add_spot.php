@@ -11,7 +11,7 @@
 	<?php echo Asset::js('pc/admin/service/edit_spot.js'); ?>
 </head>
 <body class="body-common">
-	<?php //echo $header; ?>
+	<?php echo $header; ?>
 	<div class="content-area">
 		<?php if($error_message): ?>
 		<div class="content-error"><?php echo $error_message; ?></div>
