@@ -17,7 +17,7 @@
 		<div class="content-main">
 			<h1>修改主功能组名称</h1>
 			<form method="post" action="" class="content-form">
-				<table class="content-form-talbe-col2">
+				<table class="tb-content-form">
 					<tr>
 						<th>修改前主功能组名称</th>
 						<td><?php echo $master_group_name; ?></td>

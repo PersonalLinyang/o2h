@@ -17,7 +17,7 @@
 		<div class="content-main">
 			<h1>修改权限名称</h1>
 			<form method="post" action="" class="content-form">
-				<table class="content-form-talbe-col2">
+				<table class="tb-content-form">
 					<tr>
 						<th>所属主功能组</th>
 						<td><?php echo $master_group_name; ?></td>

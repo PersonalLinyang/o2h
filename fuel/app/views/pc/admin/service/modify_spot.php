@@ -20,7 +20,7 @@
 		<div class="content-main">
 			<!--<h1>景点信息修改</h1>-->
 			<form method="post" action="" class="content-form" enctype="multipart/form-data">
-				<table class="content-form-talbe-col2">
+				<table class="tb-content-form">
 					<tr>
 						<th>景点名</th>
 						<td><input type="text" name="spot_name" value="<?php echo $input_spot_name; ?>" /></td>
