@@ -156,7 +156,7 @@
 		<div class="popup-delete popup">
 			<div class="popup-title">删除景点确认</div>
 			<div class="popup-content center">
-				<p>景点一经删除将无法还原，<br/>确定要删除「景点-<span class="popup-delete-name"></span>」吗？</p>
+				<p>景点一经删除将无法还原，<br/>当景点被删除时，使用该景点的路线及客户信息中的相关信息也将被同时删除，<br/>确定要删除「景点-<span class="popup-delete-name"></span>」吗？</p>
 			</div>
 			<div class="popup-controller">
 				<form action="/admin/delete_spot/" method="post" id="form-delete">

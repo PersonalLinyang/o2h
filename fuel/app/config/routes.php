@@ -13,6 +13,7 @@ return array(
 	'admin/spot_detail/(:spot_id)'   => 'admin/service/spotdetail/index/$1',
 	'admin/modify_spot_status'       => 'admin/service/spotdetail/modifyspotstatus',
 	'admin/modify_spot/(:spot_id)'   => 'admin/service/modifyspot/index/$1',
+	'admin/delete_spot'              => 'admin/service/spotlist/deletespot',
 	
 	//系统权限管理
 	'admin/permission_list'          => 'admin/user/permissionlist/index',
