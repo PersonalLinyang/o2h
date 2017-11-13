@@ -13,7 +13,14 @@ return array(
 	'admin/spot_detail/(:spot_id)'   => 'admin/service/spotdetail/index/$1',
 	'admin/modify_spot_status'       => 'admin/service/spotdetail/modifyspotstatus',
 	'admin/modify_spot/(:spot_id)'   => 'admin/service/modifyspot/index/$1',
+	'admin/delete_spot'              => 'admin/service/spotlist/deletespot',
 	'admin/delete_checked_spot'      => 'admin/service/spotlist/deletecheckedspot',
+	
+	//景点类别管理
+	'admin/spot_type_list'           => 'admin/service/spottypelist',
+	'admin/add_spot_type'            => 'admin/service/addspottype',
+	'admin/modify_spot_type/(:spot_type_id)'     => 'admin/service/modifyspottype/index/$1',
+	'admin/delete_spot_type'         => 'admin/service/spottypelist/deletespottype',
 	
 	//系统权限管理
 	'admin/permission_list'          => 'admin/user/permissionlist/index',

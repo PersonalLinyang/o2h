@@ -444,9 +444,9 @@ input[type="checkbox"] {
 
 /* 内容主题一览类表格 */
 .tb-content-list {
-	width: 100%;
 	border: 4px solid #713E00;
 	border-collapse: collapse;
+	margin: 0px auto;
 }
 
 .tb-content-list th {
@@ -698,12 +698,12 @@ input[type="checkbox"] {
 }
 
 /* form用双列表格 */
-.content-form-talbe-col2 {
+.tb-content-form {
 	width: 800px;
 	margin: 0 auto;
 	text-align: left;
 }
-.content-form-talbe-col2 th {
+.tb-content-form th {
 	width: 200px;
 	vertical-align: top;
 	padding-top: 4px;

@@ -12,6 +12,9 @@
 }
 
 /* 景点一览表 */
+.tb-content-list {
+	width: 100%;
+}
 .tb-content-list th.th-check {
 	width: 34px;
 }

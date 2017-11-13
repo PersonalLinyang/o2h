@@ -97,6 +97,18 @@ class Model_Spot extends Model
 	}
 	
 	/*
+	 * 根据ID删除权限
+	 */
+	public static function DeleteSpotById($spot_id) {
+		$sql_delete = "DELETE FROM t_spot WHERE spot_id = :spot_id";
+		$query_delete = DB::query($sql_delete);
+		$query_delete->param(':spot_id', $spot_id);
+		$result_delete = $query_delete->execute();
+		
+		return $result_delete;
+	}
+	
+	/*
 	 * 更新景点状态
 	 */
 	public static function UpdateSpotStatusById($params) {
@@ -437,6 +449,35 @@ class Model_Spot extends Model
 					$result['result'] = false;
 					$result['error'][] = 'nonum_se_time';
 				}
+			}
+		}
+		
+		return $result;
+	}
+	
+	/*
+	 * 删除权限前删除ID查验
+	 */
+	public static function CheckDeleteSpotById($spot_id) {
+		$result = array(
+			'result' => true,
+			'error' => array(),
+		);
+		
+		if(!is_numeric($spot_id)) {
+			$result['result'] = false;
+			$result['error'][] = 'nonum_id';
+		}
+		
+		if($result['result']) {
+			$sql_exist = "SELECT * FROM t_spot WHERE spot_id = :spot_id";
+			$query_exist = DB::query($sql_exist);
+			$query_exist->param(':spot_id', $spot_id);
+			$result_exist = $query_exist->execute()->as_array();
+			
+			if(!count($result_exist)) {
+				$result['result'] = false;
+				$result['error'][] = 'noexist';
 			}
 		}
 		
