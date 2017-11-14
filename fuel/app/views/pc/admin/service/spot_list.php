@@ -191,7 +191,7 @@
 		<div class="content-main">
 			<p class="error-icon">！</p>
 			<p class="error-text">
-				对不起，未能查找到筛选条件的景点信息<br/>
+				对不起，未能查找到符合筛选条件的景点信息<br/>
 				请确认筛选条件后重新进行筛选排序
 			</p>
 		</div>

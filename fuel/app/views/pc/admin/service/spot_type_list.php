@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<title>景点类别一览 - O2H管理系统</title>
 	<?php echo Asset::css('pc/admin/common.css'); ?>
+	<?php echo Asset::css('pc/admin/error.css'); ?>
 	<?php echo Asset::css('pc/admin/service/spot_type_list.css'); ?>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 	<?php echo Asset::js('pc/admin/common.js'); ?>
@@ -27,6 +28,7 @@
 		<div class="content-error"><?php echo $error_message; ?></div>
 		<?php endif; ?>
 		
+		<?php if(count($spot_type_list)): ?>
 		<div class="content-main">
 			<h1>景点类别一览</h1>
 			<div class="div-content-list">
@@ -51,6 +53,15 @@
 				</table>
 			</div>
 		</div>
+		<?php else: ?>
+		<div class="content-main">
+			<p class="error-icon">！</p>
+			<p class="error-text">
+				对不起，本系统尚未添加任何景点类别信息<br/>
+				请在添加景点类别后确认本页
+			</p>
+		</div>
+		<?php endif; ?>
 		
 		<div class="popup-shadow"></div>
 		

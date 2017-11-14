@@ -52,7 +52,7 @@ class Controller_Admin_Service_Spottypelist extends Controller_Admin_App
 	}
 	
 	/**
-	 * 削除景点
+	 * 削除景点类别
 	 * @access  public
 	 * @return  Response
 	 */

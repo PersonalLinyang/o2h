@@ -22,6 +22,12 @@ return array(
 	'admin/modify_spot_type/(:spot_type_id)'     => 'admin/service/modifyspottype/index/$1',
 	'admin/delete_spot_type'         => 'admin/service/spottypelist/deletespottype',
 	
+	//酒店类别管理
+	'admin/hotel_type_list'           => 'admin/service/hoteltypelist',
+	'admin/add_hotel_type'            => 'admin/service/addhoteltype',
+	'admin/modify_hotel_type/(:hotel_type_id)'   => 'admin/service/modifyhoteltype/index/$1',
+	'admin/delete_hotel_type'         => 'admin/service/hoteltypelist/deletehoteltype',
+	
 	//系统权限管理
 	'admin/permission_list'          => 'admin/user/permissionlist/index',
 	'admin/add_master_group'         => 'admin/user/addmastergroup/index',
