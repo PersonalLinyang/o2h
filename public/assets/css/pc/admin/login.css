@@ -11,9 +11,11 @@
     border-width: 5px;
     border-radius: 10px;
     width: 390px;
-    height: 240px;
+    height: 220px;
 }
-.area-login div.login-head {
+
+/* 登陆框标题 */
+.login-head {
 	color: #F4D59F;
 	background: #713E00;
 	font-weight: bold;
@@ -22,40 +24,46 @@
 	text-align: center;
     user-select:none;
 }
-.area-login div.login-body {
+
+/* 登陆框主体 */
+.login-body {
 	padding: 20px;
 }
-.area-login div.login-body form div.error-message {
+
+/* 登陆框错误提示 */
+.error-message {
 	color: #FF0000;
 	font-size: 12px;
 	text-align: center;
 	height: 16px;
 }
-.area-login div.login-body form div.form-table {
-	margin-top: 5px;
-}
-.area-login div.login-body form div.form-table table {
+
+/* 登陆框表格部分 */
+.tb-login-form {
 	width: 100%;
 	text-align: center;
+	margin-top: 5px;
 }
-.area-login div.login-body form div.form-table table tr td {
+.tb-login-form tr td {
 	height: 32px;
 }
-.area-login div.login-body form div.form-table table tr td input[type="text"] {
-	height: 23px;
-	border-radius: 5px;
+
+/* 登陆账号信息输入框 */
+.tb-login-form tr td input[type="text"] {
 	width: 100%;
 }
-.area-login div.login-body form div.form-table table tr td input[type="password"] {
-	height: 23px;
-	border-radius: 5px;
+.tb-login-form tr td input[type="password"] {
 	width: 100%;
 }
-.area-login div.login-body form div.form-table table tr td.td-submit {
+
+/* 登陆框按钮部分 */
+.tb-login-form tr td.td-submit {
 	height: 46px;
 	overflow: hidden;
 }
-.area-login div.login-body form div.form-table table tr td p.login-button {
+
+/* 登陆框按钮 */
+.tb-login-form tr td p.btn-form {
 	padding-top: 3px;
 	padding-bottom: 3px;
 	width: 100px;
@@ -74,7 +82,7 @@
 	margin-left: 30px;
 	margin-right: 30px;
 }
-.area-login div.login-body form div.form-table table tr td p.active {
+.tb-login-form tr td p.btn-form:hover {
 	background-color: #713E00;
 	color: #F4D59F;
     border: 3px solid #713E00;

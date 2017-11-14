@@ -6,13 +6,17 @@
 	width: 100px;
 }
 
+/* 内容菜单按钮部分 筛选部分 票价 */
 #area-select-price {
 	margin-left: 30px;
 	float: left;
 }
+#area-select-price input[type="text"].price {
+	width: 100px;
+}
 
 /* 景点一览表 */
-.tb-content-list {
+.div-content-list {
 	width: 100%;
 }
 .tb-content-list th.th-check {

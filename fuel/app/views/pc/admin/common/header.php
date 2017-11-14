@@ -23,7 +23,7 @@
 					<div class="header-sub-navi">
 						<ul>
 							<li><a href="/admin/" class="sub-navi-link">线路管理</a></li>
-							<li><a href="/admin/" class="sub-navi-link">景点管理</a></li>
+							<li><a href="/admin/spot_list/" class="sub-navi-link">景点管理</a></li>
 							<li><a href="/admin/" class="sub-navi-link">酒店管理</a></li>
 							<li><a href="/admin/" class="sub-navi-link">餐饮管理</a></li>
 							<li><a href="/admin/" class="sub-navi-link">特辑网页管理</a></li>

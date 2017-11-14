@@ -19,6 +19,7 @@
 				<?php else: ?>
 				<li class="content-menu-button btn-spot-status">设为公开</li>
 				<?php endif; ?>
+				<li class="content-menu-button"><a href="/admin/spot_list/">景点一览</a></li>
 			</ul>
 		</div>
 		

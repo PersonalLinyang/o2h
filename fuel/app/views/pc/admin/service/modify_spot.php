@@ -18,7 +18,7 @@
 		<?php endif; ?>
 		
 		<div class="content-main">
-			<!--<h1>景点信息修改</h1>-->
+			<h1>景点信息修改</h1>
 			<form method="post" action="" class="content-form" enctype="multipart/form-data">
 				<table class="tb-content-form">
 					<tr>
@@ -171,8 +171,8 @@
 					<tr>
 						<td colspan="2">
 							<ul class="button-group">
-								<li class="button-yes btn-form-submit">添加</li>
-								<li class="button-no"><a href="/admin/spot_list/">返回</a></li>
+								<li class="button-yes btn-form-submit">保存</li>
+								<li class="button-no"><a href="/admin/spot_detail/<?php echo $spot_id; ?>/">取消</a></li>
 							</ul>
 						</td>
 					</tr>

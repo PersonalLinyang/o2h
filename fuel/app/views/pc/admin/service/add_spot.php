@@ -152,7 +152,7 @@
 						<td colspan="2">
 							<ul class="button-group">
 								<li class="button-yes btn-form-submit">添加</li>
-								<li class="button-no"><a href="/admin/spot_list/">返回</a></li>
+								<li class="button-no"><a href="/admin/spot_list/">取消</a></li>
 							</ul>
 						</td>
 					</tr>

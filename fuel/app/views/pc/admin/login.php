@@ -14,8 +14,8 @@
 		<div class="login-body">
 			<form id="login-form" action="" method="post">
 				<div class="error-message" id="error-message"><?php echo isset($error_message) ? $error_message : ''; ?></div>
-				<div class="form-table">
-					<table>
+				<div>
+					<table class="tb-login-form">
 						<tr>
 							<td>邮箱</td>
 							<td><input type="text" name="user_email" id="user-email" value="<?php echo isset($user_email) ? $user_email : ''; ?>" /></td>
@@ -26,8 +26,8 @@
 						</tr>
 						<tr>
 							<td colspan="2" class="td-submit">
-								<p class="login-button" id="btn-login">登陆</p>
-								<p class="login-button" id="btn-password">找回密码</p>
+								<p class="btn-form" id="btn-login">登陆</p>
+								<p class="btn-form" id="btn-password">找回密码</p>
 							</td>
 						</tr>
 					</table>

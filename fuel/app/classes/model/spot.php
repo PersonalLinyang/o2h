@@ -97,12 +97,33 @@ class Model_Spot extends Model
 	}
 	
 	/*
-	 * 根据ID删除权限
+	 * 根据ID删除景点
 	 */
 	public static function DeleteSpotById($spot_id) {
 		$sql_delete = "DELETE FROM t_spot WHERE spot_id = :spot_id";
 		$query_delete = DB::query($sql_delete);
 		$query_delete->param(':spot_id', $spot_id);
+		$result_delete = $query_delete->execute();
+		
+		return $result_delete;
+	}
+	
+	/*
+	 * 根据ID删除景点(批量)
+	 */
+	public static function DeleteSpotByIdList($spot_id_list) {
+		$sql_where_list = array();
+		$sql_param_list = array();
+		foreach($spot_id_list as $spot_id_counter => $spot_id) {
+			$sql_where_list[] = ':spot_id_' . $spot_id_counter;
+			$sql_param_list[':spot_id_' . $spot_id_counter] = $spot_id;
+		}
+		$sql_where = implode(', ', $sql_where_list);
+		$sql_delete = "DELETE FROM t_spot WHERE spot_id IN (" . $sql_where . ")";
+		$query_delete = DB::query($sql_delete);
+		foreach($sql_param_list as $key => $value) {
+			$query_delete->param($key, $value);
+		}
 		$result_delete = $query_delete->execute();
 		
 		return $result_delete;
@@ -456,7 +477,7 @@ class Model_Spot extends Model
 	}
 	
 	/*
-	 * 删除权限前删除ID查验
+	 * 删除景点前删除ID查验
 	 */
 	public static function CheckDeleteSpotById($spot_id) {
 		$result = array(
@@ -478,6 +499,47 @@ class Model_Spot extends Model
 			if(!count($result_exist)) {
 				$result['result'] = false;
 				$result['error'][] = 'noexist';
+			}
+		}
+		
+		return $result;
+	}
+	
+	/*
+	 * 删除景点前删除ID查验(批量)
+	 */
+	public static function CheckDeleteSpotByIdList($spot_id_list) {
+		$result = array(
+			'result' => true,
+			'error' => array(),
+		);
+		
+		foreach($spot_id_list as $spot_id) {
+			if(!is_numeric($spot_id)) {
+				$result['result'] = false;
+				$result['error'][] = 'nonum_id';
+				break;
+			}
+		}
+		
+		if($result['result']) {
+			$sql_where_list = array();
+			$sql_param_list = array();
+			foreach($spot_id_list as $spot_id_counter => $spot_id) {
+				$sql_where_list[] = ':spot_id_' . $spot_id_counter;
+				$sql_param_list[':spot_id_' . $spot_id_counter] = $spot_id;
+			}
+			$sql_where = implode(', ', $sql_where_list);
+			$sql_exist = "SELECT * FROM t_spot WHERE spot_id IN (" . $sql_where . ")";
+			$query_exist = DB::query($sql_exist);
+			foreach($sql_param_list as $key => $value) {
+				$query_exist->param($key, $value);
+			}
+			$result_exist = $query_exist->execute()->as_array();
+			
+			if(count($result_exist) != count($spot_id_list)) {
+				$result['result'] = false;
+				$result['error'][] = 'noexist_spot_id';
 			}
 		}
 		

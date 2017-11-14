@@ -44,7 +44,9 @@ class Model_Spottype extends Model
 	 * 获取全部景点类别信息
 	 */
 	public static function GetSpotTypeListAll() {
-		$sql_spot_type = "SELECT * FROM m_spot_type ORDER BY spot_type_id";
+		$sql_spot_type = "SELECT mst.spot_type_id, mst.spot_type_name, COUNT(ts.spot_id) spot_count "
+						. "FROM m_spot_type mst LEFT JOIN t_spot ts ON ts.spot_type = mst.spot_type_id " 
+						. "GROUP BY spot_type_id, spot_type_name ORDER BY spot_type_id";
 		$query_spot_type = DB::query($sql_spot_type);
 		$spot_type_list = $query_spot_type->execute()->as_array();
 		

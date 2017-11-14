@@ -34,7 +34,7 @@ class Controller_Admin_Service_Spotlist extends Controller_Admin_App
 			$data['page'] = $page;
 			$data['page_number'] = 1;
 			//本页前后最大可链接页数
-			$data['page_link_master'] = 3;
+			$data['page_link_max'] = 3;
 			$data['select_name'] = '';
 			$data['select_status'] = isset($_GET['select_status']) ? $_GET['select_status'] : array();
 			$data['select_area'] = isset($_GET['select_area']) ? $_GET['select_area'] : array();
@@ -44,6 +44,7 @@ class Controller_Admin_Service_Spotlist extends Controller_Admin_App
 			$data['select_price_max'] = isset($_GET['select_price_max']) ? $_GET['select_price_max'] : '';
 			$data['sort_column'] = isset($_GET['sort_column']) ? $_GET['sort_column'] : 'created_at';
 			$data['sort_method'] = isset($_GET['sort_method']) ? $_GET['sort_method'] : 'desc';
+			$data['get_params'] = isset($_GET) ? '?' . http_build_query($_GET) : '';
 			$spot_count = 0;
 			$num_per_page = 20;
 
@@ -89,6 +90,15 @@ class Controller_Admin_Service_Spotlist extends Controller_Admin_App
 			if(isset($_SESSION['delete_spot_error'])) {
 				$data['error_message'] = '景点削除失敗';
 				unset($_SESSION['delete_spot_error']);
+			}
+			
+			if(isset($_SESSION['delete_checked_spot_success'])) {
+				$data['success_message'] = '选中景点削除成功';
+				unset($_SESSION['delete_checked_spot_success']);
+			}
+			if(isset($_SESSION['delete_checked_spot_error'])) {
+				$data['error_message'] = '选中景点削除失敗';
+				unset($_SESSION['delete_checked_spot_error']);
 			}
 
 			//调用View

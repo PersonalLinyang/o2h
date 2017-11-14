@@ -1,10 +1,5 @@
 $(function(){
-	$('.login-button').hover(function(){
-		$(this).addClass('active');
-	}, function(){
-		$(this).removeClass('active');
-	});
-
+	//点击登陆按钮
 	$('#btn-login').click(function(){
 		var user_email = $('#user-email').val();
 		var user_password = $('#user-password').val();

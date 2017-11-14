@@ -121,8 +121,11 @@
 		<?php if($spot_count): ?>
 		<div class="content-main">
 			<h1>景点一览</h1>
-			<p>共为您检索到<span class="strong"><?php echo $spot_count; ?></span>条景点信息　目前显示的是其中的第<span class="strong"><?php echo $start_number; ?></span>～<span class="strong"><?php echo $end_number; ?></span>条</p>
-			<div>
+			<div class="div-content-list">
+				<p>
+					共为您检索到<span class="strong"><?php echo $spot_count; ?></span>条景点信息
+					目前显示的是其中的第<span class="strong"><?php echo $start_number; ?></span>～<span class="strong"><?php echo $end_number; ?></span>条
+				</p>
 				<table class="tb-content-list">
 					<tr>
 						<th class="th-check"></th>
@@ -149,7 +152,7 @@
 						<td><?php echo $spot['free_flag'] == '1' ? '免费' : ($spot['price'] ? $spot['price'] . '元' : '收费 未设定票价'); ?></td>
 						<td><?php echo date('Y/m/d', strtotime($spot['created_at'])); ?></td>
 						<td><?php echo date('Y/m/d', strtotime($spot['modified_at'])); ?></td>
-						<td><?php echo $spot['detail_number']; ?>个</td>
+						<td><?php echo $spot['detail_number']; ?></td>
 					</tr>
 					<?php endforeach; ?>
 				</table>
@@ -157,29 +160,29 @@
 			<?php if($page_number > 1): ?>
 			<ul class="ul-list-pager">
 				<?php if($page > 1): ?>
-				<li class="li-link long"><a href="/admin/spot_list/<?php echo ($page - 1); ?>/">上一页</a></li>
-				<li class="li-link"><a href="/admin/spot_list/">1</a></li>
+				<li class="li-link long"><a href="/admin/spot_list/<?php echo ($page - 1); ?>/<?php echo $get_params; ?>">上一页</a></li>
+				<li class="li-link"><a href="/admin/spot_list/<?php echo $get_params; ?>">1</a></li>
 				<?php endif; ?>
-				<?php if(($page - $page_link_master) > 2): ?>
+				<?php if(($page - $page_link_max) > 2): ?>
 				<li>...</li>
 				<?php endif;?>
-				<?php for($i = $page_link_master; $i >= 1; $i--): ?>
+				<?php for($i = $page_link_max; $i >= 1; $i--): ?>
 				<?php if(($page-$i) > 1): ?>
-				<li class="li-link"><a href="/admin/spot_list/<?php echo ($page - $i); ?>/"><?php echo ($page - $i); ?></a></li>
+				<li class="li-link"><a href="/admin/spot_list/<?php echo ($page - $i); ?>/<?php echo $get_params; ?>"><?php echo ($page - $i); ?></a></li>
 				<?php endif; ?>
 				<?php endfor; ?>
 				<li class="active"><?php echo $page; ?></li>
-				<?php for($i = 1; $i <= $page_link_master; $i++): ?>
+				<?php for($i = 1; $i <= $page_link_max; $i++): ?>
 				<?php if(($page + $i) < $page_number): ?>
-				<li class="li-link"><a href="/admin/spot_list/<?php echo ($page + $i); ?>/"><?php echo ($page + $i); ?></a></li>
+				<li class="li-link"><a href="/admin/spot_list/<?php echo ($page + $i); ?>/<?php echo $get_params; ?>"><?php echo ($page + $i); ?></a></li>
 				<?php endif;?>
 				<?php endfor; ?>
-				<?php if(($page + $page_link_master) < ($page_number - 1)): ?>
+				<?php if(($page + $page_link_max) < ($page_number - 1)): ?>
 				<li>...</li>
 				<?php endif;?>
 				<?php if($page < $page_number): ?>
-				<li class="li-link"><a href="/admin/spot_list/<?php echo $page_number; ?>/"><?php echo $page_number; ?></a></li>
-				<li class="li-link long"><a href="/admin/spot_list/<?php echo ($page + 1); ?>/">下一页</a></li>
+				<li class="li-link"><a href="/admin/spot_list/<?php echo $page_number; ?>/<?php echo $get_params; ?>"><?php echo $page_number; ?></a></li>
+				<li class="li-link long"><a href="/admin/spot_list/<?php echo ($page + 1); ?>/<?php echo $get_params; ?>">下一页</a></li>
 				<?php endif; ?>
 			</ul>
 			<?php endif; ?>
@@ -199,7 +202,7 @@
 		<div class="popup-delete popup">
 			<div class="popup-title">删除景点确认</div>
 			<div class="popup-content center">
-				<p>景点一经删除将无法还原，<br/>当景点被删除时，使用该景点的路线及客户信息中的相关信息也将被同时删除，<br/>确定要删除「景点-<span class="popup-delete-name"></span>」吗？</p>
+				<p>景点一经删除将无法还原，<br/>当景点被删除时，使用该景点的路线及客户信息中的相关信息也将被同时清除，<br/>确定要删除「景点-<span class="popup-delete-name"></span>」吗？</p>
 			</div>
 			<div class="popup-controller">
 				<form action="/admin/delete_spot/" method="post" id="form-delete">

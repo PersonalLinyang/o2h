@@ -30,7 +30,7 @@
 						<td colspan="2">
 							<ul class="button-group">
 								<li class="button-yes btn-form-submit">保存</li>
-								<li class="button-no"><a href="/admin/spot_type_list/">返回</a></li>
+								<li class="button-no"><a href="/admin/spot_type_list/">取消</a></li>
 							</ul>
 						</td>
 					</tr>

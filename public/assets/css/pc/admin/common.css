@@ -32,6 +32,19 @@ input[type="text"].readonly {
 	border-color: #8C8C8B;
 	user-select:none;
 }
+/* 文字输入(密码) */
+input[type="password"] {
+	height: 30px;
+	line-height: 30px;
+	border: 2px solid #713E00;
+	border-radius: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-size: 16px;
+	box-sizing: border-box;
+}
 
 /* 文字输入(多行) */
 textarea {
@@ -88,10 +101,113 @@ input[type="checkbox"] {
 	text-align: center;
 }
 
+/* 横列按钮组 */
+.button-group {
+	font-size: 0px;
+	margin-left: 2px;
+	user-select:none;
+	padding: 0;
+	text-align: center;
+}
+.button-group li {
+	display: inline-block;
+	font-size: 16px;
+	margin-left: 15px;
+	margin-right: 15px;
+	width: 120px;
+	height: 26px;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 26px;
+	background: #EBCF89;
+	border-radius: 15px;
+	border-style: solid;
+	border-width: 2px;
+	border-top-color: #713E00;
+	cursor: pointer;
+}
+.button-group li a {
+	width: 100%;
+	height: 100%;
+	display: block;
+	color: #713E00;
+	text-decoration: none;
+}
+.button-group li:hover {
+	background: #713E00;
+	border-style: solid;
+	border-color: #713E00;
+	color: #EBCF89;
+	font-weight: bold;
+}
+.button-group li:hover a {
+	color: #EBCF89;
+}
+.button-group li.button-yes {
+	background: #BCF5A9;
+	border-color: #31B404;
+	color: #21610B;
+}
+.button-group li.button-yes a {
+	color: #21610B;
+}
+.button-group li.button-yes:hover {
+	background: #31B404;
+	border-color: #31B404;
+	color: #BCF5A9;
+}
+.button-group li.button-yes:hover a {
+	color: #BCF5A9;
+}
+.button-group li.button-no {
+	background: #F6CECE;
+	border-color: #FE2E2E;
+	color: #8A0808;
+}
+.button-group li.button-no a {
+	color: #8A0808;
+}
+.button-group li.button-no:hover {
+	background: #FE2E2E;
+	border-color: #FE2E2E;
+	color: #F6CECE;
+}
+.button-group li.button-no:hover a {
+	color: #F6CECE;
+}
+
+/* 按钮(基本样式)  */
+.btn-controller {
+	float: left;
+	width: 100px;
+	margin: 3px;
+	background: #EBCF89;
+	border-radius: 15px;
+	border-style: solid;
+	border-width: 1px;
+	border-top-color: #713E00;
+	text-align: center;
+	cursor: pointer;
+}
+.btn-controller:hover {
+	background: #713E00;
+	border-style: solid;
+	border-color: #713E00;
+	color: #EBCF89;
+	font-weight: bold;
+}
+.btn-controller a {
+	color: #713E00;
+	text-decoration: none;
+}
+.btn-controller:hover a {
+	color: #EBCF89;
+}
+
 /*
  * 顶部区域 
  */
- /* 顶部区域  */
+/* 顶部区域  */
 .header-area {
 	width: 1200px;
 	position: relative;
@@ -317,7 +433,6 @@ input[type="checkbox"] {
 .content-menu-list li:last-child {
 	margin-right: 0px;
 }
-
 .content-menu-list li.active {
 	background: #713E00;
 	border-style: solid;
@@ -364,9 +479,6 @@ input[type="checkbox"] {
 	width: 300px;
 	margin-top: 2px;
 	margin-bottom: 2px;
-}
-.content-menu-select table td input[type="text"].price {
-	width: 100px;
 }
 
 .content-menu-select table td .lbl-for-radio {
@@ -443,10 +555,14 @@ input[type="checkbox"] {
 }
 
 /* 内容主题一览类表格 */
+.div-content-list {
+	margin: 0 auto;
+}
+
 .tb-content-list {
+	width: 100%;
 	border: 4px solid #713E00;
 	border-collapse: collapse;
-	margin: 0px auto;
 }
 
 .tb-content-list th {
@@ -697,7 +813,7 @@ input[type="checkbox"] {
 	width: 160px;
 }
 
-/* form用双列表格 */
+/* form用表格 */
 .tb-content-form {
 	width: 800px;
 	margin: 0 auto;
@@ -715,108 +831,6 @@ input[type="checkbox"] {
 }
 .content-form-talbe-inner th {
 	width: 150px;
-}
-
-/* 横列按钮组 */
-.button-group {
-	font-size: 0px;
-	margin-left: 2px;
-	user-select:none;
-	padding: 0;
-	text-align: center;
-}
-.button-group li {
-	display: inline-block;
-	font-size: 16px;
-	margin-left: 15px;
-	margin-right: 15px;
-	width: 120px;
-	height: 26px;
-	text-align: center;
-	vertical-align: middle;
-	line-height: 26px;
-	background: #EBCF89;
-	border-radius: 15px;
-	border-style: solid;
-	border-width: 2px;
-	border-top-color: #713E00;
-	cursor: pointer;
-}
-.button-group li a {
-	width: 100%;
-	height: 100%;
-	display: block;
-	color: #713E00;
-	text-decoration: none;
-}
-.button-group li:hover {
-	background: #713E00;
-	border-style: solid;
-	border-color: #713E00;
-	color: #EBCF89;
-	font-weight: bold;
-}
-.button-group li:hover a {
-	color: #EBCF89;
-}
-.button-group li.button-yes {
-	background: #BCF5A9;
-	border-color: #31B404;
-	color: #21610B;
-}
-.button-group li.button-yes a {
-	color: #21610B;
-}
-.button-group li.button-yes:hover {
-	background: #31B404;
-	border-color: #31B404;
-	color: #BCF5A9;
-}
-.button-group li.button-yes:hover a {
-	color: #BCF5A9;
-}
-.button-group li.button-no {
-	background: #F6CECE;
-	border-color: #FE2E2E;
-	color: #8A0808;
-}
-.button-group li.button-no a {
-	color: #8A0808;
-}
-.button-group li.button-no:hover {
-	background: #FE2E2E;
-	border-color: #FE2E2E;
-	color: #F6CECE;
-}
-.button-group li.button-no:hover a {
-	color: #F6CECE;
-}
-
-.btn-controller {
-	float: left;
-	width: 100px;
-	margin: 3px;
-	background: #EBCF89;
-	border-radius: 15px;
-	border-style: solid;
-	border-width: 1px;
-	border-top-color: #713E00;
-	text-align: center;
-	cursor: pointer;
-}
-.btn-controller:hover {
-	background: #713E00;
-	border-style: solid;
-	border-color: #713E00;
-	color: #EBCF89;
-	font-weight: bold;
-}
-.btn-controller a {
-	color: #713E00;
-	text-decoration: none;
-}
-.btn-controller:hover a {
-	color: #EBCF89;
 }
 
 /* 处理结果提示 */
@@ -859,6 +873,7 @@ input[type="checkbox"] {
 	z-index: 100;
 	display: none;
 }
+
 .popup {
 	position: fixed;
 	background: #EEE2C4;
