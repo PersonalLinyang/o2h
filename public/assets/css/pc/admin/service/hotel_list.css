@@ -7,15 +7,11 @@
 }
 
 /* 内容菜单按钮部分 筛选部分 票价 */
-#form-content-menu-select {
-	margin-left: 30px;
-	float: left;
-}
 #form-content-menu-select input[type="text"].price {
 	width: 110px;
 }
 
-/* 景点一览表 */
+/* 酒店一览表 */
 .div-content-list {
 	width: 100%;
 }
@@ -49,9 +45,6 @@
 .tb-content-list th.th-modified-at {
 	width: 100px;
 }
-.tb-content-list th.th-detail {
-	width: 60px;
-}
 .tb-content-list td .lbl-for-check {
 	margin-left: 5px;
 	margin-right: 5px;
@@ -65,12 +58,4 @@
 	width: 50px;
 	margin-left: 5px;
 	margin-right: 5px;
-}
-
-/* 筛选部分票价显隐 */
-#area-select-price {
-	display: none;
-}
-#area-select-price.active {
-	display: block;
 }

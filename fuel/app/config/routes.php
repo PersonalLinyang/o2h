@@ -22,11 +22,21 @@ return array(
 	'admin/modify_spot_type/(:spot_type_id)'     => 'admin/service/modifyspottype/index/$1',
 	'admin/delete_spot_type'         => 'admin/service/spottypelist/deletespottype',
 	
+	//酒店管理
+	'admin/hotel_list'               => 'admin/service/hotellist/index',
+	'admin/hotel_list/(:page)'       => 'admin/service/hotellist/index/$1',
+	'admin/add_hotel'                => 'admin/service/addhotel/index',
+	'admin/hotel_detail/(:hotel_id)' => 'admin/service/hoteldetail/index/$1',
+	'admin/modify_hotel_status'      => 'admin/service/hoteldetail/modifyhotelstatus',
+	'admin/modify_hotel/(:hotel_id)' => 'admin/service/modifyhotel/index/$1',
+	'admin/delete_hotel'             => 'admin/service/hotellist/deletehotel',
+	'admin/delete_checked_hotel'     => 'admin/service/hotellist/deletecheckedhotel',
+	
 	//酒店类别管理
-	'admin/hotel_type_list'           => 'admin/service/hoteltypelist',
-	'admin/add_hotel_type'            => 'admin/service/addhoteltype',
+	'admin/hotel_type_list'          => 'admin/service/hoteltypelist',
+	'admin/add_hotel_type'           => 'admin/service/addhoteltype',
 	'admin/modify_hotel_type/(:hotel_type_id)'   => 'admin/service/modifyhoteltype/index/$1',
-	'admin/delete_hotel_type'         => 'admin/service/hoteltypelist/deletehoteltype',
+	'admin/delete_hotel_type'        => 'admin/service/hoteltypelist/deletehoteltype',
 	
 	//系统权限管理
 	'admin/permission_list'          => 'admin/user/permissionlist/index',

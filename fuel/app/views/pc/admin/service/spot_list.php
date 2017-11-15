@@ -63,7 +63,7 @@
 								<input type="checkbox" name="select_free_flag[]" value="0" id="chk-free-flag-0" <?php echo in_array('0', $select_free_flag) ? 'checked ' : ''; ?>/>
 								<label class="lbl-for-check<?php echo in_array('0', $select_free_flag) ? ' active' : ''; ?>" for="chk-free-flag-0" id="lbl-for-check-free-flag-0">收费</label>
 								<p id="area-select-price"<?php echo in_array('0', $select_free_flag) ? ' class="active"' : ''; ?>>
-									<span class="strong">票价</span> <input type="text" name="select_price_min" class="price" value="<?php echo $select_price_min; ?>" />～<input type="text" name="select_price_max" class="price" value="<?php echo $select_price_max; ?>" />元
+									<span class="strong">票价</span> <input type="text" name="select_price_min" class="price" value="<?php echo $select_price_min; ?>" />～<input type="text" name="select_price_max" class="price" value="<?php echo $select_price_max; ?>" />元/人
 								</p>
 							</td>
 						</tr>
@@ -81,8 +81,8 @@
 								<label class="lbl-for-radio<?php echo $sort_column == "spot_type_id" ? ' active' : ''; ?>" for="rdb-sort-type" data-for="rdb-sort-column">景点类型</label>
 								<input type="radio" name="sort_column" value="status" id="rdb-sort-status" <?php echo $sort_column == "status" ? 'checked ' : ''; ?>/>
 								<label class="lbl-for-radio<?php echo $sort_column == "status" ? ' active' : ''; ?>" for="rdb-sort-status" data-for="rdb-sort-column">公开状况</label>
-								<input type="radio" name="sort_column" value="price" id="rdb-sort-price" <?php echo $sort_column == "price" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_column == "price" ? ' active' : ''; ?>" for="rdb-sort-price" data-for="rdb-sort-column">收费状况</label>
+								<input type="radio" name="sort_column" value="spot_price" id="rdb-sort-price" <?php echo $sort_column == "spot_price" ? 'checked ' : ''; ?>/>
+								<label class="lbl-for-radio<?php echo $sort_column == "spot_price" ? ' active' : ''; ?>" for="rdb-sort-price" data-for="rdb-sort-column">收费状况</label>
 								<input type="radio" name="sort_column" value="created_at" id="rdb-sort-created-at" <?php echo $sort_column == "created_at" ? 'checked ' : ''; ?>/>
 								<label class="lbl-for-radio<?php echo $sort_column == "created_at" ? ' active' : ''; ?>" for="rdb-sort-created-at" data-for="rdb-sort-column">登录日</label>
 								<input type="radio" name="sort_column" value="modified_at" id="rdb-sort-modified-at" <?php echo $sort_column == "modified_at" ? 'checked ' : ''; ?>/>
@@ -149,7 +149,7 @@
 						<td><?php echo $spot['spot_status'] == '1' ? '公开' : '未公开'; ?></td>
 						<td><?php echo $spot['spot_area_name']; ?></td>
 						<td><?php echo $spot['spot_type_name']; ?></td>
-						<td><?php echo $spot['free_flag'] == '1' ? '免费' : ($spot['price'] ? $spot['price'] . '元' : '收费 未设定票价'); ?></td>
+						<td><?php echo $spot['free_flag'] == '1' ? '免费' : ($spot['spot_price'] ? $spot['spot_price'] . '元/人' : '收费 未设定票价'); ?></td>
 						<td><?php echo date('Y/m/d', strtotime($spot['created_at'])); ?></td>
 						<td><?php echo date('Y/m/d', strtotime($spot['modified_at'])); ?></td>
 						<td><?php echo $spot['detail_number']; ?></td>

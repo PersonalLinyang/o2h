@@ -27,7 +27,7 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 			$data['input_spot_area'] = '';
 			$data['input_spot_type'] = '';
 			$data['input_free_flag'] = '';
-			$data['input_price'] = '';
+			$data['input_spot_price'] = '';
 			$data['input_spot_status'] = '';
 			$data['input_detail_list'] = array();
 			
@@ -46,7 +46,7 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 					}
 					
 					if(isset($_POST['spot_name']) && isset($_POST['spot_area']) && isset($_POST['spot_type']) 
-							&& isset($_POST['free_flag']) && isset($_POST['price']) && isset($_POST['spot_status'])) {
+							&& isset($_POST['free_flag']) && isset($_POST['spot_price']) && isset($_POST['spot_status'])) {
 						//上传图片暂时保存
 						foreach($detail_num_list as $detail_num) {
 							$file_tmp_count = 0;
@@ -97,7 +97,7 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 							'spot_area' => $_POST['spot_area'],
 							'spot_type' => $_POST['spot_type'],
 							'free_flag' => $_POST['free_flag'],
-							'price' => $_POST['free_flag'] == '1' ? 0 : $_POST['price'],
+							'spot_price' => $_POST['free_flag'] == '1' ? 0 : $_POST['spot_price'],
 							'spot_status' => $_POST['spot_status'],
 							'detail_list' => array(),
 						);
@@ -194,7 +194,7 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 									case 'nonum_type':
 										$error_message_list[] = '请选择景点类型';
 										break;
-									case 'nobool_spotstatus':
+									case 'nobool_status':
 										$error_message_list[] = '请选择公开状态';
 										break;
 									case 'nobool_freeflag':
@@ -234,8 +234,8 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 					$data['input_spot_type'] = isset($_POST['spot_type']) ? $_POST['spot_type'] : '';
 					$data['input_free_flag'] = isset($_POST['free_flag']) ? $_POST['free_flag'] : '';
 					$data['input_spot_status'] = isset($_POST['spot_status']) ? $_POST['spot_status'] : '';
-					$price = isset($_POST['price']) ? $_POST['price'] : '';
-					$data['input_price'] = isset($_POST['free_flag']) ? ($_POST['free_flag'] == '1' ? '' : $price) : $price;
+					$spot_price = isset($_POST['spot_price']) ? $_POST['spot_price'] : '';
+					$data['input_spot_price'] = isset($_POST['free_flag']) ? ($_POST['free_flag'] == '1' ? '' : $spot_price) : $spot_price;
 					//反映景点详情
 					foreach($detail_num_list as $detail_num) {
 						$two_year_flag = 0;

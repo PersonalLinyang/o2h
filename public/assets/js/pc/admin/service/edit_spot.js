@@ -155,12 +155,12 @@ $(function(){
 	//收费/免费切换处理
 	$('input[name="free_flag"]').change(function(){
 		if($(this).val() == '0') {
-			$('input[name="price"]:text').attr('readonly', false);
-			$('input[name="price"]:text').removeClass('readonly');
+			$('input[name="spot_price"]:text').attr('readonly', false);
+			$('input[name="spot_price"]:text').removeClass('readonly');
 		} else {
-			$('input[name="price"]:text').attr('readonly', true);
-			$('input[name="price"]:text').addClass('readonly');
-			$('input[name="price"]:text').val('');
+			$('input[name="spot_price"]:text').attr('readonly', true);
+			$('input[name="spot_price"]:text').addClass('readonly');
+			$('input[name="spot_price"]:text').val('');
 		}
 	});
 	

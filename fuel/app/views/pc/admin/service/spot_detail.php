@@ -49,7 +49,7 @@
 				</tr>
 				<tr>
 					<th>收费状况</th>
-					<td><?php echo $spot_info['free_flag'] == '0' ? '收费' . ($spot_info['price'] ? ('　票价:' . $spot_info['price'] . '元') : '') : '免费'; ?></td>
+					<td><?php echo $spot_info['free_flag'] == '0' ? '收费' . ($spot_info['spot_price'] ? ('　票价:' . $spot_info['spot_price'] . '元/人') : '') : '免费'; ?></td>
 				</tr>
 				<tr>
 					<th>公开状态</th>

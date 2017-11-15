@@ -7,14 +7,14 @@ class Model_Spot extends Model
 	 */
 	public static function InsertSpot($params) {
 		//添加景点
-		$sql_insert_spot = "INSERT INTO t_spot(spot_name, spot_area, spot_type, free_flag, price, spot_status, created_at, modified_at) "
-						. "VALUES(:spot_name, :spot_area, :spot_type, :free_flag, :price, :spot_status, now(), now())";
+		$sql_insert_spot = "INSERT INTO t_spot(spot_name, spot_area, spot_type, free_flag, spot_price, spot_status, created_at, modified_at) "
+						. "VALUES(:spot_name, :spot_area, :spot_type, :free_flag, :spot_price, :spot_status, now(), now())";
 		$query_insert_spot = DB::query($sql_insert_spot);
 		$query_insert_spot->param(':spot_name', $params['spot_name']);
 		$query_insert_spot->param(':spot_area', $params['spot_area']);
 		$query_insert_spot->param(':spot_type', $params['spot_type']);
 		$query_insert_spot->param(':free_flag', $params['free_flag']);
-		$query_insert_spot->param(':price', $params['price']);
+		$query_insert_spot->param(':spot_price', $params['spot_price']);
 		$query_insert_spot->param(':spot_status', $params['spot_status']);
 		$result_insert_spot = $query_insert_spot->execute();
 		
@@ -52,14 +52,14 @@ class Model_Spot extends Model
 	public static function UpdateSpot($params) {
 		//更新景点
 		$sql_update_spot = "UPDATE t_spot SET spot_name=:spot_name, spot_area=:spot_area, spot_type=:spot_type, free_flag=:free_flag, "
-						. "price=:price, spot_status=:spot_status, modified_at=now() WHERE spot_id=:spot_id";
+						. "spot_price=:spot_price, spot_status=:spot_status, modified_at=now() WHERE spot_id=:spot_id";
 		$query_update_spot = DB::query($sql_update_spot);
 		$query_update_spot->param(':spot_id', $params['spot_id']);
 		$query_update_spot->param(':spot_name', $params['spot_name']);
 		$query_update_spot->param(':spot_area', $params['spot_area']);
 		$query_update_spot->param(':spot_type', $params['spot_type']);
 		$query_update_spot->param(':free_flag', $params['free_flag']);
-		$query_update_spot->param(':price', $params['price']);
+		$query_update_spot->param(':spot_price', $params['spot_price']);
 		$query_update_spot->param(':spot_status', $params['spot_status']);
 		$result_update_spot = $query_update_spot->execute();
 		
@@ -209,13 +209,13 @@ class Model_Spot extends Model
 					if(in_array('0', $value)) {
 						if(isset($params['price_min'])) {
 							if(is_numeric($params['price_min'])) {
-								$sql_where_list_price[] = "price >= :price_min";
+								$sql_where_list_price[] = "spot_price >= :price_min";
 								$sql_params[':price_min'] = floatval($params['price_min']);
 							}
 						}
 						if(isset($params['price_max'])) {
 							if(is_numeric($params['price_max'])) {
-								$sql_where_list_price[] = "price <= :price_max";
+								$sql_where_list_price[] = "spot_price <= :price_max";
 								$sql_params[':price_max'] = floatval($params['price_max']);
 							}
 						}
@@ -230,7 +230,7 @@ class Model_Spot extends Model
 					}
 					break;
 				case 'sort_column':
-					$sort_column_list = array('spot_name', 'spot_area_id', 'spot_type_id', 'spot_status', 'price', 'created_at', 'modified_at', 'detail_number');
+					$sort_column_list = array('spot_name', 'spot_area_id', 'spot_type_id', 'spot_status', 'spot_price', 'created_at', 'modified_at', 'detail_number');
 					if(in_array($value, $sort_column_list)) {
 						$sql_order_column = $value;
 					}
@@ -273,7 +273,7 @@ class Model_Spot extends Model
 
 			if($spot_count) {
 				$sql_select = "SELECT ts.spot_id, ts.spot_name, ts.spot_status, ts.spot_area spot_area_id, ma.area_name spot_area_name, " 
-						. "ts.spot_type spot_type_id, mst.spot_type_name, ts.free_flag, ts.price, ts.created_at, ts.modified_at, " 
+						. "ts.spot_type spot_type_id, mst.spot_type_name, ts.free_flag, ts.spot_price, ts.created_at, ts.modified_at, " 
 						. "COUNT(tsd.spot_sort_id) detail_number " 
 						. "FROM t_spot ts " 
 						. "LEFT JOIN m_area ma ON ts.spot_area = ma.area_id "
@@ -281,7 +281,7 @@ class Model_Spot extends Model
 						. "LEFT JOIN t_spot_detail tsd ON ts.spot_id = tsd.spot_id "
 						. "WHERE 1=1 " . $sql_where
 						. "GROUP BY spot_id, spot_name, spot_status, spot_area_id, spot_area_name, spot_type_id, spot_type_name, " 
-						. "free_flag, price, created_at, modified_at "
+						. "free_flag, spot_price, created_at, modified_at "
 						. "ORDER BY " . $sql_order_column . " " . $sql_order_method . " "
 						. "LIMIT " . $sql_limit . " OFFSET " . $sql_offset;
 				$query_select = DB::query($sql_select);
@@ -308,13 +308,13 @@ class Model_Spot extends Model
 	/*
 	 * 根据ID获取景点详细信息`
 	 */
-	public static function SelectSpotDetailBySpotId($spot_id) {
+	public static function SelectSpotInfoBySpotId($spot_id) {
 		if(!is_numeric($spot_id)) {
 			return false;
 		}
 		
 		$sql_spot = "SELECT ts.spot_id, ts.spot_name, ts.spot_area spot_area_id, ma.area_name spot_area_name, ma.area_description spot_area_description, " 
-				. "ts.spot_type spot_type_id, mst.spot_type_name, ts.free_flag, ts.price, ts.spot_status, ts.created_at, ts.modified_at " 
+				. "ts.spot_type spot_type_id, mst.spot_type_name, ts.free_flag, ts.spot_price, ts.spot_status, ts.created_at, ts.modified_at " 
 				. "FROM t_spot ts " 
 				. "LEFT JOIN m_area ma ON ts.spot_area = ma.area_id " 
 				. "LEFT JOIN m_spot_type mst ON ts.spot_type = mst.spot_type_id " 
@@ -397,10 +397,10 @@ class Model_Spot extends Model
 			$result['result'] = false;
 			$result['error'][] = 'nobool_freeflag';
 			if($params['free_flag'] == '0') {
-				if(!is_numeric($params['price'])) {
+				if(!is_numeric($params['spot_price'])) {
 					$result['result'] = false;
 					$result['error'][] = 'nonum_price';
-				} elseif($params['price'] < 0) {
+				} elseif($params['spot_price'] < 0) {
 					$result['result'] = false;
 					$result['error'][] = 'minus_price';
 				}
@@ -409,7 +409,7 @@ class Model_Spot extends Model
 		//公开状态
 		if(!in_array($params['spot_status'], array('0', '1'))) {
 			$result['result'] = false;
-			$result['error'][] = 'nobool_spotstatus';
+			$result['error'][] = 'nobool_status';
 		}
 		//景点详情
 		if(!count($params['detail_list'])) {
@@ -574,10 +574,10 @@ class Model_Spot extends Model
 			$result['result'] = false;
 			$result['error'][] = 'nobool_freeflag';
 			if($params['free_flag'] == '0') {
-				if(!is_numeric($params['price'])) {
+				if(!is_numeric($params['spot_price'])) {
 					$result['result'] = false;
 					$result['error'][] = 'nonum_price';
-				} elseif($params['price'] < 0) {
+				} elseif($params['spot_price'] < 0) {
 					$result['result'] = false;
 					$result['error'][] = 'minus_price';
 				}
@@ -586,7 +586,7 @@ class Model_Spot extends Model
 		//公开状态
 		if(!in_array($params['spot_status'], array('0', '1'))) {
 			$result['result'] = false;
-			$result['error'][] = 'nobool_spotstatus';
+			$result['error'][] = 'nobool_status';
 		}
 		//景点详情
 		if(!count($params['detail_list'])) {
