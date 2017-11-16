@@ -50,7 +50,7 @@
 						</td>
 					</tr>
 					<tr>
-						<th>票价</th>
+						<th>价格</th>
 						<td><input type="text" name="hotel_price" value="<?php echo $input_hotel_price; ?>" /></td>
 					</tr>
 					<tr>

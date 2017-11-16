@@ -47,7 +47,7 @@
 					<td><?php echo $hotel_info['hotel_type_name']; ?></td>
 				</tr>
 				<tr>
-					<th>住宿费</th>
+					<th>价格</th>
 					<td><?php echo $hotel_info['hotel_price'] ? ($hotel_info['hotel_price'] . '元/人夜') : ''; ?></td>
 				</tr>
 				<tr>

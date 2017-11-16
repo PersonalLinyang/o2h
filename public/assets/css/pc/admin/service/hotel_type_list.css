@@ -1,4 +1,4 @@
-/* 景点一览表 */
+/* 酒店一览表 */
 .div-content-list {
 	width: 600px;
 }
@@ -17,10 +17,6 @@
 .tb-content-list th.th-list {
 	width: 108px;
 }
-.tb-content-list td .lbl-for-check {
-	margin-left: 5px;
-	margin-right: 5px;
-}
 .tb-content-list td .btn-delete {
 	width: 50px;
 	margin-left: 5px;
@@ -30,12 +26,4 @@
 	width: 50px;
 	margin-left: 5px;
 	margin-right: 5px;
-}
-
-/* 筛选部分票价显隐 */
-#area-select-price {
-	display: none;
-}
-#area-select-price.active {
-	display: block;
 }

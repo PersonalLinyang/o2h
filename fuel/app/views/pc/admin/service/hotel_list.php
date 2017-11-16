@@ -56,7 +56,7 @@
 							</td>
 						</tr>
 						<tr>
-							<th>住宿费</th>
+							<th>价格</th>
 							<td>
 								<input type="text" name="select_price_min" class="price" value="<?php echo $select_price_min; ?>" />～<input type="text" name="select_price_max" class="price" value="<?php echo $select_price_max; ?>" />元
 							</td>
@@ -68,28 +68,28 @@
 							<th>排序项目</th>
 							<td>
 								<input type="radio" name="sort_column" value="hotel_name" id="rdb-sort-name" <?php echo $sort_column == "hotel_name" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_column == "hotel_name" ? ' active' : ''; ?>" for="rdb-sort-name" data-for="rdb-sort-column">酒店名</label>
+								<label class="lbl-for-radio<?php echo $sort_column == 'hotel_name' ? ' active' : ''; ?>" for="rdb-sort-name" data-for="rdb-sort-column">酒店名</label>
 								<input type="radio" name="sort_column" value="hotel_area_id" id="rdb-sort-area" <?php echo $sort_column == "hotel_area_id" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_column == "hotel_area_id" ? ' active' : ''; ?>" for="rdb-sort-area" data-for="rdb-sort-column">所属地区</label>
+								<label class="lbl-for-radio<?php echo $sort_column == 'hotel_area_id' ? ' active' : ''; ?>" for="rdb-sort-area" data-for="rdb-sort-column">所属地区</label>
 								<input type="radio" name="sort_column" value="hotel_type_id" id="rdb-sort-type" <?php echo $sort_column == "hotel_type_id" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_column == "hotel_type_id" ? ' active' : ''; ?>" for="rdb-sort-type" data-for="rdb-sort-column">酒店类型</label>
-								<input type="radio" name="sort_column" value="status" id="rdb-sort-status" <?php echo $sort_column == "status" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_column == "status" ? ' active' : ''; ?>" for="rdb-sort-status" data-for="rdb-sort-column">公开状况</label>
+								<label class="lbl-for-radio<?php echo $sort_column == 'hotel_type_id' ? ' active' : ''; ?>" for="rdb-sort-type" data-for="rdb-sort-column">酒店类型</label>
+								<input type="radio" name="sort_column" value="hotel_status" id="rdb-sort-status" <?php echo $sort_column == "hotel_status" ? 'checked ' : ''; ?>/>
+								<label class="lbl-for-radio<?php echo $sort_column == 'hotel_status' ? ' active' : ''; ?>" for="rdb-sort-status" data-for="rdb-sort-column">公开状况</label>
 								<input type="radio" name="sort_column" value="hotel_price" id="rdb-sort-price" <?php echo $sort_column == "hotel_price" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_column == "hotel_price" ? ' active' : ''; ?>" for="rdb-sort-price" data-for="rdb-sort-column">住宿费</label>
+								<label class="lbl-for-radio<?php echo $sort_column == 'hotel_price' ? ' active' : ''; ?>" for="rdb-sort-price" data-for="rdb-sort-column">价格</label>
 								<input type="radio" name="sort_column" value="created_at" id="rdb-sort-created-at" <?php echo $sort_column == "created_at" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_column == "created_at" ? ' active' : ''; ?>" for="rdb-sort-created-at" data-for="rdb-sort-column">登录日</label>
+								<label class="lbl-for-radio<?php echo $sort_column == 'created_at' ? ' active' : ''; ?>" for="rdb-sort-created-at" data-for="rdb-sort-column">登录日</label>
 								<input type="radio" name="sort_column" value="modified_at" id="rdb-sort-modified-at" <?php echo $sort_column == "modified_at" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_column == "modified_at" ? ' active' : ''; ?>" for="rdb-sort-modified-at" data-for="rdb-sort-column">更新日</label>
+								<label class="lbl-for-radio<?php echo $sort_column == 'modified_at' ? ' active' : ''; ?>" for="rdb-sort-modified-at" data-for="rdb-sort-column">更新日</label>
 							</td>
 						</tr>
 						<tr>
 							<th>排序方式</th>
 							<td>
 								<input type="radio" name="sort_method" value="asc" id="rdb-sort-asc" <?php echo $sort_method == "asc" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_method == "asc" ? ' active' : ''; ?>" for="rdb-sort-asc" data-for="rdb-sort-method">升序</label>
+								<label class="lbl-for-radio<?php echo $sort_method == 'asc' ? ' active' : ''; ?>" for="rdb-sort-asc" data-for="rdb-sort-method">升序</label>
 								<input type="radio" name="sort_method" value="desc" id="rdb-sort-desc" <?php echo $sort_method == "desc" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_method == "desc" ? ' active' : ''; ?>" for="rdb-sort-desc" data-for="rdb-sort-method">降序</label>
+								<label class="lbl-for-radio<?php echo $sort_method == 'desc' ? ' active' : ''; ?>" for="rdb-sort-desc" data-for="rdb-sort-method">降序</label>
 							</td>
 						</tr>
 					</table>
@@ -127,7 +127,7 @@
 						<th class="th-status">状态</th>
 						<th class="th-area">所属地区</th>
 						<th class="th-type">酒店类别</th>
-						<th class="th-price">住宿费</th>
+						<th class="th-price">价格<br>(元/人夜)</th>
 						<th class="th-created-at">登录日</th>
 						<th class="th-modified-at">更新日</th>
 					</tr>
@@ -140,7 +140,7 @@
 						<td><?php echo $hotel['hotel_status'] == '1' ? '公开' : '未公开'; ?></td>
 						<td><?php echo $hotel['hotel_area_name']; ?></td>
 						<td><?php echo $hotel['hotel_type_name']; ?></td>
-						<td><?php echo $hotel['hotel_price'] . '元/人夜'; ?></td>
+						<td><?php echo $hotel['hotel_price']; ?></td>
 						<td><?php echo date('Y/m/d', strtotime($hotel['created_at'])); ?></td>
 						<td><?php echo date('Y/m/d', strtotime($hotel['modified_at'])); ?></td>
 					</tr>

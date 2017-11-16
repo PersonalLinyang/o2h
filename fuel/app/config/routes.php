@@ -38,6 +38,22 @@ return array(
 	'admin/modify_hotel_type/(:hotel_type_id)'   => 'admin/service/modifyhoteltype/index/$1',
 	'admin/delete_hotel_type'        => 'admin/service/hoteltypelist/deletehoteltype',
 	
+	//餐饮管理
+	'admin/restaurant_list'               => 'admin/service/restaurantlist/index',
+	'admin/restaurant_list/(:page)'       => 'admin/service/restaurantlist/index/$1',
+	'admin/add_restaurant'                => 'admin/service/addrestaurant/index',
+	'admin/restaurant_detail/(:restaurant_id)' => 'admin/service/restaurantdetail/index/$1',
+	'admin/modify_restaurant_status'      => 'admin/service/restaurantdetail/modifyrestaurantstatus',
+	'admin/modify_restaurant/(:restaurant_id)' => 'admin/service/modifyrestaurant/index/$1',
+	'admin/delete_restaurant'             => 'admin/service/restaurantlist/deleterestaurant',
+	'admin/delete_checked_restaurant'     => 'admin/service/restaurantlist/deletecheckedrestaurant',
+	
+	//餐饮类别管理
+	'admin/restaurant_type_list'          => 'admin/service/restauranttypelist',
+	'admin/add_restaurant_type'           => 'admin/service/addrestauranttype',
+	'admin/modify_restaurant_type/(:restaurant_type_id)'   => 'admin/service/modifyrestauranttype/index/$1',
+	'admin/delete_restaurant_type'        => 'admin/service/restauranttypelist/deleterestauranttype',
+	
 	//系统权限管理
 	'admin/permission_list'          => 'admin/user/permissionlist/index',
 	'admin/add_master_group'         => 'admin/user/addmastergroup/index',

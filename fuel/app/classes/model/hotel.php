@@ -292,7 +292,7 @@ class Model_Hotel extends Model
 			$result['result'] = false;
 			$result['error'][] = 'nonum_type';
 		}
-		//住宿费
+		//价格
 		if(!is_numeric($params['hotel_price'])) {
 			$result['result'] = false;
 			$result['error'][] = 'nonum_price';

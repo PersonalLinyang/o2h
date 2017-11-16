@@ -14,12 +14,12 @@ $(function(){
 		$('.popup-delete').fadeIn();
 	});
 	
-	//点击删除特定酒店类别弹窗中的确定按钮
+	//点击删除特定餐饮类别弹窗中的确定按钮
 	$('#popup-delete-yes').click(function(){
 		$('#form-delete').submit();
 	});
 	
-	//点击删除特定酒店类别弹窗中的取消按钮
+	//点击删除特定餐饮类别弹窗中的取消按钮
 	$('#popup-delete-no').click(function(){
 		$('.popup-shadow').hide();
 		$('.popup-delete').hide();

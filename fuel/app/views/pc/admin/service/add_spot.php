@@ -61,7 +61,7 @@
 						</td>
 					</tr>
 					<tr>
-						<th>票价</th>
+						<th>价格</th>
 						<td><input type="text" name="spot_price" value="<?php echo $input_spot_price; ?>" <?php echo $input_free_flag == '0' ? '' : 'class="readonly" readonly="readonly" '; ?>/></td>
 					</tr>
 					<tr>

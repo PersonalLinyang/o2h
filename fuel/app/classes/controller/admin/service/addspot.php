@@ -180,7 +180,7 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 										$error_message_list[] = '景点名不能为空';
 										break;
 									case 'nonum_price':
-										$error_message_list[] = '收费景点的票价不能为空';
+										$error_message_list[] = '收费景点的价格不能为空';
 										break;
 									case 'empty_detail_name':
 										$error_message_list[] = '景点详情名不能为空';
@@ -205,7 +205,7 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 										$error_message_list[] = '请选择详情公开期';
 										break;
 									case 'minus_price':
-										$error_message_list[] = '票价不能为负';
+										$error_message_list[] = '价格不能为负';
 										break;
 									case 'noarray_detail':
 										$error_message_list[] = '请至少为景点添加一个景点详情';

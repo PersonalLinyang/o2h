@@ -164,25 +164,29 @@ class Controller_Admin_Service_Modifyspot extends Controller_Admin_App
 										$file_directory_sp = DOCROOT . 'assets/img/sp/upload/spot/' . $spot_id . '/' . $detail_num . '/';
 										
 										//被删除图片PC图片删除
-										$file_name_list_pc = scandir($file_directory_pc);
-										foreach($file_name_list_pc as $file_name) {
-											preg_match('/^\d{1,}/', $file_name, $matches, PREG_OFFSET_CAPTURE);
-											if(count($matches) == 1) {
-												$detail_num_file = $matches[0][0];
-												if(!in_array($detail_num_file, $image_sort_list[1])) {
-													unlink($file_directory_pc . $file_name);
+										if(file_exists($file_directory_pc)) {
+											$file_name_list_pc = scandir($file_directory_pc);
+											foreach($file_name_list_pc as $file_name) {
+												preg_match('/^\d{1,}/', $file_name, $matches, PREG_OFFSET_CAPTURE);
+												if(count($matches) == 1) {
+													$detail_num_file = $matches[0][0];
+													if(!in_array($detail_num_file, $image_sort_list[1])) {
+														unlink($file_directory_pc . $file_name);
+													}
 												}
 											}
 										}
 										
 										//被删除图片SP图片删除
-										$file_name_list_sp = scandir($file_directory_sp);
-										foreach($file_name_list_sp as $file_name) {
-											preg_match('/^\d{1,}/', $file_name, $matches, PREG_OFFSET_CAPTURE);
-											if(count($matches) == 1) {
-												$detail_num_file = $matches[0][0];
-												if(!in_array($detail_num_file, $image_sort_list[1])) {
-													unlink($file_directory_sp . $file_name);
+										if(file_exists($file_directory_sp)) {
+											$file_name_list_sp = scandir($file_directory_sp);
+											foreach($file_name_list_sp as $file_name) {
+												preg_match('/^\d{1,}/', $file_name, $matches, PREG_OFFSET_CAPTURE);
+												if(count($matches) == 1) {
+													$detail_num_file = $matches[0][0];
+													if(!in_array($detail_num_file, $image_sort_list[1])) {
+														unlink($file_directory_sp . $file_name);
+													}
 												}
 											}
 										}
@@ -231,7 +235,7 @@ class Controller_Admin_Service_Modifyspot extends Controller_Admin_App
 											$error_message_list[] = '景点名不能为空';
 											break;
 										case 'nonum_price':
-											$error_message_list[] = '收费景点的票价不能为空';
+											$error_message_list[] = '收费景点的价格不能为空';
 											break;
 										case 'empty_detail_name':
 											$error_message_list[] = '景点详情名不能为空';
@@ -256,7 +260,7 @@ class Controller_Admin_Service_Modifyspot extends Controller_Admin_App
 											$error_message_list[] = '请选择详情公开期';
 											break;
 										case 'minus_price':
-											$error_message_list[] = '票价不能为负';
+											$error_message_list[] = '价格不能为负';
 											break;
 										case 'noarray_detail':
 											$error_message_list[] = '请至少为景点添加一个景点详情';
