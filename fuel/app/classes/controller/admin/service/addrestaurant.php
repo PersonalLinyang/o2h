@@ -71,7 +71,7 @@ class Controller_Admin_Service_Addrestaurant extends Controller_Admin_App
 										$error_message_list[] = '餐饮名不能为空';
 										break;
 									case 'nonum_price':
-										$error_message_list[] = '餐饮的价格不能为空';
+										$error_message_list[] = '餐饮的价格必须为数字';
 										break;
 									case 'nonum_area':
 										$error_message_list[] = '请选择餐饮所属地区';
@@ -86,7 +86,7 @@ class Controller_Admin_Service_Addrestaurant extends Controller_Admin_App
 										$error_message_list[] = '价格不能为负';
 										break;
 									case 'reverse_price':
-										$error_message_list[] = '低价格不能高于高价格';
+										$error_message_list[] = '底价不能高于顶价';
 										break;
 									default:
 										break;

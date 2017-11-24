@@ -69,7 +69,7 @@ class Controller_Admin_Service_Addhotel extends Controller_Admin_App
 										$error_message_list[] = '酒店名不能为空';
 										break;
 									case 'nonum_price':
-										$error_message_list[] = '酒店的价格不能为空';
+										$error_message_list[] = '酒店的价格必须为数字';
 										break;
 									case 'nonum_area':
 										$error_message_list[] = '请选择酒店所属地区';

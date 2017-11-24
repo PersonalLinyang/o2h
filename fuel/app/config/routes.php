@@ -54,6 +54,10 @@ return array(
 	'admin/modify_restaurant_type/(:restaurant_type_id)'   => 'admin/service/modifyrestauranttype/index/$1',
 	'admin/delete_restaurant_type'        => 'admin/service/restauranttypelist/deleterestauranttype',
 	
+	//旅游路线管理
+	'admin/add_route'                => 'admin/service/addroute',
+	'admin/add_route/spot_list'      => 'admin/service/addroute/spotlist',
+	
 	//系统权限管理
 	'admin/permission_list'          => 'admin/user/permissionlist/index',
 	'admin/add_master_group'         => 'admin/user/addmastergroup/index',

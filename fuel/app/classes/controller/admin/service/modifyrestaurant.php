@@ -89,7 +89,7 @@ class Controller_Admin_Service_Modifyrestaurant extends Controller_Admin_App
 											$error_message_list[] = '价格不能为负';
 											break;
 										case 'reverse_price':
-											$error_message_list[] = '低价格不能高于高价格';
+											$error_message_list[] = '底价不能高于顶价';
 											break;
 										default:
 											break;
