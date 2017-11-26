@@ -315,9 +315,25 @@ class Model_Spot extends Model
 		
 		return $result;
 	}
+
+	/*
+	 * 获得特定景点信息的简易列表
+	 */
+	public static function SelectSpotSimpleListById($spot_id_list) {
+		$result = array();
+		if(is_array($spot_id_list)) {
+			if(count($spot_id_list)) {
+				$sql = "SELECT spot_id, spot_name FROM t_spot WHERE spot_id IN (".implode(',', $spot_id_list).") ORDER BY spot_id";
+				$query = DB::query($sql);
+				$result = $query->execute()->as_array();
+			}
+		}
+		
+		return $result;
+	}
 	
 	/*
-	 * 根据ID获取景点详细信息`
+	 * 根据ID获取景点详细信息
 	 */
 	public static function SelectSpotInfoBySpotId($spot_id) {
 		if(!is_numeric($spot_id)) {

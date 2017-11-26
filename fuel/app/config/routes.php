@@ -57,6 +57,8 @@ return array(
 	//旅游路线管理
 	'admin/add_route'                => 'admin/service/addroute',
 	'admin/add_route/spot_list'      => 'admin/service/addroute/spotlist',
+	'admin/route_detail/(:route_id)' => 'admin/service/routedetail/index/$1',
+	'admin/modify_route_status'      => 'admin/service/routedetail/modifyroutestatus',
 	
 	//系统权限管理
 	'admin/permission_list'          => 'admin/user/permissionlist/index',

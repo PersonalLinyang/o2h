@@ -30,6 +30,7 @@ class Controller_Admin_Service_AddRoute extends Controller_Admin_App
 			$data['input_route_total_cost'] = 0;
 			$data['input_route_status'] = '';
 			$data['input_detail_list'] = array();
+			$data['input_main_image'] = '';
 			$data['spot_list'] = array();
 			
 			if(isset($_POST['page'])) {
@@ -81,6 +82,39 @@ class Controller_Admin_Service_AddRoute extends Controller_Admin_App
 							}
 						}
 					}
+							
+					//本次上传图片处理
+					if(isset($_FILES['main_image'])) {
+						$files_upload = $_FILES['main_image'];
+						//图片暂时保存
+						$extension = '';
+						switch($files_upload['type']) {
+							case 'image/jpeg': 
+								$extension = 'jpg';
+								break;
+							case 'image/png': 
+								$extension = 'png';
+								break;
+							default:
+								break;
+						}
+						if($extension) {
+							$file_directory_tmp = DOCROOT . 'assets/img/tmp/' . $_SESSION['login_user']['id'] . '/route/';
+							if(!file_exists($file_directory_tmp)) {
+								mkdir($file_directory_tmp, 0777, TRUE);
+							}
+							$file_name_tmp = $file_directory_tmp . 'main_image.' . $extension;
+							move_uploaded_file($files_upload["tmp_name"], $file_name_tmp);
+							$data['input_main_image'] = '/assets/img/tmp/' . $_SESSION['login_user']['id'] . '/route/main_image.' . $extension;
+						}
+					}
+					if($data['input_main_image'] == '') {
+						if(isset($_POST['main_image_tmp'])) {
+							if(file_exists(DOCROOT . $_POST['main_image_tmp'])) {
+								$data['input_main_image'] = $_POST['main_image_tmp'];
+							}
+						}
+					}
 					
 					$data['spot_list'] = Model_Spot::SelectSpotSimpleListAll();
 					
@@ -103,12 +137,43 @@ class Controller_Admin_Service_AddRoute extends Controller_Admin_App
 						//输入内容检查
 						$result_check = Model_Route::CheckInsertRoute($param_insert);
 						
-						if($result_check['result']) {
+						if($result_check['result'] && $data['input_main_image'] && file_exists(DOCROOT . $data['input_main_image'])) {
 							//数据添加
 							$result_insert = Model_Route::InsertRoute($param_insert);
 							$route_id = $result_insert[0];
 							
-							if($result_insert) {
+							if($route_id) {
+								$file_name_tmp = DOCROOT . $data['input_main_image'];
+								
+								//调整PC用图片尺寸
+								$file_directory_pc = DOCROOT . 'assets/img/pc/upload/route/' . $route_id . '/';
+								if(!file_exists($file_directory_pc)) {
+									mkdir($file_directory_pc, 0777, TRUE);
+								}
+								$image_option_list_pc = Model_Imageoptimize::SelectImageOptionList(array('image_type' => 'route_main_image', 'image_device' => 'pc'));
+								if(count($image_option_list_pc)) {
+									foreach($image_option_list_pc as $image_option_pc) {
+										Model_Imageoptimize::ImageResizeToJpg($file_name_tmp, $image_option_pc['max_width'], $image_option_pc['max_height'], 
+												$file_directory_pc . $image_option_pc['image_option_slug'] . '.jpg');
+									}
+								}
+								
+								//调整SP用图片尺寸
+								$file_directory_sp = DOCROOT . 'assets/img/sp/upload/route/' . $route_id . '/';
+								if(!file_exists($file_directory_sp)) {
+									mkdir($file_directory_sp, 0777, TRUE);
+								}
+								$image_option_list_sp = Model_Imageoptimize::SelectImageOptionList(array('image_type' => 'route_main_image', 'image_device' => 'sp'));
+								if(count($image_option_list_sp)) {
+									foreach($image_option_list_sp as $image_option_sp) {
+										Model_Imageoptimize::ImageResizeToJpg($file_name_tmp, $image_option_sp['max_width'], $image_option_sp['max_height'], 
+												$file_directory_sp . $image_option_sp['image_option_slug'] . '.jpg');
+									}
+								}
+
+								//删除图片临时文件
+								unlink($file_name_tmp);
+
 								$_SESSION['add_route_success'] = true;
 								header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/route_detail/' . $route_id . '/');
 								exit;
@@ -190,6 +255,9 @@ class Controller_Admin_Service_AddRoute extends Controller_Admin_App
 									default:
 										break;
 								}
+							}
+							if($data['input_main_image'] == '') {
+								$error_message_list[] = '请上传主图';
 							}
 						}
 					} else {

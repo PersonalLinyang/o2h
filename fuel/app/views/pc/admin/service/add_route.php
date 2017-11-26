@@ -8,6 +8,7 @@
 	<?php echo Asset::css('pc/admin/service/edit_route.css'); ?>
 	<?php echo Asset::js('common/jquery-1.9.1.min.js'); ?>
 	<?php echo Asset::js('common/jquery-ui.min.js'); ?>
+	<?php echo Asset::js('common/jquery.uploadThumbs.js'); ?>
 	<?php echo Asset::js('pc/admin/common.js'); ?>
 	<?php echo Asset::js('pc/admin/service/edit_route.js'); ?>
 </head>
@@ -29,6 +30,25 @@
 					<tr>
 						<th>路线简介</th>
 						<td><textarea name="route_description" placeholder="请输入路线简介"><?php echo $input_route_description; ?></textarea></td>
+					</tr>
+					<tr>
+						<th>主图</th>
+						<td>
+							<div class="div-main-image">
+								<div class="thumb-area" id="div-thumb-main-image">
+									<?php if($input_main_image): ?>
+									<img src="<?php echo $input_main_image; ?>" class="thumb">
+									<input type="hidden" name="main_image_tmp" value="<?php echo $input_main_image; ?>" />
+									<?php endif; ?>
+								</div>
+								<div class="upload-area">
+									<label>
+										<input type="file" name="main_image" id="file-main-image" multiple="multiple" accept="image/jpeg,image/png" />
+										<p class="btn-thumb-upload">上传</p>
+									</label>
+								</div>
+							</div>
+						</td>
 					</tr>
 					<tr>
 						<th>价格</th>

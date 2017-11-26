@@ -209,6 +209,11 @@ $(function(){
 	
 	//初始详细日程天数调整
 	detail_day_sort();
+
+	$('#file-main-image').uploadThumbs({
+		position : '#div-thumb-main-image',
+		imgbreak : true
+	});
 	
 	//Day调整顺序
 	$('#route-detail-area').sortable({
