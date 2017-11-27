@@ -45,6 +45,7 @@ class Controller_Admin_Service_AddRoute extends Controller_Admin_App
 					$data['input_route_traffic_cost'] = isset($_POST['route_traffic_cost']) ? trim($_POST['route_traffic_cost']) : '';
 					$data['input_route_parking_cost'] = isset($_POST['route_parking_cost']) ? trim($_POST['route_parking_cost']) : '';
 					$data['input_route_status'] = isset($_POST['route_status']) ? trim($_POST['route_status']) : '';
+					$data['spot_list'] = Model_Spot::SelectSpotSimpleListAll();
 					
 					if(isset($data['input_route_base_cost']) && isset($data['input_route_traffic_cost']) && isset($data['input_route_parking_cost'])) {
 						$input_route_base_cost = 0;
@@ -115,8 +116,6 @@ class Controller_Admin_Service_AddRoute extends Controller_Admin_App
 							}
 						}
 					}
-					
-					$data['spot_list'] = Model_Spot::SelectSpotSimpleListAll();
 					
 					if(isset($_POST['route_name']) && isset($_POST['route_description']) && isset($_POST['route_price_min']) && isset($_POST['route_price_max']) 
 							&& isset($_POST['route_base_cost']) && isset($_POST['route_traffic_cost']) && isset($_POST['route_parking_cost']) && isset($_POST['route_status'])) {

@@ -815,7 +815,18 @@ input[type="checkbox"] {
 }
 
 .tb-content-detail td img {
-	width: 160px;
+	max-height: 200px;
+	max-width: 100%;
+}
+
+/* 内容主体部分详细页面用表格 链接 */
+.tb-content-detail td a {
+	color: #713E00;
+	font-weight: bold;
+	text-decoration: none;
+}
+.tb-content-detail td a:hover {
+	text-decoration: underline;
 }
 
 /* form用表格 */

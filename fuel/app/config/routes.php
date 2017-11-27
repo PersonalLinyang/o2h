@@ -59,6 +59,7 @@ return array(
 	'admin/add_route/spot_list'      => 'admin/service/addroute/spotlist',
 	'admin/route_detail/(:route_id)' => 'admin/service/routedetail/index/$1',
 	'admin/modify_route_status'      => 'admin/service/routedetail/modifyroutestatus',
+	'admin/modify_route/(:route_id)' => 'admin/service/modifyroute/index/$1',
 	
 	//系统权限管理
 	'admin/permission_list'          => 'admin/user/permissionlist/index',
