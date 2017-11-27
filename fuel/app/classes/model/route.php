@@ -47,6 +47,52 @@ class Model_Route extends Model
 	}
 	
 	/*
+	 * 根据ID删除路线
+	 */
+	public static function DeleteRouteById($route_id) {
+		$sql_delete_detail = "DELETE FROM t_route_detail WHERE route_id = :route_id";
+		$query_delete_detail = DB::query($sql_delete_detail);
+		$query_delete_detail->param(':route_id', $route_id);
+		$result_delete_detail = $query_delete_detail->execute();
+		
+		$sql_delete_route = "DELETE FROM t_route WHERE route_id = :route_id";
+		$query_delete_route = DB::query($sql_delete_route);
+		$query_delete_route->param(':route_id', $route_id);
+		$result_delete_route = $query_delete_route->execute();
+		
+		return $result_delete_route;
+	}
+	
+	/*
+	 * 根据ID删除路线(批量)
+	 */
+	public static function DeleteRouteByIdList($route_id_list) {
+		$sql_where_list = array();
+		$sql_param_list = array();
+		foreach($route_id_list as $route_id_counter => $route_id) {
+			$sql_where_list[] = ':route_id_' . $route_id_counter;
+			$sql_param_list[':route_id_' . $route_id_counter] = $route_id;
+		}
+		$sql_where = implode(', ', $sql_where_list);
+		
+		$sql_delete_detail = "DELETE FROM t_route_detail WHERE route_id IN (" . $sql_where . ")";
+		$query_delete_detail = DB::query($sql_delete_detail);
+		foreach($sql_param_list as $key => $value) {
+			$query_delete_detail->param($key, $value);
+		}
+		$result_delete_detail = $query_delete_detail->execute();
+		
+		$sql_delete_route = "DELETE FROM t_route WHERE route_id IN (" . $sql_where . ")";
+		$query_delete_route = DB::query($sql_delete_route);
+		foreach($sql_param_list as $key => $value) {
+			$query_delete_route->param($key, $value);
+		}
+		$result_delete_route = $query_delete_route->execute();
+		
+		return $result_delete_route;
+	}
+	
+	/*
 	 * 更新路线
 	 */
 	public static function UpdateRoute($params) {
@@ -108,6 +154,176 @@ class Model_Route extends Model
 		$result_update = $query_update->execute();
 		
 		return $result_update;
+	}
+
+	/*
+	 * 按条件获得路线列表
+	 */
+	public static function SelectRouteList($params) {
+		$sql_where = "";
+		$sql_order_column = "created_at";
+		$sql_order_method = "desc";
+		$sql_params = array();
+		$sql_offset = 0;
+		$sql_limit = 20;
+		foreach($params as $key => $value) {
+			switch($key) {
+				case 'route_name':
+					$sql_where_list_name = array();
+					foreach($value as $name_counter => $name) {
+						$sql_where_list_name[] = "tr.route_name LIKE :route_name_" . $name_counter;
+						$sql_params[':route_name_' . $name_counter] = '%' . $name . '%';
+					}
+					if(count($sql_where_list_name)) {
+						$sql_where .= " AND (" . implode(' OR ', $sql_where_list_name) . ") ";
+					}
+					break;
+				case 'route_status':
+					$sql_where_list_status = array();
+					foreach($value as $status_counter => $status) {
+						if(is_numeric($status)) {
+							$sql_where_list_status[] = ":route_status_" . $status_counter;
+							$sql_params[':route_status_' . $status_counter] = intval($status);
+						}
+					}
+					if(count($sql_where_list_status)) {
+						$sql_where .= " AND tr.route_status IN (" . implode(', ', $sql_where_list_status) . ") ";
+					}
+					break;
+				case 'price_min':
+					if(is_numeric($value)) {
+						$sql_where .= " AND tr.route_price_max >= :price_min ";
+						$sql_params[':price_min'] = floatval($value);
+					}
+					break;
+				case 'price_max':
+					if(is_numeric($value)) {
+						$sql_where .= " AND tr.route_price_min <= :price_max ";
+						$sql_params[':price_max'] = floatval($value);
+					}
+					break;
+				case 'base_cost_min':
+					if(is_numeric($value)) {
+						$sql_where .= " AND tr.route_base_cost >= :base_cost_min ";
+						$sql_params[':base_cost_min'] = floatval($value);
+					}
+					break;
+				case 'base_cost_max':
+					if(is_numeric($value)) {
+						$sql_where .= " AND tr.route_base_cost <= :base_cost_max ";
+						$sql_params[':base_cost_max'] = floatval($value);
+					}
+					break;
+				case 'traffic_cost_min':
+					if(is_numeric($value)) {
+						$sql_where .= " AND tr.route_traffic_cost >= :traffic_cost_min ";
+						$sql_params[':traffic_cost_min'] = floatval($value);
+					}
+					break;
+				case 'traffic_cost_max':
+					if(is_numeric($value)) {
+						$sql_where .= " AND tr.route_traffic_cost <= :traffic_cost_max ";
+						$sql_params[':traffic_cost_max'] = floatval($value);
+					}
+					break;
+				case 'parking_cost_min':
+					if(is_numeric($value)) {
+						$sql_where .= " AND tr.route_parking_cost >= :parking_cost_min ";
+						$sql_params[':parking_cost_min'] = floatval($value);
+					}
+					break;
+				case 'parking_cost_max':
+					if(is_numeric($value)) {
+						$sql_where .= " AND tr.route_parking_cost <= :parking_cost_max ";
+						$sql_params[':parking_cost_max'] = floatval($value);
+					}
+					break;
+				case 'total_cost_min':
+					if(is_numeric($value)) {
+						$sql_where .= " AND tr.route_total_cost >= :total_cost_min ";
+						$sql_params[':total_cost_min'] = floatval($value);
+					}
+					break;
+				case 'total_cost_max':
+					if(is_numeric($value)) {
+						$sql_where .= " AND tr.route_total_cost <= :total_cost_max ";
+						$sql_params[':total_cost_max'] = floatval($value);
+					}
+					break;
+				case 'sort_column':
+					$sort_column_list = array(
+						'route_name', 'route_status', 'route_price_min', 'route_price_max', 'route_base_cost', 'route_traffic_cost', 
+						'route_parking_cost', 'route_total_cost', 'created_at', 'modified_at', 'detail_day_number'
+					);
+					if(in_array($value, $sort_column_list)) {
+						$sql_order_column = $value;
+					}
+					break;
+				case 'sort_method':
+					if(in_array($value, array('asc', 'desc'))) {
+						$sql_order_method = $value;
+					}
+					break;
+				case 'page':
+					if(is_numeric($value)) {
+						$num_per_page = $sql_limit;
+						if(isset($params['num_per_page'])) {
+							if(is_numeric($params['num_per_page'])) {
+								$num_per_page = intval($params['num_per_page']);
+							}
+						}
+						$sql_offset = (intval($value) - 1) * $num_per_page;
+					}
+					break;
+				case 'num_per_page':
+					if(is_numeric($value)) {
+						$sql_limit = intval($value);
+					}
+					break;
+				case '':
+					break;
+			}
+		}
+
+		$sql_count = "SELECT COUNT(DISTINCT tr.route_id) route_count FROM t_route tr LEFT JOIN t_route_detail trd ON tr.route_id = trd.route_id WHERE 1=1 " . $sql_where;
+		$query_count = DB::query($sql_count);
+		foreach ($sql_params as $key => $value) {
+			$query_count->param($key, $value);
+		}
+		$result_count = $query_count->execute()->as_array();
+
+		if(count($result_count)) {
+			$route_count = intval($result_count[0]['route_count']);
+
+			if($route_count) {
+				$sql_select = "SELECT tr.route_id, tr.route_name, tr.route_status, tr.route_price_min, tr.route_price_max, tr.route_base_cost, " 
+						. "tr.route_traffic_cost, tr.route_parking_cost, tr.route_base_cost+tr.route_traffic_cost+tr.route_parking_cost route_total_cost, " 
+						. "count(trd.route_detail_day) detail_day_number, tr.created_at, tr.modified_at " 
+						. "FROM t_route tr " 
+						. "LEFT JOIN t_route_detail trd ON tr.route_id = trd.route_id "
+						. "WHERE 1=1 " . $sql_where
+						. "GROUP BY route_id "
+						. "ORDER BY " . $sql_order_column . " " . $sql_order_method . " "
+						. "LIMIT " . $sql_limit . " OFFSET " . $sql_offset;
+				$query_select = DB::query($sql_select);
+				foreach ($sql_params as $key => $value) {
+					$query_select->param($key, $value);
+				}
+				$result_select = $query_select->execute()->as_array();
+				
+				if(count($result_select)) {
+					$result = array(
+						'route_count' => $route_count,
+						'route_list' => $result_select,
+						'start_number' => $sql_offset + 1,
+						'end_number' => count($result_select) + $sql_offset,
+					);
+					return $result;
+				}
+			}
+		}
+
+		return false;
 	}
 	
 	/*
@@ -284,6 +500,84 @@ class Model_Route extends Model
 		}
 		
 		$result['error'] = array_unique($result['error']);
+		
+		return $result;
+	}
+	
+	/*
+	 * 删除路线前删除ID查验
+	 */
+	public static function CheckDeleteRouteById($route_id) {
+		$result = array(
+			'result' => true,
+			'error' => array(),
+		);
+		
+		if(!is_numeric($route_id)) {
+			$result['result'] = false;
+			$result['error'][] = 'nonum_id';
+		}
+		
+		if($result['result']) {
+			$sql_exist = "SELECT * FROM t_route WHERE route_id = :route_id";
+			$query_exist = DB::query($sql_exist);
+			$query_exist->param(':route_id', $route_id);
+			$result_exist = $query_exist->execute()->as_array();
+			
+			if(!count($result_exist)) {
+				$result['result'] = false;
+				$result['error'][] = 'noexist';
+			}
+		}
+		
+		return $result;
+	}
+	
+	/*
+	 * 删除路线前删除ID查验(批量)
+	 */
+	public static function CheckDeleteRouteByIdList($route_id_list) {
+		$result = array(
+			'result' => true,
+			'error' => array(),
+		);
+		
+		if(!is_array($route_id_list)) {
+			$result['result'] = false;
+			$result['error'][] = 'noarray_route_id';
+		} elseif(!count($route_id_list)) {
+			$result['result'] = false;
+			$result['error'][] = 'empty_route_id';
+		} else {
+			foreach($route_id_list as $route_id) {
+				if(!is_numeric($route_id)) {
+					$result['result'] = false;
+					$result['error'][] = 'nonum_route_id';
+					break;
+				}
+			}
+			
+			if($result['result']) {
+				$sql_where_list = array();
+				$sql_param_list = array();
+				foreach($route_id_list as $route_id_counter => $route_id) {
+					$sql_where_list[] = ':route_id_' . $route_id_counter;
+					$sql_param_list[':route_id_' . $route_id_counter] = $route_id;
+				}
+				$sql_where = implode(', ', $sql_where_list);
+				$sql_exist = "SELECT * FROM t_route WHERE route_id IN (" . $sql_where . ")";
+				$query_exist = DB::query($sql_exist);
+				foreach($sql_param_list as $key => $value) {
+					$query_exist->param($key, $value);
+				}
+				$result_exist = $query_exist->execute()->as_array();
+				
+				if(count($result_exist) != count($route_id_list)) {
+					$result['result'] = false;
+					$result['error'][] = 'noexist_route_id';
+				}
+			}
+		}
 		
 		return $result;
 	}

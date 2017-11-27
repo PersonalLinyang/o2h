@@ -55,11 +55,15 @@ return array(
 	'admin/delete_restaurant_type'        => 'admin/service/restauranttypelist/deleterestauranttype',
 	
 	//旅游路线管理
+	'admin/route_list'               => 'admin/service/routelist/index',
+	'admin/route_list/(:page)'       => 'admin/service/routelist/index/$1',
 	'admin/add_route'                => 'admin/service/addroute',
 	'admin/add_route/spot_list'      => 'admin/service/addroute/spotlist',
 	'admin/route_detail/(:route_id)' => 'admin/service/routedetail/index/$1',
 	'admin/modify_route_status'      => 'admin/service/routedetail/modifyroutestatus',
 	'admin/modify_route/(:route_id)' => 'admin/service/modifyroute/index/$1',
+	'admin/delete_route'             => 'admin/service/routelist/deleteroute',
+	'admin/delete_checked_route'     => 'admin/service/routelist/deletecheckedroute',
 	
 	//系统权限管理
 	'admin/permission_list'          => 'admin/user/permissionlist/index',
