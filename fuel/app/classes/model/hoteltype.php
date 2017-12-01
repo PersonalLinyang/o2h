@@ -41,9 +41,20 @@ class Model_Hoteltype extends Model
 	}
 
 	/*
-	 * 获取全部酒店类别信息
+	 * 获取全部酒店类别列表
 	 */
 	public static function GetHotelTypeListAll() {
+		$sql_hotel_type = "SELECT hotel_type_id, hotel_type_name FROM m_hotel_type ORDER BY hotel_type_id";
+		$query_hotel_type = DB::query($sql_hotel_type);
+		$hotel_type_list = $query_hotel_type->execute()->as_array();
+		
+		return $hotel_type_list;
+	}
+
+	/*
+	 * 获取全部酒店类别信息
+	 */
+	public static function GetHotelTypeInfoAll() {
 		$sql_hotel_type = "SELECT mht.hotel_type_id, mht.hotel_type_name, COUNT(th.hotel_id) hotel_count "
 						. "FROM m_hotel_type mht LEFT JOIN t_hotel th ON th.hotel_type = mht.hotel_type_id " 
 						. "GROUP BY hotel_type_id, hotel_type_name ORDER BY hotel_type_id";

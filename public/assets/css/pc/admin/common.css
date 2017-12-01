@@ -8,6 +8,10 @@
 	color: #713E00;
 }
 
+::placeholder{
+	color: #BDBDBD;
+}
+
 /* p标签 */
 p {
 	margin: 0px;
@@ -60,6 +64,20 @@ textarea {
 	padding-bottom: 2px;
 }
 
+/* 文字输入 */
+input[type="number"] {
+	height: 30px;
+	line-height: 30px;
+	border: 2px solid #713E00;
+	border-radius: 5px;
+	padding-left: 10px;
+	padding-right: 0;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-size: 16px;
+	box-sizing: border-box;
+}
+
 /* 下拉选择 */
 select {
 	height: 30px;
@@ -71,6 +89,9 @@ select {
 	padding-left: 10px;
 	padding-right: 10px;
 	font-size: 16px;
+}
+select option {
+	color: #000000;
 }
 
 /* 列表 */
@@ -679,10 +700,17 @@ input[type="checkbox"] {
 	height: 96px;
 }
 
+.content-form input[type="number"] {
+	width: 100%;
+}
+
 .content-form select {
 	width: 100%;
 }
 
+.content-form .radio-group {
+	overflow: hidden;
+}
 .content-form .lbl-for-radio {
 	background-color: #EBCF89;
 	border: 2px solid #713E00;
@@ -690,10 +718,14 @@ input[type="checkbox"] {
 	padding-right: 30px;
 	padding-top: 2px;
 	padding-bottom: 3px;
-	line-height: 30px;
+	line-height: 21px;
 	border-radius: 18px;
 	position: relative;
 	margin-right: 20px;
+	width: 48px;
+	height: 21px;
+	display: block;
+	float: left;
 }
 .content-form .lbl-for-radio:before {
 	content: "";
@@ -839,6 +871,71 @@ input[type="checkbox"] {
 	width: 200px;
 	vertical-align: top;
 	padding-top: 4px;
+}
+
+/* form用内部可添加行表格 */
+.tb-content-form .tb-add-row-table {
+	border-collapse: collapse;
+	border: 2px solid #713E00;
+}
+.tb-content-form .tb-add-row-table th {
+	border: 1px solid #713E00;
+	text-align: center;
+	background: #E1D2B3;
+	padding: 0;
+	height: 30px;
+	vertical-align: middle;
+}
+.tb-content-form .tb-add-row-table th.th-add {
+	font-weight: normal;
+	cursor: pointer;
+	user-select: none;
+	position: relative;
+	line-height: 22px;
+	padding-left: 30px;
+}
+.tb-content-form .tb-add-row-table th.th-delete {
+	width: 30px;
+}
+.tb-content-form .tb-add-row-table th.th-add:before {
+	content: "+";
+	width: 18px;
+	height: 18px;
+	border: 2px dashed #713E00;
+	border-radius: 12px;
+	position: absolute;
+	top: 4px;
+	left: 50%;
+	margin-left: -80px;
+	font-size: 25px;
+	line-height: 16px;
+}
+.tb-content-form .tb-add-row-table th.th-add:hover {
+	background: #713E00;
+	color: #EEE2C4;
+}
+.tb-content-form .tb-add-row-table th.th-add:hover:before {
+	border: 2px dashed #EEE2C4;
+}
+.tb-content-form .tb-add-row-table td {
+	border: 1px solid #713E00;
+	padding: 2px;
+}
+.tb-content-form .tb-add-row-table td .btn-delete {
+	width: 26px;
+	height: 26px;
+	line-height: 26px;
+	text-align: center;
+	border-radius: 13px;
+	background: #E1D2B3;
+	cursor: pointer;
+	user-select: none;
+	font-size: 20px;
+	font-weight: bold;
+}
+.tb-content-form .tb-add-row-table td .btn-delete:hover {
+	background: #713E00;
+	color: #EEE2C4;
 }
 
 /* form用嵌套内层表格 */

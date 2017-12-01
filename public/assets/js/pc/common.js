@@ -1,4 +1,4 @@
-$(function(){  
+$(function(){	
 	//ID链接滑动
 	$('a[href*=#],area[href*=#]').click(function() {
 		if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
@@ -7,7 +7,7 @@ $(function(){
 			if ($target.length) {
 				var targetOffset = $target.offset().top - 90;
 				$('html,body').animate({
-				  scrollTop: targetOffset
+					scrollTop: targetOffset
 				},
 				800);
 				return false;

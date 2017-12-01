@@ -155,7 +155,18 @@ class Model_Route extends Model
 		
 		return $result_update;
 	}
-
+	
+	/*
+	 * 按条件获得路线列表
+	 */
+	public static function GetRouteSimpleListAll() {
+		$sql = "SELECT route_id, route_name FROM t_route WHERE route_status = 1";
+		$query = DB::query($sql);
+		$result = $query->execute()->as_array();
+		
+		return $result;
+	}
+	
 	/*
 	 * 按条件获得路线列表
 	 */

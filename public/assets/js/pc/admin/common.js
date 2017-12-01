@@ -71,4 +71,18 @@ $(function(){
 	$('#btn-content-menu-select-submit').click(function(){
 		$('#form-content-menu-select').submit();
 	});
+	
+	// 項目が変更された時、条件によって色変更
+	$('select').each(function(){
+		if($(this).find('option:selected').hasClass('placeholder')) {
+			$(this).css({'color': '#BDBDBD'});
+		}
+	});
+	$('select').on('change', function(){
+		if($(this).find('option:selected').hasClass('placeholder')) {
+			$(this).css({'color': '#BDBDBD'});
+		} else {
+			$(this).css({'color': '#000000'});
+		}
+	});
 });

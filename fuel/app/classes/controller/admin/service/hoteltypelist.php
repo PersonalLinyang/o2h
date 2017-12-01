@@ -25,7 +25,7 @@ class Controller_Admin_Service_Hoteltypelist extends Controller_Admin_App
 //		if(isset($_SESSION['login_user']['permission'][5][7][1])) {
 			$data['success_message'] = '';
 			$data['error_message'] = '';
-			$data['hotel_type_list'] = Model_HotelType::GetHotelTypeListAll();
+			$data['hotel_type_list'] = Model_HotelType::GetHotelTypeInfoAll();
 			
 			if(isset($_SESSION['add_hotel_type_success'])) {
 				$data['success_message'] = '酒店类别添加成功';

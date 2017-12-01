@@ -65,6 +65,12 @@ return array(
 	'admin/delete_route'             => 'admin/service/routelist/deleteroute',
 	'admin/delete_checked_route'     => 'admin/service/routelist/deletecheckedroute',
 	
+	//顾客管理
+	'admin/add_customer'                => 'admin/customer/addcustomer',
+	'admin/add_customer/customer_cost_type_list'  => 'admin/customer/addcustomer/customercosttypelist',
+	'admin/add_customer/hotel_type_list'     => 'admin/customer/addcustomer/hoteltypelist',
+	'admin/add_customer/room_type_list' => 'admin/customer/addcustomer/roomtypelist',
+	
 	//系统权限管理
 	'admin/permission_list'          => 'admin/user/permissionlist/index',
 	'admin/add_master_group'         => 'admin/user/addmastergroup/index',
