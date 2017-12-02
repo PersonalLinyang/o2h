@@ -32,25 +32,7 @@ class Controller_App extends Controller
 		}
 
 		//時間を日本時間に調整
-		date_default_timezone_set('Asia/Tokyo');
-
-		//使う言語を判別してthemeを切り替える
-		if (isset($_GET['language'])) {
-			switch($_GET['language']) {
-				case 'ja' :
-					//日本
-					$this->language = 'ja';
-					break;
-//				case 'tw' :
-//					//中国語(繁体)
-//					$this->language = 'tw';
-//					break;
-				default :
-					//中国語(簡体)
-					$this->language = 'cn';
-					break;
-			}
-		}
+		date_default_timezone_set('PRC');
 		
 	}
 
