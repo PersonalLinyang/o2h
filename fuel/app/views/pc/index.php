@@ -7,6 +7,7 @@
 	<meta name="keywords" content="">
 	<link rel="canonical" href="https://www.ltdo2h.com">
 	<?php echo Asset::js('common/jquery-1.9.1.min.js'); ?>
+	<?php echo Asset::js('pc/common/google-analytics.js'); ?>
 </head>
 <body>
 	<?php echo $header; ?>
