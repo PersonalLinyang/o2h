@@ -13,6 +13,22 @@ class Model_Roomtype extends Model
 		
 		return $result;
 	}
+	
+	/*
+	 * 检查房型ID是否存在
+	 */
+	public static function CheckExistRoomTypeId($room_type_id) {
+		$sql = "SELECT * FROM m_room_type WHERE room_type_id = :room_type_id";
+		$query = DB::query($sql);
+		$query->param(':room_type_id', $room_type_id);
+		$result = $query->execute()->as_array();
+		
+		if(count($result)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 }
 

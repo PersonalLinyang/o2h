@@ -21,8 +21,8 @@
 			<form method="post" action="" class="content-form" enctype="multipart/form-data">
 				<table class="tb-content-form">
 					<tr>
-						<th>顾客名</th>
-						<td><input type="text" name="customer_name" value="<?php echo $input_customer_name; ?>" maxlength="50" placeholder="请输入顾客名" /></td>
+						<th>顾客姓名</th>
+						<td><input type="text" name="customer_name" value="<?php echo $input_customer_name; ?>" maxlength="50" placeholder="请输入顾客姓名" /></td>
 					</tr>
 					<tr>
 						<th>顾客来源</th>
@@ -38,12 +38,38 @@
 						</td>
 					</tr>
 					<tr>
+						<th>负责人</th>
+						<td>
+							<div class="div-search-area">
+								<div class="div-search-input">
+									<input type="text" class="txt-search" placeholder="请输入负责人姓名" />
+								</div>
+								<ul class="ul-search-list">
+								<?php foreach($user_list as $user): ?>
+									<li data-id="<?php echo $user['user_id']; ?>" data-name="<?php echo $user['user_name']; ?>">
+										<input type="radio" name="staff_id" value="<?php echo $user['user_id']; ?>" id="rdo-staff-id-<?php echo $user['user_id']; ?>" 
+												<?php echo $input_staff_id == $user['user_id'] ? 'checked ' : ''; ?>/>
+										<label class="lbl-for-radio lbl-for-radio-staff<?php echo $input_first_flag == $user['user_id'] ? ' active' : ''; ?>" 
+												for="rdo-staff-id-<?php echo $user['user_id']; ?>" data-for="rdo-staff-id">
+											<?php echo $user['user_name']; ?>
+										</label>
+									</li>
+								<?php endforeach; ?>
+								</ul>
+							</div>
+						</td>
+					</tr>
+					<tr>
 						<th>人数</th>
 						<td>
 							男<input class="people-number" type="number" name="men_num" value="<?php echo $input_men_num; ?>" placeholder="请输入人数" />
 							女<input class="people-number" type="number" name="women_num" value="<?php echo $input_women_num; ?>" placeholder="请输入人数" />
 							儿童<input class="people-number" type="number" name="children_num" value="<?php echo $input_children_num; ?>" placeholder="请输入人数" />
 						</td>
+					</tr>
+					<tr>
+						<th>旅行天数</th>
+						<td><input type="number" name="travel_days" value="<?php echo $input_travel_days; ?>" placeholder="请输入旅行天数" /></td>
 					</tr>
 					<tr>
 						<th>来日日期</th>
@@ -73,7 +99,7 @@
 						<td>
 							<select name="route_id">
 								<option value="" class="placeholder">--请选择基本旅游路线--</option>
-								<option value="0" class="placeholder">定制路线</option>
+								<option value="0"<?php echo $input_route_id == '0' ? ' selected' : ''; ?>>私人定制路线</option>
 								<?php foreach($route_list as $route): ?>
 								<option value="<?php echo $route['route_id']; ?>"<?php echo $input_route_id == $route['route_id'] ? ' selected' : ''; ?>>
 									<?php echo $route['route_name']; ?>
@@ -83,21 +109,21 @@
 						</td>
 					</tr>
 					<tr>
-						<th>预算(不含吃住)</th>
+						<th>预算(元)(不含吃住)</th>
 						<td><input type="number" name="budget_base" value="<?php echo $input_budget_base; ?>" placeholder="请输入不含吃住的预算金额" /></td>
 					</tr>
 					<tr>
-						<th>预算(含吃住)</th>
+						<th>预算(元)(含吃住)</th>
 						<td><input type="number" name="budget_total" value="<?php echo $input_budget_total; ?>" placeholder="请输入含吃住的预算金额" /></td>
 					</tr>
 					<tr>
 						<th>首次利用</th>
 						<td>
 							<div class="radio-group">
-								<input type="radio" name="first_flag" value="1" id="first-flag-1" <?php echo $input_first_flag == '1' ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $input_first_flag == '1' ? ' active' : ''; ?>" for="first-flag-1" data-for="chk-first-flag">是</label>
-								<input type="radio" name="first_flag" value="0" id="first-flag-0" <?php echo $input_first_flag == '1' ? '' : 'checked '; ?>/>
-								<label class="lbl-for-radio<?php echo $input_first_flag == '1' ? '' : ' active'; ?>" for="first-flag-0" data-for="chk-first-flag">否</label>
+								<input type="radio" name="first_flag" value="1" id="rdo-first-flag-1" <?php echo $input_first_flag == '1' ? 'checked ' : ''; ?>/>
+								<label class="lbl-for-radio<?php echo $input_first_flag == '1' ? ' active' : ''; ?>" for="rdo-first-flag-1" data-for="rdo-first-flag">是</label>
+								<input type="radio" name="first_flag" value="0" id="rdo-first-flag-0" <?php echo $input_first_flag == '1' ? '' : 'checked '; ?>/>
+								<label class="lbl-for-radio<?php echo $input_first_flag == '1' ? '' : ' active'; ?>" for="rdo-first-flag-0" data-for="rdo-first-flag">否</label>
 							</div>
 						</td>
 					</tr>
@@ -105,16 +131,16 @@
 						<th>目标景点</th>
 						<td>
 							<div class="radio-group">
-								<input type="radio" name="spot_hope_flag" value="1" class="rdo-spot-hope-flag" id="spot-hope-flag-1" <?php echo $input_spot_hope_flag == '1' ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $input_spot_hope_flag == '1' ? ' active' : ''; ?>" for="spot-hope-flag-1" data-for="chk-spot-hope-flag"><p>有</p></label>
-								<input type="radio" name="spot_hope_flag" value="0" class="rdo-spot-hope-flag" id="spot-hope-flag-0" <?php echo $input_spot_hope_flag == '1' ? '' : 'checked '; ?>/>
-								<label class="lbl-for-radio<?php echo $input_spot_hope_flag == '1' ? '' : ' active'; ?>" for="spot-hope-flag-0" data-for="chk-spot-hope-flag"><p>无</p></label>
+								<input type="radio" name="spot_hope_flag" value="1" class="rdo-spot-hope-flag" id="rdo-spot-hope-flag-1" <?php echo $input_spot_hope_flag == '1' ? 'checked ' : ''; ?>/>
+								<label class="lbl-for-radio<?php echo $input_spot_hope_flag == '1' ? ' active' : ''; ?>" for="rdo-spot-hope-flag-1" data-for="rdo-spot-hope-flag"><p>有</p></label>
+								<input type="radio" name="spot_hope_flag" value="0" class="rdo-spot-hope-flag" id="rdo-spot-hope-flag-0" <?php echo $input_spot_hope_flag == '1' ? '' : 'checked '; ?>/>
+								<label class="lbl-for-radio<?php echo $input_spot_hope_flag == '1' ? '' : ' active'; ?>" for="rdo-spot-hope-flag-0" data-for="rdo-spot-hope-flag"><p>无</p></label>
 							</div>
 							<div class="div-spot-hope-list"<?php echo $input_spot_hope_flag == '1' ? '' : ' style="display: none;"'; ?>>
 								<ul class="ul-spot-hope-list-selected" id="ul-spot-hope-list-selected">
 								<?php foreach($spot_list as $spot): ?>
 									<?php if(in_array($spot['spot_id'], $input_spot_hope_list)): ?>
-									<li data-spotid="<?php echo $spot['spot_id']; ?>" data-spotname="<?php echo $spot['spot_name']; ?>">
+									<li data-id="<?php echo $spot['spot_id']; ?>" data-name="<?php echo $spot['spot_name']; ?>">
 										<?php echo $spot['spot_name']; ?>
 										<p class="btn-spot-hope-unselect" id="btn-spot-hope-unselect-<?php echo $spot['spot_id']; ?>">×</p>
 										<input type="hidden" name="route_spot_hope_list[]" value="<?php echo $spot['spot_id']; ?>" />
@@ -122,20 +148,22 @@
 									<?php endif; ?>
 								<?php endforeach; ?>
 								</ul>
-								<div class="div-spot-hope-search">
-									<input type="text" class="txt-spot-hope-search" id="txt-spot-hope-search" placeholder="请输入目标景点" />
+								<div class="div-search-area">
+									<div class="div-search-input">
+										<input type="text" class="txt-search" placeholder="请输入目标景点" />
+									</div>
+									<ul class="ul-search-list" id="ul-spot-hope-list">
+									<?php foreach($spot_list as $spot): ?>
+										<?php if(!in_array($spot['spot_id'], $input_spot_hope_list)): ?>
+										<li data-id="<?php echo $spot['spot_id']; ?>" data-name="<?php echo $spot['spot_name']; ?>">
+											<p class="btn-spot-hope-select" id="btn-spot-hope-select-<?php echo $spot['spot_id']; ?>"></p>
+											<?php echo $spot['spot_name']; ?>
+										</li>
+										<?php endif; ?>
+									<?php endforeach; ?>
+									</ul>
 								</div>
-								<ul class="ul-spot-hope-list" id="ul-spot-hope-list">
-								<?php foreach($spot_list as $spot): ?>
-									<?php if(!in_array($spot['spot_id'], $input_spot_hope_list)): ?>
-									<li data-spotid="<?php echo $spot['spot_id']; ?>" data-spotname="<?php echo $spot['spot_name']; ?>">
-										<p class="btn-spot-hope-select" id="btn-spot-hope-select-<?php echo $spot['spot_id']; ?>"></p>
-										<?php echo $spot['spot_name']; ?>
-									</li>
-									<?php endif; ?>
-								<?php endforeach; ?>
-								</ul>
-								<textarea name="spot_hope_other" placeholder="其他目标景点"><?php echo $input_spot_hope_other; ?></textarea>
+								<textarea name="spot_hope_other" class="txt-spot-hope-other" placeholder="其他目标景点"><?php echo $input_spot_hope_other; ?></textarea>
 							</div>
 						</td>
 					</tr>
@@ -143,13 +171,13 @@
 						<th>酒店预约</th>
 						<td>
 							<div class="radio-group">
-								<input type="radio" name="hotel_reserve_flag" value="1" class="rdo-hotel-reserve-flag" id="hotel-reserve-flag-1" <?php echo $input_hotel_reserve_flag == '1' ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $input_hotel_reserve_flag == '1' ? ' active' : ''; ?>" for="hotel-reserve-flag-1" data-for="chk-hotel-reserve-flag">需要</label>
-								<input type="radio" name="hotel_reserve_flag" value="0" class="rdo-hotel-reserve-flag" id="hotel-reserve-flag-0" <?php echo $input_hotel_reserve_flag == '1' ? '' : 'checked '; ?>/>
-								<label class="lbl-for-radio<?php echo $input_hotel_reserve_flag == '1' ? '' : ' active'; ?>" for="hotel-reserve-flag-0" data-for="chk-hotel-reserve-flag">不需要</label>
+								<input type="radio" name="hotel_reserve_flag" value="1" class="rdo-hotel-reserve-flag" id="rdo-hotel-reserve-flag-1" <?php echo $input_hotel_reserve_flag == '1' ? 'checked ' : ''; ?>/>
+								<label class="lbl-for-radio<?php echo $input_hotel_reserve_flag == '1' ? ' active' : ''; ?>" for="rdo-hotel-reserve-flag-1" data-for="rdo-hotel-reserve-flag">需要</label>
+								<input type="radio" name="hotel_reserve_flag" value="0" class="rdo-hotel-reserve-flag" id="rdo-hotel-reserve-flag-0" <?php echo $input_hotel_reserve_flag == '1' ? '' : 'checked '; ?>/>
+								<label class="lbl-for-radio<?php echo $input_hotel_reserve_flag == '1' ? '' : ' active'; ?>" for="rdo-hotel-reserve-flag-0" data-for="rdo-hotel-reserve-flag">不需要</label>
 							</div>
 							<div class="div-hotel-reserve-list"<?php echo $input_hotel_reserve_flag == '1' ? '' : ' style="display: none;"'; ?>>
-								<table class="tb-add-row-table tb-hotel-reserve-list" id="tb-hotel-reserve-list" data-costrow="<?php echo count($input_hotel_reserve_list); ?>">
+								<table class="tb-add-row-table tb-hotel-reserve-list" id="tb-hotel-reserve-list" data-row="<?php echo count($input_hotel_reserve_list); ?>">
 									<tr>
 										<th class="th-delete"></th>
 										<th class="th-hotel-type">酒店类型</th>
@@ -161,7 +189,10 @@
 									</tr>
 									<?php foreach($input_hotel_reserve_list as $row_num => $hotel_reserve): ?>
 									<tr>
-										<td><p class="btn-delete">－</p></td>
+										<td>
+											<p class="btn-delete">－</p>
+											<input type="hidden" name="hotel_reserve_row[]" value="<?php echo $row_num; ?>" />
+										</td>
 										<td>
 											<select class="sel-hotel-type" name="hotel_type_<?php echo $row_num; ?>">
 												<option value="" class="placeholder">-请选择-</option>
@@ -187,7 +218,7 @@
 										<td><input type="number" name="people_num_<?php echo $row_num; ?>" class="txt-people-num" value="<?php echo $hotel_reserve['people_num']; ?>" placeholder="人数" /></td>
 										<td><input type="number" name="room_num_<?php echo $row_num; ?>" class="txt-room-num" value="<?php echo $hotel_reserve['room_num']; ?>" placeholder="间数" /></td>
 										<td><input type="number" name="day_num_<?php echo $row_num; ?>" class="txt-day-num" value="<?php echo $hotel_reserve['day_num']; ?>" placeholder="天数" /></td>
-										<td><input type="text" name="etc_<?php echo $row_num; ?>" value="<?php echo $hotel_reserve['etc']; ?>" maxlength="50" placeholder="请输入备注" /></td>
+										<td><input type="text" name="comment_<?php echo $row_num; ?>" value="<?php echo $hotel_reserve['comment']; ?>" maxlength="200" placeholder="请输入备注" /></td>
 									</tr>
 									<?php endforeach; ?>
 									<tr><th colspan="7" class="th-add">添加一行酒店预约</td></tr>
@@ -206,8 +237,8 @@
 					<tr>
 						<th>实际成本(日元)</th>
 						<td>
-							<table class="tb-add-row-table tb-customer-cost" id="tb-customer-cost" data-costrow="<?php echo count($input_customer_cost); ?>">
-								<tr><th colspan="8" class="th-customer-cost">当前实际成本 : <span class="span-customer-cost"><?php echo $input_cost_total;?></span></th></tr>
+							<table class="tb-add-row-table tb-customer-cost" id="tb-customer-cost" data-row="<?php echo count($input_customer_cost_list); ?>">
+								<tr><th colspan="8" class="th-customer-cost">当前实际成本 : <span class="span-cost-total"><?php echo $input_cost_total;?></span></th></tr>
 								<tr>
 									<th class="th-delete"></th>
 									<th class="th-type">项目</th>
@@ -217,9 +248,9 @@
 									<th class="th-each">单价</th>
 									<th class="th-total">合计</th>
 								</tr>
-								<?php foreach($input_customer_cost as $row_num => $customer_cost): ?>
+								<?php foreach($input_customer_cost_list as $row_num => $customer_cost): ?>
 								<tr>
-									<td><p class="btn-delete">－</p></td>
+									<td><p class="btn-delete">－</p><input type="hidden" name="customer_cost_row[]" value="<?php echo $row_num; ?>" /></td>
 									<td>
 										<select class="sel-customer-cost-type" name="customer_cost_type_<?php echo $row_num; ?>">
 											<option value="" class="placeholder">-请选择-</option>
@@ -228,15 +259,18 @@
 													<?php echo $customer_cost['customer_cost_type'] == $customer_cost_type['customer_cost_type_id'] ? ' selected' : ''; ?>>
 												<?php echo $customer_cost_type['customer_cost_type_name']; ?>
 											</option>
-											<option value="1" <?php echo $customer_cost['customer_cost_type'] == '1' ? ' selected' : ''; ?>>其他</option>
 											<?php endforeach; ?>
+											<option value="1" <?php echo $customer_cost['customer_cost_type'] == '1' ? ' selected' : ''; ?>>其他</option>
 										</select>
 									</td>
-									<td><input type="text" name="customer_cost_name_<?php echo $row_num; ?>" value="<?php echo $customer_cost['customer_cost_name']; ?>" maxlength="100" placeholder="请输入简述" /></td>
-									<td><input type="number" name="cost_day_<?php echo $row_num; ?>" class="txt-cost-day" value="<?php echo $customer_cost['cost_day']; ?>" placeholder="天数" /></td>
-									<td><input type="number" name="cost_people_<?php echo $row_num; ?>" class="txt-cost-people" value="<?php echo $customer_cost['cost_people']; ?>" placeholder="人数" /></td>
-									<td><input type="number" name="cost_each_<?php echo $row_num; ?>" class="txt-cost-each" value="<?php echo $customer_cost['cost_each']; ?>" placeholder="单价" /></td>
-									<td class="td-total"><span class="span-cost-total"><?php echo $customer_cost['cost_total']; ?></span></td>
+									<td>
+										<input type="text" name="customer_cost_desc_<?php echo $row_num; ?>" class="txt-customer-cost-desc<?php echo $customer_cost['customer_cost_type'] == '1' ? '' : ' readonly'; ?>" 
+												value="<?php echo $customer_cost['customer_cost_desc']; ?>" maxlength="100" placeholder="请输入简述"<?php echo $customer_cost['customer_cost_type'] == '1' ? '' : ' readonly="readonly"'; ?> />
+									</td>
+									<td><input type="number" name="customer_cost_day_<?php echo $row_num; ?>" class="txt-customer-cost-day" value="<?php echo $customer_cost['customer_cost_day']; ?>" placeholder="天数" /></td>
+									<td><input type="number" name="customer_cost_people_<?php echo $row_num; ?>" class="txt-customer-cost-people" value="<?php echo $customer_cost['customer_cost_people']; ?>" placeholder="人数" /></td>
+									<td><input type="number" name="customer_cost_each_<?php echo $row_num; ?>" class="txt-customer-cost-each" value="<?php echo $customer_cost['customer_cost_each']; ?>" placeholder="单价" /></td>
+									<td class="td-total"><span class="span-customer-cost-total"><?php echo $customer_cost['customer_cost_total']; ?></span></td>
 								</tr>
 								<?php endforeach; ?>
 								<tr><th colspan="8" class="th-add">添加一行实际成本</td></tr>
@@ -250,6 +284,10 @@
 					<tr>
 						<th>航班号</th>
 						<td><input type="text" name="airplane_num" value="<?php echo $input_airplane_num; ?>" maxlength="20" placeholder="请输入航班号" /></td>
+					</tr>
+					<tr>
+						<th>备注</th>
+						<td><textarea name="comment" placeholder="请输入备注"><?php echo $input_comment; ?></textarea></td>
 					</tr>
 					<tr>
 						<td colspan="2">

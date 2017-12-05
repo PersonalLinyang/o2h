@@ -183,6 +183,22 @@ class Model_Hoteltype extends Model
 		
 		return $result;
 	}
+	
+	/*
+	 * 检查酒店类别ID是否存在
+	 */
+	public static function CheckExistHotelTypeId($hotel_type_id) {
+		$sql = "SELECT * FROM m_hotel_type WHERE hotel_type_id = :hotel_type_id";
+		$query = DB::query($sql);
+		$query->param(':hotel_type_id', $hotel_type_id);
+		$result = $query->execute()->as_array();
+		
+		if(count($result)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 }
 

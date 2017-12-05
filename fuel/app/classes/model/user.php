@@ -45,6 +45,33 @@ class Model_User extends Model
 			return false;
 		}
 	}
+	
+	/*
+	 * 获取全部在职用户简易信息列表
+	 */
+	public static function GetActiveUserSimpleListAll() {
+		$sql = "SELECT user_id, user_name FROM t_user Where delete_flag = 0 ORDER BY user_id";
+		$query = DB::query($sql);
+		$result = $query->execute()->as_array();
+		
+		return $result;
+	}
+	
+	/*
+	 * 检查用户ID是否在职
+	 */
+	public static function CheckActiveUserId($user_id) {
+		$sql = "SELECT * FROM t_user WHERE user_id = :user_id AND delete_flag = 0";
+		$query = DB::query($sql);
+		$query->param(':user_id', $user_id);
+		$result = $query->execute()->as_array();
+		
+		if(count($result)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 }
 
