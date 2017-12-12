@@ -4,6 +4,117 @@ class Model_Customer extends Model
 {
 
 	/*
+	 * 添加顾客
+	 */
+	 public static function InsertCustomer($params) {
+	 	$sql_customer_columns = '';
+	 	$sql_customer_values = '';
+	 	$sql_customer_param_list = array();
+		$sql_customer_spot_param_list = array();
+		$sql_customer_spot_value_list = array();
+		$sql_hotel_reserve_param_list = array();
+		$sql_hotel_reserve_value_list = array();
+		$sql_customer_cost_param_list = array();
+		$sql_customer_cost_value_list = array();
+	 	
+	 	//添加数据整理
+	 	foreach($params as $param_key => $param_value) {
+	 		switch($param_key) {
+	 			case 'spot_hope_list':
+					foreach($param_value as $key => $value) {
+						$sql_customer_spot_param_list[':spot_id_' . $key] = $value;
+						$sql_customer_spot_value_list[] = "(:customer_id, :spot_id_" . $key . ")";
+					}
+	 				break;
+	 			case 'hotel_reserve_list':
+	 				foreach($param_value as $key => $value) {
+	 					$sql_hotel_reserve_param_list[':row_id_' . $key] = $key;
+	 					$sql_hotel_reserve_param_list[':hotel_type_' . $key] = $value['hotel_type'] == '' ? NULL : $value['hotel_type'];;
+	 					$sql_hotel_reserve_param_list[':room_type_' . $key] = $value['room_type'] == '' ? NULL : $value['room_type'];;
+	 					$sql_hotel_reserve_param_list[':people_num_' . $key] = $value['people_num'] == '' ? NULL : $value['people_num'];;
+	 					$sql_hotel_reserve_param_list[':room_num_' . $key] = $value['room_num'] == '' ? NULL : $value['room_num'];;
+	 					$sql_hotel_reserve_param_list[':day_num_' . $key] = $value['day_num'] == '' ? NULL : $value['day_num'];;
+	 					$sql_hotel_reserve_param_list[':comment_' . $key] = $value['comment'] == '' ? NULL : $value['comment'];;
+						$sql_hotel_reserve_value_list[] = "(:customer_id, :row_id_" . $key . ", :hotel_type_" . $key . ", :room_type_" . $key . ", "
+														. ":people_num_" . $key . ", :room_num_" . $key . ", :day_num_" . $key . ", :comment_" . $key . ")";
+	 				}
+	 				break;
+	 			case 'customer_cost_list':
+	 				foreach($param_value as $key => $value) {
+	 					$sql_customer_cost_param_list[':row_id_' . $key] = $key;
+	 					$sql_customer_cost_param_list[':customer_cost_type_' . $key] = $value['customer_cost_type'] == '' ? NULL : $value['customer_cost_type'];
+	 					$sql_customer_cost_param_list[':customer_cost_desc_' . $key] = $value['customer_cost_desc'] == '' ? NULL : $value['customer_cost_desc'];
+	 					$sql_customer_cost_param_list[':customer_cost_day_' . $key] = $value['customer_cost_day'] == '' ? NULL : $value['customer_cost_day'];
+	 					$sql_customer_cost_param_list[':customer_cost_people_' . $key] = $value['customer_cost_people'] == '' ? NULL : $value['customer_cost_people'];
+	 					$sql_customer_cost_param_list[':customer_cost_each_' . $key] = $value['customer_cost_each'] == '' ? NULL : $value['customer_cost_each'];
+	 					$sql_customer_cost_param_list[':customer_cost_total_' . $key] = $value['customer_cost_total'] == '' ? NULL : $value['customer_cost_total'];
+						$sql_customer_cost_value_list[] = "(:customer_id, :row_id_" . $key . ", :customer_cost_type_" . $key . ", :customer_cost_desc_" . $key . ", "
+														. ":customer_cost_day_" . $key . ", :customer_cost_people_" . $key . ", :customer_cost_each_" . $key . ", :customer_cost_total_" . $key . ")";
+	 				}
+	 				break;
+	 			default:
+	 				if($param_value != '') {
+	 					$sql_customer_columns .= $param_key . ',';
+	 					$sql_customer_values .= ':' . $param_key . ',';
+	 					$sql_customer_param_list[':' . $param_key] = $param_value;
+	 				}
+	 				break;
+	 		}
+	 	}
+	 	
+	 	//顾客数据添加
+	 	$sql_customer = "INSERT INTO t_customer(" . $sql_customer_columns . " created_at, modified_at) "
+	 				. "VALUES(" . $sql_customer_values . " now(), now())";
+		$query_customer = DB::query($sql_customer);
+		foreach($sql_customer_param_list as $param_key => $param_value) {
+			$query_customer->param($param_key, $param_value);
+		}
+		$result_customer = $query_customer->execute();
+		
+		if($result_customer) {
+			$customer_id = intval($result_customer[0]);
+			
+	 		//希望景点添加
+			if(count($sql_customer_spot_value_list)) {
+				$sql_customer_spot = "INSERT INTO r_customer_spot(customer_id, spot_id) VALUES" . implode(", ", $sql_customer_spot_value_list);
+				$query_customer_spot = DB::query($sql_customer_spot);
+				$query_customer_spot->param(':customer_id', $customer_id);
+				foreach($sql_customer_spot_param_list as $param_key => $param_value) {
+					$query_customer_spot->param($param_key, $param_value);
+				}
+				$result_customer_spot = $query_customer_spot->execute();
+			}
+			
+	 		//酒店预定添加
+			if(count($sql_hotel_reserve_value_list)) {
+				$sql_hotel_reserve = "INSERT INTO t_hotel_reserve(customer_id, row_id, hotel_type, room_type, people_num, room_num, day_num, comment) "
+									. "VALUES" . implode(", ", $sql_hotel_reserve_value_list);
+				$query_hotel_reserve = DB::query($sql_hotel_reserve);
+				$query_hotel_reserve->param(':customer_id', $customer_id);
+				foreach($sql_hotel_reserve_param_list as $param_key => $param_value) {
+					$query_hotel_reserve->param($param_key, $param_value);
+				}
+				$result_hotel_reserve = $query_hotel_reserve->execute();
+			}
+			
+	 		//实际成本添加
+			if(count($sql_customer_cost_value_list)) {
+				$sql_customer_cost = "INSERT INTO t_customer_cost(customer_id, row_id, customer_cost_type, customer_cost_desc, "
+									. "customer_cost_day, customer_cost_people, customer_cost_each, customer_cost_total) "
+									. "VALUES" . implode(", ", $sql_customer_cost_value_list);
+				$query_customer_cost = DB::query($sql_customer_cost);
+				$query_customer_cost->param(':customer_id', $customer_id);
+				foreach($sql_customer_cost_param_list as $param_key => $param_value) {
+					$query_customer_cost->param($param_key, $param_value);
+				}
+				$result_customer_cost = $query_customer_cost->execute();
+			}
+		}
+		
+		return $result_customer;
+	 }
+
+	/*
 	 * 添加顾客前添加信息查验
 	 */
 	public static function CheckInsertCustomer($params) {
@@ -28,6 +139,39 @@ class Model_Customer extends Model
 		} elseif(!Model_Customerstatus::CheckExistCustomerStatusId($params['customer_status'])) {
 			$result['result'] = false;
 			$result['error'][] = 'noexist_customer_status';
+		}
+		
+		//顾客性别
+		if(!empty($params['customer_gender'])) {
+			if(!is_numeric($params['customer_gender'])) {
+				$result['result'] = false;
+				$result['error'][] = 'nonum_customer_gender';
+			} elseif(!in_array($params['customer_gender'], array('1', '2'))) {
+				$result['result'] = false;
+				$result['error'][] = 'error_customer_gender';
+			}
+		}
+		
+		//顾客年龄
+		if(!empty($params['customer_age'])) {
+			if(!is_numeric($params['customer_age'])) {
+				$result['result'] = false;
+				$result['error'][] = 'nonum_customer_age';
+			} elseif(!in_array($params['customer_age'], array('1', '2', '3', '4', '5'))) {
+				$result['result'] = false;
+				$result['error'][] = 'error_customer_age';
+			}
+		}
+		
+		//旅游目的
+		if(!empty($params['travel_reason'])) {
+			if(!is_numeric($params['travel_reason'])) {
+				$result['result'] = false;
+				$result['error'][] = 'nonum_travel_reason';
+			} elseif(!Model_Travelreason::CheckExistTravelReasonId($params['travel_reason'])) {
+				$result['result'] = false;
+				$result['error'][] = 'noexist_travel_reason';
+			}
 		}
 		
 		//顾客来源
@@ -63,53 +207,29 @@ class Model_Customer extends Model
 		
 		//人数
 		if(!empty($params['men_num'])) {
-			if(!is_numeric($params['men_num'])) {
+			if(!preg_match('/^(\d{1,2})?$/', $params['men_num'])) {
 				$result['result'] = false;
-				$result['error'][] = 'nonum_men_num';
-			} elseif(intval($params['men_num']) < 0) {
-				$result['result'] = false;
-				$result['error'][] = 'minus_men_num';
-			} elseif($params['men_num'] - intval($params['men_num']) > 0) {
-				$result['result'] = false;
-				$result['error'][] = 'noint_men_num';
+				$result['error'][] = 'error_men_num';
 			}
 		}
 		if(!empty($params['women_num'])) {
-			if(!is_numeric($params['women_num'])) {
+			if(!preg_match('/^(\d{1,2})?$/', $params['women_num'])) {
 				$result['result'] = false;
-				$result['error'][] = 'nonum_women_num';
-			} elseif(intval($params['women_num']) < 0) {
-				$result['result'] = false;
-				$result['error'][] = 'minus_women_num';
-			} elseif($params['women_num'] - intval($params['women_num']) > 0) {
-				$result['result'] = false;
-				$result['error'][] = 'noint_women_num';
+				$result['error'][] = 'error_women_num';
 			}
 		}
 		if(!empty($params['children_num'])) {
-			if(!is_numeric($params['children_num'])) {
+			if(!preg_match('/^(\d{1,2})?$/', $params['children_num'])) {
 				$result['result'] = false;
-				$result['error'][] = 'nonum_children_num';
-			} elseif(intval($params['children_num']) < 0) {
-				$result['result'] = false;
-				$result['error'][] = 'minus_children_num';
-			} elseif($params['children_num'] - intval($params['children_num']) > 0) {
-				$result['result'] = false;
-				$result['error'][] = 'noint_children_num';
+				$result['error'][] = 'error_children_num';
 			}
 		}
 		
 		//旅行天数
 		if(!empty($params['travel_days'])) {
-			if(!is_numeric($params['travel_days'])) {
-				$result['result'] = false;
-				$result['error'][] = 'nonum_travel_days';
-			} elseif(intval($params['travel_days']) < 1) {
+			if(!preg_match('/^(\d{1,2})?$/', $params['travel_days'])) {
 				$result['result'] = false;
 				$result['error'][] = 'error_travel_days';
-			} elseif($params['travel_days'] - intval($params['travel_days']) > 0) {
-				$result['result'] = false;
-				$result['error'][] = 'noint_travel_days';
 			}
 		}
 		
@@ -172,21 +292,15 @@ class Model_Customer extends Model
 		
 		//预算
 		if(!empty($params['budget_base'])) {
-			if(!is_numeric($params['budget_base'])) {
+			if(!preg_match('/^(\d{1,6})(\.\d{1,2})?$/', $params['budget_base'])) {
 				$result['result'] = false;
-				$result['error'][] = 'nonum_budget_base';
-			} elseif(intval($params['budget_base']) < 0) {
-				$result['result'] = false;
-				$result['error'][] = 'minus_budget_base';
+				$result['error'][] = 'error_budget_base';
 			}
 		}
 		if(!empty($params['budget_total'])) {
-			if(!is_numeric($params['budget_total'])) {
+			if(!preg_match('/^(\d{1,6})(\.\d{1,2})?$/', $params['budget_total'])) {
 				$result['result'] = false;
-				$result['error'][] = 'nonum_budget_total';
-			} elseif(intval($params['budget_total']) < 0) {
-				$result['result'] = false;
-				$result['error'][] = 'minus_budget_total';
+				$result['error'][] = 'error_budget_total';
 			}
 		}
 		
@@ -263,43 +377,25 @@ class Model_Customer extends Model
 				
 				//人数
 				if(!empty($hotel_reserve['people_num'])) {
-					if(!is_numeric($hotel_reserve['people_num'])) {
-						$result['result'] = false;
-						$result['error'][] = 'nonum_people_num';
-					} elseif(intval($hotel_reserve['people_num']) < 1) {
+					if(!preg_match('/^(\d{1,2})?$/', $hotel_reserve['people_num'])) {
 						$result['result'] = false;
 						$result['error'][] = 'error_people_num';
-					} elseif($hotel_reserve['people_num'] - intval($hotel_reserve['people_num']) > 0) {
-						$result['result'] = false;
-						$result['error'][] = 'noint_people_num';
 					}
 				}
 				
 				//间数
 				if(!empty($hotel_reserve['room_num'])) {
-					if(!is_numeric($hotel_reserve['room_num'])) {
-						$result['result'] = false;
-						$result['error'][] = 'nonum_room_num';
-					} elseif(intval($hotel_reserve['room_num']) < 1) {
+					if(!preg_match('/^(\d{1,2})?$/', $hotel_reserve['room_num'])) {
 						$result['result'] = false;
 						$result['error'][] = 'error_room_num';
-					} elseif($hotel_reserve['room_num'] - intval($hotel_reserve['room_num']) > 0) {
-						$result['result'] = false;
-						$result['error'][] = 'noint_room_num';
 					}
 				}
 				
 				//天数
 				if(!empty($hotel_reserve['day_num'])) {
-					if(!is_numeric($hotel_reserve['day_num'])) {
-						$result['result'] = false;
-						$result['error'][] = 'nonum_day_num';
-					} elseif(intval($hotel_reserve['day_num']) < 1) {
+					if(!preg_match('/^(\d{1,2})?$/', $hotel_reserve['day_num'])) {
 						$result['result'] = false;
 						$result['error'][] = 'error_day_num';
-					} elseif($hotel_reserve['day_num'] - intval($hotel_reserve['day_num']) > 0) {
-						$result['result'] = false;
-						$result['error'][] = 'noint_day_num';
 					}
 				}
 				
@@ -315,23 +411,17 @@ class Model_Customer extends Model
 		
 		//成本报价
 		if(!empty($params['cost_budget'])) {
-			if(!is_numeric($params['cost_budget'])) {
+			if(!preg_match('/^(\d{1,6})(\.\d{1,2})?$/', $params['cost_budget'])) {
 				$result['result'] = false;
-				$result['error'][] = 'nonum_cost_budget';
-			} elseif(intval($params['cost_budget']) < 0) {
-				$result['result'] = false;
-				$result['error'][] = 'minus_cost_budget';
+				$result['error'][] = 'error_cost_budget';
 			}
 		}
 		
 		//成本报价
 		if(!empty($params['turnover'])) {
-			if(!is_numeric($params['turnover'])) {
+			if(!preg_match('/^(\d{1,6})(\.\d{1,2})?$/', $params['turnover'])) {
 				$result['result'] = false;
-				$result['error'][] = 'nonum_turnover';
-			} elseif(intval($params['turnover']) < 0) {
-				$result['result'] = false;
-				$result['error'][] = 'minus_turnover';
+				$result['error'][] = 'error_turnover';
 			}
 		}
 		
@@ -362,43 +452,25 @@ class Model_Customer extends Model
 				
 				//天数
 				if(!empty($customer_cost['customer_cost_day'])) {
-					if(!is_numeric($customer_cost['customer_cost_day'])) {
-						$result['result'] = false;
-						$result['error'][] = 'nonum_customer_cost_day';
-					} elseif(intval($customer_cost['customer_cost_day']) < 1) {
+					if(!preg_match('/^(\d{1,2})?$/', $customer_cost['customer_cost_day'])) {
 						$result['result'] = false;
 						$result['error'][] = 'error_customer_cost_day';
-					} elseif($customer_cost['customer_cost_day'] - intval($customer_cost['customer_cost_day']) > 0) {
-						$result['result'] = false;
-						$result['error'][] = 'noint_customer_cost_day';
 					}
 				}
 				
 				//人数
 				if(!empty($customer_cost['customer_cost_people'])) {
-					if(!is_numeric($customer_cost['customer_cost_people'])) {
-						$result['result'] = false;
-						$result['error'][] = 'nonum_customer_cost_people';
-					} elseif(intval($customer_cost['customer_cost_people']) < 1) {
+					if(!preg_match('/^(\d{1,2})?$/', $customer_cost['customer_cost_people'])) {
 						$result['result'] = false;
 						$result['error'][] = 'error_customer_cost_people';
-					} elseif($customer_cost['customer_cost_people'] - intval($customer_cost['customer_cost_people']) > 0) {
-						$result['result'] = false;
-						$result['error'][] = 'noint_customer_cost_people';
 					}
 				}
 				
 				//单价
 				if(!empty($customer_cost['customer_cost_each'])) {
-					if(!is_numeric($customer_cost['customer_cost_each'])) {
-						$result['result'] = false;
-						$result['error'][] = 'nonum_customer_cost_each';
-					} elseif(intval($customer_cost['customer_cost_each']) < 1) {
+					if(!preg_match('/^(\d{1,6})(\.\d{1,2})?$/', $customer_cost['customer_cost_each'])) {
 						$result['result'] = false;
 						$result['error'][] = 'error_customer_cost_each';
-					} elseif($customer_cost['customer_cost_each'] - intval($customer_cost['customer_cost_each']) > 0) {
-						$result['result'] = false;
-						$result['error'][] = 'noint_customer_cost_each';
 					}
 				}
 			}
@@ -411,8 +483,6 @@ class Model_Customer extends Model
 				$result['error'][] = 'long_airplane_num';
 			}
 		}
-		
-		$result['error'] = array_unique($result['error']);
 		
 		return $result;
 	}

@@ -25,6 +25,43 @@
 						<td><input type="text" name="customer_name" value="<?php echo $input_customer_name; ?>" maxlength="50" placeholder="请输入顾客姓名" /></td>
 					</tr>
 					<tr>
+						<th>顾客性别</th>
+						<td>
+							<div class="radio-group">
+								<input type="radio" name="customer_gender" value="1" id="rdo-customer-gender-1" <?php echo $input_customer_gender == '1' ? 'checked ' : ''; ?>/>
+								<label class="lbl-for-radio<?php echo $input_customer_gender == '1' ? ' active' : ''; ?>" for="rdo-customer-gender-1" data-for="rdo-customer-gender">男</label>
+								<input type="radio" name="customer_gender" value="2" id="rdo-customer-gender-2" <?php echo $input_customer_gender == '2' ? 'checked ' : ''; ?>/>
+								<label class="lbl-for-radio<?php echo $input_customer_gender == '2' ? ' active' : ''; ?>" for="rdo-customer-gender-2" data-for="rdo-customer-gender">女</label>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>顾客年龄</th>
+						<td>
+							<select name="customer_age">
+								<option value="" class="placeholder">--请选择年龄段--</option>
+								<option value="1"<?php echo $input_customer_age == '1' ? ' selected' : ''; ?>>15岁以内</option>
+								<option value="2"<?php echo $input_customer_age == '2' ? ' selected' : ''; ?>>15～30岁</option>
+								<option value="3"<?php echo $input_customer_age == '3' ? ' selected' : ''; ?>>30～45岁</option>
+								<option value="4"<?php echo $input_customer_age == '4' ? ' selected' : ''; ?>>45～60岁</option>
+								<option value="5"<?php echo $input_customer_age == '5' ? ' selected' : ''; ?>>60岁以上</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th>旅游目的</th>
+						<td>
+							<select name="travel_reason">
+								<option value="" value="" class="placeholder">--请选择旅游目的--</option>
+								<?php foreach($travel_reason_list as $travel_reason): ?>
+								<option value="<?php echo $travel_reason['travel_reason_id']; ?>"<?php echo $input_travel_reason == $travel_reason['travel_reason_id'] ? ' selected' : ''; ?>>
+									<?php echo $travel_reason['travel_reason_name']; ?>
+								</option>
+								<?php endforeach; ?>
+							</select>
+						</td>
+					</tr>
+					<tr>
 						<th>顾客来源</th>
 						<td>
 							<select name="customer_source">

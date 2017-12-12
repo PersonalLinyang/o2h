@@ -219,9 +219,9 @@ $(function(){
 					});
 				html.push('</select>');
 			html.push('</td>');
-			html.push('<td><input type="number" name="people_num_' + row + '" class="txt-people-num" value="0" placeholder="人数" /></td>');
-			html.push('<td><input type="number" name="room_num_' + row + '" class="txt-room-num" value="0" placeholder="间数" /></td>');
-			html.push('<td><input type="number" name="day_num_' + row + '" class="txt-day-num" value="0" placeholder="天数" /></td>');
+			html.push('<td><input type="number" name="people_num_' + row + '" class="txt-people-num" placeholder="人数" /></td>');
+			html.push('<td><input type="number" name="room_num_' + row + '" class="txt-room-num" placeholder="间数" /></td>');
+			html.push('<td><input type="number" name="day_num_' + row + '" class="txt-day-num" placeholder="天数" /></td>');
 			html.push('<td><input type="text" name="comment_' + row + '" value="" maxlength="50" placeholder="请输入备注" /></td>');
 		html.push('</tr>');
 		
@@ -272,9 +272,9 @@ $(function(){
 				html.push('</select>');
 			html.push('</td>');
 			html.push('<td><input type="text" name="customer_cost_desc_' + row + '" class="txt-customer-cost-desc readonly" value="" maxlength="100" placeholder="请输入简述" readonly="readonly" /></td>');
-			html.push('<td><input type="number" name="customer_cost_day_' + row + '" class="txt-customer-cost-day" id="txt-customer-cost-day-' + row + '" value="0" placeholder="天数" /></td>');
-			html.push('<td><input type="number" name="customer_cost_people_' + row + '" class="txt-customer-cost-people" id="txt-customer-cost-people-' + row + '" value="0" placeholder="人数" /></td>');
-			html.push('<td><input type="number" name="customer_cost_each_' + row + '" class="txt-customer-cost-each" id="txt-customer-cost-each-' + row + '" value="0" placeholder="单价" /></td>');
+			html.push('<td><input type="number" name="customer_cost_day_' + row + '" class="txt-customer-cost-day" id="txt-customer-cost-day-' + row + '" placeholder="天数" /></td>');
+			html.push('<td><input type="number" name="customer_cost_people_' + row + '" class="txt-customer-cost-people" id="txt-customer-cost-people-' + row + '" placeholder="人数" /></td>');
+			html.push('<td><input type="number" name="customer_cost_each_' + row + '" class="txt-customer-cost-each" id="txt-customer-cost-each-' + row + '" placeholder="单价" /></td>');
 			html.push('<td class="td-total"><span class="span-customer-cost-total">0</span></td>');
 		html.push('</tr>');
 		

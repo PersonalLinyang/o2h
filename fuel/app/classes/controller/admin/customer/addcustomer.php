@@ -22,6 +22,7 @@ class Controller_Admin_Customer_Addcustomer extends Controller_Admin_App
 			$data['error_message'] = '';
 			
 			//必要列表信息取得
+			$data['travel_reason_list'] = Model_Travelreason::GetTravelReasonListAll();
 			$data['customer_source_list'] = Model_Customersource::GetCustomerSourceListAll();
 			$data['user_list'] = Model_User::GetActiveUserSimpleListAll();
 			$data['route_list'] = Model_Route::GetActiveRouteSimpleListAll();
@@ -33,6 +34,9 @@ class Controller_Admin_Customer_Addcustomer extends Controller_Admin_App
 			//form控件默认值设定
 			$data['input_customer_name'] = '';
 			$data['input_customer_source'] = '';
+			$data['input_customer_gender'] = '';
+			$data['input_customer_age'] = '';
+			$data['input_travel_reason'] = '';
 			$data['input_staff_id'] = '';
 			$data['input_men_num'] = '';
 			$data['input_women_num'] = '';
@@ -66,6 +70,9 @@ class Controller_Admin_Customer_Addcustomer extends Controller_Admin_App
 					//form控件值设定
 					$data['input_customer_name'] = isset($_POST['customer_name']) ? trim($_POST['customer_name']) : '';
 					$data['input_customer_source'] = isset($_POST['customer_source']) ? trim($_POST['customer_source']) : '';
+					$data['input_customer_gender'] = isset($_POST['customer_gender']) ? trim($_POST['customer_gender']) : '';
+					$data['input_customer_age'] = isset($_POST['customer_age']) ? trim($_POST['customer_age']) : '';
+					$data['input_travel_reason'] = isset($_POST['travel_reason']) ? trim($_POST['travel_reason']) : '';
 					$data['input_staff_id'] = isset($_POST['staff_id']) ? trim($_POST['staff_id']) : '';
 					$data['input_men_num'] = isset($_POST['men_num']) ? trim($_POST['men_num']) : '';
 					$data['input_women_num'] = isset($_POST['women_num']) ? trim($_POST['women_num']) : '';
@@ -136,6 +143,9 @@ class Controller_Admin_Customer_Addcustomer extends Controller_Admin_App
 						'customer_name' => $data['input_customer_name'],
 						'customer_status' => '1',
 						'customer_source' => $data['input_customer_source'],
+						'customer_gender' => $data['input_customer_gender'],
+						'customer_age' => $data['input_customer_age'],
+						'travel_reason' => $data['input_travel_reason'],
 						'member_id' => '',
 						'staff_id' => $data['input_staff_id'],
 						'men_num' => $data['input_men_num'],
@@ -168,8 +178,17 @@ class Controller_Admin_Customer_Addcustomer extends Controller_Admin_App
 					$result_check = Model_Customer::CheckInsertCustomer($param_insert);
 					
 					if($result_check['result']) {
+						$result_insert = Model_Customer::InsertCustomer($param_insert);
 						
-						
+						if($result_insert) {
+							//添加成功 页面跳转
+							$customer_id = $result_insert[0];
+							$_SESSION['add_customer_success'] = true;
+							header('Location: //' . $_SERVER['HTTP_HOST'] . '/admin/customer/' . $customer_id . '/');
+							exit;
+						} else {
+							$error_message_list[] = '数据库错误：数据添加失败';
+						}
 					} else {
 						foreach($result_check['error'] as $insert_error) {
 							switch($insert_error) {
@@ -179,17 +198,13 @@ class Controller_Admin_Customer_Addcustomer extends Controller_Admin_App
 								case 'long_customer_name':
 									$error_message_list[] = '顾客姓名不能超过50字';
 									break;
-								case 'minus_men_num':
-								case 'noint_men_num':
-								case 'minus_women_num':
-								case 'noint_women_num':
-								case 'minus_children_num':
-								case 'noint_children_num':
-									$error_message_list[] = '请为人数部分输入不小于0的整数';
+								case 'error_men_num':
+								case 'error_women_num':
+								case 'error_children_num':
+									$error_message_list[] = '请为人数部分输入0～99以内的整数';
 									break;
 								case 'error_travel_days':
-								case 'noint_travel_days':
-									$error_message_list[] = '请为旅行天数部分输入不小于1的整数';
+									$error_message_list[] = '请为旅行天数部分输入0～99以内的整数';
 									break;
 								case 'empty_start_at_year':
 									$error_message_list[] = '请选择来日年';
@@ -200,42 +215,36 @@ class Controller_Admin_Customer_Addcustomer extends Controller_Admin_App
 								case 'error_start_at_date':
 									$error_message_list[] = '您选择的来日日期不存在,请重新选择';
 									break;
-								case 'minus_budget_base':
-								case 'minus_budget_total':
-									$error_message_list[] = '请为预算部分输入不小于0的数字';
+								case 'error_budget_base':
+								case 'error_budget_total':
+									$error_message_list[] = '请为预算部分输入0～10万以内且不多于2位小数的数字';
 									break;
 								case 'error_people_num':
-								case 'noint_people_num':
-									$error_message_list[] = '请为酒店预约的人数部分输入不小于1的整数';
+									$error_message_list[] = '请为酒店预约的人数部分输入0～99以内的整数';
 									break;
 								case 'error_room_num':
-								case 'noint_room_num':
-									$error_message_list[] = '请为酒店预约的间数部分输入不小于1的整数';
+									$error_message_list[] = '请为酒店预约的间数部分输入0～99以内的整数';
 									break;
 								case 'error_day_num':
-								case 'noint_day_num':
-									$error_message_list[] = '请为酒店预约的天数部分输入不小于1的整数';
+									$error_message_list[] = '请为酒店预约的天数部分输入0～99以内的整数';
 									break;
 								case 'long_hotel_comment':
 									$error_message_list[] = '酒店预约的备注部分不能超过200字';
 									break;
-								case 'minus_cost_budget':
-									$error_message_list[] = '请为成本报价部分输入不小于0的数字';
+								case 'error_cost_budget':
+									$error_message_list[] = '请为成本报价部分输入0～10万以内且不多于2位小数的数字';
 									break;
-								case 'minus_turnover':
-									$error_message_list[] = '请为营业额部分输入不小于0的数字';
+								case 'error_turnover':
+									$error_message_list[] = '请为营业额部分输入0～10万以内且不多于2位小数的数字';
 									break;
 								case 'error_customer_cost_day':
-								case 'noint_customer_cost_day':
-									$error_message_list[] = '请为实际成本的天数部分输入不小于1的整数';
+									$error_message_list[] = '请为实际成本的天数部分输入0～99以内的整数';
 									break;
 								case 'error_customer_cost_people':
-								case 'noint_customer_cost_people':
-									$error_message_list[] = '请为实际成本的人数部分输入不小于1的整数';
+									$error_message_list[] = '请为实际成本的人数部分输入0～99以内的整数';
 									break;
 								case 'error_customer_cost_each':
-								case 'noint_customer_cost_each':
-									$error_message_list[] = '请为实际成本的单价部分输入不小于1的整数';
+									$error_message_list[] = '请为实际成本的单价部分输入0～10万以内且不多于2位小数的数字';
 									break;
 								case 'long_airplane_num':
 									$error_message_list[] = '航班号不能超过20字';
@@ -246,6 +255,8 @@ class Controller_Admin_Customer_Addcustomer extends Controller_Admin_App
 							}
 						}
 					}
+					
+					$error_message_list = array_unique($error_message_list);
 					
 					//输出错误信息
 					if(count($error_message_list)) {
@@ -272,14 +283,12 @@ class Controller_Admin_Customer_Addcustomer extends Controller_Admin_App
 	public function action_customercosttypelist($page = null)
 	{
 		$result = '';
-//		if(isset($_SESSION['login_user']['permission'][5][7][1]) && isset($_POST['delete_id'], $_POST['page'])) {
-			if(isset($_POST['page'])) {
-				if($_POST['page'] == 'add_customer') {
-					$customer_cost_type_list = Model_Customercosttype::GetCustomerCostTypeListExceptOther();
-					$result = json_encode($customer_cost_type_list);
-				}
+		if(isset($_POST['page'])) {
+			if($_POST['page'] == 'add_customer') {
+				$customer_cost_type_list = Model_Customercosttype::GetCustomerCostTypeListExceptOther();
+				$result = json_encode($customer_cost_type_list);
 			}
-//		}
+		}
 		return $result;
 	}
 
@@ -291,14 +300,12 @@ class Controller_Admin_Customer_Addcustomer extends Controller_Admin_App
 	public function action_hoteltypelist($page = null)
 	{
 		$result = '';
-//		if(isset($_SESSION['login_user']['permission'][5][7][1]) && isset($_POST['delete_id'], $_POST['page'])) {
-			if(isset($_POST['page'])) {
-				if($_POST['page'] == 'add_customer') {
-					$hotel_type_list = Model_Hoteltype::GetHotelTypeListAll();
-					$result = json_encode($hotel_type_list);
-				}
+		if(isset($_POST['page'])) {
+			if($_POST['page'] == 'add_customer') {
+				$hotel_type_list = Model_Hoteltype::GetHotelTypeListAll();
+				$result = json_encode($hotel_type_list);
 			}
-//		}
+		}
 		return $result;
 	}
 
@@ -310,14 +317,12 @@ class Controller_Admin_Customer_Addcustomer extends Controller_Admin_App
 	public function action_roomtypelist($page = null)
 	{
 		$result = '';
-//		if(isset($_SESSION['login_user']['permission'][5][7][1]) && isset($_POST['delete_id'], $_POST['page'])) {
-			if(isset($_POST['page'])) {
-				if($_POST['page'] == 'add_customer') {
-					$room_type_list = Model_Roomtype::GetRoomTypeListAll();
-					$result = json_encode($room_type_list);
-				}
+		if(isset($_POST['page'])) {
+			if($_POST['page'] == 'add_customer') {
+				$room_type_list = Model_Roomtype::GetRoomTypeListAll();
+				$result = json_encode($room_type_list);
 			}
-//		}
+		}
 		return $result;
 	}
 
