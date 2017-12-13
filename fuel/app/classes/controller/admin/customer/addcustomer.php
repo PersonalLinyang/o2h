@@ -213,7 +213,7 @@ class Controller_Admin_Customer_Addcustomer extends Controller_Admin_App
 									$error_message_list[] = '请选择来日月';
 									break;
 								case 'error_start_at_date':
-									$error_message_list[] = '您选择的来日日期不存在,请重新选择';
+									$error_message_list[] = '您选择的来日时间不存在,请重新选择';
 									break;
 								case 'error_budget_base':
 								case 'error_budget_total':

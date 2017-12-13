@@ -70,7 +70,7 @@ return array(
 	'admin/add_customer/customer_cost_type_list' => 'admin/customer/addcustomer/customercosttypelist',
 	'admin/add_customer/hotel_type_list'         => 'admin/customer/addcustomer/hoteltypelist',
 	'admin/add_customer/room_type_list'          => 'admin/customer/addcustomer/roomtypelist',
-	'admin/customer_detail/(:customer_id)'       => 'admin/customer/customerdetail',
+	'admin/customer_detail/(:customer_id)'       => 'admin/customer/customerdetail/index/$1',
 	
 	//系统权限管理
 	'admin/permission_list'     => 'admin/user/permissionlist/index',

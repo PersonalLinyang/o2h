@@ -113,6 +113,91 @@ class Model_Customer extends Model
 		
 		return $result_customer;
 	 }
+	
+	/*
+	 * 根据ID获取顾客详细信息
+	 */
+	public static function SelectCustomerInfoByCustomerId($customer_id) {
+		if(!is_numeric($customer_id)) {
+			return false;
+		}
+		
+		//获取顾客详细信息
+		$sql_customer = "SELECT tc.customer_id, tc.customer_name, tc.customer_status, "
+					. "(SELECT mcst.customer_status_name FROM m_customer_status mcst WHERE mcst.customer_status_id = tc.customer_status) customer_status_name, "
+					. "tc.customer_source, "
+					. "(SELECT mcso.customer_source_name FROM m_customer_source mcso WHERE mcso.customer_source_id = tc.customer_source) customer_source_name, "
+					. "tc.customer_gender, tc.customer_age, tc.travel_reason, "
+					. "(SELECT mtr.travel_reason_name FROM m_travel_reason mtr WHERE mtr.travel_reason_id = tc.travel_reason) travel_reason_name, "
+					. "tc.member_id, tc.staff_id, "
+					. "(SELECT tu.user_name FROM t_user tu WHERE tu.user_id = tc.staff_id) staff_name, "
+					. "tc.men_num, tc.women_num, tc.children_num, tc.travel_days, tc.start_at_year, tc.start_at_month, tc.start_at_day, tc.route_id, "
+					. "(SELECT tr.route_name FROM t_route tr WHERE tr.route_id = tc.route_id) route_name, "
+					. "tc.budget_base, tc.budget_total, tc.form_flag, tc.first_flag, tc.spot_hope_flag, tc.spot_hope_other, tc.hotel_reserve_flag, "
+					. "tc.cost_budget, tc.turnover, tc.cost_total, tc.dinner_demand, tc.airplane_num, tc.comment, tc.created_at, tc.modified_at "
+					. "FROM t_customer tc "
+					. "WHERE tc.customer_id = :customer_id ";
+		$query_customer = DB::query($sql_customer);
+		$query_customer->param(':customer_id', $customer_id);
+		$result_customer = $query_customer->execute()->as_array();
+		
+		if(count($result_customer) == 1) {
+			$customer_info = $result_customer[0];
+			$customer_info['spot_hope_list'] = array();
+			$customer_info['hotel_reserve_list'] = array();
+			$customer_info['customer_cost_list'] = array();
+			
+			//获取希望景点列表
+			$sql_customer_spot = "SELECT rcs.spot_id, "
+							. "(SELECT ts.spot_name FROM t_spot ts WHERE ts.spot_id = rcs.spot_id) spot_name "
+							. "FROM r_customer_spot rcs "
+							. "WHERE rcs.customer_id = :customer_id "
+							. "ORDER BY rcs.spot_id ASC ";
+			$query_customer_spot = DB::query($sql_customer_spot);
+			$query_customer_spot->param(':customer_id', $customer_id);
+			$result_customer_spot = $query_customer_spot->execute()->as_array();
+			
+			if(count($result_customer_spot)) {
+				$customer_info['spot_hope_list'] = $result_customer_spot;
+			}
+			
+			//获取酒店预定列表
+			$sql_hotel_reserve = "SELECT thr.row_id, thr.hotel_type, "
+							. "(SELECT mht.hotel_type_name FROM m_hotel_type mht WHERE mht.hotel_type_id = thr.hotel_type) hotel_type_name, "
+							. "thr.room_type, "
+							. "(SELECT mrt.room_type_name FROM m_room_type mrt WHERE mrt.room_type_id = thr.room_type) room_type_name, "
+							. "thr.people_num, thr.room_num, thr.day_num, thr.comment "
+							. "FROM t_hotel_reserve thr "
+							. "WHERE thr.customer_id = :customer_id "
+							. "ORDER BY thr.row_id ASC ";
+			$query_hotel_reserve = DB::query($sql_hotel_reserve);
+			$query_hotel_reserve->param(':customer_id', $customer_id);
+			$result_hotel_reserve = $query_hotel_reserve->execute()->as_array();
+			
+			if(count($result_hotel_reserve)) {
+				$customer_info['hotel_reserve_list'] = $result_hotel_reserve;
+			}
+			
+			//获取实际成本列表
+			$sql_customer_cost = "SELECT tcc.row_id, tcc.customer_cost_type, "
+							. "(SELECT mcct.customer_cost_type_name FROM m_customer_cost_type mcct WHERE mcct.customer_cost_type_id = tcc.customer_cost_type) customer_cost_type_name, "
+							. "tcc.customer_cost_desc, tcc.customer_cost_day, tcc.customer_cost_people, tcc.customer_cost_each, tcc.customer_cost_total "
+							. "FROM t_customer_cost tcc "
+							. "WHERE tcc.customer_id = :customer_id "
+							. "ORDER BY tcc.row_id ASC ";
+			$query_customer_cost = DB::query($sql_customer_cost);
+			$query_customer_cost->param(':customer_id', $customer_id);
+			$result_customer_cost = $query_customer_cost->execute()->as_array();
+			
+			if(count($result_customer_cost)) {
+				$customer_info['customer_cost_list'] = $result_customer_cost;
+			}
+			
+			return $customer_info;
+		} else {
+			return false;
+		}
+	}
 
 	/*
 	 * 添加顾客前添加信息查验
@@ -233,7 +318,7 @@ class Model_Customer extends Model
 			}
 		}
 		
-		//来日日期
+		//来日时间
 		if(empty($params['start_at_year'])) {
 			if(!empty($params['start_at_month']) || !empty($params['start_at_day'])) {
 				$result['result'] = false;

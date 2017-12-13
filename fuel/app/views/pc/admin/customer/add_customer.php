@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>顾客登录 - O2H管理系统</title>
+	<title>顾客信息登录 - O2H管理系统</title>
 	<?php echo Asset::css('pc/admin/common.css'); ?>
 	<?php echo Asset::css('pc/admin/customer/edit_customer.css'); ?>
 	<?php echo Asset::js('common/jquery-1.9.1.min.js'); ?>
@@ -17,15 +17,15 @@
 		<?php endif; ?>
 		
 		<div class="content-main">
-			<h1>顾客登录</h1>
+			<h1>顾客信息登录</h1>
 			<form method="post" action="" class="content-form" enctype="multipart/form-data">
 				<table class="tb-content-form">
 					<tr>
-						<th>顾客姓名</th>
+						<th>姓名</th>
 						<td><input type="text" name="customer_name" value="<?php echo $input_customer_name; ?>" maxlength="50" placeholder="请输入顾客姓名" /></td>
 					</tr>
 					<tr>
-						<th>顾客性别</th>
+						<th>性别</th>
 						<td>
 							<div class="radio-group">
 								<input type="radio" name="customer_gender" value="1" id="rdo-customer-gender-1" <?php echo $input_customer_gender == '1' ? 'checked ' : ''; ?>/>
@@ -36,7 +36,7 @@
 						</td>
 					</tr>
 					<tr>
-						<th>顾客年龄</th>
+						<th>年龄</th>
 						<td>
 							<select name="customer_age">
 								<option value="" class="placeholder">--请选择年龄段--</option>
@@ -109,7 +109,7 @@
 						<td><input type="number" name="travel_days" value="<?php echo $input_travel_days; ?>" placeholder="请输入旅行天数" /></td>
 					</tr>
 					<tr>
-						<th>来日日期</th>
+						<th>来日时间</th>
 						<td>
 							<select name="start_at_year" class="date">
 								<option value="" class="placeholder">--请选择--</option>
@@ -222,7 +222,7 @@
 										<th class="th-people-num">人数</th>
 										<th class="th-room-num">间数</th>
 										<th class="th-day-num">天数</th>
-										<th class="th-other">备注</th>
+										<th class="th-comment">备注</th>
 									</tr>
 									<?php foreach($input_hotel_reserve_list as $row_num => $hotel_reserve): ?>
 									<tr>
