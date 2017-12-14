@@ -306,10 +306,10 @@ class Model_Spot extends Model
 	}
 	
 	/*
-	 * 获得全部景点信息的简易列表
+	 * 获得全部有效公开景点信息的简易列表
 	 */
-	public static function SelectSpotSimpleListAll() {
-		$sql = "SELECT spot_id, spot_name FROM t_spot ORDER BY spot_id";
+	public static function SelectSpotSimpleListActive() {
+		$sql = "SELECT spot_id, spot_name FROM t_spot WHERE delete_flag = 0 AND spot_status = 1 ORDER BY spot_id";
 		$query = DB::query($sql);
 		$result = $query->execute()->as_array();
 		

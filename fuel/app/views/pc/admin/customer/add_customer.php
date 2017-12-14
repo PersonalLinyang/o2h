@@ -297,7 +297,6 @@
 												<?php echo $customer_cost_type['customer_cost_type_name']; ?>
 											</option>
 											<?php endforeach; ?>
-											<option value="1" <?php echo $customer_cost['customer_cost_type'] == '1' ? ' selected' : ''; ?>>其他</option>
 										</select>
 									</td>
 									<td>

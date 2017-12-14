@@ -25,7 +25,7 @@ class Controller_Admin_Service_Modifyspot extends Controller_Admin_App
 			
 			if($spot_info) {
 				$data['spot_id'] = $spot_id;
-				$data['area_list'] = Model_Area::GetAreaListAll();
+				$data['area_list'] = Model_Area::GetAreaListActive();
 				$data['spot_type_list'] = Model_SpotType::GetSpotTypeListAll();
 				$data['input_spot_name'] = '';
 				$data['input_spot_area'] = '';

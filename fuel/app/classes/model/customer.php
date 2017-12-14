@@ -221,7 +221,7 @@ class Model_Customer extends Model
 		if(!is_numeric($params['customer_status'])) {
 			$result['result'] = false;
 			$result['error'][] = 'nonum_customer_status';
-		} elseif(!Model_Customerstatus::CheckExistCustomerStatusId($params['customer_status'])) {
+		} elseif(!Model_Customerstatus::CheckCustomerStatusIdActive($params['customer_status'])) {
 			$result['result'] = false;
 			$result['error'][] = 'noexist_customer_status';
 		}
@@ -253,7 +253,7 @@ class Model_Customer extends Model
 			if(!is_numeric($params['travel_reason'])) {
 				$result['result'] = false;
 				$result['error'][] = 'nonum_travel_reason';
-			} elseif(!Model_Travelreason::CheckExistTravelReasonId($params['travel_reason'])) {
+			} elseif(!Model_Travelreason::CheckTravelReasonIdActive($params['travel_reason'])) {
 				$result['result'] = false;
 				$result['error'][] = 'noexist_travel_reason';
 			}
@@ -263,7 +263,7 @@ class Model_Customer extends Model
 		if(!is_numeric($params['customer_source'])) {
 			$result['result'] = false;
 			$result['error'][] = 'nonum_customer_source';
-		} elseif(!Model_Customersource::CheckExistCustomerSourceId($params['customer_source'])) {
+		} elseif(!Model_Customersource::CheckCustomerSourceIdActive($params['customer_source'])) {
 			$result['result'] = false;
 			$result['error'][] = 'noexist_customer_source';
 		}
@@ -284,7 +284,7 @@ class Model_Customer extends Model
 			if(!is_numeric($params['staff_id'])) {
 				$result['result'] = false;
 				$result['error'][] = 'nonum_staff_id';
-			} elseif(!Model_User::CheckActiveUserId($params['staff_id'])) {
+			} elseif(!Model_User::CheckUserIdActive($params['staff_id'])) {
 				$result['result'] = false;
 				$result['error'][] = 'noactive_staff_id';
 			}
@@ -521,7 +521,7 @@ class Model_Customer extends Model
 					if(!is_numeric($customer_cost['customer_cost_type'])) {
 						$result['result'] = false;
 						$result['error'][] = 'nonum_customer_cost_type';
-					} elseif(!Model_Customercosttype::CheckExistCustomerCostTypeId($customer_cost['customer_cost_type'])) {
+					} elseif(!Model_Customercosttype::CheckCustomerCostTypeIdActive($customer_cost['customer_cost_type'])) {
 						$result['result'] = false;
 						$result['error'][] = 'noexist_customer_cost_type';
 					}

@@ -25,7 +25,7 @@ class Controller_Admin_Service_Modifyrestaurant extends Controller_Admin_App
 			
 			if($restaurant_info) {
 				$data['restaurant_id'] = $restaurant_id;
-				$data['area_list'] = Model_Area::GetAreaListAll();
+				$data['area_list'] = Model_Area::GetAreaListActive();
 				$data['restaurant_type_list'] = Model_RestaurantType::GetRestaurantTypeListAll();
 				$data['input_restaurant_name'] = '';
 				$data['input_restaurant_area'] = '';

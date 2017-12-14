@@ -22,14 +22,14 @@ class Controller_Admin_Customer_Addcustomer extends Controller_Admin_App
 			$data['error_message'] = '';
 			
 			//必要列表信息取得
-			$data['travel_reason_list'] = Model_Travelreason::GetTravelReasonListAll();
-			$data['customer_source_list'] = Model_Customersource::GetCustomerSourceListAll();
-			$data['user_list'] = Model_User::GetActiveUserSimpleListAll();
-			$data['route_list'] = Model_Route::GetActiveRouteSimpleListAll();
-			$data['spot_list'] = Model_Spot::SelectSpotSimpleListAll();
-			$data['hotel_type_list'] = Model_Hoteltype::GetHotelTypeListAll();
-			$data['room_type_list'] = Model_Roomtype::GetRoomTypeListAll();
-			$data['customer_cost_type_list'] = Model_Customercosttype::GetCustomerCostTypeListExceptOther();
+			$data['travel_reason_list'] = Model_Travelreason::GetTravelReasonListActive();
+			$data['customer_source_list'] = Model_Customersource::GetCustomerSourceListActive();
+			$data['user_list'] = Model_User::GetUserSimpleListActive();
+			$data['route_list'] = Model_Route::GetRouteSimpleListActive();
+			$data['spot_list'] = Model_Spot::SelectSpotSimpleListActive();
+			$data['hotel_type_list'] = Model_Hoteltype::GetHotelTypeListActive();
+			$data['room_type_list'] = Model_Roomtype::GetRoomTypeListActive();
+			$data['customer_cost_type_list'] = Model_Customercosttype::GetCustomerCostTypeListActive();
 			
 			//form控件默认值设定
 			$data['input_customer_name'] = '';
@@ -184,7 +184,7 @@ class Controller_Admin_Customer_Addcustomer extends Controller_Admin_App
 							//添加成功 页面跳转
 							$customer_id = $result_insert[0];
 							$_SESSION['add_customer_success'] = true;
-							header('Location: //' . $_SERVER['HTTP_HOST'] . '/admin/customer/' . $customer_id . '/');
+							header('Location: //' . $_SERVER['HTTP_HOST'] . '/admin/customer_detail/' . $customer_id . '/');
 							exit;
 						} else {
 							$error_message_list[] = '数据库错误：数据添加失败';
@@ -285,7 +285,7 @@ class Controller_Admin_Customer_Addcustomer extends Controller_Admin_App
 		$result = '';
 		if(isset($_POST['page'])) {
 			if($_POST['page'] == 'add_customer') {
-				$customer_cost_type_list = Model_Customercosttype::GetCustomerCostTypeListExceptOther();
+				$customer_cost_type_list = Model_Customercosttype::GetCustomerCostTypeListActive();
 				$result = json_encode($customer_cost_type_list);
 			}
 		}
@@ -302,7 +302,7 @@ class Controller_Admin_Customer_Addcustomer extends Controller_Admin_App
 		$result = '';
 		if(isset($_POST['page'])) {
 			if($_POST['page'] == 'add_customer') {
-				$hotel_type_list = Model_Hoteltype::GetHotelTypeListAll();
+				$hotel_type_list = Model_Hoteltype::GetHotelTypeListActive();
 				$result = json_encode($hotel_type_list);
 			}
 		}
@@ -319,7 +319,7 @@ class Controller_Admin_Customer_Addcustomer extends Controller_Admin_App
 		$result = '';
 		if(isset($_POST['page'])) {
 			if($_POST['page'] == 'add_customer') {
-				$room_type_list = Model_Roomtype::GetRoomTypeListAll();
+				$room_type_list = Model_Roomtype::GetRoomTypeListActive();
 				$result = json_encode($room_type_list);
 			}
 		}

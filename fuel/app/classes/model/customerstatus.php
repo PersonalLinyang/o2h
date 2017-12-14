@@ -4,10 +4,10 @@ class Model_Customerstatus extends Model
 {
 
 	/*
-	 * 获取全部顾客状态列表
+	 * 获取全部有效顾客状态列表
 	 */
-	public static function GetCustomerStatusListAll() {
-		$sql = "SELECT * FROM m_customer_status ORDER BY customer_status_id";
+	public static function GetCustomerStatusListActive() {
+		$sql = "SELECT customer_status_id, customer_status_name FROM m_customer_status WHERE delete_flag = 0 ORDER BY sort_id";
 		$query = DB::query($sql);
 		$result = $query->execute()->as_array();
 		
@@ -15,10 +15,10 @@ class Model_Customerstatus extends Model
 	}
 	
 	/*
-	 * 检查顾客状态ID是否存在
+	 * 检查顾客状态ID是否有效
 	 */
-	public static function CheckExistCustomerStatusId($customer_status_id) {
-		$sql = "SELECT * FROM m_customer_status WHERE customer_status_id = :customer_status_id";
+	public static function CheckCustomerStatusIdActive($customer_status_id) {
+		$sql = "SELECT customer_status_id FROM m_customer_status WHERE customer_status_id = :customer_status_id AND delete_flag = 0";
 		$query = DB::query($sql);
 		$query->param(':customer_status_id', $customer_status_id);
 		$result = $query->execute()->as_array();

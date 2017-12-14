@@ -260,7 +260,6 @@ $(function(){
 									html_select.push(val.customer_cost_type_name);
 								html_select.push('</option>');
 							});
-							html_select.push('<option value="1">其他</option>');
 							$('#sel-customer-cost-type-' + row).append(html_select.join(''));
 						},
 						error: function(XMLHttpRequest, textStatus, errorThrown) {

@@ -170,7 +170,7 @@ class Model_Route extends Model
 	/*
 	 * 获取全部有效公开旅游路线简易信息列表
 	 */
-	public static function GetActiveRouteSimpleListAll() {
+	public static function GetRouteSimpleListActive() {
 		$sql = "SELECT route_id, route_name FROM t_route WHERE delete_flag = 0 AND route_status = 1";
 		$query = DB::query($sql);
 		$result = $query->execute()->as_array();

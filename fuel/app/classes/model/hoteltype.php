@@ -41,10 +41,10 @@ class Model_Hoteltype extends Model
 	}
 
 	/*
-	 * 获取全部酒店类别列表
+	 * 获取全部有效酒店类别列表
 	 */
-	public static function GetHotelTypeListAll() {
-		$sql_hotel_type = "SELECT hotel_type_id, hotel_type_name FROM m_hotel_type ORDER BY hotel_type_id";
+	public static function GetHotelTypeListActive() {
+		$sql_hotel_type = "SELECT hotel_type_id, hotel_type_name FROM m_hotel_type WHERE delete_flag = 0 ORDER BY hotel_type_id";
 		$query_hotel_type = DB::query($sql_hotel_type);
 		$hotel_type_list = $query_hotel_type->execute()->as_array();
 		
