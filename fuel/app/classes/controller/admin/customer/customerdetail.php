@@ -27,7 +27,7 @@ class Controller_Admin_Customer_Customerdetail extends Controller_Admin_App
 			
 			if($customer_info) {
 				$data['customer_info'] = $customer_info;
-				
+				$data['login_user'] = $_SESSION['login_user'];
 				
 				if(isset($_SESSION['add_customer_success'])) {
 					$data['success_message'] = '顾客添加成功';

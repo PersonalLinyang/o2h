@@ -29,40 +29,58 @@
 		<?php if(count($permission_list)): ?>
 		<div class="content-main">
 			<h1>系统权限一览</h1>
+			<p class="strong">系统权限一览</p>
 			<?php foreach($permission_list as $master_group_id => $master_group_info): ?>
-			<div class="permission-line permission-mastergroup" >
-				<p class="btn-controller"><a href="/admin/add_sub_group/?master_group_id=<?php echo $master_group_id; ?>">添加副组</a></p>
-				<p class="btn-controller btn-delete" data-type="mg" data-value="<?php echo $master_group_id; ?>" data-name="<?php echo $master_group_info['name']; ?>">削除主组</p>
-				<p class="btn-controller"><a href="/admin/modify_master_group/?master_group_id=<?php echo $master_group_id; ?>">修改名称</a></p>
-				<p class="permission-id"><?php echo $master_group_id; ?></p>
-				<p class="permission-name"><?php echo $master_group_info['name']; ?></p>
+			<div class="permission-area">
+				<?php if(count($master_group_info['sub_group_list'])): ?>
+				<p class="btn-permission-show"></p>
+				<?php endif; ?>
+				<div class="permission-line">
+					<p class="permission-id"><?php echo $master_group_id; ?></p>
+					<p class="permission-name<?php echo $master_group_info['special_flag'] ? ' strong' : ''; ?>"><?php echo $master_group_info['name']; ?></p>
+					<p class="btn-controller"><a href="/admin/add_sub_group/?master_group_id=<?php echo $master_group_id; ?>">添加副组</a></p>
+					<p class="btn-controller"><a href="/admin/modify_master_group/?master_group_id=<?php echo $master_group_id; ?>">修改名称</a></p>
+					<p class="btn-controller btn-delete" data-type="mg" data-value="<?php echo $master_group_id; ?>" data-name="<?php echo $master_group_info['name']; ?>">削除主组</p>
+				</div>
+				<?php foreach($master_group_info['sub_group_list'] as $sub_group_id => $sub_group_info): ?>
+				<div class="permission-area">
+					<?php if(count($sub_group_info['function_list'])): ?>
+					<p class="btn-permission-show"></p>
+					<?php endif; ?>
+					<div class="permission-line">
+						<p class="permission-id"><?php echo $master_group_id . '-' . $sub_group_id; ?></p>
+						<p class="permission-name<?php echo $sub_group_info['special_flag'] ? ' strong' : ''; ?>"><?php echo $sub_group_info['name']; ?></p>
+						<p class="btn-controller"><a href="/admin/add_function/?sub_group_id=<?php echo $sub_group_id; ?>">添加功能</a></p>
+						<p class="btn-controller"><a href="/admin/modify_sub_group/?sub_group_id=<?php echo $sub_group_id; ?>">修改名称</a></p>
+						<p class="btn-controller btn-delete" data-type="sg" data-value="<?php echo $sub_group_id; ?>" data-name="<?php echo $sub_group_info['name']; ?>">削除副组</p>
+					</div>
+					<?php foreach($sub_group_info['function_list'] as $function_id => $function_info) :?>
+					<div class="permission-area">
+						<?php if(count($function_info['authority_list'])): ?>
+						<p class="btn-permission-show"></p>
+						<?php endif; ?>
+						<div class="permission-line">
+							<p class="permission-id"><?php echo $master_group_id . '-' . $sub_group_id . '-' . $function_id; ?></p>
+							<p class="permission-name<?php echo $function_info['special_flag'] ? ' strong' : ''; ?>"><?php echo $function_info['name']; ?></p>
+							<p class="btn-controller"><a href="/admin/add_authority/?function_id=<?php echo $function_id; ?>">添加权限</a></p>
+							<p class="btn-controller"><a href="/admin/modify_function/?function_id=<?php echo $function_id; ?>">修改名称</a></p>
+							<p class="btn-controller btn-delete" data-type="f" data-value="<?php echo $function_id; ?>" data-name="<?php echo $function_info['name']; ?>">削除功能</p>
+						</div>
+						<?php foreach($function_info['authority_list'] as $authority_id => $authority_info) :?>
+						<div class="permission-area">
+							<div class="permission-line">
+								<p class="permission-id"><?php echo $master_group_id . '-' . $sub_group_id . '-' . $function_id . '-' . $authority_id; ?></p>
+								<p class="permission-name"><?php echo $authority_info['name']; ?></p>
+								<p class="btn-controller"><a href="/admin/modify_authority/?authority_id=<?php echo $authority_id; ?>">修改名称</a></p>
+								<p class="btn-controller btn-delete" data-type="a" data-value="<?php echo $authority_id; ?>" data-name="<?php echo $authority_info['name']; ?>">削除权限</p>
+							</div>
+						</div>
+						<?php endforeach; /* authority */ ?>
+					</div>
+					<?php endforeach; /* function */ ?>
+				</div>
+				<?php endforeach; /* sub_group */ ?>
 			</div>
-			<?php foreach($master_group_info['sub_group_list'] as $sub_group_id => $sub_group_info) :?>
-			<div class="permission-line permission-subgroup">
-				<p class="btn-controller"><a href="/admin/add_function/?sub_group_id=<?php echo $sub_group_id; ?>">添加功能</a></p>
-				<p class="btn-controller btn-delete" data-type="sg" data-value="<?php echo $sub_group_id; ?>" data-name="<?php echo $sub_group_info['name']; ?>">削除副组</p>
-				<p class="btn-controller"><a href="/admin/modify_sub_group/?sub_group_id=<?php echo $sub_group_id; ?>">修改名称</a></p>
-				<p class="permission-id"><?php echo $master_group_id . '-' . $sub_group_id; ?></p>
-				<p class="permission-name"><?php echo $sub_group_info['name']; ?></p>
-			</div>
-			<?php foreach($sub_group_info['function_list'] as $function_id => $function_info) :?>
-			<div class="permission-line permission-function">
-				<p class="btn-controller"><a href="/admin/add_authority/?function_id=<?php echo $function_id; ?>">添加权限</a></p>
-				<p class="btn-controller btn-delete" data-type="f" data-value="<?php echo $function_id; ?>" data-name="<?php echo $function_info['name']; ?>">削除功能</p>
-				<p class="btn-controller"><a href="/admin/modify_function/?function_id=<?php echo $function_id; ?>">修改名称</a></p>
-				<p class="permission-id"><?php echo $master_group_id . '-' . $sub_group_id . '-' . $function_id; ?></p>
-				<p class="permission-name"><?php echo $function_info['name']; ?></p>
-			</div>
-			<?php foreach($function_info['authority_list'] as $authority_id => $authority_info) :?>
-			<div class="permission-line permission-authority">
-				<p class="btn-controller btn-delete" data-type="a" data-value="<?php echo $authority_id; ?>" data-name="<?php echo $authority_info['name']; ?>">削除权限</p>
-				<p class="btn-controller"><a href="/admin/modify_authority/?authority_id=<?php echo $authority_id; ?>">修改名称</a></p>
-				<p class="permission-id"><?php echo $master_group_id . '-' . $sub_group_id . '-' . $function_id . '-' . $authority_id; ?></p>
-				<p class="permission-name"><?php echo $authority_info['name']; ?></p>
-			</div>
-			<?php endforeach; /* authority */ ?>
-			<?php endforeach; /* function */ ?>
-			<?php endforeach; /* sub_group */ ?>
 			<?php endforeach; /* master_group */ ?>
 		</div>
 		<?php else: ?>

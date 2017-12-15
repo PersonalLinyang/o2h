@@ -29,8 +29,8 @@ class Controller_Admin_App extends Controller
 			$this->template = 'sp';
 		}
 
-		//日本时间
-		date_default_timezone_set('Asia/Tokyo');
+		//北京时间
+		date_default_timezone_set('PRC');
 
 		
 		session_start();

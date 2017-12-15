@@ -18,19 +18,26 @@ class Model_User extends Model
 		if(count($result_user) == 1) {
 			$result = $result_user[0];
 
-			$permission_list = array();
-			$sql_permission = "SELECT tp.* FROM t_permission tp WHERE tp.position_id IN "
-							. "(SELECT position_id FROM r_user_position rup WHERE rup.user_id = :user_id) ";
+			$permission_list = array(
+				'master_group' => array(),
+				'sub_group' => array(),
+				'function' => array(),
+				'authority' => array(),
+			);
+			$permission_type_list = array(
+				'1' => 'master_group',
+				'2' => 'sub_group',
+				'3' => 'function',
+				'4' => 'authority',
+			);
+			$sql_permission = "SELECT rp.permission_type, rp.permission_id FROM r_permission rp WHERE rp.user_type_id IN "
+							. "(SELECT tu.user_type FROM t_user tu WHERE tu.user_id = :user_id) ";
 			$query_permission = DB::query($sql_permission);
 			$query_permission->param('user_id', $result_user[0]["user_id"]);
 			$result_permission = $query_permission->execute()->as_array();
 
 			foreach($result_permission as $permission) {
-				if($permission['authority_id']){
-					$permission_list[$permission['master_group_id']][$permission['sub_group_id']][$permission['function_id']][$permission['authority_id']] = 1;
-				} else {
-					$permission_list[$permission['master_group_id']][$permission['sub_group_id']][$permission['function_id']] = 1;
-				}
+				$permission_list[$permission_type_list[$permission['permission_type']]][] = $permission['permission_id'];
 			}
 			$result['user_permission'] = $permission_list;
 			

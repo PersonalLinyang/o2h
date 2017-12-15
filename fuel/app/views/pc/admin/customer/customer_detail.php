@@ -12,8 +12,8 @@
 	<div class="content-area">
 		<div class="content-menu">
 			<ul class="content-menu-list">
-				<li class="content-menu-button"><a href="/admin/modify_customer/<?php echo $customer_info['customer_id']; ?>/">信息修改</a></li>
-				<li class="content-menu-button"><a href="/admin/customer_list/">顾客一览</a></li>
+				<li class="content-menu-button"><a href="/admin/modify_customer/<?php echo $customer_info['customer_id']; ?>/">修改申请信息</a></li>
+				<li class="content-menu-button"><a href="/admin/customer_list/">返回顾客一览</a></li>
 			</ul>
 		</div>
 		

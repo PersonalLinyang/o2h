@@ -19,13 +19,20 @@ class Controller_Admin_User_Addmastergroup extends Controller_Admin_App
 		$data['header'] = Request::forge('admin/common/header')->execute()->response();
 		
 //		if(isset($_SESSION['login_user']['permission'][5][7][1])) {
-			$data['input_name'] = '';
+			$data['input_master_group_name'] = '';
+			$data['input_special_flag'] = '';
 			$data['error_message'] = '';
 			
-			if(isset($_POST['page'], $_POST['name'])) {
-				if($_POST['page'] == 'add_mg') {
+			if(isset($_POST['page'])) {
+				$error_message_list = array();
+				
+				$data['input_master_group_name'] = isset($_POST['master_group_name']) ? trim($_POST['master_group_name']) : '';
+				$data['input_special_flag'] = isset($_POST['special_flag']) ? $_POST['special_flag'] : '';
+				
+				if($_POST['page'] == 'add_master_group') {
 					$params_insert = array(
-						'function_group_name' => trim($_POST['name']),
+						'function_group_name' => $data['input_master_group_name'],
+						'special_flag' => $data['input_special_flag'],
 					);
 					//输入内容检查
 					$result_check = Model_Functiongroup::CheckInsertMasterGroup($params_insert);
@@ -39,29 +46,33 @@ class Controller_Admin_User_Addmastergroup extends Controller_Admin_App
 							header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/permission_list/');
 							exit;
 						} else {
-							$data['error_message'] = '数据库错误：数据添加失败';
+							$error_message_list[] = '数据库错误：数据添加失败';
 						}
 					} else {
 						foreach($result_check['error'] as $insert_error) {
-							$error_message_list = array();
 							switch($insert_error) {
-								case 'noset_name':
-									$error_message_list[] = '系统错误：请勿修改表单中的控件名称';
-									break;
 								case 'empty_name':
 									$error_message_list[] = '请输入主功能组名称';
 									break;
-								case 'duplication':
+								case 'long_name':
+									$error_message_list[] = '主功能组名称不能超过50字';
+									break;
+								case 'dup_name':
 									$error_message_list[] = '已存在该名称的主功能组，无法重复添加';
 									break;
 								default:
+									$error_message_list[] = '发生系统错误,请重新尝试添加';
 									break;
 							}
-							$data['error_message'] = implode('<br/>', $error_message_list);
 						}
 					}
 					
-					$data['input_name'] = $_POST['name'];
+					$error_message_list = array_unique($error_message_list);
+					
+					//输出错误信息
+					if(count($error_message_list)) {
+						$data['error_message'] = implode('<br/>', $error_message_list);
+					}
 				} else {
 					return Response::forge(View::forge($this->template . '/admin/error/access_error', $data, false));
 					exit;

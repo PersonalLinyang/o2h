@@ -28,8 +28,21 @@
 					</tr>
 					<tr>
 						<th>功能名称</th>
-						<td><input type="text" name="name" /></td>
+						<td><input type="text" name="function_name" value="<?php echo $input_function_name; ?>" /></td>
 					</tr>
+					<?php if(!$sub_special_flag) : ?>
+					<tr>
+						<th>特殊功能</th>
+						<td>
+							<div class="radio-group">
+								<input type="radio" name="special_flag" value="1" id="rdo-special-flag-1" <?php echo $input_special_flag == '1' ? 'checked ' : ''; ?>/>
+								<label class="lbl-for-radio<?php echo $input_special_flag == '1' ? ' active' : ''; ?>" for="rdo-special-flag-1" data-for="rdo-special-flag">是</label>
+								<input type="radio" name="special_flag" value="0" id="rdo-special-flag-0" <?php echo $input_special_flag == '1' ? '' : 'checked '; ?>/>
+								<label class="lbl-for-radio<?php echo $input_special_flag == '1' ? '' : ' active'; ?>" for="rdo-special-flag-0" data-for="rdo-special-flag">否</label>
+							</div>
+						</td>
+					</tr>
+					<?php endif; ?>
 					<tr>
 						<td colspan="2">
 							<ul class="button-group">
