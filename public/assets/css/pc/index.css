@@ -1,0 +1,1092 @@
+/* 主图区域 */
+.mainv-area {
+	background-color: #9EBFF4;
+	height: 460px;
+	min-width: 1100px;
+	user-select: none;
+	cursor: default;
+	position: relative;
+}
+.mainv-area .mainv-text {
+	position: absolute;
+	top: 150px;
+	left: 50%;
+	margin-left: -540px;
+	background: rgba(0, 50, 130, 0.4);;
+	color: #FFFFFF;
+	font-size: 25px;
+	font-weight: bold;
+	text-align: center;
+	padding: 20px;
+	border-radius: 10px;
+	z-index: 2000;
+}
+.mainv-area .mainv-image {
+	position: absolute;
+	top: 32px;
+	left: 50%;
+	margin-left: 110px;
+	z-index: 1000;
+}
+
+/* 滑动form区域 */
+.form-slide {
+	width: 1100px;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+	z-index: 1000;
+	top: -60px;
+	margin-bottom: -60px;
+}
+
+/* 滑动form区域 标题部分(按季节变化) */
+.form-slide .form-title {
+	width: 1100px;
+	height: 100px;
+	border-top-right-radius: 20px;
+	border-top-left-radius: 20px;
+	background-repeat: no-repeat;
+	background-position-x: 900px;
+	background-position-y: -10px;
+
+}
+.form-slide.spring .form-title {
+	background-color: #A40064;
+	background-image: url(/assets/img/pc/index/bg-form-title-spring.png);
+}
+.form-slide.summer .form-title {
+	background-color: #3A8E2C;
+	background-image: url(/assets/img/pc/index/bg-form-title-summer.png);
+}
+.form-slide.autumn .form-title {
+	background-color: #A46000;
+	background-image: url(/assets/img/pc/index/bg-form-title-autumn.png);
+}
+.form-slide.winter .form-title {
+	background-color: #0027A4;
+	background-image: url(/assets/img/pc/index/bg-form-title-winter.png);
+}
+
+/* 滑动form区域 标题部分 12角星 */
+.form-slide .form-title .form-title-burst {
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	text-align: center;
+	transform:rotate(-15deg);
+	left: 80px;
+	background: radial-gradient(circle, #FEFFDB, #FFF000);
+	background: -moz-radial-gradient(circle, #FEFFDB, #FFF000);
+	background: -o-radial-gradient(circle, #FEFFDB, #FFF000);
+	background: -webkit-radial-gradient(circle, #FEFFDB, #FFF000);
+	user-select: none;
+	cursor: default;
+}
+.form-slide .form-title .form-title-burst:before, .form-slide .form-title .form-title-burst:after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100px;
+	width: 100px;
+	background: radial-gradient(circle, #FEFFDB, #FFF000);
+	background: -moz-radial-gradient(circle, #FEFFDB, #FFF000);
+	background: -o-radial-gradient(circle, #FEFFDB, #FFF000);
+	background: -webkit-radial-gradient(circle, #FEFFDB, #FFF000);
+}
+.form-slide .form-title .form-title-burst:before {
+	-webkit-transform: rotate(30deg);
+	-moz-transform: rotate(30deg);
+	-ms-transform: rotate(30deg);
+	-o-transform: rotate(30deg);
+	transform: rotate(30deg);
+}
+.form-slide .form-title .form-title-burst:after {
+	-webkit-transform: rotate(60deg);
+	-moz-transform: rotate(60deg);
+	-ms-transform: rotate(60deg);
+	-o-transform: rotate(60deg);
+	transform: rotate(60deg);
+}
+.form-slide .form-title .form-title-burst p {
+	position: absolute;
+	z-index: 1000;
+	font-size: 18px;
+	line-height: 30px;
+	padding-left: 14px;
+	padding-top: 5px;
+	color: #FF0000;
+	font-weight: bold;
+	text-shadow: rgba(244,201,0,0.9) 0px 1px 2px;
+}
+.form-slide .form-title .form-title-burst p span {
+	font-size: 30px;
+	line-height: 30px;
+	margin-right: 5px;
+	font-family: fantasy;
+	vertical-align: bottom;
+}
+
+/* 滑动form区域 标题部分 主题文字 */
+.form-slide .form-title .form-title-text {
+	font-size: 40px;
+	font-weight: bold;
+	color: #FFFFFF;
+	padding-left: 280px;
+	padding-top: 20px;
+	letter-spacing: 6px;
+	text-shadow: rgba(0,0,0,0.9) 0px 1px 2px;
+	user-select: none;
+	cursor: default;
+}
+
+/* 滑动form区域 本体部分(按季节变化) */
+.form-slide .form-inner {
+	width: 1000px;
+	padding-left: 45px;
+	padding-right: 45px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	border-bottom-right-radius: 20px;
+	border-bottom-left-radius: 20px;
+	border-left-width: 5px;
+	border-right-width: 5px;
+	border-bottom-width: 5px;
+	border-top-width: 0;
+	border-style: solid;
+	background-color: #FFFFFF;
+}
+.form-slide.spring .form-inner {
+	border-color: #A40064;
+	color: #A40064;
+}
+.form-slide.summer .form-inner {
+	border-color: #3A8E2C;
+	color: #3A8E2C;
+}
+.form-slide.autumn .form-inner {
+	border-color: #A46000;
+	color: #A46000;
+}
+.form-slide.winter .form-inner {
+	border-color: #0027A4;
+	color: #0027A4;
+}
+
+/* 滑动form区域 本体部分 顶端文字 */
+.form-slide .form-inner .form-head-text {
+	font-size: 20px;
+	font-weight: bold;
+	padding-left: 50px;
+}
+
+/* 滑动form区域 本体部分 步骤列表 */
+.form-slide .form-inner .ul-form-head-step {
+	margin-top: 15px;
+	margin-bottom: 15px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0;
+	list-style-type: none;
+	overflow: hidden;
+	width: 780px;
+}
+.form-slide .form-inner .ul-form-head-step li {
+	float: left;
+	position: relative;
+	line-height: 30px;
+	margin-right: 50px;
+	width: 150px;
+	height: 30px;
+	border-width: 2px;
+	border-style: solid;
+	border-radius: 5px;
+	text-align: center;
+	font-weight: bold;
+	user-select: none;
+	cursor: default;
+	border-color: #A4A4A4;
+	color: #A4A4A4;
+}
+.form-slide.spring .form-inner .ul-form-head-step li.active {
+	border-color: #A40064;
+	color: #A40064;
+}
+.form-slide.summer .form-inner .ul-form-head-step li.active {
+	border-color: #3A8E2C;
+	color: #3A8E2C;
+}
+.form-slide.autumn .form-inner .ul-form-head-step li.active {
+	border-color: #A46000;
+	color: #A46000;
+}
+.form-slide.winter .form-inner .ul-form-head-step li.active {
+	border-color: #0027A4;
+	color: #0027A4;
+}
+.form-slide .form-inner .ul-form-head-step li:last-child {
+	margin-right: 0;
+}
+.form-slide .form-inner .ul-form-head-step li:after {
+	content: "・・・";
+	position: absolute;
+	right: -35px;
+	font-size: 40px;
+	letter-spacing: -26px;
+	line-height: 26px;
+	color: #D8D8D8;
+}
+.form-slide .form-inner .ul-form-head-step li:last-child:after {
+	content: "";
+}
+.form-slide .form-inner .ul-form-head-step li p {
+	width: 60px;
+	float: left;
+	font-family: fantasy;
+	color: #FFFFFF;
+	text-align: center;
+	font-weight: normal;
+	background-color: #A4A4A4;
+}
+.form-slide.spring .form-inner .ul-form-head-step li.active p {
+	background-color: #A40064;
+}
+.form-slide.summer .form-inner .ul-form-head-step li.active p {
+	background-color: #3A8E2C;
+}
+.form-slide.autumn .form-inner .ul-form-head-step li.active p {
+	background-color: #A46000;
+}
+.form-slide.winter .form-inner .ul-form-head-step li.active p {
+	background-color: #0027A4;
+}
+
+/* 滑动form区域 本体部分 表单 */
+.form-slide .form-inner .form-body {
+	width: 1000px;
+	overflow: hidden;
+}
+.form-slide .form-inner .form-body .form-body-slide {
+	width: 4000px;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step {
+	float: left;
+	width: 1000px;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .form-body-content {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .form-body-row {
+	overflow: hidden;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .form-body-row .form-body-half {
+	float: left;
+	width: 459px;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .form-body-row .form-body-half:first-child {
+	border-right: 2px dashed #D8D8D8;
+}
+
+/* 滑动form区域 本体部分 表单 问题 */
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .question {
+	font-weight: bold;
+	padding-top: 6px;
+	padding-bottom: 6px;
+}
+
+/* 滑动form区域 本体部分 表单 单选按钮区域 */
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .div-for-radio {
+	overflow: hidden;
+	padding-top: 4px;
+	height: 37px;
+}
+
+/* 滑动form区域 本体部分 表单 单选按钮(滑动式,按季节变化) */
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .lbl-for-radio {
+	padding-left: 70px;
+	padding-right: 30px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	border-radius: 20px;
+	position: relative;
+	margin-left: 5px;
+	margin-right: 15px;
+	font-weight: bold;
+	line-height: 30px;
+	color: #FFFFFF;
+	text-shadow: rgba(0,0,0,0.9) 0px 1px 2px;
+	box-shadow: rgba(0,0,0,0.5) 0px 2px 5px, 
+				inset rgba(255,255,255,0.25) 0px 1px 0px, 
+				inset rgba(0,0,0,0.25) 0px 0px 0px, 
+				inset rgba(255,255,255,0.03) 0px 3px 0px, 
+				inset rgba(0,0,0,0.15) 0px -3px 3px, 
+				inset rgba(255,255,255,0.05) 0px 3px 3px;
+}
+.form-slide.spring .form-inner .form-body .form-body-slide .form-body-step .lbl-for-radio {
+	background-color: #A40064;
+}
+.form-slide.summer .form-inner .form-body .form-body-slide .form-body-step .lbl-for-radio {
+	background-color: #3A8E2C;
+}
+.form-slide.autumn .form-inner .form-body .form-body-slide .form-body-step .lbl-for-radio {
+	background-color: #A46000;
+}
+.form-slide.winter .form-inner .form-body .form-body-slide .form-body-step .lbl-for-radio {
+	background-color: #0027A4;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .lbl-for-radio:before {
+	content: "";
+	width: 40px;
+	height: 23px;
+	border-radius: 15px;
+	background: #BDBDBD;
+	position: absolute;
+	top: 6px;
+	left: 10px;
+	border: 1px solid #848484;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .lbl-for-radio:after {
+	content: "";
+	width: 28px;
+	height: 28px;
+	border-radius: 15px;
+	background: #F2F2F2;
+	position: absolute;
+	top: 5px;
+	left: 7px;
+	box-shadow: rgba(0,0,0,0.5) 0px 2px 5px, 
+				inset rgba(255,255,255,0.25) 0px 1px 0px, 
+				inset rgba(0,0,0,0.25) 0px 0px 0px, 
+				inset rgba(255,255,255,0.03) 0px 5px 0px, 
+				inset rgba(0,0,0,0.15) 0px -5px 5px, 
+				inset rgba(255,255,255,0.05) 0px 5px 5px;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .lbl-for-radio.active:before {
+	background: #00FF00;
+	border-color: #31B404;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .lbl-for-radio.active:after {
+	left: 25px;
+}
+
+/* 滑动form区域 本体部分 表单 下拉菜单 */
+.form-slide .form-inner .form-body .form-body-slide .form-body-step select {
+	font-size: 16px;
+	width: 120px;
+	height: 31px;
+	vertical-align: middle;
+	border-width: 2px;
+	border-style: solid;
+	padding-left: 10px;
+	padding-right: 15px;
+	margin-right: 5px;
+	margin-left: 5px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+	position: relative;
+	border-radius: 5px;
+	user-select: none;
+	cursor: pointer;
+	box-shadow: rgba(0,0,0,0.5) 0px 2px 5px, 
+				inset rgba(255,255,255,0.25) 0px 1px 0px, 
+				inset rgba(0,0,0,0.25) 0px 0px 0px, 
+				inset rgba(255,255,255,0.03) 0px 2px 0px, 
+				inset rgba(0,0,0,0.15) 0px -2px 2px, 
+				inset rgba(255,255,255,0.05) 0px 2px 2px;
+}
+.form-slide.spring .form-inner .form-body .form-body-slide .form-body-step select {
+	border-color: #A40064;
+	color: #A40064;
+}
+.form-slide.summer .form-inner .form-body .form-body-slide .form-body-step select {
+	border-color: #3A8E2C;
+	color: #3A8E2C;
+}
+.form-slide.autumn .form-inner .form-body .form-body-slide .form-body-step select {
+	border-color: #A46000;
+	color: #A46000;
+}
+.form-slide.winter .form-inner .form-body .form-body-slide .form-body-step select {
+	border-color: #0027A4;
+	color: #0027A4;
+}
+
+/* 滑动form区域 本体部分 表单 数字 */
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .div-for-number {
+	overflow: hidden;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	line-height: 30px;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .btn-for-number {
+	position: relative;
+	float: left;
+	width: 30px;
+	height: 30px;
+	cursor: pointer;
+	box-shadow: rgba(0,0,0,0.5) 0px 2px 5px, 
+				inset rgba(255,255,255,0.25) 0px 1px 0px, 
+				inset rgba(0,0,0,0.25) 0px 0px 0px, 
+				inset rgba(255,255,255,0.03) 0px 5px 0px, 
+				inset rgba(0,0,0,0.15) 0px -5px 5px, 
+				inset rgba(255,255,255,0.05) 0px 5px 5px;
+}
+.form-slide.spring .form-inner .form-body .form-body-slide .form-body-step .btn-for-number {
+	background-color: #A40064;
+}
+.form-slide.summer .form-inner .form-body .form-body-slide .form-body-step .btn-for-number {
+	background-color: #3A8E2C;
+}
+.form-slide.autumn .form-inner .form-body .form-body-slide .form-body-step .btn-for-number {
+	background-color: #A46000;
+}
+.form-slide.winter .form-inner .form-body .form-body-slide .form-body-step .btn-for-number {
+	background-color: #0027A4;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .minus-for-number {
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	margin-left: 5px;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .minus-for-number:before {
+	content: " ";
+	position: absolute;
+	width: 14px;
+	height: 0;
+	border-top: 2px solid #FFFFFF;
+	top: 14px;
+	left: 8px;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .plus-for-number {
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	margin-right: 5px;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .plus-for-number:before {
+	content: " ";
+	position: absolute;
+	width: 14px;
+	height: 0;
+	border-top: 2px solid #FFFFFF;
+	top: 14px;
+	left: 8px;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .plus-for-number:after {
+	content: " ";
+	position: absolute;
+	width: 0;
+	height: 14px;
+	border-left: 2px solid #FFFFFF;
+	left: 14px;
+	top: 8px;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .num-number {
+	float: left;
+	width: 40px;
+	font-size: 16px;
+	border-top-width: 2px;
+	border-bottom-width: 2px;
+	border-left-width: 0;
+	border-right-width: 0;
+	border-style: solid;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 10px;
+	padding-right: 10px;
+	position: relative;
+	text-align: center;
+	box-shadow: rgba(0,0,0,0.5) 0px 2px 5px, 
+				inset rgba(255,255,255,0.25) 0px 1px 0px, 
+				inset rgba(0,0,0,0.25) 0px 0px 0px, 
+				inset rgba(255,255,255,0.03) 0px 2px 0px, 
+				inset rgba(0,0,0,0.15) 0px -2px 2px, 
+				inset rgba(255,255,255,0.05) 0px 2px 2px;
+}
+.form-slide.spring .form-inner .form-body .form-body-slide .form-body-step .num-number {
+	border-color: #A40064;
+	color: #A40064;
+}
+.form-slide.summer .form-inner .form-body .form-body-slide .form-body-step .num-number {
+	border-color: #3A8E2C;
+	color: #3A8E2C;
+}
+.form-slide.autumn .form-inner .form-body .form-body-slide .form-body-step .num-number {
+	border-color: #A46000;
+	color: #A46000;
+}
+.form-slide.winter .form-inner .form-body .form-body-slide .form-body-step .num-number {
+	border-color: #0027A4;
+	color: #0027A4;
+}
+
+/* 滑动form区域 本体部分 表单 旅行成员表列宽 */
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .th-age {
+	width: 90px;
+	padding-left: 5px;
+	text-align: left;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .th-men {
+	width: 130px;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .th-women {
+	width: 130px;
+}
+
+/* 滑动form区域 本体部分 表单 标签区域 */
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .div-for-tab {
+	overflow: hidden;
+	padding-top: 5px;
+	user-select: none;
+	height: 33px;
+	padding-left: 5px;
+}
+
+/* 滑动form区域 本体部分 表单 标签按钮(按季节变化) */
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .lbl-for-tab {
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	margin-right: -5px;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+	border-top: 1px solid #A4A4A4;
+	border-left: 1px solid #A4A4A4;
+	border-right: 1px solid #A4A4A4;
+	font-weight: bold;
+	line-height: 30px;
+	background-color: #DBDBDB;
+	color: #FFFFFF;
+	text-shadow: rgba(0,0,0,0.9) 0px 1px 2px;
+	cursor: pointer;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .lbl-for-tab.active {
+	padding-left: 35px;
+	padding-right: 35px;
+}
+.form-slide.spring .form-inner .form-body .form-body-slide .form-body-step .lbl-for-tab.active {
+	background-color: #A40064;
+	border-color: #A40064;
+}
+.form-slide.summer .form-inner .form-body .form-body-slide .form-body-step .lbl-for-tab.active {
+	background-color: #3A8E2C;
+	border-color: #3A8E2C;
+}
+.form-slide.autumn .form-inner .form-body .form-body-slide .form-body-step .lbl-for-tab.active {
+	background-color: #A46000;
+	border-color: #A46000;
+}
+.form-slide.winter .form-inner .form-body .form-body-slide .form-body-step .lbl-for-tab.active {
+	background-color: #0027A4;
+	border-color: #0027A4;
+}
+
+/* 滑动form区域 本体部分 表单 标签内容(按季节变化) */
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .div-content-tab {
+	width: 942px;
+	margin-left: 5px;
+	border-width: 4px;
+	border-style: solid;
+	border-top-right-radius: 8px;
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+	display: none;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .div-content-tab.active {
+	display: block;
+}
+.form-slide.spring .form-inner .form-body .form-body-slide .form-body-step .div-content-tab {
+	border-color: #A40064;
+}
+.form-slide.summer .form-inner .form-body .form-body-slide .form-body-step .div-content-tab {
+	border-color: #3A8E2C;
+}
+.form-slide.autumn .form-inner .form-body .form-body-slide .form-body-step .div-content-tab {
+	border-color: #A46000;
+}
+.form-slide.winter .form-inner .form-body .form-body-slide .form-body-step .div-content-tab {
+	border-color: #0027A4;
+}
+
+/* 滑动form区域 本体部分 表单 文本框(按季节变化) */
+.form-slide .form-inner .form-body .form-body-slide .form-body-step input[type="text"] {
+	width: 100%;
+	height: 30px;
+	box-sizing: border-box;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-left: 5px;
+	margin-right: 5px;
+	border-width: 2px;
+	border-style: solid;
+	font-size: 16px;
+	border-radius: 5px;
+	box-shadow: rgba(0,0,0,0.5) 0px 2px 5px, 
+				inset rgba(255,255,255,0.25) 0px 1px 0px, 
+				inset rgba(0,0,0,0.25) 0px 0px 0px, 
+				inset rgba(255,255,255,0.03) 0px 2px 0px, 
+				inset rgba(0,0,0,0.15) 0px -2px 2px, 
+				inset rgba(255,255,255,0.05) 0px 2px 2px;
+}
+.form-slide.spring .form-inner .form-body .form-body-slide .form-body-step input[type="text"] {
+	border-color: #A40064;
+	color: #A40064;
+}
+.form-slide.summer .form-inner .form-body .form-body-slide .form-body-step input[type="text"] {
+	border-color: #3A8E2C;
+	color: #3A8E2C;
+}
+.form-slide.autumn .form-inner .form-body .form-body-slide .form-body-step input[type="text"] {
+	border-color: #A46000;
+	color: #A46000;
+}
+.form-slide.winter .form-inner .form-body .form-body-slide .form-body-step input[type="text"] {
+	border-color: #0027A4;
+	color: #0027A4;
+}
+
+/* 滑动form区域 本体部分 表单 滚动区域 */
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .div-scroll {
+	width: 100%;
+	overflow-y: auto;
+}
+
+/* 滑动form区域 本体部分 表单 预定酒店表格 */
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .th-hotel-type {
+	width: 130px;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .th-room-type {
+	width: 130px;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .th-people-num {
+	width: 130px;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .th-room-num {
+	width: 130px;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .th-day-num {
+	width: 130px;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .th-hotel-comment {
+	width: 255px;
+}
+
+/* 滑动form区域 本体部分 表单 按钮区域 */
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .ul-form-body-button-group {
+	user-select:none;
+	padding-left: 0;
+	margin-bottom: 0;
+	text-align: center;
+}
+
+/* 滑动form区域 本体部分 表单 返回按钮 */
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .ul-form-body-button-group .btn-return {
+	display: inline-block;
+	width: 160px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	margin-left: 20px;
+	margin-right: 20px;
+	cursor: pointer;
+	opacity: 0.9;
+	color: #FFFFFF;
+	font-size: 20px;
+	font-weight: bold;
+	letter-spacing: 3px;
+	background: #DF0101;
+	text-shadow: rgba(0,0,0,0.9) 0px 1px 2px;
+	border: 1px solid #242424;
+	-webkit-border-radius: 4px;
+	-khtml-border-radius: 4px;
+	-moz-border-radius: 4px;
+	-o-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: rgba(255,255,255,0.25) 0px 1px 0px, 
+						inset rgba(255,255,255,0.25) 0px 1px 0px, 
+						inset rgba(0,0,0,0.25) 0px 0px 0px, 
+						inset rgba(255,255,255,0.03) 0px 20px 0px, 
+						inset rgba(0,0,0,0.15) 0px -20px 20px, 
+						inset rgba(255,255,255,0.05) 0px 20px 20px;
+	-khtml-box-shadow: rgba(255,255,255,0.25) 0px 1px 0px, 
+						inset rgba(255,255,255,0.25) 0px 1px 0px, 
+						inset rgba(0,0,0,0.25) 0px 0px 0px, 
+						inset rgba(255,255,255,0.03) 0px 20px 0px, 
+						inset rgba(0,0,0,0.15) 0px -20px 20px, 
+						inset rgba(255,255,255,0.05) 0px 20px 20px;
+	-moz-box-shadow: rgba(255,255,255,0.25) 0px 1px 0px, 
+						inset rgba(255,255,255,0.25) 0px 1px 0px, 
+						inset rgba(0,0,0,0.25) 0px 0px 0px, 
+						inset rgba(255,255,255,0.03) 0px 20px 0px, 
+						inset rgba(0,0,0,0.15) 0px -20px 20px, 
+						inset rgba(255,255,255,0.05) 0px 20px 20px;
+	-o-box-shadow: rgba(255,255,255,0.25) 0px 1px 0px, 
+					inset rgba(255,255,255,0.25) 0px 1px 0px, 
+					inset rgba(0,0,0,0.25) 0px 0px 0px, 
+					inset rgba(255,255,255,0.03) 0px 20px 0px, 
+					inset rgba(0,0,0,0.15) 0px -20px 20px, 
+					inset rgba(255,255,255,0.05) 0px 20px 20px;
+	box-shadow: rgba(255,255,255,0.25) 0px 1px 0px, 
+				inset rgba(255,255,255,0.25) 0px 1px 0px, 
+				inset rgba(0,0,0,0.25) 0px 0px 0px, 
+				inset rgba(255,255,255,0.03) 0px 20px 0px, 
+				inset rgba(0,0,0,0.15) 0px -20px 20px, 
+				inset rgba(255,255,255,0.05) 0px 20px 20px;
+	-webkit-transition: all 0.1s linear;
+	-khtml-transition: all 0.1s linear;
+	-moz-transition: all 0.1s linear;
+	-o-transition: all 0.1s linear;
+	transition: all 0.1s linear;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .ul-form-body-button-group .btn-return:hover {
+	-webkit-box-shadow: rgba(0,0,0,0.5) 0px 2px 5px, 
+						inset rgba(255,255,255,0.25) 0px 1px 0px, 
+						inset rgba(0,0,0,0.25) 0px 0px 0px, 
+						inset rgba(255,255,255,0.03) 0px 20px 0px, 
+						inset rgba(0,0,0,0.15) 0px -20px 20px, 
+						inset rgba(255,255,255,0.05) 0px 20px 20px;
+	-khtml-box-shadow: rgba(0,0,0,0.5) 0px 2px 5px, 
+						inset rgba(255,255,255,0.25) 0px 1px 0px, 
+						inset rgba(0,0,0,0.25) 0px 0px 0px, 
+						inset rgba(255,255,255,0.03) 0px 20px 0px, 
+						inset rgba(0,0,0,0.15) 0px -20px 20px, 
+						inset rgba(255,255,255,0.05) 0px 20px 20px;
+	-moz-box-shadow: rgba(0,0,0,0.5) 0px 2px 5px, 
+						inset rgba(255,255,255,0.25) 0px 1px 0px, 
+						inset rgba(0,0,0,0.25) 0px 0px 0px, 
+						inset rgba(255,255,255,0.03) 0px 20px 0px, 
+						inset rgba(0,0,0,0.15) 0px -20px 20px, 
+						inset rgba(255,255,255,0.05) 0px 20px 20px;
+	-o-box-shadow: rgba(0,0,0,0.5) 0px 2px 5px, 
+					inset rgba(255,255,255,0.25) 0px 1px 0px, 
+					inset rgba(0,0,0,0.25) 0px 0px 0px, 
+					inset rgba(255,255,255,0.03) 0px 20px 0px, 
+					inset rgba(0,0,0,0.15) 0px -20px 20px, 
+					inset rgba(255,255,255,0.05) 0px 20px 20px;
+	box-shadow: rgba(0,0,0,0.5) 0px 2px 5px, 
+				inset rgba(255,255,255,0.25) 0px 1px 0px, 
+				inset rgba(0,0,0,0.25) 0px 0px 0px, 
+				inset rgba(255,255,255,0.03) 0px 20px 0px, 
+				inset rgba(0,0,0,0.15) 0px -20px 20px, 
+				inset rgba(255,255,255,0.05) 0px 20px 20px;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .ul-form-body-button-group .btn-return:active {
+	-webkit-box-shadow: rgba(255,255,255,0.25) 0px 1px 0px,
+						inset rgba(255,255,255,0) 0px 1px 0px, 
+						inset rgba(0,0,0,0.5) 0px 0px 5px, 
+						inset rgba(255,255,255,0.03) 0px 20px 0px, 
+						inset rgba(0,0,0,0.15) 0px -20px 20px, 
+						inset rgba(255,255,255,0.05) 0px 20px 20px;
+	-khtml-box-shadow: rgba(255,255,255,0.25) 0px 1px 0px,
+						inset rgba(255,255,255,0) 0px 1px 0px, 
+						inset rgba(0,0,0,0.5) 0px 0px 5px, 
+						inset rgba(255,255,255,0.03) 0px 20px 0px, 
+						inset rgba(0,0,0,0.15) 0px -20px 20px, 
+						inset rgba(255,255,255,0.05) 0px 20px 20px;
+	-moz-box-shadow: rgba(255,255,255,0.25) 0px 1px 0px, 
+						inset rgba(255,255,255,0) 0px 1px 0px, 
+						inset rgba(0,0,0,0.5) 0px 0px 5px, 
+						inset rgba(255,255,255,0.03) 0px 20px 0px, 
+						inset rgba(0,0,0,0.15) 0px -20px 20px, 
+						inset rgba(255,255,255,0.05) 0px 20px 20px;
+	-o-box-shadow: rgba(255,255,255,0.25) 0px 1px 0px, 
+					inset rgba(255,255,255,0) 0px 1px 0px, 
+					inset rgba(0,0,0,0.5) 0px 0px 5px, 
+					inset rgba(255,255,255,0.03) 0px 20px 0px, 
+					inset rgba(0,0,0,0.15) 0px -20px 20px, 
+					inset rgba(255,255,255,0.05) 0px 20px 20px;
+	box-shadow: rgba(255,255,255,0.25) 0px 1px 0px, 
+				inset rgba(255,255,255,0) 0px 1px 0px, 
+				inset rgba(0,0,0,0.5) 0px 0px 5px, 
+				inset rgba(255,255,255,0.03) 0px 20px 0px, 
+				inset rgba(0,0,0,0.15) 0px -20px 20px, 
+				inset rgba(255,255,255,0.05) 0px 20px 20px;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .ul-form-body-button-group .btn-return .shine {
+	display: block;
+	position: relative;
+	background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%);
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,0)), 
+				color-stop(50%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,0)));
+	background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 50%,rgba(255,255,255,0) 100%);
+	background: -o-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 50%,rgba(255,255,255,0) 100%);
+	background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 50%,rgba(255,255,255,0) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#00ffffff',GradientType=1 );
+	background: linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 50%,rgba(255,255,255,0) 100%);
+	padding: 0px 12px;
+	top: -8px;
+	left: -36px;
+	height: 1px;
+	-webkit-box-shadow: rgba(255,255,255,0.2) 0px 1px 5px;
+	-khtml-box-shadow: rgba(255,255,255,0.2) 0px 1px 5px;
+	-moz-box-shadow: rgba(255,255,255,0.2) 0px 1px 5px;
+	-o-box-shadow: rgba(255,255,255,0.2) 0px 1px 5px;
+	box-shadow: rgba(255,255,255,0.2) 0px 1px 5px;
+	-webkit-transition: all 0.3s ease-in-out;
+	-khtml-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .ul-form-body-button-group .btn-return:hover .shine {
+	left: 36px;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .ul-form-body-button-group .btn-return:active .shine {
+	opacity: 0;
+}
+
+
+/* 滑动form区域 本体部分 表单 下一步按钮 */
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .ul-form-body-button-group .btn-next {
+	display: inline-block;
+	width: 160px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	margin-left: 20px;
+	margin-right: 20px;
+	cursor: pointer;
+	opacity: 0.9;
+	color: #FFFFFF;
+	font-size: 20px;
+	font-weight: bold;
+	letter-spacing: 3px;
+	background: #BDBDBD;
+	text-shadow: rgba(0,0,0,0.9) 0px 1px 2px;
+	border: 1px solid #242424;
+	-webkit-border-radius: 4px;
+	-khtml-border-radius: 4px;
+	-moz-border-radius: 4px;
+	-o-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: rgba(255,255,255,0.25) 0px 1px 0px, 
+						inset rgba(255,255,255,0.25) 0px 1px 0px, 
+						inset rgba(0,0,0,0.25) 0px 0px 0px, 
+						inset rgba(255,255,255,0.03) 0px 20px 0px, 
+						inset rgba(0,0,0,0.15) 0px -20px 20px, 
+						inset rgba(255,255,255,0.05) 0px 20px 20px;
+	-khtml-box-shadow: rgba(255,255,255,0.25) 0px 1px 0px, 
+						inset rgba(255,255,255,0.25) 0px 1px 0px, 
+						inset rgba(0,0,0,0.25) 0px 0px 0px, 
+						inset rgba(255,255,255,0.03) 0px 20px 0px, 
+						inset rgba(0,0,0,0.15) 0px -20px 20px, 
+						inset rgba(255,255,255,0.05) 0px 20px 20px;
+	-moz-box-shadow: rgba(255,255,255,0.25) 0px 1px 0px, 
+						inset rgba(255,255,255,0.25) 0px 1px 0px, 
+						inset rgba(0,0,0,0.25) 0px 0px 0px, 
+						inset rgba(255,255,255,0.03) 0px 20px 0px, 
+						inset rgba(0,0,0,0.15) 0px -20px 20px, 
+						inset rgba(255,255,255,0.05) 0px 20px 20px;
+	-o-box-shadow: rgba(255,255,255,0.25) 0px 1px 0px, 
+					inset rgba(255,255,255,0.25) 0px 1px 0px, 
+					inset rgba(0,0,0,0.25) 0px 0px 0px, 
+					inset rgba(255,255,255,0.03) 0px 20px 0px, 
+					inset rgba(0,0,0,0.15) 0px -20px 20px, 
+					inset rgba(255,255,255,0.05) 0px 20px 20px;
+	box-shadow: rgba(255,255,255,0.25) 0px 1px 0px, 
+				inset rgba(255,255,255,0.25) 0px 1px 0px, 
+				inset rgba(0,0,0,0.25) 0px 0px 0px, 
+				inset rgba(255,255,255,0.03) 0px 20px 0px, 
+				inset rgba(0,0,0,0.15) 0px -20px 20px, 
+				inset rgba(255,255,255,0.05) 0px 20px 20px;
+	-webkit-transition: all 0.1s linear;
+	-khtml-transition: all 0.1s linear;
+	-moz-transition: all 0.1s linear;
+	-o-transition: all 0.1s linear;
+	transition: all 0.1s linear;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .ul-form-body-button-group .btn-next.active {
+	background: #01DF01;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .ul-form-body-button-group .btn-next.active:hover {
+	-webkit-box-shadow: rgba(0,0,0,0.5) 0px 2px 5px, 
+						inset rgba(255,255,255,0.25) 0px 1px 0px, 
+						inset rgba(0,0,0,0.25) 0px 0px 0px, 
+						inset rgba(255,255,255,0.03) 0px 20px 0px, 
+						inset rgba(0,0,0,0.15) 0px -20px 20px, 
+						inset rgba(255,255,255,0.05) 0px 20px 20px;
+	-khtml-box-shadow: rgba(0,0,0,0.5) 0px 2px 5px, 
+						inset rgba(255,255,255,0.25) 0px 1px 0px, 
+						inset rgba(0,0,0,0.25) 0px 0px 0px, 
+						inset rgba(255,255,255,0.03) 0px 20px 0px, 
+						inset rgba(0,0,0,0.15) 0px -20px 20px, 
+						inset rgba(255,255,255,0.05) 0px 20px 20px;
+	-moz-box-shadow: rgba(0,0,0,0.5) 0px 2px 5px, 
+						inset rgba(255,255,255,0.25) 0px 1px 0px, 
+						inset rgba(0,0,0,0.25) 0px 0px 0px, 
+						inset rgba(255,255,255,0.03) 0px 20px 0px, 
+						inset rgba(0,0,0,0.15) 0px -20px 20px, 
+						inset rgba(255,255,255,0.05) 0px 20px 20px;
+	-o-box-shadow: rgba(0,0,0,0.5) 0px 2px 5px, 
+					inset rgba(255,255,255,0.25) 0px 1px 0px, 
+					inset rgba(0,0,0,0.25) 0px 0px 0px, 
+					inset rgba(255,255,255,0.03) 0px 20px 0px, 
+					inset rgba(0,0,0,0.15) 0px -20px 20px, 
+					inset rgba(255,255,255,0.05) 0px 20px 20px;
+	box-shadow: rgba(0,0,0,0.5) 0px 2px 5px, 
+				inset rgba(255,255,255,0.25) 0px 1px 0px, 
+				inset rgba(0,0,0,0.25) 0px 0px 0px, 
+				inset rgba(255,255,255,0.03) 0px 20px 0px, 
+				inset rgba(0,0,0,0.15) 0px -20px 20px, 
+				inset rgba(255,255,255,0.05) 0px 20px 20px;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .ul-form-body-button-group .btn-next.active:active {
+	-webkit-box-shadow: rgba(255,255,255,0.25) 0px 1px 0px,
+						inset rgba(255,255,255,0) 0px 1px 0px, 
+						inset rgba(0,0,0,0.5) 0px 0px 5px, 
+						inset rgba(255,255,255,0.03) 0px 20px 0px, 
+						inset rgba(0,0,0,0.15) 0px -20px 20px, 
+						inset rgba(255,255,255,0.05) 0px 20px 20px;
+	-khtml-box-shadow: rgba(255,255,255,0.25) 0px 1px 0px,
+						inset rgba(255,255,255,0) 0px 1px 0px, 
+						inset rgba(0,0,0,0.5) 0px 0px 5px, 
+						inset rgba(255,255,255,0.03) 0px 20px 0px, 
+						inset rgba(0,0,0,0.15) 0px -20px 20px, 
+						inset rgba(255,255,255,0.05) 0px 20px 20px;
+	-moz-box-shadow: rgba(255,255,255,0.25) 0px 1px 0px, 
+						inset rgba(255,255,255,0) 0px 1px 0px, 
+						inset rgba(0,0,0,0.5) 0px 0px 5px, 
+						inset rgba(255,255,255,0.03) 0px 20px 0px, 
+						inset rgba(0,0,0,0.15) 0px -20px 20px, 
+						inset rgba(255,255,255,0.05) 0px 20px 20px;
+	-o-box-shadow: rgba(255,255,255,0.25) 0px 1px 0px, 
+					inset rgba(255,255,255,0) 0px 1px 0px, 
+					inset rgba(0,0,0,0.5) 0px 0px 5px, 
+					inset rgba(255,255,255,0.03) 0px 20px 0px, 
+					inset rgba(0,0,0,0.15) 0px -20px 20px, 
+					inset rgba(255,255,255,0.05) 0px 20px 20px;
+	box-shadow: rgba(255,255,255,0.25) 0px 1px 0px, 
+				inset rgba(255,255,255,0) 0px 1px 0px, 
+				inset rgba(0,0,0,0.5) 0px 0px 5px, 
+				inset rgba(255,255,255,0.03) 0px 20px 0px, 
+				inset rgba(0,0,0,0.15) 0px -20px 20px, 
+				inset rgba(255,255,255,0.05) 0px 20px 20px;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .ul-form-body-button-group .btn-next.active .shine {
+	display: block;
+	position: relative;
+	background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%);
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,0)), 
+				color-stop(50%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,0)));
+	background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 50%,rgba(255,255,255,0) 100%);
+	background: -o-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 50%,rgba(255,255,255,0) 100%);
+	background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 50%,rgba(255,255,255,0) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#00ffffff',GradientType=1 );
+	background: linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 50%,rgba(255,255,255,0) 100%);
+	padding: 0px 12px;
+	top: -8px;
+	left: -36px;
+	height: 1px;
+	-webkit-box-shadow: rgba(255,255,255,0.2) 0px 1px 5px;
+	-khtml-box-shadow: rgba(255,255,255,0.2) 0px 1px 5px;
+	-moz-box-shadow: rgba(255,255,255,0.2) 0px 1px 5px;
+	-o-box-shadow: rgba(255,255,255,0.2) 0px 1px 5px;
+	box-shadow: rgba(255,255,255,0.2) 0px 1px 5px;
+	-webkit-transition: all 0.3s ease-in-out;
+	-khtml-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .ul-form-body-button-group .btn-next.active:hover .shine {
+	left: 36px;
+}
+.form-slide .form-inner .form-body .form-body-slide .form-body-step .ul-form-body-button-group .btn-next.active:active .shine {
+	opacity: 0;
+}
+
+/* Mission区域 */
+.mission-area {
+	position: relative;
+	height: 550px;
+	margin-top: -100px;
+}
+
+/* Mission区域 图片部分 */
+.mission-area .div-image {
+	position: absolute;
+	right: 50%;
+	height: 550px;
+	overflow: hidden;
+	width: 50%;
+}
+
+/* Mission区域 内容部分 */
+.mission-area .div-content {
+	position: absolute;
+	top: 40px;
+	left: 50%;
+	width: 500px;
+	text-align: center;
+}
+.mission-area .div-content .p-item {
+	font-weight: bold;
+	font-size: 22px;
+	text-align: right;
+	padding-right: 100px;
+	margin-top: 35px;
+}
+.mission-area .div-content .p-sub-title {
+	font-weight: bold;
+	font-size: 18px;
+	margin-top: 20px;
+	text-align: center;
+}
+.mission-area .div-content .p-title {
+	font-weight: bold;
+	font-size: 24px;
+	letter-spacing: 2px;
+	margin-top: 10px;
+	text-align: center;
+}
+.mission-area .div-content .p-content {
+	line-height: 30px;
+	letter-spacing: 1px;
+	margin-top: 10px;
+	text-align: center;
+}
+
+/* Project区域 */
+.project-area {
+	position: relative;
+	height: 550px;
+}
+
+/* Mission区域 图片部分 */
+.project-area .div-image {
+	position: absolute;
+	left: 50%;
+	height: 550px;
+	overflow: hidden;
+	width: 50%;
+}
+.project-area .div-image img {
+	float: right;
+}
+
+/* Project区域 内容部分 */
+.project-area .div-content {
+	position: absolute;
+	right: 50%;
+	width: 500px;
+}
+.project-area .div-content .p-item {
+	font-weight: bold;
+	font-size: 22px;
+	padding-left: 100px;
+	margin-top: 20px;
+}
+.project-area .div-content .p-title {
+	font-weight: bold;
+	font-size: 24px;
+	letter-spacing: 2px;
+	text-align: center;
+	margin-top: 20px;
+}
+.project-area .div-content .p-title span {
+	letter-spacing: 0;
+}
+.project-area .div-content .p-content {
+	letter-spacing: 1px;
+	margin-top: 10px;
+}

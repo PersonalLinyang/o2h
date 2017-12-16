@@ -1,15 +1,13 @@
 <?php
 /* 
- * 前サイトページの共通親
+ * 宣传系统通用Controller父类
  */
 
 class Controller_App extends Controller 
 {
 
-	//デフォルトでPCのthemeを使う
+	//默认使用PC式样
 	public $template = 'pc';
-	//デフォルトで中国語を使う
-	public $language = 'cn';
 	
 	/**
 	 *
@@ -19,7 +17,7 @@ class Controller_App extends Controller
 
 		$ua = $_SERVER['HTTP_USER_AGENT'];
 		
-		//PC、SPを判別してSPまたはFPならthemeをきりかえる
+		//PC、SP判定并切换template
 		if ((strpos($ua, 'iPhone') !== false)
 	    || (strpos($ua, 'Windows Phone') !== false)
 	    || (strpos($ua, 'DoCoMo') !== false)
@@ -31,7 +29,7 @@ class Controller_App extends Controller
 			$this->template = 'sp';
 		}
 
-		//時間を日本時間に調整
+		//调整时间
 		date_default_timezone_set('PRC');
 		
 	}
