@@ -21,7 +21,7 @@ class Controller_Admin_Service_Addspot extends Controller_Admin_App
 //		if(isset($_SESSION['login_user']['permission'][5][7][1])) {
 			//设定View所需变量
 			$data['error_message'] = '';
-			$data['area_list'] = Model_Area::GetAreaListAll();
+			$data['area_list'] = Model_Area::GetAreaListActive();
 			$data['spot_type_list'] = Model_SpotType::GetSpotTypeListAll();
 			$data['input_spot_name'] = '';
 			$data['input_spot_area'] = '';

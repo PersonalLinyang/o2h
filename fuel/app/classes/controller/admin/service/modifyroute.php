@@ -32,7 +32,7 @@ class Controller_Admin_Service_Modifyroute extends Controller_Admin_App
 			$data['input_detail_list'] = array();
 			$data['main_image_url'] = '';
 			$data['input_main_image'] = '';
-			$data['spot_list'] = Model_Spot::SelectSpotSimpleListAll();
+			$data['spot_list'] = Model_Spot::SelectSpotSimpleListActive();
 			
 			$route_check = Model_Route::CheckRouteExistByRouteId($route_id);
 			

@@ -66,7 +66,7 @@
 				</li>
 				<?php //endif; ?>
 				<li class="js-navi-sub">
-					<a class="main-navi-link">企业管理</a>
+					<a class="main-navi-link">综合统筹</a>
 					<div class="header-sub-navi">
 						<ul>
 							<li><a href="/admin/" class="sub-navi-link">客户量结算</a></li>

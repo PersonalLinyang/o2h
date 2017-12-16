@@ -306,10 +306,10 @@ class Model_Spot extends Model
 	}
 	
 	/*
-	 * 获得全部景点信息的简易列表
+	 * 获得全部有效公开景点信息的简易列表
 	 */
-	public static function SelectSpotSimpleListAll() {
-		$sql = "SELECT spot_id, spot_name FROM t_spot ORDER BY spot_id";
+	public static function SelectSpotSimpleListActive() {
+		$sql = "SELECT spot_id, spot_name FROM t_spot WHERE delete_flag = 0 AND spot_status = 1 ORDER BY spot_id";
 		$query = DB::query($sql);
 		$result = $query->execute()->as_array();
 		
@@ -727,6 +727,45 @@ class Model_Spot extends Model
 			if(count($result_exist) != 1) {
 				$result['result'] = false;
 				$result['error'][] = 'noexist_spot_id';
+			}
+		}
+		
+		return $result;
+	}
+	
+	/*
+	 * 检查一组景点ID是否全部有效
+	 */
+	public static function CheckActiveSpotIdList($spot_id_list) {
+		$result = false;
+		
+		if(is_array($spot_id_list)) {
+			if(!count($spot_id_list)) {
+				$result = true;
+			} else {
+				foreach($spot_id_list as $spot_id) {
+					if(!is_numeric($spot_id)) {
+						return false;
+					}
+				}
+				
+				$sql_where_list = array();
+				$sql_param_list = array();
+				foreach($spot_id_list as $spot_id_counter => $spot_id) {
+					$sql_where_list[] = ':spot_id_' . $spot_id_counter;
+					$sql_param_list[':spot_id_' . $spot_id_counter] = $spot_id;
+				}
+				$sql_where = implode(', ', $sql_where_list);
+				$sql = "SELECT * FROM t_spot WHERE spot_id IN (" . $sql_where . ")";
+				$query = DB::query($sql);
+				foreach($sql_param_list as $key => $value) {
+					$query->param($key, $value);
+				}
+				$result = $query->execute()->as_array();
+				
+				if(count($result) == count($spot_id_list)) {
+					$result = true;
+				}
 			}
 		}
 		

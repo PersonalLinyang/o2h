@@ -41,10 +41,10 @@ class Model_Hoteltype extends Model
 	}
 
 	/*
-	 * 获取全部酒店类别列表
+	 * 获取全部有效酒店类别列表
 	 */
-	public static function GetHotelTypeListAll() {
-		$sql_hotel_type = "SELECT hotel_type_id, hotel_type_name FROM m_hotel_type ORDER BY hotel_type_id";
+	public static function GetHotelTypeListActive() {
+		$sql_hotel_type = "SELECT hotel_type_id, hotel_type_name FROM m_hotel_type WHERE delete_flag = 0 ORDER BY hotel_type_id";
 		$query_hotel_type = DB::query($sql_hotel_type);
 		$hotel_type_list = $query_hotel_type->execute()->as_array();
 		
@@ -182,6 +182,22 @@ class Model_Hoteltype extends Model
 		}
 		
 		return $result;
+	}
+	
+	/*
+	 * 检查酒店类别ID是否存在
+	 */
+	public static function CheckExistHotelTypeId($hotel_type_id) {
+		$sql = "SELECT * FROM m_hotel_type WHERE hotel_type_id = :hotel_type_id";
+		$query = DB::query($sql);
+		$query->param(':hotel_type_id', $hotel_type_id);
+		$result = $query->execute()->as_array();
+		
+		if(count($result)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

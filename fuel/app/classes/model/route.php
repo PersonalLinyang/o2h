@@ -157,7 +157,7 @@ class Model_Route extends Model
 	}
 	
 	/*
-	 * 按条件获得路线列表
+	 * 获取全部旅游路线简易信息列表
 	 */
 	public static function GetRouteSimpleListAll() {
 		$sql = "SELECT route_id, route_name FROM t_route WHERE route_status = 1";
@@ -165,6 +165,33 @@ class Model_Route extends Model
 		$result = $query->execute()->as_array();
 		
 		return $result;
+	}
+	
+	/*
+	 * 获取全部有效公开旅游路线简易信息列表
+	 */
+	public static function GetRouteSimpleListActive() {
+		$sql = "SELECT route_id, route_name FROM t_route WHERE delete_flag = 0 AND route_status = 1";
+		$query = DB::query($sql);
+		$result = $query->execute()->as_array();
+		
+		return $result;
+	}
+	
+	/*
+	 * 检查旅游路线ID是否有效公开
+	 */
+	public static function CheckActiveRouteId($route_id) {
+		$sql = "SELECT * FROM t_user WHERE route_id = :route_id AND delete_flag = 0 AND route_status = 1";
+		$query = DB::query($sql);
+		$query->param(':route_id', $route_id);
+		$result = $query->execute()->as_array();
+		
+		if(count($result)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	/*

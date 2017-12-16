@@ -38,4 +38,15 @@ $(function(){
 		$('.popup-shadow').hide();
 		$('.popup-delete').hide();
 	});
+	
+	//点击展开/收起按钮
+	$('.btn-permission-show').click(function(){
+		if($(this).hasClass('active')) {
+			$(this).removeClass('active');
+			$(this).closest('.permission-area').children('.permission-area').fadeIn();
+		} else {
+			$(this).addClass('active');
+			$(this).closest('.permission-area').children('.permission-area').fadeOut();
+		}
+	});
 });

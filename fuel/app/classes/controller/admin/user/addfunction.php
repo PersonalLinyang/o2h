@@ -19,9 +19,8 @@ class Controller_Admin_User_Addfunction extends Controller_Admin_App
 		$data['header'] = Request::forge('admin/common/header')->execute()->response();
 		
 //		if(isset($_SESSION['login_user']['permission'][5][7][1])) {
-			$data['input_name'] = '';
-			$data['master_group_name'] = '';
-			$data['sub_group_name'] = '';
+			$data['input_function_name'] = '';
+			$data['input_special_flag'] = '';
 			$data['error_message'] = '';
 			
 			//页面参数检查
@@ -38,12 +37,19 @@ class Controller_Admin_User_Addfunction extends Controller_Admin_App
 			
 			$data['master_group_name'] = $sub_group['master_group_name'];
 			$data['sub_group_name'] = $sub_group['sub_group_name'];
+			$data['sub_special_flag'] = $sub_group['sub_special_flag'];
 			
-			if(isset($_POST['page'], $_POST['name'])) {
+			if(isset($_POST['page'])) {
+				$error_message_list = array();
+				
+				$data['input_function_name'] = isset($_POST['function_name']) ? trim($_POST['function_name']) : '';
+				$data['input_special_flag'] = isset($_POST['special_flag']) ? $_POST['special_flag'] : '';
+				
 				if($_POST['page'] == 'add_function') {
 					$params_insert = array(
-						'function_name' => trim($_POST['name']),
+						'function_name' => $data['input_function_name'],
 						'function_group_id' => $_GET['sub_group_id'],
+						'special_flag' => $sub_group['sub_special_flag'] ? '1' : $data['input_special_flag'],
 					);
 					//输入内容检查
 					$result_check = Model_Function::CheckInsertFunction($params_insert);
@@ -63,29 +69,28 @@ class Controller_Admin_User_Addfunction extends Controller_Admin_App
 						foreach($result_check['error'] as $insert_error) {
 							$error_message_list = array();
 							switch($insert_error) {
-								case 'noset_name':
-									$error_message_list[] = '系统错误：请勿修改表单中的控件名称';
-									break;
 								case 'empty_name':
 									$error_message_list[] = '请输入功能名称';
 									break;
-								case 'noset_group':
-									$error_message_list[] = '请设定所属副功能组';
+								case 'long_name':
+									$error_message_list[] = '功能名称不能超过50字';
 									break;
-								case 'nonum_group':
-									$error_message_list[] = '副功能组编号不是数字';
-									break;
-								case 'duplication':
+								case 'dup_name':
 									$error_message_list[] = '该副功能组中已存在该名称的功能，无法重复添加';
 									break;
 								default:
+									$error_message_list[] = '发生系统错误,请重新尝试添加';
 									break;
 							}
-							$data['error_message'] = implode('<br/>', $error_message_list);
 						}
 					}
 					
-					$data['input_name'] = $_POST['name'];
+					$error_message_list = array_unique($error_message_list);
+					
+					//输出错误信息
+					if(count($error_message_list)) {
+						$data['error_message'] = implode('<br/>', $error_message_list);
+					}
 				} else {
 					return Response::forge(View::forge($this->template . '/admin/error/access_error', $data, false));
 					exit;

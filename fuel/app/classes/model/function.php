@@ -2,18 +2,117 @@
 
 class Model_Function extends Model
 {
+
 	/*
 	 * 添加功能
 	 */
 	public static function InsertFunction($params) {
-		$sql_insert = "INSERT INTO m_function(function_name, function_group_id) VALUES(:function_name, :function_group_id)";
-		$query_insert = DB::query($sql_insert);
-		$query_insert->param(':function_name', $params['function_name']);
-		$query_insert->param(':function_group_id', $params['function_group_id']);
-		$result_insert = $query_insert->execute();
+		$sql_function = "INSERT INTO m_function(function_name, function_group_id, special_flag) VALUES(:function_name, :function_group_id, :special_flag)";
+		$query_function = DB::query($sql_function);
+		$query_function->param(':function_name', $params['function_name']);
+		$query_function->param(':function_group_id', $params['function_group_id']);
+		$query_function->param(':special_flag', $params['special_flag']);
+		$result_function = $query_function->execute();
 		
-		return $result_insert;
+		//添加成功的同时为系统管理员添加该权限
+		if($result_function) {
+			$function_id = intval($result_function[0]);
+			
+			$sql_permission = "INSERT INTO r_permission(user_type_id, permission_type, permission_id) VALUES(1, 3, :permission_id)";
+			$query_permission = DB::query($sql_permission);
+			$query_permission->param(':permission_id', $function_id);
+			$result_permission = $query_permission->execute();
+		}
+		
+		return $result_function;
 	}
+	
+	/*
+	 * 添加功能前添加信息查验
+	 */
+	public static function CheckInsertFunction($params) {
+		$result = array(
+			'result' => true,
+			'error' => array(),
+		);
+		
+		if(empty($params['function_name'])) {
+			$result['result'] = false;
+			$result['error'][] = 'empty_name';
+		} elseif(mb_strlen($params['function_name']) > 50) {
+			$result['result'] = false;
+			$result['error'][] = 'long_name';
+		}
+		
+		if(!is_numeric($params['function_group_id'])) {
+			$result['result'] = false;
+			$result['error'][] = 'nonum_group';
+		} elseif(!Model_Functiongroup::CheckSubGroupIdExist($params['function_group_id'])) {
+			$result['result'] = false;
+			$result['error'][] = 'noexist_group';
+		}
+		
+		if(!empty($params['function_name']) && is_numeric($params['function_group_id'])) {
+			if(Model_Function::CheckFunctionNameExist($params['function_name'], $params['function_group_id'])) {
+				$result['result'] = false;
+				$result['error'][] = 'dup_name';
+			}
+		}
+		
+		if(!in_array($params['special_flag'], array('1', '0'))) {
+			$result['result'] = false;
+			$result['error'][] = 'error_special_flag';
+		}
+		
+		if($result['result']) {
+			$sql_duplication = "SELECT * FROM m_function WHERE function_name = :function_name AND function_group_id = :function_group_id";
+			$query_duplication = DB::query($sql_duplication);
+			$query_duplication->param(':function_name', $params['function_name']);
+			$query_duplication->param(':function_group_id', $params['function_group_id']);
+			$result_duplication = $query_duplication->execute()->as_array();
+			
+			if(count($result_duplication)) {
+				$result['result'] = false;
+				$result['error'][] = 'duplication';
+			}
+		}
+		
+		return $result;
+	}
+	
+	/*
+	 * 检查功能名称是否存在
+	 */
+	public static function CheckFunctionNameExist($function_name, $function_group_id) {
+		$sql = "SELECT function_id FROM m_function WHERE function_name = :function_name AND function_group_id = :function_group_id";
+		$query = DB::query($sql);
+		$query->param(':function_name', $function_name);
+		$query->param(':function_group_id', $function_group_id);
+		$result = $query->execute()->as_array();
+		
+		if(count($result)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 	/*
 	 * 根据ID删除功能
@@ -70,47 +169,6 @@ class Model_Function extends Model
 		} else {
 			return false;
 		}
-	}
-	
-	/*
-	 * 添加功能前添加信息查验
-	 */
-	public static function CheckInsertFunction($params) {
-		$result = array(
-			'result' => true,
-			'error' => array(),
-		);
-		
-		if(!isset($params['function_name'])) {
-			$result['result'] = false;
-			$result['error'][] = 'noset_name';
-		} elseif(empty($params['function_name'])) {
-			$result['result'] = false;
-			$result['error'][] = 'empty_name';
-		}
-		
-		if(!isset($params['function_group_id'])) {
-			$result['result'] = false;
-			$result['error'][] = 'noset_group';
-		} elseif(!is_numeric($params['function_group_id'])) {
-			$result['result'] = false;
-			$result['error'][] = 'nonum_group';
-		}
-		
-		if($result['result']) {
-			$sql_duplication = "SELECT * FROM m_function WHERE function_name = :function_name AND function_group_id = :function_group_id";
-			$query_duplication = DB::query($sql_duplication);
-			$query_duplication->param(':function_name', $params['function_name']);
-			$query_duplication->param(':function_group_id', $params['function_group_id']);
-			$result_duplication = $query_duplication->execute()->as_array();
-			
-			if(count($result_duplication)) {
-				$result['result'] = false;
-				$result['error'][] = 'duplication';
-			}
-		}
-		
-		return $result;
 	}
 	
 	/*
