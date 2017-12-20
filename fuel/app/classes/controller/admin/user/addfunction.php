@@ -18,7 +18,7 @@ class Controller_Admin_User_Addfunction extends Controller_Admin_App
 		//调用共用Header
 		$data['header'] = Request::forge('admin/common/header')->execute()->response();
 		
-//		if(isset($_SESSION['login_user']['permission'][5][7][1])) {
+		if(Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 1)) {
 			$data['input_function_name'] = '';
 			$data['input_special_flag'] = '';
 			$data['error_message'] = '';
@@ -63,17 +63,16 @@ class Controller_Admin_User_Addfunction extends Controller_Admin_App
 							header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/permission_list/');
 							exit;
 						} else {
-							$data['error_message'] = '数据库错误：数据添加失败';
+							$error_message_list[] = '数据库错误：数据添加失败';
 						}
 					} else {
 						foreach($result_check['error'] as $insert_error) {
-							$error_message_list = array();
 							switch($insert_error) {
 								case 'empty_name':
 									$error_message_list[] = '请输入功能名称';
 									break;
 								case 'long_name':
-									$error_message_list[] = '功能名称不能超过50字';
+									$error_message_list[] = '功能名称不能超过30字';
 									break;
 								case 'dup_name':
 									$error_message_list[] = '该副功能组中已存在该名称的功能，无法重复添加';
@@ -99,9 +98,9 @@ class Controller_Admin_User_Addfunction extends Controller_Admin_App
 			
 			//调用View
 			return Response::forge(View::forge($this->template . '/admin/user/add_function', $data, false));
-//		} else {
-//			return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
-//		}
+		} else {
+			return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
+		}
 	}
 
 }

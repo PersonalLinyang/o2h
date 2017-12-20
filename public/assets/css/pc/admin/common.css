@@ -1056,8 +1056,9 @@ input[type="checkbox"] {
 	height: 100%;
 	top: 0;
 	left: 0;
-	z-index: 100;
+	z-index: 9998;
 	display: none;
+	cursor: pointer;
 }
 
 .popup {
@@ -1068,7 +1069,7 @@ input[type="checkbox"] {
 	top: 50%;
 	left: 50%;
 	margin-left: -400px;
-	z-index: 200;
+	z-index: 9999;
 	border-style: solid;
 	border-color: #8A4B08;
 	border-width: 5px;

@@ -36,7 +36,7 @@
 					</tr>
 					<tr>
 						<th>修改后权限名称</th>
-						<td><input type="text" name="name" /></td>
+						<td><input type="text" name="authority_name" value="<?php echo $input_authority_name; ?>" /></td>
 					</tr>
 					<tr>
 						<td colspan="2">

@@ -17,8 +17,10 @@ class Controller_Admin_User_Permissionlist extends Controller_Admin_App
 		
 		//调用共用Header
 		$data['header'] = Request::forge('admin/common/header')->execute()->response();
+		$data['edit_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 1);
+		$data['delete_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 2);
 		
-//		if(isset($_SESSION['login_user']['permission'][5][7][1])) {
+		if(Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'sub_group', 7)) {
 			//获取权限数列
 			$data['permission_list'] = Model_Permission::GetPermissionListAll();
 			
@@ -93,9 +95,9 @@ class Controller_Admin_User_Permissionlist extends Controller_Admin_App
 			
 			//调用View
 			return Response::forge(View::forge($this->template . '/admin/user/permission_list', $data, false));
-//		} else {
-//			return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
-//		}
+		} else {
+			return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
+		}
 	}
 	
 	/**
@@ -105,7 +107,7 @@ class Controller_Admin_User_Permissionlist extends Controller_Admin_App
 	 */
 	public function action_deletemastergroup($param = null)
 	{
-//		if(isset($_SESSION['login_user']['permission'][5][7][1]) && isset($_POST['delete_id'], $_POST['page'])) {
+		if(Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 2) && isset($_POST['delete_id'], $_POST['page'])) {
 			if($_POST['page'] == 'permission_list') {
 				//删除信息检查
 				$result_check = Model_Functiongroup::CheckDeleteMasterGroupById($_POST['delete_id']);
@@ -120,7 +122,7 @@ class Controller_Admin_User_Permissionlist extends Controller_Admin_App
 					}
 				}
 			}
-//		}
+		}
 		$_SESSION['delete_master_group_error'] = true;
 		header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/permission_list/');
 		exit;
@@ -133,7 +135,7 @@ class Controller_Admin_User_Permissionlist extends Controller_Admin_App
 	 */
 	public function action_deletesubgroup($param = null)
 	{
-//		if(isset($_SESSION['login_user']['permission'][5][7][1]) && isset($_POST['delete_id'], $_POST['page'])) {
+		if(Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 2) && isset($_POST['delete_id'], $_POST['page'])) {
 			if($_POST['page'] == 'permission_list') {
 				//删除信息检查
 				$result_check = Model_Functiongroup::CheckDeleteSubGroupById($_POST['delete_id']);
@@ -148,7 +150,7 @@ class Controller_Admin_User_Permissionlist extends Controller_Admin_App
 					}
 				}
 			}
-//		}
+		}
 		$_SESSION['delete_sub_group_error'] = true;
 		header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/permission_list/');
 		exit;
@@ -161,7 +163,7 @@ class Controller_Admin_User_Permissionlist extends Controller_Admin_App
 	 */
 	public function action_deletefunction($param = null)
 	{
-//		if(isset($_SESSION['login_user']['permission'][5][7][1]) && isset($_POST['delete_id'], $_POST['page'])) {
+		if(Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 2) && isset($_POST['delete_id'], $_POST['page'])) {
 			if($_POST['page'] == 'permission_list') {
 				//删除信息检查
 				$result_check = Model_Function::CheckDeleteFunctionById($_POST['delete_id']);
@@ -176,7 +178,7 @@ class Controller_Admin_User_Permissionlist extends Controller_Admin_App
 					}
 				}
 			}
-//		}
+		}
 		$_SESSION['delete_function_error'] = true;
 		header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/permission_list/');
 		exit;
@@ -189,7 +191,7 @@ class Controller_Admin_User_Permissionlist extends Controller_Admin_App
 	 */
 	public function action_deleteauthority($param = null)
 	{
-//		if(isset($_SESSION['login_user']['permission'][5][7][1]) && isset($_POST['delete_id'], $_POST['page'])) {
+		if(Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 2) && isset($_POST['delete_id'], $_POST['page'])) {
 			if($_POST['page'] == 'permission_list') {
 				//删除信息检查
 				$result_check = Model_Authority::CheckDeleteAuthorityById($_POST['delete_id']);
@@ -204,7 +206,7 @@ class Controller_Admin_User_Permissionlist extends Controller_Admin_App
 					}
 				}
 			}
-//		}
+		}
 		$_SESSION['delete_authority_error'] = true;
 		header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/permission_list/');
 		exit;

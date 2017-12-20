@@ -18,11 +18,9 @@ class Controller_Admin_User_Addauthority extends Controller_Admin_App
 		//调用共用Header
 		$data['header'] = Request::forge('admin/common/header')->execute()->response();
 		
-//		if(isset($_SESSION['login_user']['permission'][5][7][1])) {
-			$data['input_name'] = '';
-			$data['master_group_name'] = '';
-			$data['sub_group_name'] = '';
-			$data['function_name'] = '';
+		if(Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 1)) {
+			$data['input_authority_name'] = '';
+			$data['input_special_flag'] = '';
 			$data['error_message'] = '';
 			
 			//页面参数检查
@@ -40,12 +38,19 @@ class Controller_Admin_User_Addauthority extends Controller_Admin_App
 			$data['master_group_name'] = $function['master_group_name'];
 			$data['sub_group_name'] = $function['sub_group_name'];
 			$data['function_name'] = $function['function_name'];
+			$data['function_special_flag'] = $function['function_special_flag'];
 			
-			if(isset($_POST['page'], $_POST['name'])) {
+			if(isset($_POST['page'])) {
+				$error_message_list = array();
+				
+				$data['input_authority_name'] = isset($_POST['authority_name']) ? trim($_POST['authority_name']) : '';
+				$data['input_special_flag'] = isset($_POST['special_flag']) ? $_POST['special_flag'] : '';
+				
 				if($_POST['page'] == 'add_authority') {
 					$params_insert = array(
-						'authority_name' => trim($_POST['name']),
+						'authority_name' => $data['input_authority_name'],
 						'function_id' => $_GET['function_id'],
+						'special_flag' => $function['function_special_flag'] ? '1' : $data['input_special_flag'],
 					);
 					//输入内容检查
 					$result_check = Model_Authority::CheckInsertAuthority($params_insert);
@@ -59,35 +64,33 @@ class Controller_Admin_User_Addauthority extends Controller_Admin_App
 							header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/permission_list/');
 							exit;
 						} else {
-							$data['error_message'] = '数据库错误：数据添加失败';
+							$error_message_list[] = '数据库错误：数据添加失败';
 						}
 					} else {
 						foreach($result_check['error'] as $insert_error) {
-							$error_message_list = array();
 							switch($insert_error) {
-								case 'noset_name':
-									$error_message_list[] = '系统错误：请勿修改表单中的控件名称';
-									break;
 								case 'empty_name':
 									$error_message_list[] = '请输入权限名称';
 									break;
-								case 'noset_function':
-									$error_message_list[] = '请设定所属功能';
+								case 'long_name':
+									$error_message_list[] = '权限名称不能超过30字';
 									break;
-								case 'nonum_function':
-									$error_message_list[] = '功能编号不是数字';
-									break;
-								case 'duplication':
+								case 'dup_name':
 									$error_message_list[] = '该功能中已存在该名称的权限，无法重复添加';
 									break;
 								default:
+									$error_message_list[] = '发生系统错误,请重新尝试添加';
 									break;
 							}
-							$data['error_message'] = implode('<br/>', $error_message_list);
 						}
 					}
 					
-					$data['input_name'] = $_POST['name'];
+					$error_message_list = array_unique($error_message_list);
+					
+					//输出错误信息
+					if(count($error_message_list)) {
+						$data['error_message'] = implode('<br/>', $error_message_list);
+					}
 				} else {
 					return Response::forge(View::forge($this->template . '/admin/error/access_error', $data, false));
 					exit;
@@ -96,9 +99,9 @@ class Controller_Admin_User_Addauthority extends Controller_Admin_App
 			
 			//调用View
 			return Response::forge(View::forge($this->template . '/admin/user/add_authority', $data, false));
-//		} else {
-//			return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
-//		}
+		} else {
+			return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
+		}
 	}
 
 }

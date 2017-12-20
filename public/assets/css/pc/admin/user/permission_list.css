@@ -54,7 +54,7 @@
 	background: #EBCF89;
 	border: 1px solid #713E00;
 	border-radius: 2px;
-	z-index: 9999;
+	z-index: 1;
 	user-select: none;
 	cursor: pointer;
 }

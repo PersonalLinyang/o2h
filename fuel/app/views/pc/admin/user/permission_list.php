@@ -12,11 +12,13 @@
 <body class="body-common">
 	<?php echo $header; ?>
 	<div class="content-area">
+		<?php if($edit_able_flag): ?>
 		<div class="content-menu">
 			<ul class="content-menu-list">
 				<li class="content-menu-button"><a href="/admin/add_master_group/">添加主组</a></li>
 			</ul>
 		</div>
+		<?php endif; ?>
 		
 		<?php if($success_message): ?>
 		<div class="content-success"><?php echo $success_message; ?></div>
@@ -38,9 +40,13 @@
 				<div class="permission-line">
 					<p class="permission-id"><?php echo $master_group_id; ?></p>
 					<p class="permission-name<?php echo $master_group_info['special_flag'] ? ' strong' : ''; ?>"><?php echo $master_group_info['name']; ?></p>
+					<?php if($edit_able_flag): ?>
 					<p class="btn-controller"><a href="/admin/add_sub_group/?master_group_id=<?php echo $master_group_id; ?>">添加副组</a></p>
 					<p class="btn-controller"><a href="/admin/modify_master_group/?master_group_id=<?php echo $master_group_id; ?>">修改名称</a></p>
+					<?php endif; ?>
+					<?php if($delete_able_flag): ?>
 					<p class="btn-controller btn-delete" data-type="mg" data-value="<?php echo $master_group_id; ?>" data-name="<?php echo $master_group_info['name']; ?>">削除主组</p>
+					<?php endif; ?>
 				</div>
 				<?php foreach($master_group_info['sub_group_list'] as $sub_group_id => $sub_group_info): ?>
 				<div class="permission-area">
@@ -50,9 +56,13 @@
 					<div class="permission-line">
 						<p class="permission-id"><?php echo $master_group_id . '-' . $sub_group_id; ?></p>
 						<p class="permission-name<?php echo $sub_group_info['special_flag'] ? ' strong' : ''; ?>"><?php echo $sub_group_info['name']; ?></p>
+						<?php if($edit_able_flag): ?>
 						<p class="btn-controller"><a href="/admin/add_function/?sub_group_id=<?php echo $sub_group_id; ?>">添加功能</a></p>
 						<p class="btn-controller"><a href="/admin/modify_sub_group/?sub_group_id=<?php echo $sub_group_id; ?>">修改名称</a></p>
+						<?php endif; ?>
+						<?php if($delete_able_flag): ?>
 						<p class="btn-controller btn-delete" data-type="sg" data-value="<?php echo $sub_group_id; ?>" data-name="<?php echo $sub_group_info['name']; ?>">削除副组</p>
+						<?php endif; ?>
 					</div>
 					<?php foreach($sub_group_info['function_list'] as $function_id => $function_info) :?>
 					<div class="permission-area">
@@ -62,17 +72,25 @@
 						<div class="permission-line">
 							<p class="permission-id"><?php echo $master_group_id . '-' . $sub_group_id . '-' . $function_id; ?></p>
 							<p class="permission-name<?php echo $function_info['special_flag'] ? ' strong' : ''; ?>"><?php echo $function_info['name']; ?></p>
+							<?php if($edit_able_flag): ?>
 							<p class="btn-controller"><a href="/admin/add_authority/?function_id=<?php echo $function_id; ?>">添加权限</a></p>
 							<p class="btn-controller"><a href="/admin/modify_function/?function_id=<?php echo $function_id; ?>">修改名称</a></p>
+							<?php endif; ?>
+							<?php if($delete_able_flag): ?>
 							<p class="btn-controller btn-delete" data-type="f" data-value="<?php echo $function_id; ?>" data-name="<?php echo $function_info['name']; ?>">削除功能</p>
+							<?php endif; ?>
 						</div>
 						<?php foreach($function_info['authority_list'] as $authority_id => $authority_info) :?>
 						<div class="permission-area">
 							<div class="permission-line">
 								<p class="permission-id"><?php echo $master_group_id . '-' . $sub_group_id . '-' . $function_id . '-' . $authority_id; ?></p>
-								<p class="permission-name"><?php echo $authority_info['name']; ?></p>
+								<p class="permission-name<?php echo $authority_info['special_flag'] ? ' strong' : ''; ?>"><?php echo $authority_info['name']; ?></p>
+								<?php if($edit_able_flag): ?>
 								<p class="btn-controller"><a href="/admin/modify_authority/?authority_id=<?php echo $authority_id; ?>">修改名称</a></p>
+								<?php endif; ?>
+								<?php if($delete_able_flag): ?>
 								<p class="btn-controller btn-delete" data-type="a" data-value="<?php echo $authority_id; ?>" data-name="<?php echo $authority_info['name']; ?>">削除权限</p>
+								<?php endif; ?>
 							</div>
 						</div>
 						<?php endforeach; /* authority */ ?>
@@ -87,12 +105,12 @@
 		<div class="content-main"><p class="strong">目前尚未设定任何权限，请添加主权限组</p></div>
 		<?php endif; ?>
 		
+		<?php if($delete_able_flag): ?>
 		<div class="popup-shadow"></div>
-		
 		<div class="popup-delete popup">
-			<div class="popup-title">删除<span class="popup-delete-type"></span>确认</div>
+			<div class="popup-title"><span class="popup-delete-type"></span>删除确认</div>
 			<div class="popup-content center">
-				<p><span class="popup-delete-type"></span>一经删除将无法还原，<br/>确定要删除「<span class="popup-delete-type"></span>-<span class="popup-delete-name"></span>」吗？</p>
+				<p class="popup-delete-text"></p>
 			</div>
 			<div class="popup-controller">
 				<form action method="post" id="form-delete">
@@ -105,6 +123,7 @@
 				</ul>
 			</div>
 		</div>
+		<?php endif; ?>
 	</div>
 </body>
 </html>

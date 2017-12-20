@@ -32,7 +32,7 @@
 					</tr>
 					<tr>
 						<th>修改后功能名称</th>
-						<td><input type="text" name="name" /></td>
+						<td><input type="text" name="function_name" value="<?php echo $input_function_name; ?>" /></td>
 					</tr>
 					<tr>
 						<td colspan="2">

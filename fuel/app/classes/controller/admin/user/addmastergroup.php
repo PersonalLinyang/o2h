@@ -18,7 +18,7 @@ class Controller_Admin_User_Addmastergroup extends Controller_Admin_App
 		//调用共用Header
 		$data['header'] = Request::forge('admin/common/header')->execute()->response();
 		
-//		if(isset($_SESSION['login_user']['permission'][5][7][1])) {
+		if(Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 1)) {
 			$data['input_master_group_name'] = '';
 			$data['input_special_flag'] = '';
 			$data['error_message'] = '';
@@ -55,7 +55,7 @@ class Controller_Admin_User_Addmastergroup extends Controller_Admin_App
 									$error_message_list[] = '请输入主功能组名称';
 									break;
 								case 'long_name':
-									$error_message_list[] = '主功能组名称不能超过50字';
+									$error_message_list[] = '主功能组名称不能超过30字';
 									break;
 								case 'dup_name':
 									$error_message_list[] = '已存在该名称的主功能组，无法重复添加';
@@ -81,9 +81,9 @@ class Controller_Admin_User_Addmastergroup extends Controller_Admin_App
 			
 			//调用View
 			return Response::forge(View::forge($this->template . '/admin/user/add_master_group', $data, false));
-//		} else {
-//			return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
-//		}
+		} else {
+			return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
+		}
 	}
 
 }

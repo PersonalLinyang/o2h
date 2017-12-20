@@ -28,7 +28,7 @@
 					</tr>
 					<tr>
 						<th>修改后副功能组名称</th>
-						<td><input type="text" name="name" /></td>
+						<td><input type="text" name="sub_group_name" value="<?php echo $input_sub_group_name; ?>" /></td>
 					</tr>
 					<tr>
 						<td colspan="2">
@@ -39,7 +39,7 @@
 						</td>
 					</tr>
 				</table>
-				<input type="hidden" name="page" value="modify_sg" />
+				<input type="hidden" name="page" value="modify_sub_group" />
 			</form>
 		</div>
 	</div>

@@ -24,7 +24,7 @@
 					</tr>
 					<tr>
 						<th>修改后主功能组名称</th>
-						<td><input type="text" name="name" /></td>
+						<td><input type="text" name="master_group_name" value="<?php echo $input_master_group_name; ?>" /></td>
 					</tr>
 					<tr>
 						<td colspan="2">
@@ -35,7 +35,7 @@
 						</td>
 					</tr>
 				</table>
-				<input type="hidden" name="page" value="modify_mg" />
+				<input type="hidden" name="page" value="modify_master_group" />
 			</form>
 		</div>
 	</div>

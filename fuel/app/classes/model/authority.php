@@ -2,47 +2,61 @@
 
 class Model_Authority extends Model
 {
+
 	/*
 	 * 添加权限
 	 */
 	public static function InsertAuthority($params) {
-		$sql_insert = "INSERT INTO m_authority(authority_name, function_id) VALUES(:authority_name, :function_id)";
-		$query_insert = DB::query($sql_insert);
-		$query_insert->param(':authority_name', $params['authority_name']);
-		$query_insert->param(':function_id', $params['function_id']);
-		$result_insert = $query_insert->execute();
+		$sql_authority = "INSERT INTO m_authority(authority_name, function_id, special_flag) VALUES(:authority_name, :function_id, :special_flag)";
+		$query_authority = DB::query($sql_authority);
+		$query_authority->param(':authority_name', $params['authority_name']);
+		$query_authority->param(':function_id', $params['function_id']);
+		$query_authority->param(':special_flag', $params['special_flag']);
+		$result_authority = $query_authority->execute();
 		
-		return $result_insert;
+		//添加成功的同时为系统管理员添加该权限
+		if($result_authority) {
+			$authority_id = intval($result_authority[0]);
+			
+			$sql_permission = "INSERT INTO r_permission(user_type_id, permission_type, permission_id) VALUES(1, 4, :permission_id)";
+			$query_permission = DB::query($sql_permission);
+			$query_permission->param(':permission_id', $authority_id);
+			$result_permission = $query_permission->execute();
+		}
+		
+		return $query_authority;
+	}
+
+	/*
+	 * 更新权限名称
+	 */
+	public static function UpdateAuthorityName($params) {
+		$sql = "UPDATE m_authority SET authority_name = :authority_name WHERE authority_id = :authority_id";
+		$query = DB::query($sql);
+		$query->param(':authority_id', $params['authority_id']);
+		$query->param(':authority_name', $params['authority_name']);
+		$result = $query->execute();
+		
+		return $result;
 	}
 	
 	/*
 	 * 根据ID删除权限
 	 */
 	public static function DeleteAuthorityById($authority_id) {
-		$sql_pdelete = "DELETE FROM t_permission WHERE authority_id = :authority_id";
-		$query_pdelete = DB::query($sql_pdelete);
-		$query_pdelete->param(':authority_id', $authority_id);
-		$result_pdelete = $query_pdelete->execute();
+		//删除相关权限许可
+		$sql_permission = "DELETE FROM r_permission WHERE permission_type = 4 AND permission_id = :permission_id";
+		$query_permission = DB::query($sql_permission);
+		$query_permission->param(':permission_id', $authority_id);
+		$result_permission = $query_permission->execute();
 		
-		$sql_adelete = "DELETE FROM m_authority WHERE authority_id = :authority_id";
-		$query_adelete = DB::query($sql_adelete);
-		$query_adelete->param(':authority_id', $authority_id);
-		$result_adelete = $query_adelete->execute();
+		//删除权限
+		$sql_authority = "DELETE FROM m_authority WHERE authority_id = :authority_id";
+		$query_authority = DB::query($sql_authority);
+		$query_authority->param(':authority_id', $authority_id);
+		$result_authority = $query_authority->execute();
 		
-		return $result_adelete;
-	}
-
-	/*
-	 * 更新权限
-	 */
-	public static function UpdateAuthority($params) {
-		$sql_update = "UPDATE m_authority SET authority_name = :authority_name WHERE authority_id = :authority_id";
-		$query_update = DB::query($sql_update);
-		$query_update->param(':authority_id', $params['authority_id']);
-		$query_update->param(':authority_name', $params['authority_name']);
-		$result_update = $query_update->execute();
-		
-		return $result_update;
+		return $result_authority;
 	}
 	
 	/*
@@ -53,11 +67,14 @@ class Model_Authority extends Model
 			return false;
 		}
 		
-		$sql = "SELECT a.authority_id, a.authority_name, f.function_id, f.function_name, f.function_group_id sub_group_id, sg.function_group_name sub_group_name, " 
-				. "sg.function_group_parent master_group_id, mg.function_group_name master_group_name " 
-				. "FROM m_authority a LEFT JOIN m_function f ON a.function_id = f.function_id LEFT JOIN m_function_group sg ON f.function_group_id = sg.function_group_id " 
-				. "LEFT JOIN m_function_group mg ON sg.function_group_parent = mg.function_group_id " 
-				. "WHERE a.authority_id = :authority_id";
+		$sql = "SELECT mg.function_group_id master_group_id, mg.function_group_name master_group_name, mg.special_flag master_special_flag, "
+			. "sg.function_group_id sub_group_id, sg.function_group_name sub_group_name, sg.special_flag sub_special_flag, "
+			. "f.function_id, f.function_name, f.special_flag function_special_flag, a.authority_id, a.authority_name, a.special_flag authority_special_flag " 
+			. "FROM m_authority a "
+			. "LEFT JOIN m_function f ON a.function_id = f.function_id "
+			. "LEFT JOIN (SELECT * FROM m_function_group WHERE function_group_parent IS NOT NULL) sg ON f.function_group_id = sg.function_group_id "
+			. "LEFT JOIN (SELECT * FROM m_function_group WHERE function_group_parent IS NULL) mg ON sg.function_group_parent = mg.function_group_id " 
+			. "WHERE a.authority_id = :authority_id";
 		$query = DB::query($sql);
 		$query->param(':authority_id', $authority_id);
 		$result = $query->execute()->as_array();
@@ -78,78 +95,66 @@ class Model_Authority extends Model
 			'error' => array(),
 		);
 		
-		if(!isset($params['authority_name'])) {
-			$result['result'] = false;
-			$result['error'][] = 'noset_name';
-		} elseif(empty($params['authority_name'])) {
+		if(empty($params['authority_name'])) {
 			$result['result'] = false;
 			$result['error'][] = 'empty_name';
+		} elseif(mb_strlen($params['authority_name']) > 30) {
+			$result['result'] = false;
+			$result['error'][] = 'long_name';
 		}
 		
-		if(!isset($params['function_id'])) {
+		if(!is_numeric($params['function_id'])) {
 			$result['result'] = false;
-			$result['error'][] = 'noset_function';
-		} elseif(!is_numeric($params['function_id'])) {
+			$result['error'][] = 'nonum_group';
+		} elseif(!Model_Function::CheckFunctionIdExist($params['function_id'])) {
 			$result['result'] = false;
-			$result['error'][] = 'nonum_function';
+			$result['error'][] = 'noexist_group';
 		}
 		
-		if($result['result']) {
-			$sql_duplication = "SELECT * FROM m_authority WHERE authority_name = :authority_name AND function_id = :function_id";
-			$query_duplication = DB::query($sql_duplication);
-			$query_duplication->param(':authority_name', $params['authority_name']);
-			$query_duplication->param(':function_id', $params['function_id']);
-			$result_duplication = $query_duplication->execute()->as_array();
-			
-			if(count($result_duplication)) {
+		if(!empty($params['authority_name']) && is_numeric($params['function_id'])) {
+			if(Model_Authority::CheckAuthorityNameExist($params['authority_name'], $params['function_id'])) {
 				$result['result'] = false;
-				$result['error'][] = 'duplication';
+				$result['error'][] = 'dup_name';
 			}
+		}
+		
+		if(!in_array($params['special_flag'], array('1', '0'))) {
+			$result['result'] = false;
+			$result['error'][] = 'error_special_flag';
 		}
 		
 		return $result;
 	}
 	
 	/*
-	 * 更新权限前更新信息查验
+	 * 更新权限名称前更新信息查验
 	 */
-	public static function CheckUpdateAuthority($params) {
+	public static function CheckUpdateAuthorityName($params) {
 		$result = array(
 			'result' => true,
 			'error' => array(),
 		);
 		
-		if(!isset($params['authority_id'])) {
-			$result['result'] = false;
-			$result['error'][] = 'noset_id';
-		} elseif(!is_numeric($params['authority_id'])) {
-			$result['result'] = false;
-			$result['error'][] = 'nonum_id';
-		}
-		
-		if(!isset($params['authority_name'])) {
-			$result['result'] = false;
-			$result['error'][] = 'noset_name';
-		} elseif(empty($params['authority_name'])) {
+		if(empty($params['authority_name'])) {
 			$result['result'] = false;
 			$result['error'][] = 'empty_name';
+		} elseif(mb_strlen($params['authority_name']) > 30) {
+			$result['result'] = false;
+			$result['error'][] = 'long_name';
 		}
 		
-		if($result['result']) {
-			$sql_duplication = "SELECT * FROM m_authority WHERE authority_name = :authority_name AND function_id = (SELECT function_id FROM m_authority WHERE authority_id = :authority_id)";
-			$query_duplication = DB::query($sql_duplication);
-			$query_duplication->param(':authority_id', $params['authority_id']);
-			$query_duplication->param(':authority_name', $params['authority_name']);
-			$result_duplication = $query_duplication->execute()->as_array();
-			
-			if(count($result_duplication)) {
-				if($result_duplication[0]['authority_id'] == $params['authority_id']) {
-					$result['result'] = false;
-					$result['error'][] = 'nomodify';
-				} else {
-					$result['result'] = false;
-					$result['error'][] = 'duplication';
-				}
+		if(!is_numeric($params['function_id'])) {
+			$result['result'] = false;
+			$result['error'][] = 'nonum_group';
+		} elseif(!Model_Function::CheckFunctionIdExist($params['function_id'])) {
+			$result['result'] = false;
+			$result['error'][] = 'noexist_group';
+		}
+		
+		if(!empty($params['authority_name']) && is_numeric($params['function_id'])) {
+			if(Model_Authority::CheckAuthorityNameExist($params['authority_name'], $params['function_id'])) {
+				$result['result'] = false;
+				$result['error'][] = 'dup_name';
 			}
 		}
 		
@@ -168,22 +173,65 @@ class Model_Authority extends Model
 		if(!is_numeric($authority_id)) {
 			$result['result'] = false;
 			$result['error'][] = 'nonum_id';
-		}
-		
-		if($result['result']) {
-			$sql_exist = "SELECT * FROM m_authority WHERE authority_id = :authority_id";
-			$query_exist = DB::query($sql_exist);
-			$query_exist->param(':authority_id', $authority_id);
-			$result_exist = $query_exist->execute()->as_array();
-			
-			if(!count($result_exist)) {
-				$result['result'] = false;
-				$result['error'][] = 'noexist';
-			}
+		} elseif(!Model_Authority::CheckAuthorityIdExist($authority_id)) {
+			$result['result'] = false;
+			$result['error'][] = 'noexist_id';
 		}
 		
 		return $result;
 	}
+	
+	/*
+	 * 检查权限ID是否存在
+	 */
+	public static function CheckAuthorityIdExist($authority_id) {
+		$sql = "SELECT authority_id FROM m_authority WHERE authority_id = :authority_id";
+		$query = DB::query($sql);
+		$query->param(':authority_id', $authority_id);
+		$result = $query->execute()->as_array();
+		
+		if(count($result)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/*
+	 * 检查功能名称是否存在
+	 */
+	public static function CheckAuthorityNameExist($authority_name, $function_id) {
+		$sql = "SELECT authority_id FROM m_authority WHERE authority_name = :authority_name AND function_id = :function_id";
+		$query = DB::query($sql);
+		$query->param(':authority_name', $authority_name);
+		$query->param(':function_id', $function_id);
+		$result = $query->execute()->as_array();
+		
+		if(count($result)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
 
