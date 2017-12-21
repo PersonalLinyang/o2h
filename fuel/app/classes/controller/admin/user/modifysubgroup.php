@@ -11,7 +11,7 @@ class Controller_Admin_User_Modifysubgroup extends Controller_Admin_App
 	 * @access  public
 	 * @return  Response
 	 */
-	public function action_index($param = null)
+	public function action_index($group_id)
 	{
 		$data = array();
 		
@@ -23,15 +23,10 @@ class Controller_Admin_User_Modifysubgroup extends Controller_Admin_App
 			$data['error_message'] = '';
 			
 			//页面参数检查
-			if(!isset($_GET['sub_group_id'])) {
+			$sub_group = Model_Functiongroup::SelectSubGroupById($group_id);
+			if(!$sub_group) {
 				return Response::forge(View::forge($this->template . '/admin/error/access_error', $data, false));
 				exit;
-			} else {
-				$sub_group = Model_Functiongroup::SelectSubGroupById($_GET['sub_group_id']);
-				if(!$sub_group) {
-					return Response::forge(View::forge($this->template . '/admin/error/access_error', $data, false));
-					exit;
-				}
 			}
 			
 			$data['master_group_name'] = $sub_group['master_group_name'];
@@ -47,7 +42,7 @@ class Controller_Admin_User_Modifysubgroup extends Controller_Admin_App
 						$error_message_list[] = '请输入与原名称不同的副功能组名称';
 					} else {
 						$params_update = array(
-							'function_group_id' => $_GET['sub_group_id'],
+							'function_group_id' => $group_id,
 							'function_group_name' => $data['input_sub_group_name'],
 							'function_group_parent' => $sub_group['master_group_id'],
 						);

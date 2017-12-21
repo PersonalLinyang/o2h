@@ -11,7 +11,7 @@ class Controller_Admin_User_Modifyfunction extends Controller_Admin_App
 	 * @access  public
 	 * @return  Response
 	 */
-	public function action_index($param = null)
+	public function action_index($function_id)
 	{
 		$data = array();
 		
@@ -23,15 +23,10 @@ class Controller_Admin_User_Modifyfunction extends Controller_Admin_App
 			$data['error_message'] = '';
 			
 			//页面参数检查
-			if(!isset($_GET['function_id'])) {
+			$function = Model_Function::SelectFunctionById($function_id);
+			if(!$function) {
 				return Response::forge(View::forge($this->template . '/admin/error/access_error', $data, false));
 				exit;
-			} else {
-				$function = Model_Function::SelectFunctionById($_GET['function_id']);
-				if(!$function) {
-					return Response::forge(View::forge($this->template . '/admin/error/access_error', $data, false));
-					exit;
-				}
 			}
 			
 			$data['master_group_name'] = $function['master_group_name'];
@@ -48,7 +43,7 @@ class Controller_Admin_User_Modifyfunction extends Controller_Admin_App
 						$error_message_list[] = '请输入与原名称不同的功能名称';
 					} else {
 						$params_update = array(
-							'function_id' => $_GET['function_id'],
+							'function_id' => $function_id,
 							'function_name' => $data['input_function_name'],
 							'function_group_id' => $function['sub_group_id'],
 						);

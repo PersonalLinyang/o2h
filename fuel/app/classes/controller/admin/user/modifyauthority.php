@@ -11,7 +11,7 @@ class Controller_Admin_User_Modifyauthority extends Controller_Admin_App
 	 * @access  public
 	 * @return  Response
 	 */
-	public function action_index($param = null)
+	public function action_index($authority_id)
 	{
 		$data = array();
 		
@@ -23,15 +23,10 @@ class Controller_Admin_User_Modifyauthority extends Controller_Admin_App
 			$data['error_message'] = '';
 			
 			//页面参数检查
-			if(!isset($_GET['authority_id'])) {
+			$authority = Model_Authority::SelectAuthorityById($authority_id);
+			if(!$authority) {
 				return Response::forge(View::forge($this->template . '/admin/error/access_error', $data, false));
 				exit;
-			} else {
-				$authority = Model_Authority::SelectAuthorityById($_GET['authority_id']);
-				if(!$authority) {
-					return Response::forge(View::forge($this->template . '/admin/error/access_error', $data, false));
-					exit;
-				}
 			}
 			
 			$data['master_group_name'] = $authority['master_group_name'];
@@ -49,7 +44,7 @@ class Controller_Admin_User_Modifyauthority extends Controller_Admin_App
 						$error_message_list[] = '请输入与原名称不同的功能名称';
 					} else {
 						$params_update = array(
-							'authority_id' => $_GET['authority_id'],
+							'authority_id' => $authority_id,
 							'authority_name' => $data['input_authority_name'],
 							'function_id' => $authority['function_id'],
 						);
