@@ -3,7 +3,7 @@
  * 添加功能页
  */
 
-class Controller_Admin_User_Addfunction extends Controller_Admin_App
+class Controller_Admin_User_Permission_Addfunction extends Controller_Admin_App
 {
 
 	/**
@@ -97,7 +97,7 @@ class Controller_Admin_User_Addfunction extends Controller_Admin_App
 			}
 			
 			//调用View
-			return Response::forge(View::forge($this->template . '/admin/user/add_function', $data, false));
+			return Response::forge(View::forge($this->template . '/admin/user/permission/add_function', $data, false));
 		} else {
 			return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
 		}

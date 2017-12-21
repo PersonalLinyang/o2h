@@ -1,13 +1,13 @@
 <?php
 /* 
- * 修改主功能组名称页
+ * 修改副功能组名称页
  */
 
-class Controller_Admin_User_Modifymastergroup extends Controller_Admin_App
+class Controller_Admin_User_Permission_Modifysubgroup extends Controller_Admin_App
 {
 
 	/**
-	 * 修改主功能组名称
+	 * 修改副功能组名称
 	 * @access  public
 	 * @return  Response
 	 */
@@ -19,40 +19,42 @@ class Controller_Admin_User_Modifymastergroup extends Controller_Admin_App
 		$data['header'] = Request::forge('admin/common/header')->execute()->response();
 		
 		if(Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 1)) {
-			$data['input_master_group_name'] = '';
+			$data['input_sub_group_name'] = '';
 			$data['error_message'] = '';
 			
 			//页面参数检查
-			$master_group = Model_Functiongroup::SelectMasterGroupById($group_id);
-			if(!$master_group) {
+			$sub_group = Model_Functiongroup::SelectSubGroupById($group_id);
+			if(!$sub_group) {
 				return Response::forge(View::forge($this->template . '/admin/error/access_error', $data, false));
 				exit;
 			}
 			
-			$data['master_group_name'] = $master_group['function_group_name'];
+			$data['master_group_name'] = $sub_group['master_group_name'];
+			$data['sub_group_name'] = $sub_group['sub_group_name'];
 			
 			if(isset($_POST['page'])) {
 				$error_message_list = array();
 				
-				$data['input_master_group_name'] = isset($_POST['master_group_name']) ? trim($_POST['master_group_name']) : '';
+				$data['input_sub_group_name'] = isset($_POST['sub_group_name']) ? trim($_POST['sub_group_name']) : '';
 				
-				if($_POST['page'] == 'modify_master_group') {
-					if($data['input_master_group_name'] == $master_group['function_group_name']) {
-						$error_message_list[] = '请输入与原名称不同的主功能组名称';
+				if($_POST['page'] == 'modify_sub_group') {
+					if($data['input_sub_group_name'] == $sub_group['sub_group_name']) {
+						$error_message_list[] = '请输入与原名称不同的副功能组名称';
 					} else {
 						$params_update = array(
 							'function_group_id' => $group_id,
-							'function_group_name' => $data['input_master_group_name'],
+							'function_group_name' => $data['input_sub_group_name'],
+							'function_group_parent' => $sub_group['master_group_id'],
 						);
 						//输入内容检查
-						$result_check = Model_Functiongroup::CheckUpdateMasterGroupName($params_update);
+						$result_check = Model_Functiongroup::CheckUpdateSubGroupName($params_update);
 						
 						if($result_check['result']) {
 							//数据更新
 							$result_update = Model_Functiongroup::UpdateFunctionGroupName($params_update);
 							
 							if($result_update) {
-								$_SESSION['update_master_group_success'] = true;
+								$_SESSION['update_sub_group_success'] = true;
 								header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/permission_list/');
 								exit;
 							} else {
@@ -62,13 +64,13 @@ class Controller_Admin_User_Modifymastergroup extends Controller_Admin_App
 							foreach($result_check['error'] as $update_error) {
 								switch($update_error) {
 									case 'empty_name':
-										$error_message_list[] = '请输入主功能组名称';
+										$error_message_list[] = '请输入副功能组名称';
 										break;
 									case 'long_name':
-										$error_message_list[] = '主功能组名称不能超过30字';
+										$error_message_list[] = '副功能组名称不能超过30字';
 										break;
 									case 'dup_name':
-										$error_message_list[] = '已存在该名称的主功能组，无法重复设定';
+										$error_message_list[] = '该主功能组中已存在该名称的副功能组，无法重复设定';
 										break;
 									default:
 										$error_message_list[] = '发生系统错误,请重新尝试更新';
@@ -91,7 +93,7 @@ class Controller_Admin_User_Modifymastergroup extends Controller_Admin_App
 			}
 			
 			//调用View
-			return Response::forge(View::forge($this->template . '/admin/user/modify_master_group', $data, false));
+			return Response::forge(View::forge($this->template . '/admin/user/permission/modify_sub_group', $data, false));
 		} else {
 			return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
 		}

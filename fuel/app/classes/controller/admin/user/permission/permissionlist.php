@@ -3,7 +3,7 @@
  * 系统权限管理页
  */
 
-class Controller_Admin_User_Permissionlist extends Controller_Admin_App
+class Controller_Admin_User_Permission_Permissionlist extends Controller_Admin_App
 {
 
 	/**
@@ -94,7 +94,7 @@ class Controller_Admin_User_Permissionlist extends Controller_Admin_App
 			}
 			
 			//调用View
-			return Response::forge(View::forge($this->template . '/admin/user/permission_list', $data, false));
+			return Response::forge(View::forge($this->template . '/admin/user/permission/permission_list', $data, false));
 		} else {
 			return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
 		}

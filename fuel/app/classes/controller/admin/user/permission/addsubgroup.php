@@ -3,7 +3,7 @@
  * 添加副功能组页
  */
 
-class Controller_Admin_User_Addsubgroup extends Controller_Admin_App
+class Controller_Admin_User_Permission_Addsubgroup extends Controller_Admin_App
 {
 
 	/**
@@ -96,7 +96,7 @@ class Controller_Admin_User_Addsubgroup extends Controller_Admin_App
 			}
 			
 			//调用View
-			return Response::forge(View::forge($this->template . '/admin/user/add_sub_group', $data, false));
+			return Response::forge(View::forge($this->template . '/admin/user/permission/add_sub_group', $data, false));
 		} else {
 			return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
 		}
