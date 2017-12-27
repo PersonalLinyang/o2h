@@ -21,7 +21,7 @@ class Controller_Admin_Common_Header extends Controller_App
 			exit;
 		}
 
-		$data['login_user_permission'] = Model_Permission::SelectPermissionByUser($_SESSION['login_user']['id']);
+		$data['login_user_permission'] = Model_Permission::SelectPermissionList(array('user_id' => $_SESSION['login_user']['id']));
 		
 		return Response::forge(View::forge($this->template . '/admin/common/header', $data, false));
 	}

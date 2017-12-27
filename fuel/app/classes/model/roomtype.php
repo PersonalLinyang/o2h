@@ -20,7 +20,7 @@ class Model_Roomtype extends Model
 	public static function CheckRoomTypeIdActive($room_type_id) {
 		$sql = "SELECT room_type_id FROM m_room_type WHERE room_type_id = :room_type_id AND delete_flag = 0";
 		$query = DB::query($sql);
-		$query->param(':room_type_id', $room_type_id);
+		$query->param('room_type_id', $room_type_id);
 		$result = $query->execute()->as_array();
 		
 		if(count($result)) {

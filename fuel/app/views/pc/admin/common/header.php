@@ -70,6 +70,9 @@
 							<?php if(in_array('7', $login_user_permission['sub_group'])) : ?>
 							<li><a href="/admin/permission_list/" class="sub-navi-link">系统权限管理</a></li>
 							<?php endif; ?>
+							<?php if(in_array('8', $login_user_permission['sub_group'])) : ?>
+							<li><a href="/admin/user_type_list/" class="sub-navi-link">用户类型管理</a></li>
+							<?php endif; ?>
 <!--
 							<li><a href="/admin/user_list/" class="sub-navi-link">公司成员管理</a></li>
 							<li><a href="/admin/" class="sub-navi-link">新员工注册</a></li>

@@ -86,4 +86,11 @@ return array(
 	'admin/delete_sub_group'                 => 'admin/user/permission/permissionlist/deletesubgroup',
 	'admin/delete_function'                  => 'admin/user/permission/permissionlist/deletefunction',
 	'admin/delete_authority'                 => 'admin/user/permission/permissionlist/deleteauthority',
+	
+	//用户类型管理
+	'admin/user_type_list'                   => 'admin/user/usertype/usertypelist/index',
+	'admin/add_user_type'                    => 'admin/user/usertype/addusertype/index',
+	'admin/modify_user_type/(:user_type_id)' => 'admin/user/usertype/modifyusertype/index/$1',
+	'admin/delete_user_type'                 => 'admin/user/usertype/usertypelist/deleteusertype/',
+	'admin/user_type_detail/(:user_type_id)' => 'admin/user/usertype/usertypedetail/index/$1',
 );

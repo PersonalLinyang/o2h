@@ -22,7 +22,7 @@ class Controller_Admin_User_Permission_Permissionlist extends Controller_Admin_A
 		
 		if(Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'sub_group', 7)) {
 			//获取权限数列
-			$data['permission_list'] = Model_Permission::GetPermissionListAll();
+			$data['permission_list'] = Model_Permission::SelectSystemPermissionList();
 			
 			$data['success_message'] = '';
 			$data['error_message'] = '';

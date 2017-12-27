@@ -10,12 +10,12 @@ class Model_Restaurant extends Model
 		$sql_insert_restaurant = "INSERT INTO t_restaurant(restaurant_name, restaurant_area, restaurant_type, restaurant_price_min, restaurant_price_max, restaurant_status, created_at, modified_at) "
 						. "VALUES(:restaurant_name, :restaurant_area, :restaurant_type, :restaurant_price_min, :restaurant_price_max, :restaurant_status, now(), now())";
 		$query_insert_restaurant = DB::query($sql_insert_restaurant);
-		$query_insert_restaurant->param(':restaurant_name', $params['restaurant_name']);
-		$query_insert_restaurant->param(':restaurant_area', $params['restaurant_area']);
-		$query_insert_restaurant->param(':restaurant_type', $params['restaurant_type']);
-		$query_insert_restaurant->param(':restaurant_price_min', $params['restaurant_price_min']);
-		$query_insert_restaurant->param(':restaurant_price_max', $params['restaurant_price_max']);
-		$query_insert_restaurant->param(':restaurant_status', $params['restaurant_status']);
+		$query_insert_restaurant->param('restaurant_name', $params['restaurant_name']);
+		$query_insert_restaurant->param('restaurant_area', $params['restaurant_area']);
+		$query_insert_restaurant->param('restaurant_type', $params['restaurant_type']);
+		$query_insert_restaurant->param('restaurant_price_min', $params['restaurant_price_min']);
+		$query_insert_restaurant->param('restaurant_price_max', $params['restaurant_price_max']);
+		$query_insert_restaurant->param('restaurant_status', $params['restaurant_status']);
 		$result_insert_restaurant = $query_insert_restaurant->execute();
 		
 		return $result_insert_restaurant;
@@ -29,13 +29,13 @@ class Model_Restaurant extends Model
 		$sql_update_restaurant = "UPDATE t_restaurant SET restaurant_name=:restaurant_name, restaurant_area=:restaurant_area, restaurant_type=:restaurant_type, "
 						. "restaurant_price_min=:restaurant_price_min, restaurant_price_max=:restaurant_price_max, restaurant_status=:restaurant_status, modified_at=now() WHERE restaurant_id=:restaurant_id";
 		$query_update_restaurant = DB::query($sql_update_restaurant);
-		$query_update_restaurant->param(':restaurant_id', $params['restaurant_id']);
-		$query_update_restaurant->param(':restaurant_name', $params['restaurant_name']);
-		$query_update_restaurant->param(':restaurant_area', $params['restaurant_area']);
-		$query_update_restaurant->param(':restaurant_type', $params['restaurant_type']);
-		$query_update_restaurant->param(':restaurant_price_min', $params['restaurant_price_min']);
-		$query_update_restaurant->param(':restaurant_price_max', $params['restaurant_price_max']);
-		$query_update_restaurant->param(':restaurant_status', $params['restaurant_status']);
+		$query_update_restaurant->param('restaurant_id', $params['restaurant_id']);
+		$query_update_restaurant->param('restaurant_name', $params['restaurant_name']);
+		$query_update_restaurant->param('restaurant_area', $params['restaurant_area']);
+		$query_update_restaurant->param('restaurant_type', $params['restaurant_type']);
+		$query_update_restaurant->param('restaurant_price_min', $params['restaurant_price_min']);
+		$query_update_restaurant->param('restaurant_price_max', $params['restaurant_price_max']);
+		$query_update_restaurant->param('restaurant_status', $params['restaurant_status']);
 		$result_update_restaurant = $query_update_restaurant->execute();
 		
 		return $result_update_restaurant;
@@ -47,7 +47,7 @@ class Model_Restaurant extends Model
 	public static function DeleteRestaurantById($restaurant_id) {
 		$sql_delete = "DELETE FROM t_restaurant WHERE restaurant_id = :restaurant_id";
 		$query_delete = DB::query($sql_delete);
-		$query_delete->param(':restaurant_id', $restaurant_id);
+		$query_delete->param('restaurant_id', $restaurant_id);
 		$result_delete = $query_delete->execute();
 		
 		return $result_delete;
@@ -80,8 +80,8 @@ class Model_Restaurant extends Model
 	public static function UpdateRestaurantStatusById($params) {
 		$sql_update = "UPDATE t_restaurant SET restaurant_status = :restaurant_status WHERE restaurant_id = :restaurant_id";
 		$query_update = DB::query($sql_update);
-		$query_update->param(':restaurant_id', $params['restaurant_id']);
-		$query_update->param(':restaurant_status', $params['restaurant_status']);
+		$query_update->param('restaurant_id', $params['restaurant_id']);
+		$query_update->param('restaurant_status', $params['restaurant_status']);
 		$result_update = $query_update->execute();
 		
 		return $result_update;
@@ -245,7 +245,7 @@ class Model_Restaurant extends Model
 				. "LEFT JOIN m_restaurant_type mrt ON tr.restaurant_type = mrt.restaurant_type_id " 
 				. "WHERE tr.restaurant_id = :restaurant_id ";
 		$query_restaurant = DB::query($sql_restaurant);
-		$query_restaurant->param(':restaurant_id', $restaurant_id);
+		$query_restaurant->param('restaurant_id', $restaurant_id);
 		$result_restaurant = $query_restaurant->execute()->as_array();
 		
 		if(count($result_restaurant) == 1) {
@@ -333,7 +333,7 @@ class Model_Restaurant extends Model
 		if($result['result']) {
 			$sql_exist = "SELECT * FROM t_restaurant WHERE restaurant_id = :restaurant_id";
 			$query_exist = DB::query($sql_exist);
-			$query_exist->param(':restaurant_id', $restaurant_id);
+			$query_exist->param('restaurant_id', $restaurant_id);
 			$result_exist = $query_exist->execute()->as_array();
 			
 			if(!count($result_exist)) {
@@ -452,7 +452,7 @@ class Model_Restaurant extends Model
 		if($result['result']) {
 			$sql_exist = "SELECT * FROM t_restaurant WHERE restaurant_id = :restaurant_id";
 			$query_exist = DB::query($sql_exist);
-			$query_exist->param(':restaurant_id', $params['restaurant_id']);
+			$query_exist->param('restaurant_id', $params['restaurant_id']);
 			$result_exist = $query_exist->execute()->as_array();
 			
 			if(count($result_exist) != 1) {

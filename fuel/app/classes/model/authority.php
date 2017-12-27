@@ -9,9 +9,9 @@ class Model_Authority extends Model
 	public static function InsertAuthority($params) {
 		$sql_authority = "INSERT INTO m_authority(authority_name, function_id, special_flag) VALUES(:authority_name, :function_id, :special_flag)";
 		$query_authority = DB::query($sql_authority);
-		$query_authority->param(':authority_name', $params['authority_name']);
-		$query_authority->param(':function_id', $params['function_id']);
-		$query_authority->param(':special_flag', $params['special_flag']);
+		$query_authority->param('authority_name', $params['authority_name']);
+		$query_authority->param('function_id', $params['function_id']);
+		$query_authority->param('special_flag', $params['special_flag']);
 		$result_authority = $query_authority->execute();
 		
 		//添加成功的同时为系统管理员添加该权限
@@ -20,11 +20,11 @@ class Model_Authority extends Model
 			
 			$sql_permission = "INSERT INTO r_permission(user_type_id, permission_type, permission_id) VALUES(1, 4, :permission_id)";
 			$query_permission = DB::query($sql_permission);
-			$query_permission->param(':permission_id', $authority_id);
+			$query_permission->param('permission_id', $authority_id);
 			$result_permission = $query_permission->execute();
 		}
 		
-		return $query_authority;
+		return $result_authority;
 	}
 
 	/*
@@ -33,8 +33,8 @@ class Model_Authority extends Model
 	public static function UpdateAuthorityName($params) {
 		$sql = "UPDATE m_authority SET authority_name = :authority_name WHERE authority_id = :authority_id";
 		$query = DB::query($sql);
-		$query->param(':authority_id', $params['authority_id']);
-		$query->param(':authority_name', $params['authority_name']);
+		$query->param('authority_id', $params['authority_id']);
+		$query->param('authority_name', $params['authority_name']);
 		$result = $query->execute();
 		
 		return $result;
@@ -47,13 +47,13 @@ class Model_Authority extends Model
 		//删除相关权限许可
 		$sql_permission = "DELETE FROM r_permission WHERE permission_type = 4 AND permission_id = :permission_id";
 		$query_permission = DB::query($sql_permission);
-		$query_permission->param(':permission_id', $authority_id);
+		$query_permission->param('permission_id', $authority_id);
 		$result_permission = $query_permission->execute();
 		
 		//删除权限
 		$sql_authority = "DELETE FROM m_authority WHERE authority_id = :authority_id";
 		$query_authority = DB::query($sql_authority);
-		$query_authority->param(':authority_id', $authority_id);
+		$query_authority->param('authority_id', $authority_id);
 		$result_authority = $query_authority->execute();
 		
 		return $result_authority;
@@ -76,13 +76,33 @@ class Model_Authority extends Model
 			. "LEFT JOIN (SELECT * FROM m_function_group WHERE function_group_parent IS NULL) mg ON sg.function_group_parent = mg.function_group_id " 
 			. "WHERE a.authority_id = :authority_id";
 		$query = DB::query($sql);
-		$query->param(':authority_id', $authority_id);
+		$query->param('authority_id', $authority_id);
 		$result = $query->execute()->as_array();
 		
 		if(count($result) == 1) {
 			return $result[0];
 		} else {
 			return false;
+		}
+	}
+	
+	/*
+	 * 根据功能ID列表获得所属权限ID列表
+	 */
+	public static function SelectAuthorityIdListByFunctionList($function_id_list) {
+		$sql = "SELECT authority_id FROM m_authority WHERE function_id IN :function_id_list";
+		$query = DB::query($sql);
+		$query->param('function_id_list', $function_id_list);
+		$result = $query->execute()->as_array();
+		
+		if(count($result)) {
+			$authority_id_list = array();
+			foreach($result as $authority) {
+				$authority_id_list[] = $authority['authority_id'];
+			}
+			return $authority_id_list;
+		} else {
+			return array();
 		}
 	}
 	
@@ -187,7 +207,7 @@ class Model_Authority extends Model
 	public static function CheckAuthorityIdExist($authority_id) {
 		$sql = "SELECT authority_id FROM m_authority WHERE authority_id = :authority_id";
 		$query = DB::query($sql);
-		$query->param(':authority_id', $authority_id);
+		$query->param('authority_id', $authority_id);
 		$result = $query->execute()->as_array();
 		
 		if(count($result)) {
@@ -203,8 +223,8 @@ class Model_Authority extends Model
 	public static function CheckAuthorityNameExist($authority_name, $function_id) {
 		$sql = "SELECT authority_id FROM m_authority WHERE authority_name = :authority_name AND function_id = :function_id";
 		$query = DB::query($sql);
-		$query->param(':authority_name', $authority_name);
-		$query->param(':function_id', $function_id);
+		$query->param('authority_name', $authority_name);
+		$query->param('function_id', $function_id);
 		$result = $query->execute()->as_array();
 		
 		if(count($result)) {

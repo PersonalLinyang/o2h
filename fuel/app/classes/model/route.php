@@ -11,14 +11,14 @@ class Model_Route extends Model
 		$sql_insert_route = "INSERT INTO t_route(route_name, route_description, route_price_min, route_price_max, route_base_cost, route_traffic_cost, route_parking_cost, route_status, created_at, modified_at) "
 						. "VALUES(:route_name, :route_description, :route_price_min, :route_price_max, :route_base_cost, :route_traffic_cost, :route_parking_cost, :route_status, now(), now())";
 		$query_insert_route = DB::query($sql_insert_route);
-		$query_insert_route->param(':route_name', $params['route_name']);
-		$query_insert_route->param(':route_description', $params['route_description']);
-		$query_insert_route->param(':route_price_min', $params['route_price_min']);
-		$query_insert_route->param(':route_price_max', $params['route_price_max']);
-		$query_insert_route->param(':route_base_cost', $params['route_base_cost']);
-		$query_insert_route->param(':route_traffic_cost', $params['route_traffic_cost']);
-		$query_insert_route->param(':route_parking_cost', $params['route_parking_cost']);
-		$query_insert_route->param(':route_status', $params['route_status']);
+		$query_insert_route->param('route_name', $params['route_name']);
+		$query_insert_route->param('route_description', $params['route_description']);
+		$query_insert_route->param('route_price_min', $params['route_price_min']);
+		$query_insert_route->param('route_price_max', $params['route_price_max']);
+		$query_insert_route->param('route_base_cost', $params['route_base_cost']);
+		$query_insert_route->param('route_traffic_cost', $params['route_traffic_cost']);
+		$query_insert_route->param('route_parking_cost', $params['route_parking_cost']);
+		$query_insert_route->param('route_status', $params['route_status']);
 		$result_insert_route = $query_insert_route->execute();
 		
 		if($result_insert_route) {
@@ -30,15 +30,15 @@ class Model_Route extends Model
 									. "VALUES(:route_id, :route_detail_day, :route_detail_title, :route_detail_content, " 
 									. ":route_spot_list, :route_breakfast, :route_lunch, :route_dinner, :route_hotel)";
 				$query_insert_detail = DB::query($sql_insert_detail);
-				$query_insert_detail->param(':route_id', $route_id);
-				$query_insert_detail->param(':route_detail_day', $detail['route_detail_day']);
-				$query_insert_detail->param(':route_detail_title', $detail['route_detail_title']);
-				$query_insert_detail->param(':route_detail_content', $detail['route_detail_content']);
-				$query_insert_detail->param(':route_spot_list', implode(',', $detail['route_spot_list']));
-				$query_insert_detail->param(':route_breakfast', $detail['route_breakfast']);
-				$query_insert_detail->param(':route_lunch', $detail['route_lunch']);
-				$query_insert_detail->param(':route_dinner', $detail['route_dinner']);
-				$query_insert_detail->param(':route_hotel', $detail['route_hotel']);
+				$query_insert_detail->param('route_id', $route_id);
+				$query_insert_detail->param('route_detail_day', $detail['route_detail_day']);
+				$query_insert_detail->param('route_detail_title', $detail['route_detail_title']);
+				$query_insert_detail->param('route_detail_content', $detail['route_detail_content']);
+				$query_insert_detail->param('route_spot_list', implode(',', $detail['route_spot_list']));
+				$query_insert_detail->param('route_breakfast', $detail['route_breakfast']);
+				$query_insert_detail->param('route_lunch', $detail['route_lunch']);
+				$query_insert_detail->param('route_dinner', $detail['route_dinner']);
+				$query_insert_detail->param('route_hotel', $detail['route_hotel']);
 				$result_insert_detail = $query_insert_detail->execute();
 			}
 		}
@@ -52,12 +52,12 @@ class Model_Route extends Model
 	public static function DeleteRouteById($route_id) {
 		$sql_delete_detail = "DELETE FROM t_route_detail WHERE route_id = :route_id";
 		$query_delete_detail = DB::query($sql_delete_detail);
-		$query_delete_detail->param(':route_id', $route_id);
+		$query_delete_detail->param('route_id', $route_id);
 		$result_delete_detail = $query_delete_detail->execute();
 		
 		$sql_delete_route = "DELETE FROM t_route WHERE route_id = :route_id";
 		$query_delete_route = DB::query($sql_delete_route);
-		$query_delete_route->param(':route_id', $route_id);
+		$query_delete_route->param('route_id', $route_id);
 		$result_delete_route = $query_delete_route->execute();
 		
 		return $result_delete_route;
@@ -102,22 +102,22 @@ class Model_Route extends Model
 						. "route_base_cost=:route_base_cost, route_traffic_cost=:route_traffic_cost, route_parking_cost=:route_parking_cost, route_status=:route_status, modified_at=now() "
 						. "WHERE route_id=:route_id";
 		$query_update_route = DB::query($sql_update_route);
-		$query_update_route->param(':route_id', $params['route_id']);
-		$query_update_route->param(':route_name', $params['route_name']);
-		$query_update_route->param(':route_description', $params['route_description']);
-		$query_update_route->param(':route_price_min', $params['route_price_min']);
-		$query_update_route->param(':route_price_max', $params['route_price_max']);
-		$query_update_route->param(':route_base_cost', $params['route_base_cost']);
-		$query_update_route->param(':route_traffic_cost', $params['route_traffic_cost']);
-		$query_update_route->param(':route_parking_cost', $params['route_parking_cost']);
-		$query_update_route->param(':route_status', $params['route_status']);
+		$query_update_route->param('route_id', $params['route_id']);
+		$query_update_route->param('route_name', $params['route_name']);
+		$query_update_route->param('route_description', $params['route_description']);
+		$query_update_route->param('route_price_min', $params['route_price_min']);
+		$query_update_route->param('route_price_max', $params['route_price_max']);
+		$query_update_route->param('route_base_cost', $params['route_base_cost']);
+		$query_update_route->param('route_traffic_cost', $params['route_traffic_cost']);
+		$query_update_route->param('route_parking_cost', $params['route_parking_cost']);
+		$query_update_route->param('route_status', $params['route_status']);
 		$result_update_route = $query_update_route->execute();
 		
 		if($result_update_route) {
 			//删除原有详细日程
 			$sql_delete_detail = "DELETE FROM t_route_detail WHERE route_id=:route_id";
 			$query_delete_detail = DB::query($sql_delete_detail);
-			$query_delete_detail->param(':route_id', $params['route_id']);
+			$query_delete_detail->param('route_id', $params['route_id']);
 			$result_delete_detail = $query_delete_detail->execute();
 			
 			//更新详细日程
@@ -127,15 +127,15 @@ class Model_Route extends Model
 									. "VALUES(:route_id, :route_detail_day, :route_detail_title, :route_detail_content, " 
 									. ":route_spot_list, :route_breakfast, :route_lunch, :route_dinner, :route_hotel)";
 				$query_update_detail = DB::query($sql_update_detail);
-				$query_update_detail->param(':route_id', $params['route_id']);
-				$query_update_detail->param(':route_detail_day', $detail['route_detail_day']);
-				$query_update_detail->param(':route_detail_title', $detail['route_detail_title']);
-				$query_update_detail->param(':route_detail_content', $detail['route_detail_content']);
-				$query_update_detail->param(':route_spot_list', implode(',', $detail['route_spot_list']));
-				$query_update_detail->param(':route_breakfast', $detail['route_breakfast']);
-				$query_update_detail->param(':route_lunch', $detail['route_lunch']);
-				$query_update_detail->param(':route_dinner', $detail['route_dinner']);
-				$query_update_detail->param(':route_hotel', $detail['route_hotel']);
+				$query_update_detail->param('route_id', $params['route_id']);
+				$query_update_detail->param('route_detail_day', $detail['route_detail_day']);
+				$query_update_detail->param('route_detail_title', $detail['route_detail_title']);
+				$query_update_detail->param('route_detail_content', $detail['route_detail_content']);
+				$query_update_detail->param('route_spot_list', implode(',', $detail['route_spot_list']));
+				$query_update_detail->param('route_breakfast', $detail['route_breakfast']);
+				$query_update_detail->param('route_lunch', $detail['route_lunch']);
+				$query_update_detail->param('route_dinner', $detail['route_dinner']);
+				$query_update_detail->param('route_hotel', $detail['route_hotel']);
 				$result_update_detail = $query_update_detail->execute();
 			}
 		}
@@ -149,8 +149,8 @@ class Model_Route extends Model
 	public static function UpdateRouteStatusById($params) {
 		$sql_update = "UPDATE t_route SET route_status = :route_status WHERE route_id = :route_id";
 		$query_update = DB::query($sql_update);
-		$query_update->param(':route_id', $params['route_id']);
-		$query_update->param(':route_status', $params['route_status']);
+		$query_update->param('route_id', $params['route_id']);
+		$query_update->param('route_status', $params['route_status']);
 		$result_update = $query_update->execute();
 		
 		return $result_update;
@@ -184,7 +184,7 @@ class Model_Route extends Model
 	public static function CheckActiveRouteId($route_id) {
 		$sql = "SELECT * FROM t_user WHERE route_id = :route_id AND delete_flag = 0 AND route_status = 1";
 		$query = DB::query($sql);
-		$query->param(':route_id', $route_id);
+		$query->param('route_id', $route_id);
 		$result = $query->execute()->as_array();
 		
 		if(count($result)) {
@@ -377,7 +377,7 @@ class Model_Route extends Model
 				. "FROM t_route " 
 				. "WHERE route_id = :route_id ";
 		$query_route = DB::query($sql_route);
-		$query_route->param(':route_id', $route_id);
+		$query_route->param('route_id', $route_id);
 		$result_route = $query_route->execute()->as_array();
 		
 		if(count($result_route) == 1) {
@@ -389,7 +389,7 @@ class Model_Route extends Model
 								. "WHERE route_id = :route_id " 
 								. "ORDER BY route_detail_day ASC ";
 			$query_detail = DB::query($sql_detail);
-			$query_detail->param(':route_id', $route_id);
+			$query_detail->param('route_id', $route_id);
 			$result_detail = $query_detail->execute()->as_array();
 			
 			if(count($result_detail)) {
@@ -559,7 +559,7 @@ class Model_Route extends Model
 		if($result['result']) {
 			$sql_exist = "SELECT * FROM t_route WHERE route_id = :route_id";
 			$query_exist = DB::query($sql_exist);
-			$query_exist->param(':route_id', $route_id);
+			$query_exist->param('route_id', $route_id);
 			$result_exist = $query_exist->execute()->as_array();
 			
 			if(!count($result_exist)) {
@@ -759,7 +759,7 @@ class Model_Route extends Model
 		if($result['result']) {
 			$sql_exist = "SELECT * FROM t_route WHERE route_id = :route_id";
 			$query_exist = DB::query($sql_exist);
-			$query_exist->param(':route_id', $params['route_id']);
+			$query_exist->param('route_id', $params['route_id']);
 			$result_exist = $query_exist->execute()->as_array();
 			
 			if(count($result_exist) != 1) {
@@ -781,7 +781,7 @@ class Model_Route extends Model
 		
 		$sql_route = "SELECT route_id FROM t_route WHERE route_id = :route_id ";
 		$query_route = DB::query($sql_route);
-		$query_route->param(':route_id', $route_id);
+		$query_route->param('route_id', $route_id);
 		$result_route = $query_route->execute()->as_array();
 		
 		if(count($result_route) == 1) {

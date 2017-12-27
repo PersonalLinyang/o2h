@@ -15,7 +15,7 @@ class Model_Imageoptimize extends Model
 		}
 		$query = DB::query($sql);
 		foreach($params as $key => $value) {
-			$query->param(':' . $key, $value);
+			$query->param($key, $value);
 		}
 		$result = $query->execute()->as_array();
 		

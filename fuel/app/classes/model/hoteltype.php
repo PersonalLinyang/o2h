@@ -9,7 +9,7 @@ class Model_Hoteltype extends Model
 	public static function InsertHotelType($params) {
 		$sql_insert = "INSERT INTO m_hotel_type(hotel_type_name) VALUES(:hotel_type_name)";
 		$query_insert = DB::query($sql_insert);
-		$query_insert->param(':hotel_type_name', $params['hotel_type_name']);
+		$query_insert->param('hotel_type_name', $params['hotel_type_name']);
 		$result_insert = $query_insert->execute();
 		
 		return $result_insert;
@@ -21,7 +21,7 @@ class Model_Hoteltype extends Model
 	public static function DeleteHotelTypeById($hotel_type_id) {
 		$sql_delete = "DELETE FROM m_hotel_type WHERE hotel_type_id = :hotel_type_id";
 		$query_delete = DB::query($sql_delete);
-		$query_delete->param(':hotel_type_id', $hotel_type_id);
+		$query_delete->param('hotel_type_id', $hotel_type_id);
 		$result_delete = $query_delete->execute();
 		
 		return $result_delete;
@@ -33,8 +33,8 @@ class Model_Hoteltype extends Model
 	public static function UpdateHotelType($params) {
 		$sql_update = "UPDATE m_hotel_type SET hotel_type_name = :hotel_type_name WHERE hotel_type_id = :hotel_type_id";
 		$query_update = DB::query($sql_update);
-		$query_update->param(':hotel_type_id', $params['hotel_type_id']);
-		$query_update->param(':hotel_type_name', $params['hotel_type_name']);
+		$query_update->param('hotel_type_id', $params['hotel_type_id']);
+		$query_update->param('hotel_type_name', $params['hotel_type_name']);
 		$result_update = $query_update->execute();
 		
 		return $result_update;
@@ -74,7 +74,7 @@ class Model_Hoteltype extends Model
 		
 		$sql = "SELECT * FROM m_hotel_type WHERE hotel_type_id = :hotel_type_id";
 		$query = DB::query($sql);
-		$query->param(':hotel_type_id', $hotel_type_id);
+		$query->param('hotel_type_id', $hotel_type_id);
 		$result = $query->execute()->as_array();
 		
 		if(count($result) == 1) {
@@ -104,7 +104,7 @@ class Model_Hoteltype extends Model
 		if($result['result']) {
 			$sql_duplication = "SELECT * FROM m_hotel_type WHERE hotel_type_name = :hotel_type_name";
 			$query_duplication = DB::query($sql_duplication);
-			$query_duplication->param(':hotel_type_name', $params['hotel_type_name']);
+			$query_duplication->param('hotel_type_name', $params['hotel_type_name']);
 			$result_duplication = $query_duplication->execute()->as_array();
 			
 			if(count($result_duplication)) {
@@ -133,7 +133,7 @@ class Model_Hoteltype extends Model
 		if($result['result']) {
 			$sql_exist = "SELECT * FROM m_hotel_type WHERE hotel_type_id = :hotel_type_id";
 			$query_exist = DB::query($sql_exist);
-			$query_exist->param(':hotel_type_id', $hotel_type_id);
+			$query_exist->param('hotel_type_id', $hotel_type_id);
 			$result_exist = $query_exist->execute()->as_array();
 			
 			if(!count($result_exist)) {
@@ -167,7 +167,7 @@ class Model_Hoteltype extends Model
 		if($result['result']) {
 			$sql_duplication = "SELECT * FROM m_hotel_type WHERE hotel_type_name = :hotel_type_name";
 			$query_duplication = DB::query($sql_duplication);
-			$query_duplication->param(':hotel_type_name', $params['hotel_type_name']);
+			$query_duplication->param('hotel_type_name', $params['hotel_type_name']);
 			$result_duplication = $query_duplication->execute()->as_array();
 			
 			if(count($result_duplication)) {
@@ -190,7 +190,7 @@ class Model_Hoteltype extends Model
 	public static function CheckExistHotelTypeId($hotel_type_id) {
 		$sql = "SELECT * FROM m_hotel_type WHERE hotel_type_id = :hotel_type_id";
 		$query = DB::query($sql);
-		$query->param(':hotel_type_id', $hotel_type_id);
+		$query->param('hotel_type_id', $hotel_type_id);
 		$result = $query->execute()->as_array();
 		
 		if(count($result)) {

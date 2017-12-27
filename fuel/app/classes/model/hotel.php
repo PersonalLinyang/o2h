@@ -10,11 +10,11 @@ class Model_Hotel extends Model
 		$sql_insert_hotel = "INSERT INTO t_hotel(hotel_name, hotel_area, hotel_type, hotel_price, hotel_status, created_at, modified_at) "
 						. "VALUES(:hotel_name, :hotel_area, :hotel_type, :hotel_price, :hotel_status, now(), now())";
 		$query_insert_hotel = DB::query($sql_insert_hotel);
-		$query_insert_hotel->param(':hotel_name', $params['hotel_name']);
-		$query_insert_hotel->param(':hotel_area', $params['hotel_area']);
-		$query_insert_hotel->param(':hotel_type', $params['hotel_type']);
-		$query_insert_hotel->param(':hotel_price', $params['hotel_price']);
-		$query_insert_hotel->param(':hotel_status', $params['hotel_status']);
+		$query_insert_hotel->param('hotel_name', $params['hotel_name']);
+		$query_insert_hotel->param('hotel_area', $params['hotel_area']);
+		$query_insert_hotel->param('hotel_type', $params['hotel_type']);
+		$query_insert_hotel->param('hotel_price', $params['hotel_price']);
+		$query_insert_hotel->param('hotel_status', $params['hotel_status']);
 		$result_insert_hotel = $query_insert_hotel->execute();
 		
 		return $result_insert_hotel;
@@ -28,12 +28,12 @@ class Model_Hotel extends Model
 		$sql_update_hotel = "UPDATE t_hotel SET hotel_name=:hotel_name, hotel_area=:hotel_area, hotel_type=:hotel_type, "
 						. "hotel_price=:hotel_price, hotel_status=:hotel_status, modified_at=now() WHERE hotel_id=:hotel_id";
 		$query_update_hotel = DB::query($sql_update_hotel);
-		$query_update_hotel->param(':hotel_id', $params['hotel_id']);
-		$query_update_hotel->param(':hotel_name', $params['hotel_name']);
-		$query_update_hotel->param(':hotel_area', $params['hotel_area']);
-		$query_update_hotel->param(':hotel_type', $params['hotel_type']);
-		$query_update_hotel->param(':hotel_price', $params['hotel_price']);
-		$query_update_hotel->param(':hotel_status', $params['hotel_status']);
+		$query_update_hotel->param('hotel_id', $params['hotel_id']);
+		$query_update_hotel->param('hotel_name', $params['hotel_name']);
+		$query_update_hotel->param('hotel_area', $params['hotel_area']);
+		$query_update_hotel->param('hotel_type', $params['hotel_type']);
+		$query_update_hotel->param('hotel_price', $params['hotel_price']);
+		$query_update_hotel->param('hotel_status', $params['hotel_status']);
 		$result_update_hotel = $query_update_hotel->execute();
 		
 		return $result_update_hotel;
@@ -45,7 +45,7 @@ class Model_Hotel extends Model
 	public static function DeleteHotelById($hotel_id) {
 		$sql_delete = "DELETE FROM t_hotel WHERE hotel_id = :hotel_id";
 		$query_delete = DB::query($sql_delete);
-		$query_delete->param(':hotel_id', $hotel_id);
+		$query_delete->param('hotel_id', $hotel_id);
 		$result_delete = $query_delete->execute();
 		
 		return $result_delete;
@@ -78,8 +78,8 @@ class Model_Hotel extends Model
 	public static function UpdateHotelStatusById($params) {
 		$sql_update = "UPDATE t_hotel SET hotel_status = :hotel_status WHERE hotel_id = :hotel_id";
 		$query_update = DB::query($sql_update);
-		$query_update->param(':hotel_id', $params['hotel_id']);
-		$query_update->param(':hotel_status', $params['hotel_status']);
+		$query_update->param('hotel_id', $params['hotel_id']);
+		$query_update->param('hotel_status', $params['hotel_status']);
 		$result_update = $query_update->execute();
 		
 		return $result_update;
@@ -243,7 +243,7 @@ class Model_Hotel extends Model
 				. "LEFT JOIN m_hotel_type mht ON th.hotel_type = mht.hotel_type_id " 
 				. "WHERE th.hotel_id = :hotel_id ";
 		$query_hotel = DB::query($sql_hotel);
-		$query_hotel->param(':hotel_id', $hotel_id);
+		$query_hotel->param('hotel_id', $hotel_id);
 		$result_hotel = $query_hotel->execute()->as_array();
 		
 		if(count($result_hotel) == 1) {
@@ -326,7 +326,7 @@ class Model_Hotel extends Model
 		if($result['result']) {
 			$sql_exist = "SELECT * FROM t_hotel WHERE hotel_id = :hotel_id";
 			$query_exist = DB::query($sql_exist);
-			$query_exist->param(':hotel_id', $hotel_id);
+			$query_exist->param('hotel_id', $hotel_id);
 			$result_exist = $query_exist->execute()->as_array();
 			
 			if(!count($result_exist)) {
@@ -440,7 +440,7 @@ class Model_Hotel extends Model
 		if($result['result']) {
 			$sql_exist = "SELECT * FROM t_hotel WHERE hotel_id = :hotel_id";
 			$query_exist = DB::query($sql_exist);
-			$query_exist->param(':hotel_id', $params['hotel_id']);
+			$query_exist->param('hotel_id', $params['hotel_id']);
 			$result_exist = $query_exist->execute()->as_array();
 			
 			if(count($result_exist) != 1) {

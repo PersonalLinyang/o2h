@@ -1,0 +1,24 @@
+/* 用户类型一览表 */
+.div-content-list {
+	width: 600px;
+}
+.tb-content-list th.th-delete {
+	width: 62px;
+}
+.tb-content-list th.th-modify {
+	width: 62px;
+}
+.tb-content-list th.th-name {
+	width: auto;
+}
+.tb-content-list th.th-level {
+	width: 80px;
+}
+.tb-content-list th.th-number {
+	width: 60px;
+}
+.tb-content-list td .btn-controller {
+	width: 50px;
+	margin-left: 5px;
+	margin-right: 5px;
+}

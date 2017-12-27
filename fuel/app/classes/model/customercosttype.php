@@ -20,7 +20,7 @@ class Model_Customercosttype extends Model
 	public static function CheckCustomerCostTypeIdActive($customer_cost_type_id) {
 		$sql = "SELECT customer_cost_type_id FROM m_customer_cost_type WHERE customer_cost_type_id = :customer_cost_type_id AND delete_flag = 0";
 		$query = DB::query($sql);
-		$query->param(':customer_cost_type_id', $customer_cost_type_id);
+		$query->param('customer_cost_type_id', $customer_cost_type_id);
 		$result = $query->execute()->as_array();
 		
 		if(count($result)) {

@@ -10,12 +10,12 @@ class Model_Spot extends Model
 		$sql_insert_spot = "INSERT INTO t_spot(spot_name, spot_area, spot_type, free_flag, spot_price, spot_status, created_at, modified_at) "
 						. "VALUES(:spot_name, :spot_area, :spot_type, :free_flag, :spot_price, :spot_status, now(), now())";
 		$query_insert_spot = DB::query($sql_insert_spot);
-		$query_insert_spot->param(':spot_name', $params['spot_name']);
-		$query_insert_spot->param(':spot_area', $params['spot_area']);
-		$query_insert_spot->param(':spot_type', $params['spot_type']);
-		$query_insert_spot->param(':free_flag', $params['free_flag']);
-		$query_insert_spot->param(':spot_price', $params['spot_price']);
-		$query_insert_spot->param(':spot_status', $params['spot_status']);
+		$query_insert_spot->param('spot_name', $params['spot_name']);
+		$query_insert_spot->param('spot_area', $params['spot_area']);
+		$query_insert_spot->param('spot_type', $params['spot_type']);
+		$query_insert_spot->param('free_flag', $params['free_flag']);
+		$query_insert_spot->param('spot_price', $params['spot_price']);
+		$query_insert_spot->param('spot_status', $params['spot_status']);
 		$result_insert_spot = $query_insert_spot->execute();
 		
 		if($result_insert_spot) {
@@ -27,18 +27,18 @@ class Model_Spot extends Model
 									. "VALUES(:spot_id, :spot_sort_id, :spot_detail_name, :spot_description_text, " 
 									. ":image_list, :two_year_flag, :spot_start_month, :spot_end_month)";
 				$query_insert_detail = DB::query($sql_insert_detail);
-				$query_insert_detail->param(':spot_id', $spot_id);
-				$query_insert_detail->param(':spot_sort_id', $detail['spot_sort_id']);
-				$query_insert_detail->param(':spot_detail_name', $detail['spot_detail_name']);
-				$query_insert_detail->param(':spot_description_text', $detail['spot_description_text']);
+				$query_insert_detail->param('spot_id', $spot_id);
+				$query_insert_detail->param('spot_sort_id', $detail['spot_sort_id']);
+				$query_insert_detail->param('spot_detail_name', $detail['spot_detail_name']);
+				$query_insert_detail->param('spot_description_text', $detail['spot_description_text']);
 				$image_list = array();
 				for($i = 0; $i < $detail['image_number']; $i++) {
 					$image_list[] = $i;
 				}
-				$query_insert_detail->param(':image_list', implode(',', $image_list));
-				$query_insert_detail->param(':two_year_flag', $detail['two_year_flag']);
-				$query_insert_detail->param(':spot_start_month', $detail['spot_start_month']);
-				$query_insert_detail->param(':spot_end_month', $detail['spot_end_month']);
+				$query_insert_detail->param('image_list', implode(',', $image_list));
+				$query_insert_detail->param('two_year_flag', $detail['two_year_flag']);
+				$query_insert_detail->param('spot_start_month', $detail['spot_start_month']);
+				$query_insert_detail->param('spot_end_month', $detail['spot_end_month']);
 				$result_insert_detail = $query_insert_detail->execute();
 			}
 		}
@@ -54,20 +54,20 @@ class Model_Spot extends Model
 		$sql_update_spot = "UPDATE t_spot SET spot_name=:spot_name, spot_area=:spot_area, spot_type=:spot_type, free_flag=:free_flag, "
 						. "spot_price=:spot_price, spot_status=:spot_status, modified_at=now() WHERE spot_id=:spot_id";
 		$query_update_spot = DB::query($sql_update_spot);
-		$query_update_spot->param(':spot_id', $params['spot_id']);
-		$query_update_spot->param(':spot_name', $params['spot_name']);
-		$query_update_spot->param(':spot_area', $params['spot_area']);
-		$query_update_spot->param(':spot_type', $params['spot_type']);
-		$query_update_spot->param(':free_flag', $params['free_flag']);
-		$query_update_spot->param(':spot_price', $params['spot_price']);
-		$query_update_spot->param(':spot_status', $params['spot_status']);
+		$query_update_spot->param('spot_id', $params['spot_id']);
+		$query_update_spot->param('spot_name', $params['spot_name']);
+		$query_update_spot->param('spot_area', $params['spot_area']);
+		$query_update_spot->param('spot_type', $params['spot_type']);
+		$query_update_spot->param('free_flag', $params['free_flag']);
+		$query_update_spot->param('spot_price', $params['spot_price']);
+		$query_update_spot->param('spot_status', $params['spot_status']);
 		$result_update_spot = $query_update_spot->execute();
 		
 		if($result_update_spot) {
 			//删除原有景点详情
 			$sql_delete_detail = "DELETE FROM t_spot_detail WHERE spot_id=:spot_id";
 			$query_delete_detail = DB::query($sql_delete_detail);
-			$query_delete_detail->param(':spot_id', $params['spot_id']);
+			$query_delete_detail->param('spot_id', $params['spot_id']);
 			$result_delete_detail = $query_delete_detail->execute();
 			
 			//更新景点详情
@@ -77,18 +77,18 @@ class Model_Spot extends Model
 									. "VALUES(:spot_id, :spot_sort_id, :spot_detail_name, :spot_description_text, " 
 									. ":image_list, :two_year_flag, :spot_start_month, :spot_end_month)";
 				$query_update_detail = DB::query($sql_update_detail);
-				$query_update_detail->param(':spot_id', $params['spot_id']);
-				$query_update_detail->param(':spot_sort_id', $detail['spot_sort_id']);
-				$query_update_detail->param(':spot_detail_name', $detail['spot_detail_name']);
-				$query_update_detail->param(':spot_description_text', $detail['spot_description_text']);
+				$query_update_detail->param('spot_id', $params['spot_id']);
+				$query_update_detail->param('spot_sort_id', $detail['spot_sort_id']);
+				$query_update_detail->param('spot_detail_name', $detail['spot_detail_name']);
+				$query_update_detail->param('spot_description_text', $detail['spot_description_text']);
 				$image_list = $detail['image_sort'];
 				for($i = 1; $i <= $detail['image_number_upload']; $i++) {
 					$image_list[] = $i + intval($detail['max_image_sort']);
 				}
-				$query_update_detail->param(':image_list', implode(',', $image_list));
-				$query_update_detail->param(':two_year_flag', $detail['two_year_flag']);
-				$query_update_detail->param(':spot_start_month', $detail['spot_start_month']);
-				$query_update_detail->param(':spot_end_month', $detail['spot_end_month']);
+				$query_update_detail->param('image_list', implode(',', $image_list));
+				$query_update_detail->param('two_year_flag', $detail['two_year_flag']);
+				$query_update_detail->param('spot_start_month', $detail['spot_start_month']);
+				$query_update_detail->param('spot_end_month', $detail['spot_end_month']);
 				$result_update_detail = $query_update_detail->execute();
 			}
 		}
@@ -102,7 +102,7 @@ class Model_Spot extends Model
 	public static function DeleteSpotById($spot_id) {
 		$sql_delete = "DELETE FROM t_spot WHERE spot_id = :spot_id";
 		$query_delete = DB::query($sql_delete);
-		$query_delete->param(':spot_id', $spot_id);
+		$query_delete->param('spot_id', $spot_id);
 		$result_delete = $query_delete->execute();
 		
 		return $result_delete;
@@ -135,8 +135,8 @@ class Model_Spot extends Model
 	public static function UpdateSpotStatusById($params) {
 		$sql_update = "UPDATE t_spot SET spot_status = :spot_status WHERE spot_id = :spot_id";
 		$query_update = DB::query($sql_update);
-		$query_update->param(':spot_id', $params['spot_id']);
-		$query_update->param(':spot_status', $params['spot_status']);
+		$query_update->param('spot_id', $params['spot_id']);
+		$query_update->param('spot_status', $params['spot_status']);
 		$result_update = $query_update->execute();
 		
 		return $result_update;
@@ -347,7 +347,7 @@ class Model_Spot extends Model
 				. "LEFT JOIN m_spot_type mst ON ts.spot_type = mst.spot_type_id " 
 				. "WHERE ts.spot_id = :spot_id ";
 		$query_spot = DB::query($sql_spot);
-		$query_spot->param(':spot_id', $spot_id);
+		$query_spot->param('spot_id', $spot_id);
 		$result_spot = $query_spot->execute()->as_array();
 		
 		if(count($result_spot) == 1) {
@@ -359,7 +359,7 @@ class Model_Spot extends Model
 								. "WHERE tsd.spot_id = :spot_id " 
 								. "ORDER BY spot_sort_id ASC ";
 			$query_spot_detail = DB::query($sql_spot_detail);
-			$query_spot_detail->param(':spot_id', $spot_id);
+			$query_spot_detail->param('spot_id', $spot_id);
 			$result_spot_detail = $query_spot_detail->execute()->as_array();
 			
 			if(count($result_spot_detail)) {
@@ -520,7 +520,7 @@ class Model_Spot extends Model
 		if($result['result']) {
 			$sql_exist = "SELECT * FROM t_spot WHERE spot_id = :spot_id";
 			$query_exist = DB::query($sql_exist);
-			$query_exist->param(':spot_id', $spot_id);
+			$query_exist->param('spot_id', $spot_id);
 			$result_exist = $query_exist->execute()->as_array();
 			
 			if(!count($result_exist)) {
@@ -721,7 +721,7 @@ class Model_Spot extends Model
 		if($result['result']) {
 			$sql_exist = "SELECT * FROM t_spot WHERE spot_id = :spot_id";
 			$query_exist = DB::query($sql_exist);
-			$query_exist->param(':spot_id', $params['spot_id']);
+			$query_exist->param('spot_id', $params['spot_id']);
 			$result_exist = $query_exist->execute()->as_array();
 			
 			if(count($result_exist) != 1) {

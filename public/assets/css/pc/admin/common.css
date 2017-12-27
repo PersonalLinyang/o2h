@@ -224,6 +224,9 @@ input[type="checkbox"] {
 }
 .btn-controller a {
 	color: #713E00;
+	width: 100%;
+	height: 100%;
+	display: block;
 	text-decoration: none;
 }
 .btn-controller:hover a {

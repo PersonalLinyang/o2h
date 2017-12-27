@@ -8,8 +8,8 @@ class Model_Functiongroup extends Model
 	public static function InsertMasterGroup($params) {
 		$sql_group = "INSERT INTO m_function_group(function_group_name, special_flag) VALUES(:function_group_name, :special_flag)";
 		$query_group = DB::query($sql_group);
-		$query_group->param(':function_group_name', $params['function_group_name']);
-		$query_group->param(':special_flag', $params['special_flag']);
+		$query_group->param('function_group_name', $params['function_group_name']);
+		$query_group->param('special_flag', $params['special_flag']);
 		$result_group = $query_group->execute();
 		
 		//添加成功的同时为系统管理员添加该权限
@@ -18,7 +18,7 @@ class Model_Functiongroup extends Model
 			
 			$sql_permission = "INSERT INTO r_permission(user_type_id, permission_type, permission_id) VALUES(1, 1, :permission_id)";
 			$query_permission = DB::query($sql_permission);
-			$query_permission->param(':permission_id', $group_id);
+			$query_permission->param('permission_id', $group_id);
 			$result_permission = $query_permission->execute();
 		}
 		
@@ -31,9 +31,9 @@ class Model_Functiongroup extends Model
 	public static function InsertSubGroup($params) {
 		$sql_group = "INSERT INTO m_function_group(function_group_name, function_group_parent, special_flag) VALUES(:function_group_name, :function_group_parent, :special_flag)";
 		$query_group = DB::query($sql_group);
-		$query_group->param(':function_group_name', $params['function_group_name']);
-		$query_group->param(':function_group_parent', $params['function_group_parent']);
-		$query_group->param(':special_flag', $params['special_flag']);
+		$query_group->param('function_group_name', $params['function_group_name']);
+		$query_group->param('function_group_parent', $params['function_group_parent']);
+		$query_group->param('special_flag', $params['special_flag']);
 		$result_group = $query_group->execute();
 		
 		//添加成功的同时为系统管理员添加该权限
@@ -42,7 +42,7 @@ class Model_Functiongroup extends Model
 			
 			$sql_permission = "INSERT INTO r_permission(user_type_id, permission_type, permission_id) VALUES(1, 2, :permission_id)";
 			$query_permission = DB::query($sql_permission);
-			$query_permission->param(':permission_id', $group_id);
+			$query_permission->param('permission_id', $group_id);
 			$result_permission = $query_permission->execute();
 		}
 		
@@ -55,8 +55,8 @@ class Model_Functiongroup extends Model
 	public static function UpdateFunctionGroupName($params) {
 		$sql = "UPDATE m_function_group SET function_group_name = :function_group_name WHERE function_group_id = :function_group_id";
 		$query = DB::query($sql);
-		$query->param(':function_group_id', $params['function_group_id']);
-		$query->param(':function_group_name', $params['function_group_name']);
+		$query->param('function_group_id', $params['function_group_id']);
+		$query->param('function_group_name', $params['function_group_name']);
 		$result = $query->execute();
 		
 		return $result;
@@ -72,25 +72,25 @@ class Model_Functiongroup extends Model
 								. "(SELECT function_id FROM m_function WHERE function_group_id IN "
 								. "(SELECT function_group_id FROM m_function_group WHERE function_group_parent = :function_group_id)))";
 		$query_permission_authority = DB::query($sql_permission_authority);
-		$query_permission_authority->param(':function_group_id', $function_group_id);
+		$query_permission_authority->param('function_group_id', $function_group_id);
 		$result_permission_authority = $query_permission_authority->execute();
 		
 		$sql_permission_function = "DELETE FROM r_permission WHERE permission_type = 3 AND permission_id IN "
 								. "(SELECT function_id FROM m_function WHERE function_group_id IN "
 								. "(SELECT function_group_id FROM m_function_group WHERE function_group_parent = :function_group_id))";
 		$query_permission_function = DB::query($sql_permission_function);
-		$query_permission_function->param(':function_group_id', $function_group_id);
+		$query_permission_function->param('function_group_id', $function_group_id);
 		$result_permission_function = $query_permission_function->execute();
 		
 		$sql_permission_function = "DELETE FROM r_permission WHERE permission_type = 2 AND permission_id IN "
 								. "(SELECT function_group_id FROM m_function_group WHERE function_group_parent = :function_group_id)";
 		$query_permission_function = DB::query($sql_permission_function);
-		$query_permission_function->param(':function_group_id', $function_group_id);
+		$query_permission_function->param('function_group_id', $function_group_id);
 		$result_permission_function = $query_permission_function->execute();
 		
 		$sql_permission_sub = "DELETE FROM r_permission WHERE permission_type = 1 AND permission_id = :permission_id";
 		$query_permission_sub = DB::query($sql_permission_sub);
-		$query_permission_sub->param(':permission_id', $function_group_id);
+		$query_permission_sub->param('permission_id', $function_group_id);
 		$result_permission_sub = $query_permission_sub->execute();
 		
 		//删除权限
@@ -98,20 +98,20 @@ class Model_Functiongroup extends Model
 					. "(SELECT function_id FROM m_function WHERE function_group_id IN " 
 					. "(SELECT function_group_id FROM m_function_group WHERE function_group_parent = :function_group_id))";
 		$query_authority = DB::query($sql_authority);
-		$query_authority->param(':function_group_id', $function_group_id);
+		$query_authority->param('function_group_id', $function_group_id);
 		$result_authority = $query_authority->execute();
 		
 		//删除功能
 		$sql_function = "DELETE FROM m_function WHERE function_group_id IN " 
 					. "(SELECT function_group_id FROM m_function_group WHERE function_group_parent = :function_group_id)";
 		$query_function = DB::query($sql_function);
-		$query_function->param(':function_group_id', $function_group_id);
+		$query_function->param('function_group_id', $function_group_id);
 		$result_function = $query_function->execute();
 		
 		//删除主/副功能组
 		$sql_group = "DELETE FROM m_function_group WHERE function_group_id = :function_group_id OR function_group_parent = :function_group_id";
 		$query_group = DB::query($sql_group);
-		$query_group->param(':function_group_id', $function_group_id);
+		$query_group->param('function_group_id', $function_group_id);
 		$result_group = $query_group->execute();
 		
 		return $result_group;
@@ -126,37 +126,37 @@ class Model_Functiongroup extends Model
 								. "(SELECT authority_id FROM m_authority WHERE function_id IN "
 								. "(SELECT function_id FROM m_function WHERE function_group_id = :function_group_id))";
 		$query_permission_authority = DB::query($sql_permission_authority);
-		$query_permission_authority->param(':function_group_id', $function_group_id);
+		$query_permission_authority->param('function_group_id', $function_group_id);
 		$result_permission_authority = $query_permission_authority->execute();
 		
 		$sql_permission_function = "DELETE FROM r_permission WHERE permission_type = 3 AND permission_id IN "
 								. "(SELECT function_id FROM m_function WHERE function_group_id = :function_group_id)";
 		$query_permission_function = DB::query($sql_permission_function);
-		$query_permission_function->param(':function_group_id', $function_group_id);
+		$query_permission_function->param('function_group_id', $function_group_id);
 		$result_permission_function = $query_permission_function->execute();
 		
 		$sql_permission_sub = "DELETE FROM r_permission WHERE permission_type = 2 AND permission_id = :permission_id";
 		$query_permission_sub = DB::query($sql_permission_sub);
-		$query_permission_sub->param(':permission_id', $function_group_id);
+		$query_permission_sub->param('permission_id', $function_group_id);
 		$result_permission_sub = $query_permission_sub->execute();
 		
 		//删除权限
 		$sql_authority = "DELETE FROM m_authority WHERE function_id IN " 
 					. "(SELECT function_id FROM m_function WHERE function_group_id = :function_group_id)";
 		$query_authority = DB::query($sql_authority);
-		$query_authority->param(':function_group_id', $function_group_id);
+		$query_authority->param('function_group_id', $function_group_id);
 		$result_authority = $query_authority->execute();
 		
 		//删除功能
 		$sql_function = "DELETE FROM m_function WHERE function_group_id = :function_group_id";
 		$query_function = DB::query($sql_function);
-		$query_function->param(':function_group_id', $function_group_id);
+		$query_function->param('function_group_id', $function_group_id);
 		$result_function = $query_function->execute();
 		
 		//删除副功能组
 		$sql_sub_group = "DELETE FROM m_function_group WHERE function_group_id = :function_group_id";
 		$query_sub_group = DB::query($sql_sub_group);
-		$query_sub_group->param(':function_group_id', $function_group_id);
+		$query_sub_group->param('function_group_id', $function_group_id);
 		$result_sub_group = $query_sub_group->execute();
 		
 		return $result_sub_group;
@@ -172,7 +172,7 @@ class Model_Functiongroup extends Model
 		
 		$sql = "SELECT * FROM m_function_group WHERE function_group_id = :function_group_id AND function_group_parent IS NULL";
 		$query = DB::query($sql);
-		$query->param(':function_group_id', $function_group_id);
+		$query->param('function_group_id', $function_group_id);
 		$result = $query->execute()->as_array();
 		
 		if(count($result) == 1) {
@@ -196,13 +196,33 @@ class Model_Functiongroup extends Model
 			. "LEFT JOIN (SELECT * FROM m_function_group WHERE function_group_parent IS NULL) mg ON sg.function_group_parent = mg.function_group_id " 
 			. "WHERE sg.function_group_id = :sub_group_id";
 		$query = DB::query($sql);
-		$query->param(':sub_group_id', $sub_group_id);
+		$query->param('sub_group_id', $sub_group_id);
 		$result = $query->execute()->as_array();
 		
 		if(count($result) == 1) {
 			return $result[0];
 		} else {
 			return false;
+		}
+	}
+	
+	/*
+	 * 根据主功能组ID列表获得所属副功能组ID列表
+	 */
+	public static function SelectSubGroupIdListByMasterList($master_group_id_list) {
+		$sql = "SELECT function_group_id FROM m_function_group WHERE function_group_parent IN :master_group_id_list";
+		$query = DB::query($sql);
+		$query->param('master_group_id_list', $master_group_id_list);
+		$result = $query->execute()->as_array();
+		
+		if(count($result)) {
+			$sub_group_id_list = array();
+			foreach($result as $sub_group) {
+				$sub_group_id_list[] = $sub_group['function_group_id'];
+			}
+			return $sub_group_id_list;
+		} else {
+			return array();
 		}
 	}
 	
@@ -378,7 +398,7 @@ class Model_Functiongroup extends Model
 	public static function CheckMasterGroupIdExist($function_group_id) {
 		$sql = "SELECT function_group_id FROM m_function_group WHERE function_group_id = :function_group_id AND function_group_parent IS NULL";
 		$query = DB::query($sql);
-		$query->param(':function_group_id', $function_group_id);
+		$query->param('function_group_id', $function_group_id);
 		$result = $query->execute()->as_array();
 		
 		if(count($result)) {
@@ -394,7 +414,7 @@ class Model_Functiongroup extends Model
 	public static function CheckSubGroupIdExist($function_group_id) {
 		$sql = "SELECT function_group_id FROM m_function_group WHERE function_group_id = :function_group_id AND function_group_parent IS NOT NULL";
 		$query = DB::query($sql);
-		$query->param(':function_group_id', $function_group_id);
+		$query->param('function_group_id', $function_group_id);
 		$result = $query->execute()->as_array();
 		
 		if(count($result)) {
@@ -410,7 +430,7 @@ class Model_Functiongroup extends Model
 	public static function CheckMasterGroupNameExist($function_group_name) {
 		$sql = "SELECT function_group_id FROM m_function_group WHERE function_group_name = :function_group_name AND function_group_parent IS NULL";
 		$query = DB::query($sql);
-		$query->param(':function_group_name', $function_group_name);
+		$query->param('function_group_name', $function_group_name);
 		$result = $query->execute()->as_array();
 		
 		if(count($result)) {
@@ -426,8 +446,8 @@ class Model_Functiongroup extends Model
 	public static function CheckSubGroupNameExist($function_group_name, $function_group_parent) {
 		$sql = "SELECT function_group_id FROM m_function_group WHERE function_group_name = :function_group_name AND function_group_parent = :function_group_parent";
 		$query = DB::query($sql);
-		$query->param(':function_group_name', $function_group_name);
-		$query->param(':function_group_parent', $function_group_parent);
+		$query->param('function_group_name', $function_group_name);
+		$query->param('function_group_parent', $function_group_parent);
 		$result = $query->execute()->as_array();
 		
 		if(count($result)) {

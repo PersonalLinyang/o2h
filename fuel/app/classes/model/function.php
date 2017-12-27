@@ -9,9 +9,9 @@ class Model_Function extends Model
 	public static function InsertFunction($params) {
 		$sql_function = "INSERT INTO m_function(function_name, function_group_id, special_flag) VALUES(:function_name, :function_group_id, :special_flag)";
 		$query_function = DB::query($sql_function);
-		$query_function->param(':function_name', $params['function_name']);
-		$query_function->param(':function_group_id', $params['function_group_id']);
-		$query_function->param(':special_flag', $params['special_flag']);
+		$query_function->param('function_name', $params['function_name']);
+		$query_function->param('function_group_id', $params['function_group_id']);
+		$query_function->param('special_flag', $params['special_flag']);
 		$result_function = $query_function->execute();
 		
 		//添加成功的同时为系统管理员添加该权限
@@ -20,7 +20,7 @@ class Model_Function extends Model
 			
 			$sql_permission = "INSERT INTO r_permission(user_type_id, permission_type, permission_id) VALUES(1, 3, :permission_id)";
 			$query_permission = DB::query($sql_permission);
-			$query_permission->param(':permission_id', $function_id);
+			$query_permission->param('permission_id', $function_id);
 			$result_permission = $query_permission->execute();
 		}
 		
@@ -33,8 +33,8 @@ class Model_Function extends Model
 	public static function UpdateFunctionName($params) {
 		$sql = "UPDATE m_function SET function_name = :function_name WHERE function_id = :function_id";
 		$query = DB::query($sql);
-		$query->param(':function_id', $params['function_id']);
-		$query->param(':function_name', $params['function_name']);
+		$query->param('function_id', $params['function_id']);
+		$query->param('function_name', $params['function_name']);
 		$result = $query->execute();
 		
 		return $result;
@@ -47,24 +47,24 @@ class Model_Function extends Model
 		//删除相关权限许可
 		$sql_permission_authority = "DELETE FROM r_permission WHERE permission_type = 4 AND permission_id IN (SELECT authority_id FROM m_authority WHERE function_id = :function_id)";
 		$query_permission_authority = DB::query($sql_permission_authority);
-		$query_permission_authority->param(':function_id', $function_id);
+		$query_permission_authority->param('function_id', $function_id);
 		$result_permission_authority = $query_permission_authority->execute();
 		
 		$sql_permission_function = "DELETE FROM r_permission WHERE permission_type = 3 AND permission_id = :permission_id";
 		$query_permission_function = DB::query($sql_permission_function);
-		$query_permission_function->param(':permission_id', $function_id);
+		$query_permission_function->param('permission_id', $function_id);
 		$result_permission_function = $query_permission_function->execute();
 		
 		//删除权限
 		$sql_authority = "DELETE FROM m_authority WHERE function_id = :function_id";
 		$query_authority = DB::query($sql_authority);
-		$query_authority->param(':function_id', $function_id);
+		$query_authority->param('function_id', $function_id);
 		$result_authority = $query_authority->execute();
 		
 		//删除功能
 		$sql_function = "DELETE FROM m_function WHERE function_id = :function_id";
 		$query_function = DB::query($sql_function);
-		$query_function->param(':function_id', $function_id);
+		$query_function->param('function_id', $function_id);
 		$result_function = $query_function->execute();
 		
 		return $result_function;
@@ -86,13 +86,33 @@ class Model_Function extends Model
 			. "LEFT JOIN (SELECT * FROM m_function_group WHERE function_group_parent IS NULL) mg ON sg.function_group_parent = mg.function_group_id " 
 			. "WHERE f.function_id = :function_id";
 		$query = DB::query($sql);
-		$query->param(':function_id', $function_id);
+		$query->param('function_id', $function_id);
 		$result = $query->execute()->as_array();
 		
 		if(count($result) == 1) {
 			return $result[0];
 		} else {
 			return false;
+		}
+	}
+	
+	/*
+	 * 根据副功能组ID列表获得所属功能ID列表
+	 */
+	public static function SelectFunctionIdListByGroupList($sub_group_id_list) {
+		$sql = "SELECT function_id FROM m_function WHERE function_group_id IN :sub_group_id_list";
+		$query = DB::query($sql);
+		$query->param('sub_group_id_list', $sub_group_id_list);
+		$result = $query->execute()->as_array();
+		
+		if(count($result)) {
+			$function_id_list = array();
+			foreach($result as $function) {
+				$function_id_list[] = $function['function_id'];
+			}
+			return $function_id_list;
+		} else {
+			return array();
 		}
 	}
 	
@@ -197,7 +217,7 @@ class Model_Function extends Model
 	public static function CheckFunctionIdExist($function_id) {
 		$sql = "SELECT function_id FROM m_function WHERE function_id = :function_id";
 		$query = DB::query($sql);
-		$query->param(':function_id', $function_id);
+		$query->param('function_id', $function_id);
 		$result = $query->execute()->as_array();
 		
 		if(count($result)) {
@@ -213,8 +233,8 @@ class Model_Function extends Model
 	public static function CheckFunctionNameExist($function_name, $function_group_id) {
 		$sql = "SELECT function_id FROM m_function WHERE function_name = :function_name AND function_group_id = :function_group_id";
 		$query = DB::query($sql);
-		$query->param(':function_name', $function_name);
-		$query->param(':function_group_id', $function_group_id);
+		$query->param('function_name', $function_name);
+		$query->param('function_group_id', $function_group_id);
 		$result = $query->execute()->as_array();
 		
 		if(count($result)) {
