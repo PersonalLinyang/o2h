@@ -1,0 +1,29 @@
+/* 餐饮 */
+.div-content-list {
+	width: 600px;
+}
+.tb-content-list th.th-delete {
+	width: 62px;
+}
+.tb-content-list th.th-modify {
+	width: 108px;
+}
+.tb-content-list th.th-name {
+	width: auto;
+}
+.tb-content-list th.th-number {
+	width: 60px;
+}
+.tb-content-list th.th-list {
+	width: 108px;
+}
+.tb-content-list td .btn-delete {
+	width: 50px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.tb-content-list td .btn-modify {
+	width: 50px;
+	margin-left: 5px;
+	margin-right: 5px;
+}

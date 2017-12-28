@@ -33,7 +33,7 @@ desktop.ini
 /fuel/app/config/crypt.php
 
 
-/public/assets/.sass-cache/
+/public/assets/src/.sass-cache/
 /public/assets/img/tmp/
 /public/assets/img/pc/upload/
 /public/assets/img/sp/upload/

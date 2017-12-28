@@ -8,7 +8,7 @@
 	<?php echo Asset::css('pc/admin/service/edit_route.css'); ?>
 	<?php echo Asset::js('common/jquery-1.9.1.min.js'); ?>
 	<?php echo Asset::js('common/jquery-ui.min.js'); ?>
-	<?php echo Asset::js('common/jquery.uploadThumbs.js'); ?>
+	<?php echo Asset::js('common/jquery.uploadThumbs.min.js'); ?>
 	<?php echo Asset::js('pc/admin/common.js'); ?>
 	<?php echo Asset::js('pc/admin/service/edit_route.js'); ?>
 </head>

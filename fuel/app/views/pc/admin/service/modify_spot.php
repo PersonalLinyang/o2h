@@ -6,7 +6,7 @@
 	<?php echo Asset::css('pc/admin/common.css'); ?>
 	<?php echo Asset::css('pc/admin/service/edit_spot.css'); ?>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-	<?php echo Asset::js('common/jquery.uploadThumbs.js'); ?>
+	<?php echo Asset::js('common/jquery.uploadThumbs.min.js'); ?>
 	<?php echo Asset::js('pc/admin/common.js'); ?>
 	<?php echo Asset::js('pc/admin/service/edit_spot.js'); ?>
 </head>

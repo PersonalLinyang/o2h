@@ -4,7 +4,7 @@ Encoding.default_external = "utf-8"
 http_path = "/"
 
 # css用のディレクトリ
-css_dir = "css"
+css_dir = "../css"
 
 # sass用のディレクトリ
 sass_dir = "scss"
