@@ -18,7 +18,7 @@ class Controller_Admin_User_Usertype_Addusertype extends Controller_Admin_App
 		//调用共用Header
 		$data['header'] = Request::forge('admin/common/header')->execute()->response();
 		
-		try {
+//		try {
 			if(!Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 3)) {
 				//当前登陆用户不具备编辑用户类型的权限
 				return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
@@ -52,17 +52,17 @@ class Controller_Admin_User_Usertype_Addusertype extends Controller_Admin_App
 				if(isset($_POST['page'])) {
 					$error_message_list = array();
 					
-					//数据来源检验
 					if($_POST['page'] != $data['form_page_index']) {
+						//数据来源不是添加用户类型页
 						return Response::forge(View::forge($this->template . '/admin/error/access_error', $data, false));
 					} else {
 						//form控件当前值设定
-						$data['input_user_type_name'] = isset($_POST['user_type_name']) ? trim($_POST['user_type_name']) : '';
-						$data['input_special_level'] = (isset($_POST['special_level']) && $data['special_able_flag']) ? trim($_POST['special_level']) : '0';
-						$data['input_master_group'] = isset($_POST['master_group']) ? (is_array($_POST['master_group']) ? $_POST['master_group'] : array()) : array();
-						$data['input_sub_group'] = isset($_POST['sub_group']) ? (is_array($_POST['sub_group']) ? $_POST['sub_group'] : array()) : array();
-						$data['input_function'] = isset($_POST['function']) ? (is_array($_POST['function']) ? $_POST['function'] : array()) : array();
-						$data['input_authority'] = isset($_POST['authority']) ? (is_array($_POST['authority']) ? $_POST['authority'] : array()) : array();
+						$data['input_user_type_name'] = isset($_POST['user_type_name']) ? trim($_POST['user_type_name']) : $data['input_user_type_name'];
+						$data['input_special_level'] = (isset($_POST['special_level']) && $data['special_able_flag']) ? trim($_POST['special_level']) : $data['input_special_level'];
+						$data['input_master_group'] = isset($_POST['master_group']) ? (is_array($_POST['master_group']) ? $_POST['master_group'] : $data['input_master_group']) : array();
+						$data['input_sub_group'] = isset($_POST['sub_group']) ? (is_array($_POST['sub_group']) ? $_POST['sub_group'] : $data['input_sub_group']) : array();
+						$data['input_function'] = isset($_POST['function']) ? (is_array($_POST['function']) ? $_POST['function'] : $data['input_function']) : array();
+						$data['input_authority'] = isset($_POST['authority']) ? (is_array($_POST['authority']) ? $_POST['authority'] : $data['input_authority']) : array();
 						
 						//添加用户类型用数据生成
 						$param_insert = array(

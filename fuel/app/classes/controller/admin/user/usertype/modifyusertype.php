@@ -88,7 +88,7 @@ class Controller_Admin_User_Usertype_Modifyusertype extends Controller_Admin_App
 						$data['input_function'] = isset($_POST['function']) ? (is_array($_POST['function']) ? $_POST['function'] : $data['input_function']) : array();
 						$data['input_authority'] = isset($_POST['authority']) ? (is_array($_POST['authority']) ? $_POST['authority'] : $data['input_authority']) : array();
 						
-						//添加用户类型用数据生成
+						//更新用户类型用数据生成
 						$param_update = array(
 							'user_type_id' => $user_type_id,
 							'user_type_name' => $data['input_user_type_name'],
@@ -101,7 +101,7 @@ class Controller_Admin_User_Usertype_Modifyusertype extends Controller_Admin_App
 							),
 						);
 						
-						//添加内容检查
+						//更新内容检查
 						$result_check = Model_Usertype::CheckEditUserType($param_update);
 						
 						if($result_check['result']) {

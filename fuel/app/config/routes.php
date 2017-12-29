@@ -75,9 +75,9 @@ return array(
 	//系统权限管理
 	'admin/permission_list'                  => 'admin/user/permission/permissionlist/index',
 	'admin/add_master_group'                 => 'admin/user/permission/addmastergroup/index',
-	'admin/add_sub_group'                    => 'admin/user/permission/addsubgroup/index',
-	'admin/add_function'                     => 'admin/user/permission/addfunction/index',
-	'admin/add_authority'                    => 'admin/user/permission/addauthority/index',
+	'admin/add_sub_group/(:master_group_id)' => 'admin/user/permission/addsubgroup/index/$1',
+	'admin/add_function/(:sub_group_id)'     => 'admin/user/permission/addfunction/index/$1',
+	'admin/add_authority/(:function_id)'     => 'admin/user/permission/addauthority/index/$1',
 	'admin/modify_master_group/(:group_id)'  => 'admin/user/permission/modifymastergroup/index/$1',
 	'admin/modify_sub_group/(:group_id)'     => 'admin/user/permission/modifysubgroup/index/$1',
 	'admin/modify_function/(:function_id)'   => 'admin/user/permission/modifyfunction/index/$1',

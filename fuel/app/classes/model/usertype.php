@@ -114,61 +114,69 @@ class Model_Usertype extends Model
 	 * 获得特定条件的用户类型列表
 	 */
 	public static function SelectUserTypeListWithUserNum($params = array()) {
-		$sql_where = array();
-		$sql_params = array();
-		
-		//用户类型ID限定
-		if(isset($params['special_level'])) {
-			$sql_where[] = " mut.special_level IN :special_level ";
-			$sql_params['special_level'] = $params['special_level'];
+		try {
+			$sql_where = array();
+			$sql_params = array();
+			
+			//用户类型ID限定
+			if(isset($params['special_level'])) {
+				$sql_where[] = " mut.special_level IN :special_level ";
+				$sql_params['special_level'] = $params['special_level'];
+			}
+			
+			//数据获取
+			$sql = "SELECT mut.*, COUNT(tu.user_id) user_count "
+				. "FROM m_user_type mut "
+				. "LEFT JOIN t_user tu ON tu.user_type = mut.user_type_id " 
+				. (count($sql_where) ? (" WHERE " . implode(" AND ", $sql_where)) : "")
+				. "GROUP BY mut.user_type_id "
+				. "ORDER BY mut.sort_id, mut.user_type_id ";
+			$query = DB::query($sql);
+			foreach($sql_params as $param_key => $param_value) {
+				$query->param($param_key, $param_value);
+			}
+			$result = $query->execute()->as_array();
+			
+			return $result;
+		} catch (Exception $e) {
+			return false;
 		}
-		
-		//数据获取
-		$sql = "SELECT mut.*, COUNT(tu.user_id) user_count "
-			. "FROM m_user_type mut "
-			. "LEFT JOIN t_user tu ON tu.user_type = mut.user_type_id " 
-			. (count($sql_where) ? (" WHERE " . implode(" AND ", $sql_where)) : "")
-			. "GROUP BY mut.user_type_id "
-			. "ORDER BY mut.sort_id, mut.user_type_id ";
-		$query = DB::query($sql);
-		foreach($sql_params as $param_key => $param_value) {
-			$query->param($param_key, $param_value);
-		}
-		$result = $query->execute()->as_array();
-		
-		return $result;
 	}
 	
 	/*
 	 * 获得特定单个用户类型信息
 	 */
 	public static function SelectUserType($params = array()) {
-		$sql_where = array();
-		$sql_params = array();
-		
-		//用户类型ID限定
-		if(isset($params['user_type_id'])) {
-			$sql_where[] = " mut.user_type_id = :user_type_id ";
-			$sql_params['user_type_id'] = $params['user_type_id'];
-		}
-		
-		//数据获取
-		$sql = "SELECT mut.* FROM m_user_type mut " . (count($sql_where) ? (" WHERE " . implode(" AND ", $sql_where)) : "");
-		$query = DB::query($sql);
-		foreach($sql_params as $param_key => $param_value) {
-			$query->param($param_key, $param_value);
-		}
-		$result = $query->execute()->as_array();
-		
-		if(count($result) == 1) {
-			return $result[0];
-		} else {
+		try {
+			$sql_where = array();
+			$sql_params = array();
+			
+			//用户类型ID限定
+			if(isset($params['user_type_id'])) {
+				$sql_where[] = " mut.user_type_id = :user_type_id ";
+				$sql_params['user_type_id'] = $params['user_type_id'];
+			}
+			
+			//数据获取
+			$sql = "SELECT mut.* FROM m_user_type mut " . (count($sql_where) ? (" WHERE " . implode(" AND ", $sql_where)) : "");
+			$query = DB::query($sql);
+			foreach($sql_params as $param_key => $param_value) {
+				$query->param($param_key, $param_value);
+			}
+			$result = $query->execute()->as_array();
+			
+			if(count($result) == 1) {
+				return $result[0];
+			} else {
+				return false;
+			}
+		} catch (Exception $e) {
 			return false;
 		}
 	}
 	
 	/*
-	 * 添加/更新用户类型前添加信息查验
+	 * 添加/更新用户类型前信息查验
 	 */
 	public static function CheckEditUserType($params) {
 		$result = array(
@@ -212,7 +220,7 @@ class Model_Usertype extends Model
 		if(!in_array('nonum_permission', $result['error'])) {
 			if(count($params['permission']['1'])) {
 				if(count($params['permission']['2'])) {
-					$sub_group_list = Model_Functiongroup::SelectSubGroupIdListByMasterList($params['permission']['1']);
+					$sub_group_list = Model_Functiongroup::SelectSubGroupIdList(array('master_group_id_list' => $params['permission']['1']));
 					foreach($params['permission']['2'] as $sub_group_id) {
 						if(!in_array($sub_group_id, $sub_group_list)) {
 							$result['result'] = false;
@@ -223,7 +231,7 @@ class Model_Usertype extends Model
 					
 					if(!in_array('error_permission', $result['error'])) {
 						if(count($params['permission']['3'])) {
-							$function_list = Model_Function::SelectFunctionIdListByGroupList($params['permission']['2']);
+							$function_list = Model_Function::SelectFunctionIdList(array('function_group_id_list' => $params['permission']['2']));
 							foreach($params['permission']['3'] as $function_id) {
 								if(!in_array($function_id, $function_list)) {
 									$result['result'] = false;
@@ -233,7 +241,7 @@ class Model_Usertype extends Model
 							}
 							
 							if(!in_array('error_permission', $result['error']) && count($params['permission']['4'])) {
-								$authority_list = Model_Authority::SelectAuthorityIdListByFunctionList($params['permission']['3']);
+								$authority_list = Model_Authority::SelectAuthorityIdList(array('function_id_list' => $params['permission']['3']));
 								foreach($params['permission']['4'] as $authority_id) {
 									if(!in_array($authority_id, $authority_list)) {
 										$result['result'] = false;
@@ -261,22 +269,26 @@ class Model_Usertype extends Model
 	}
 	
 	/*
-	 * 添加/更新用户类型前添加信息查验
+	 * 用户类型名称重复查验
 	 */
 	public static function CheckUserTypeNameDuplication($user_type_id, $user_type_name) {
-		//数据获取
-		$sql = "SELECT user_type_id FROM m_user_type WHERE user_type_name = :user_type_name" . ($user_type_id ? " AND user_type_id != :user_type_id" : "");
-		$query = DB::query($sql);
-		if($user_type_id) {
-			$query->param('user_type_id', $user_type_id);
-		}
-		$query->param('user_type_name', $user_type_name);
-		$result = $query->execute()->as_array();
-		
-		if(count($result)) {
+		try {
+			//数据获取
+			$sql = "SELECT user_type_id FROM m_user_type WHERE user_type_name = :user_type_name" . ($user_type_id ? " AND user_type_id != :user_type_id" : "");
+			$query = DB::query($sql);
+			if($user_type_id) {
+				$query->param('user_type_id', $user_type_id);
+			}
+			$query->param('user_type_name', $user_type_name);
+			$result = $query->execute()->as_array();
+			
+			if(count($result)) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception $e) {
 			return true;
-		} else {
-			return false;
 		}
 	}
 

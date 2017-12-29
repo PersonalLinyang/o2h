@@ -41,7 +41,7 @@
 					<p class="permission-id"><?php echo $master_group_id; ?></p>
 					<p class="permission-name<?php echo $master_group_info['special_flag'] ? ' strong' : ''; ?>"><?php echo $master_group_info['name']; ?></p>
 					<?php if($edit_able_flag): ?>
-					<p class="btn-controller"><a href="/admin/add_sub_group/?master_group_id=<?php echo $master_group_id; ?>">添加副组</a></p>
+					<p class="btn-controller"><a href="/admin/add_sub_group/<?php echo $master_group_id; ?>/">添加副组</a></p>
 					<p class="btn-controller"><a href="/admin/modify_master_group/<?php echo $master_group_id; ?>/">修改名称</a></p>
 					<?php endif; ?>
 					<?php if($delete_able_flag): ?>
@@ -57,7 +57,7 @@
 						<p class="permission-id"><?php echo $master_group_id . '-' . $sub_group_id; ?></p>
 						<p class="permission-name<?php echo $sub_group_info['special_flag'] ? ' strong' : ''; ?>"><?php echo $sub_group_info['name']; ?></p>
 						<?php if($edit_able_flag): ?>
-						<p class="btn-controller"><a href="/admin/add_function/?sub_group_id=<?php echo $sub_group_id; ?>">添加功能</a></p>
+						<p class="btn-controller"><a href="/admin/add_function/<?php echo $sub_group_id; ?>/">添加功能</a></p>
 						<p class="btn-controller"><a href="/admin/modify_sub_group/<?php echo $sub_group_id; ?>/">修改名称</a></p>
 						<?php endif; ?>
 						<?php if($delete_able_flag): ?>
@@ -73,7 +73,7 @@
 							<p class="permission-id"><?php echo $master_group_id . '-' . $sub_group_id . '-' . $function_id; ?></p>
 							<p class="permission-name<?php echo $function_info['special_flag'] ? ' strong' : ''; ?>"><?php echo $function_info['name']; ?></p>
 							<?php if($edit_able_flag): ?>
-							<p class="btn-controller"><a href="/admin/add_authority/?function_id=<?php echo $function_id; ?>">添加权限</a></p>
+							<p class="btn-controller"><a href="/admin/add_authority/<?php echo $function_id; ?>/">添加权限</a></p>
 							<p class="btn-controller"><a href="/admin/modify_function/<?php echo $function_id; ?>/">修改名称</a></p>
 							<?php endif; ?>
 							<?php if($delete_able_flag): ?>

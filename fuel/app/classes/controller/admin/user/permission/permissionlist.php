@@ -17,12 +17,16 @@ class Controller_Admin_User_Permission_Permissionlist extends Controller_Admin_A
 		
 		//调用共用Header
 		$data['header'] = Request::forge('admin/common/header')->execute()->response();
-		$data['edit_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 1);
-		$data['delete_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 2);
 		
-		if(Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'sub_group', 7)) {
+		if(!Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'sub_group', 7)) {
+			return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
+		} else {
 			//获取权限数列
 			$data['permission_list'] = Model_Permission::SelectSystemPermissionList();
+			//是否具备权限信息编辑权限
+			$data['edit_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 1);
+			//是否具备权限信息删除权限
+			$data['delete_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 2);
 			
 			$data['success_message'] = '';
 			$data['error_message'] = '';
@@ -95,8 +99,6 @@ class Controller_Admin_User_Permission_Permissionlist extends Controller_Admin_A
 			
 			//调用View
 			return Response::forge(View::forge($this->template . '/admin/user/permission/permission_list', $data, false));
-		} else {
-			return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
 		}
 	}
 	
@@ -110,10 +112,10 @@ class Controller_Admin_User_Permission_Permissionlist extends Controller_Admin_A
 		if(Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 2) && isset($_POST['delete_id'], $_POST['page'])) {
 			if($_POST['page'] == 'permission_list') {
 				//删除信息检查
-				$result_check = Model_Functiongroup::CheckDeleteMasterGroupById($_POST['delete_id']);
+				$result_check = Model_Functiongroup::CheckDeleteFunctionGroup($_POST['delete_id']);
 				if($result_check['result']) {
 					//数据删除
-					$result_delete = Model_Functiongroup::DeleteMasterGroupById($_POST['delete_id']);
+					$result_delete = Model_Functiongroup::DeleteFunctionGroup($_POST['delete_id']);
 					
 					if($result_delete) {
 						$_SESSION['delete_master_group_success'] = true;
@@ -138,10 +140,10 @@ class Controller_Admin_User_Permission_Permissionlist extends Controller_Admin_A
 		if(Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 2) && isset($_POST['delete_id'], $_POST['page'])) {
 			if($_POST['page'] == 'permission_list') {
 				//删除信息检查
-				$result_check = Model_Functiongroup::CheckDeleteSubGroupById($_POST['delete_id']);
+				$result_check = Model_Functiongroup::CheckDeleteFunctionGroup($_POST['delete_id']);
 				if($result_check['result']) {
 					//数据删除
-					$result_delete = Model_Functiongroup::DeleteSubGroupById($_POST['delete_id']);
+					$result_delete = Model_Functiongroup::DeleteFunctionGroup($_POST['delete_id']);
 					
 					if($result_delete) {
 						$_SESSION['delete_sub_group_success'] = true;
@@ -166,10 +168,10 @@ class Controller_Admin_User_Permission_Permissionlist extends Controller_Admin_A
 		if(Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 2) && isset($_POST['delete_id'], $_POST['page'])) {
 			if($_POST['page'] == 'permission_list') {
 				//删除信息检查
-				$result_check = Model_Function::CheckDeleteFunctionById($_POST['delete_id']);
+				$result_check = Model_Function::CheckDeleteFunction($_POST['delete_id']);
 				if($result_check['result']) {
 					//数据删除
-					$result_delete = Model_Function::DeleteFunctionById($_POST['delete_id']);
+					$result_delete = Model_Function::DeleteFunction($_POST['delete_id']);
 					
 					if($result_delete) {
 						$_SESSION['delete_function_success'] = true;
@@ -194,10 +196,10 @@ class Controller_Admin_User_Permission_Permissionlist extends Controller_Admin_A
 		if(Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 2) && isset($_POST['delete_id'], $_POST['page'])) {
 			if($_POST['page'] == 'permission_list') {
 				//删除信息检查
-				$result_check = Model_Authority::CheckDeleteAuthorityById($_POST['delete_id']);
+				$result_check = Model_Authority::CheckDeleteAuthority($_POST['delete_id']);
 				if($result_check['result']) {
 					//数据删除
-					$result_delete = Model_Authority::DeleteAuthorityById($_POST['delete_id']);
+					$result_delete = Model_Authority::DeleteAuthority($_POST['delete_id']);
 					
 					if($result_delete) {
 						$_SESSION['delete_authority_success'] = true;
