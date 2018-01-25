@@ -7,14 +7,16 @@ return array(
 	'admin' => 'admin/index',
 	
 	//景点管理
-	'admin/spot_list'              => 'admin/service/spotlist/index',
-	'admin/spot_list/(:page)'      => 'admin/service/spotlist/index/$1',
-	'admin/add_spot'               => 'admin/service/addspot/index',
-	'admin/spot_detail/(:spot_id)' => 'admin/service/spotdetail/index/$1',
-	'admin/modify_spot_status'     => 'admin/service/spotdetail/modifyspotstatus',
-	'admin/modify_spot/(:spot_id)' => 'admin/service/modifyspot/index/$1',
-	'admin/delete_spot'            => 'admin/service/spotlist/deletespot',
-	'admin/delete_checked_spot'    => 'admin/service/spotlist/deletecheckedspot',
+	'admin/spot_list'              => 'admin/service/spot/spotlist/index',
+	'admin/spot_list/(:page)'      => 'admin/service/spot/spotlist/index/$1',
+	'admin/spot_detail/(:spot_id)' => 'admin/service/spot/spotdetail/index/$1',
+	'admin/add_spot'               => 'admin/service/spot/addspot/index',
+	'admin/modify_spot/(:spot_id)' => 'admin/service/spot/modifyspot/index/$1',
+	'admin/modify_spot_status'     => 'admin/service/spot/modifyspot/modifyspotstatus',
+	'admin/import_spot'            => 'admin/service/spot/importspot/index',
+	'admin/export_spot'            => 'admin/service/spot/exportspot/index',
+	'admin/delete_spot'            => 'admin/service/spot/deletespot/index',
+	'admin/delete_spot_checked'    => 'admin/service/spot/deletespot/deletespotchecked',
 	
 	//景点类别管理
 	'admin/spot_type_list'                   => 'admin/service/spottypelist',

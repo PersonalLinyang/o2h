@@ -1,20 +1,20 @@
 Encoding.default_external = "utf-8"
 
-# compassの基準となるディレクトリ
+# compass基本文件夹
 http_path = "/"
 
-# css用のディレクトリ
+# css文件夹
 css_dir = "../css"
 
-# sass用のディレクトリ
+# sass文件夹
 sass_dir = "scss"
 
-# cssの出力形式
+# css的输出方式
 output_style = :compressed
 
-# css内のパスを相対パスにするかどうか
+# 是否将css内的文件路径设为相对路径
 relative_assets = true
 
-# コメントを出力するかどうか
+# 是否输出注释
 line_comments = false
 

@@ -19,23 +19,23 @@ class Controller_Admin_User_Usertype_Usertypelist extends Controller_Admin_App
 		$data['header'] = Request::forge('admin/common/header')->execute()->response();
 		
 		try {
-			//获取自身所持有的用户类型
-			$data['user_type_self'] = Model_User::SelectUserTypeById($_SESSION['login_user']['id']);
-			//用户类型特殊等级列表
-			$data['special_level_list'] = array('一般类型', '特殊类型', '系统类型');
-			//是否具备用户类型编辑权限
-			$data['edit_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 3);
-			//是否具备用户类型删除权限
-			$data['delete_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 4);
-			//是否具备操作特殊用户类型权限
-			$data['special_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 5);
-			
 			if(!Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'sub_group', 8)) {
 				//当前登陆用户不具备查看用户类型的权限
 				return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
 			} else {
 				$data['success_message'] = '';
 				$data['error_message'] = '';
+				
+				//获取自身所持有的用户类型
+				$data['user_type_self'] = Model_User::SelectUserTypeById($_SESSION['login_user']['id']);
+				//用户类型特殊等级列表
+				$data['special_level_list'] = array('一般类型', '特殊类型', '系统类型');
+				//是否具备用户类型编辑权限
+				$data['edit_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 3);
+				//是否具备用户类型删除权限
+				$data['delete_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 4);
+				//是否具备操作特殊用户类型权限
+				$data['special_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 5);
 				
 				//获取权限数列
 				if($data['special_able_flag']) {
@@ -107,7 +107,9 @@ class Controller_Admin_User_Usertype_Usertypelist extends Controller_Admin_App
 			exit;
 		} catch (Exception $e) {
 			//发生系统异常
-			return Response::forge(View::forge($this->template . '/admin/error/system_error', $data, false));
+			$_SESSION['delete_user_type_error'] = true;
+			header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/user_type_list/');
+			exit;
 		}
 	}
 

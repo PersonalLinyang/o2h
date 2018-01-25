@@ -18,7 +18,7 @@ class Controller_Admin_User_Usertype_Addusertype extends Controller_Admin_App
 		//调用共用Header
 		$data['header'] = Request::forge('admin/common/header')->execute()->response();
 		
-//		try {
+		try {
 			if(!Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 3)) {
 				//当前登陆用户不具备编辑用户类型的权限
 				return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
@@ -103,7 +103,7 @@ class Controller_Admin_User_Usertype_Addusertype extends Controller_Admin_App
 										$error_message_list[] = '用户类型名称不能超过30字';
 										break;
 									case 'dup_user_type_name':
-										$error_message_list[] = '该用户类型名称于其他用户类型重复,请选用其他名称';
+										$error_message_list[] = '该用户类型名称与其他用户类型重复,请选用其他名称';
 										break;
 									default:
 										$error_message_list[] = '发生系统错误,请重新尝试添加';

@@ -3,6 +3,59 @@
 class Model_Spottype extends Model
 {
 
+	//获得符合特定条件的景点类别
+	public static function GetSpotTypeList($params) {
+		try{
+			$sql_where = array();
+			$sql_params = array();
+			
+			//有效地区限定
+			if(isset($params['active_only'])) {
+				$sql_where[] = " mst.delete_flag = 0 ";
+			}
+			
+			$sql = "SELECT mst.* FROM m_spot_type mst " . (count($sql_where) ? (" WHERE " . implode(" AND ", $sql_where)) : "") . " ORDER BY mst.sort_id, mst.spot_type_id";
+			$query = DB::query($sql);
+			foreach($sql_params as $param_key => $param_value) {
+				$query->param($param_key, $param_value);
+			}
+			$result = $query->execute()->as_array();
+			
+			return $result;
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	/*
+	 * 检查景点类别ID是否存在
+	 */
+	public static function CheckSpotTypeIdExist($spot_type_id, $active_check = 0) {
+		try {
+			$sql = "SELECT spot_type_id FROM m_spot_type WHERE spot_type_id = :spot_type_id " . ($active_check ? " AND delete_flag = 0 " : "");
+			$query = DB::query($sql);
+			$query->param('spot_type_id', $spot_type_id);
+			$result = $query->execute()->as_array();
+			
+			if(count($result)) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/*
 	 * 添加景点类别
 	 */

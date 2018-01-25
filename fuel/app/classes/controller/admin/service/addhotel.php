@@ -21,7 +21,7 @@ class Controller_Admin_Service_Addhotel extends Controller_Admin_App
 //		if(isset($_SESSION['login_user']['permission'][5][7][1])) {
 			//设定View所需变量
 			$data['error_message'] = '';
-			$data['area_list'] = Model_Area::GetAreaListActive();
+			$data['area_list'] = Model_Area::GetAreaList(array('active_only' => true));
 			$data['hotel_type_list'] = Model_HotelType::GetHotelTypeListActive();
 			$data['input_hotel_name'] = '';
 			$data['input_hotel_area'] = '';

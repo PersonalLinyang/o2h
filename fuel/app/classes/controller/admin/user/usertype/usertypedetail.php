@@ -33,9 +33,8 @@ class Controller_Admin_User_Usertype_Usertypedetail extends Controller_Admin_App
 				
 				//获取用户类型信息
 				$user_type = Model_UserType::SelectUserType(array('user_type_id' => $user_type_id));
-				$data['user_type'] = $user_type;
 				//是否允许操作特殊用户类型
-				$data['special_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 5);
+				$special_able_flag = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 5);
 				
 				if(!$user_type) {
 					//不存在该ID的用户类型
@@ -45,18 +44,22 @@ class Controller_Admin_User_Usertype_Usertypedetail extends Controller_Admin_App
 					//该ID的用户类型为系统用户类型
 					return Response::forge(View::forge($this->template . '/admin/error/access_error', $data, false));
 					exit;
-				} elseif(!$data['special_able_flag'] && intval($user_type['special_level']) > 0) {
+				} elseif(!$special_able_flag && intval($user_type['special_level']) > 0) {
 					//该ID的用户类型为特殊用户类型且当前登陆用户不具备操作特殊用户类型的权限
 					return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
 					exit;
 				}
 				
+				//用户类型信息
+				$data['user_type'] = $user_type;
 				//获取全部权限
 				$data['permission_list'] = Model_Permission::SelectSystemPermissionList();
 				//用户类型特殊等级列表
 				$data['special_level_list'] = array('一般类型', '特殊类型', '系统类型');
 				//是否具备用户类型编辑权限
 				$data['edit_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 3);
+				//是否允许操作特殊用户类型
+				$data['special_able_flag'] = $special_able_flag;
 				//获取当前该用户类型所持有的权限列表
 				$permission_list = Model_Permission::SelectPermissionList(array('user_type' => $user_type_id));
 				$data['master_group'] = $permission_list['master_group'];
