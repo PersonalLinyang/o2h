@@ -19,10 +19,10 @@ return array(
 	'admin/delete_spot_checked'    => 'admin/service/spot/deletespot/deletespotchecked',
 	
 	//景点类别管理
-	'admin/spot_type_list'                   => 'admin/service/spottypelist',
-	'admin/add_spot_type'                    => 'admin/service/addspottype',
-	'admin/modify_spot_type/(:spot_type_id)' => 'admin/service/modifyspottype/index/$1',
-	'admin/delete_spot_type'                 => 'admin/service/spottypelist/deletespottype',
+	'admin/spot_type_list'                   => 'admin/service/spottype/spottypelist/index',
+	'admin/add_spot_type'                    => 'admin/service/spottype/addspottype/index',
+	'admin/modify_spot_type/(:spot_type_id)' => 'admin/service/spottype/modifyspottype/index/$1',
+	'admin/delete_spot_type'                 => 'admin/service/spottype/deletespottype/index',
 	
 	//酒店管理
 	'admin/hotel_list'               => 'admin/service/hotellist/index',

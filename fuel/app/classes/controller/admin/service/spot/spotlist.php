@@ -29,15 +29,12 @@ class Controller_Admin_Service_Spot_Spotlist extends Controller_Admin_App
 				$data['success_message'] = '';
 				$data['error_message'] = '';
 				
-				//每页现实景点数
-				$num_per_page = 20;
-				
 				//获取自身用户ID
 				$data['user_id_self'] = $_SESSION['login_user']['id'];
 				//获取地区列表
 				$data['area_list'] = Model_Area::GetAreaList(array('active_only' => true));
 				//获取景点类型列表
-				$data['spot_type_list'] = Model_SpotType::GetSpotTypeList(array('active_only' => true));
+				$data['spot_type_list'] = Model_SpotType::SelectSpotTypeList(array('active_only' => true));
 				//是否具备景点编辑权限
 				$data['edit_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 6);
 				//是否具备其他用户所登陆的景点编辑权限
@@ -53,6 +50,8 @@ class Controller_Admin_Service_Spot_Spotlist extends Controller_Admin_App
 				//是否具备导出景点信息权限
 				$data['export_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 9);
 				
+				//每页现实景点数
+				$num_per_page = 20;
 				//本页前后最大可链接页数
 				$data['page_link_max'] = 3;
 				

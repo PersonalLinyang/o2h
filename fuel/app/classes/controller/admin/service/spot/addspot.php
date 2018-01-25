@@ -35,7 +35,7 @@ class Controller_Admin_Service_Spot_Addspot extends Controller_Admin_App
 				//获取地区列表
 				$data['area_list'] = Model_Area::GetAreaList(array('active_only' => true));
 				//获取景点类型列表
-				$data['spot_type_list'] = Model_SpotType::GetSpotTypeList(array('active_only' => true));
+				$data['spot_type_list'] = Model_SpotType::SelectSpotTypeList(array('active_only' => true));
 				
 				//form控件默认值设定
 				$data['input_spot_name'] = '';
@@ -265,7 +265,7 @@ class Controller_Admin_Service_Spot_Addspot extends Controller_Admin_App
 								}
 								
 								//添加成功 页面跳转
-								$_SESSION['add_user_type_success'] = true;
+								$_SESSION['add_spot_success'] = true;
 								header('Location: //' . $_SERVER['HTTP_HOST'] . '/admin/spot_detail/' . $spot_id . '/');
 								exit;
 							} else {
@@ -339,7 +339,6 @@ class Controller_Admin_Service_Spot_Addspot extends Controller_Admin_App
 				//调用View
 				return Response::forge(View::forge($this->template . '/admin/service/spot/edit_spot', $data, false));
 			}
-			exit;
 		} catch (Exception $e) {
 			//发生系统异常
 			return Response::forge(View::forge($this->template . '/admin/error/system_error', $data, false));

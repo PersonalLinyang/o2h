@@ -54,7 +54,7 @@ class Controller_Admin_Service_Spot_Importspot extends Controller_Admin_App
 					}
 					
 					//景点类型列表
-					$spot_type_list = Model_SpotType::GetSpotTypeList(array('active_only' => true));
+					$spot_type_list = Model_SpotType::SelectSpotTypeList(array('active_only' => true));
 					foreach($spot_type_list as $spot_type) {
 						$type_master_list[$spot_type['spot_type_name']] = $spot_type['spot_type_id'];
 					}

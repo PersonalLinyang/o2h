@@ -547,7 +547,7 @@ class Model_Spot extends Model
 	}
 	
 	/*
-	 * 添加景点前添加信息查验
+	 * 编辑景点前编辑信息查验
 	 */
 	public static function CheckEditSpot($params) {
 		$result = array(

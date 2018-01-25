@@ -11,7 +11,7 @@ class Controller_Admin_Service_Spot_Deletespot extends Controller_Admin_App
 	 * @access  public
 	 * @return  Response
 	 */
-	public function action_index($page = 1)
+	public function action_index($param = 1)
 	{
 		$header_url = '//' . $_SERVER['HTTP_HOST'] . '/admin/spot_list/';
 		try {
@@ -36,7 +36,7 @@ class Controller_Admin_Service_Spot_Deletespot extends Controller_Admin_App
 					$result_check = Model_Spot::CheckDeleteSpot($params_delete);
 					
 					if($result_check['result']) {
-						$result_delete = Model_Spot::DeleteSpot(array('spot_id_list' => array($_POST['delete_id']), 'deleted_by' => $_SESSION['login_user']['id']));
+						$result_delete = Model_Spot::DeleteSpot($params_delete);
 						
 						if($result_delete) {
 							//削除成功

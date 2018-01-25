@@ -3,18 +3,87 @@
 class Model_Spottype extends Model
 {
 
+	/*
+	 * 添加景点类别
+	 */
+	public static function InsertSpotType($params) {
+		try {
+			$sql = "INSERT INTO m_spot_type(spot_type_name, delete_flag, sort_id) VALUES(:spot_type_name, 0, 1)";
+			$query = DB::query($sql);
+			$query->param('spot_type_name', $params['spot_type_name']);
+			$result = $query->execute();
+			
+			if($result) {
+				//新景点类别ID
+				$spot_type_id = intval($result[0]);
+				return $spot_type_id;
+			} else {
+				return false;
+			}
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	/*
+	 * 删除景点类别
+	 */
+	public static function DeleteSpotType($params) {
+		try {
+			//删除景点类别
+			$sql_type = "UPDATE m_spot_type SET delete_flag = 1 WHERE spot_type_id = :spot_type_id";
+			$query_type = DB::query($sql_type);
+			$query_type->param('spot_type_id', $params['spot_type_id']);
+			$result_type = $query_type->execute();
+			
+			return $result_type;
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	/*
+	 * 更新景点类别名称
+	 */
+	public static function UpdateSpotType($params) {
+		try {
+			$sql = "UPDATE m_spot_type SET spot_type_name = :spot_type_name WHERE spot_type_id = :spot_type_id";
+			$query = DB::query($sql);
+			$query->param('spot_type_id', $params['spot_type_id']);
+			$query->param('spot_type_name', $params['spot_type_name']);
+			$result = $query->execute();
+			
+			return true;
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
 	//获得符合特定条件的景点类别
-	public static function GetSpotTypeList($params) {
+	public static function SelectSpotTypeList($params) {
 		try{
+			$sql_select = array();
+			$sql_from = array();
 			$sql_where = array();
+			$sql_group_by = array();
 			$sql_params = array();
 			
-			//有效地区限定
+			//有效景点类别限定
 			if(isset($params['active_only'])) {
 				$sql_where[] = " mst.delete_flag = 0 ";
 			}
+			//获取所属景点数
+			if(isset($params['spot_count_flag'])) {
+				$sql_select[] = " COUNT(ts.spot_id) spot_count ";
+				$sql_from[] = " LEFT JOIN (SELECT * FROM t_spot WHERE delete_flag=0) ts ON ts.spot_type = mst.spot_type_id ";
+				$sql_group_by[] = " mst.spot_type_id ";
+			}
 			
-			$sql = "SELECT mst.* FROM m_spot_type mst " . (count($sql_where) ? (" WHERE " . implode(" AND ", $sql_where)) : "") . " ORDER BY mst.sort_id, mst.spot_type_id";
+			$sql = "SELECT mst.* " . (count($sql_select) ? (", " . implode(", ", $sql_select)) : "") 
+				. "FROM m_spot_type mst " . (count($sql_from) ? implode(" ", array_unique($sql_from)) : "") 
+				. (count($sql_where) ? (" WHERE " . implode(" AND ", $sql_where)) : "") 
+				. (count($sql_group_by) ? (" GROUP BY " . implode(", ", array_unique($sql_group_by))) : "") 
+				. " ORDER BY mst.sort_id, mst.spot_type_id";
 			$query = DB::query($sql);
 			foreach($sql_params as $param_key => $param_value) {
 				$query->param($param_key, $param_value);
@@ -25,6 +94,101 @@ class Model_Spottype extends Model
 		} catch (Exception $e) {
 			return false;
 		}
+	}
+	
+	/*
+	 * 获取特定单个景点类别信息
+	 */
+	public static function SelectSpotType($params) {
+		try {
+			$sql_where = array();
+			$sql_params = array();
+			
+			//景点类别ID限定
+			if(isset($params['spot_type_id'])) {
+				$sql_where[] = " mst.spot_type_id = :spot_type_id ";
+				$sql_params['spot_type_id'] = $params['spot_type_id'];
+			}
+			//有效性限定
+			if(isset($params['active_only'])) {
+				if($params['active_only']) {
+					$sql_where[] = " mst.delete_flag = 0 ";
+				}
+			}
+			
+			//数据获取
+			$sql = "SELECT * FROM m_spot_type mst " 
+				. (count($sql_where) ? (" WHERE " . implode(" AND ", $sql_where)) : "");
+			$query = DB::query($sql);
+			foreach($sql_params as $param_key => $param_value) {
+				$query->param($param_key, $param_value);
+			}
+			$result = $query->execute()->as_array();
+			
+			if(count($result) == 1) {
+				return $result[0];
+			} else {
+				return false;
+			}
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	/*
+	 * 编辑景点类别前编辑信息查验
+	 */
+	public static function CheckEditSpotType($params) {
+		$result = array(
+			'result' => true,
+			'error' => array(),
+		);
+		
+		//景点类别名称
+		if(empty($params['spot_type_name'])) {
+			$result['result'] = false;
+			$result['error'][] = 'empty_spot_type_name';
+		} elseif(mb_strlen($params['spot_type_name']) > 50) {
+			$result['result'] = false;
+			$result['error'][] = 'long_spot_type_name';
+		} elseif(Model_Spottype::CheckSpotTypeNameDuplication($params['spot_type_id'], $params['spot_type_name'])) {
+			$result['result'] = false;
+			$result['error'][] = 'dup_spot_type_name';
+		}
+		
+		return $result;
+	}
+	
+	/*
+	 * 删除景点类别前删除信息查验
+	 */
+	public static function CheckDeleteSpotType($params) {
+		$result = array(
+			'result' => true,
+			'error' => array(),
+		);
+		
+		if(!is_numeric($params['spot_type_id'])) {
+			$result['result'] = false;
+			$result['error'][] = 'nonum_spot_type_id';
+		} elseif(!Model_Spottype::CheckSpotTypeIdExist($params['spot_type_id'], 1)) {
+			$result['result'] = false;
+			$result['error'][] = 'error_spot_type_id';
+		} else {
+			//获取景点信息
+			$params_select = array(
+				'spot_type' => array($params['spot_type_id']),
+				'active_only' => 1,
+			);
+			$spot_select = Model_Spot::SelectSpotList($params_select);
+			
+			if($spot_select['spot_count']) {
+				$result['result'] = false;
+				$result['error'][] = 'error_spot_list';
+			}
+		}
+		
+		return $result;
 	}
 	
 	/*
@@ -47,183 +211,83 @@ class Model_Spottype extends Model
 		}
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/*
-	 * 添加景点类别
+	 * 景点类别名称重复查验
 	 */
-	public static function InsertSpotType($params) {
-		$sql_insert = "INSERT INTO m_spot_type(spot_type_name) VALUES(:spot_type_name)";
-		$query_insert = DB::query($sql_insert);
-		$query_insert->param('spot_type_name', $params['spot_type_name']);
-		$result_insert = $query_insert->execute();
-		
-		return $result_insert;
+	public static function CheckSpotTypeNameDuplication($spot_type_id, $spot_type_name) {
+		try {
+			//数据获取
+			$sql = "SELECT spot_type_id FROM m_spot_type WHERE spot_type_name = :spot_type_name AND delete_flag = 0" . ($spot_type_id ? " AND spot_type_id != :spot_type_id " : "");
+			$query = DB::query($sql);
+			if($spot_type_id) {
+				$query->param('spot_type_id', $spot_type_id);
+			}
+			$query->param('spot_type_name', $spot_type_name);
+			$result = $query->execute()->as_array();
+			
+			if(count($result)) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception $e) {
+			return true;
+		}
 	}
 	
 	/*
-	 * 根据ID删除景点类别
+	 * 景点信息上传用模板Excel更新
 	 */
-	public static function DeleteSpotTypeById($spot_type_id) {
-		$sql_delete = "DELETE FROM m_spot_type WHERE spot_type_id = :spot_type_id";
-		$query_delete = DB::query($sql_delete);
-		$query_delete->param('spot_type_id', $spot_type_id);
-		$result_delete = $query_delete->execute();
-		
-		return $result_delete;
-	}
-	
-	/*
-	 * 更新景点类别名称
-	 */
-	public static function UpdateSpotType($params) {
-		$sql_update = "UPDATE m_spot_type SET spot_type_name = :spot_type_name WHERE spot_type_id = :spot_type_id";
-		$query_update = DB::query($sql_update);
-		$query_update->param('spot_type_id', $params['spot_type_id']);
-		$query_update->param('spot_type_name', $params['spot_type_name']);
-		$result_update = $query_update->execute();
-		
-		return $result_update;
-	}
-
-	/*
-	 * 获取全部景点类别信息
-	 */
-	public static function GetSpotTypeListAll() {
-		$sql_spot_type = "SELECT mst.spot_type_id, mst.spot_type_name, COUNT(ts.spot_id) spot_count "
-						. "FROM m_spot_type mst LEFT JOIN t_spot ts ON ts.spot_type = mst.spot_type_id " 
-						. "GROUP BY spot_type_id, spot_type_name ORDER BY spot_type_id";
-		$query_spot_type = DB::query($sql_spot_type);
-		$spot_type_list = $query_spot_type->execute()->as_array();
-		
-		return $spot_type_list;
-	}
-	
-	/*
-	 * 根据ID获取主功能组信息
-	 */
-	public static function SelectSpotTypeById($spot_type_id) {
-		if(!is_numeric($spot_type_id)) {
+	public static function ModifySpotModelExcel() {
+		try {
+			//修改景点上传用模板Excel
+			//Excel处理用组件
+			include_once(APPPATH . 'modules/PHPExcel-1.8/Classes/PHPExcel.php');
+			include_once(APPPATH . 'modules/PHPExcel-1.8/Classes/PHPExcel/IOFactory.php');
+			
+			//读取模板
+			$xls_model = PHPExcel_IOFactory::load(DOCROOT . '/assets/xls/model/import_spot_model.xls');
+			$sheet_type = $xls_model->getSheetByName('spot_type');
+			
+			//删除原有信息
+			$sheet_type->removeColumn('A');
+			
+			//写入景点类别名列表
+			$spot_type_list = Model_SpotType::SelectSpotTypeList(array('active_only' => 1));
+			$row_counter = 1;
+			foreach($spot_type_list as $spot_type) {
+				$sheet_type->setCellValue('B' . $row_counter, $spot_type['spot_type_name']);
+				$row_counter++;
+			}
+			
+			//删除原有信息
+			$sheet_type->removeColumn('A');
+			
+			//写入景点类别名列表
+			$spot_type_list = Model_SpotType::SelectSpotTypeList(array('active_only' => 1));
+			$row_counter = 1;
+			foreach($spot_type_list as $spot_type) {
+				$sheet_type->setCellValue('B' . $row_counter, $spot_type['spot_type_name']);
+				$row_counter++;
+			}
+			
+			//删除原有信息
+			$sheet_type->removeColumn('A');
+			
+			//更新文件
+			$writer_xls = PHPExcel_IOFactory::createWriter($xls_model, 'Excel2007');
+			$writer_xls->save(DOCROOT . '/assets/xls/model/import_spot_model.xls');
+			
+			//释放缓存
+			$xls_model->disconnectWorksheets();
+			unset($writer_xls);
+			unset($sheet_type);
+			unset($xls_model);
+			
+			return true;
+		} catch (Exception $e) {
 			return false;
 		}
-		
-		$sql = "SELECT * FROM m_spot_type WHERE spot_type_id = :spot_type_id";
-		$query = DB::query($sql);
-		$query->param('spot_type_id', $spot_type_id);
-		$result = $query->execute()->as_array();
-		
-		if(count($result) == 1) {
-			return $result[0];
-		} else {
-			return false;
-		}
-	}
-	
-	/*
-	 * 添加景点类别前添加信息查验
-	 */
-	public static function CheckInsertSpotType($params) {
-		$result = array(
-			'result' => true,
-			'error' => array(),
-		);
-		
-		if(!isset($params['spot_type_name'])) {
-			$result['result'] = false;
-			$result['error'][] = 'noset_name';
-		} elseif(empty($params['spot_type_name'])) {
-			$result['result'] = false;
-			$result['error'][] = 'empty_name';
-		}
-		
-		if($result['result']) {
-			$sql_duplication = "SELECT * FROM m_spot_type WHERE spot_type_name = :spot_type_name";
-			$query_duplication = DB::query($sql_duplication);
-			$query_duplication->param('spot_type_name', $params['spot_type_name']);
-			$result_duplication = $query_duplication->execute()->as_array();
-			
-			if(count($result_duplication)) {
-				$result['result'] = false;
-				$result['error'][] = 'duplication';
-			}
-		}
-		
-		return $result;
-	}
-	
-	/*
-	 * 删除景点类别前删除ID查验
-	 */
-	public static function CheckDeleteSpotTypeById($spot_type_id) {
-		$result = array(
-			'result' => true,
-			'error' => array(),
-		);
-		
-		if(!is_numeric($spot_type_id)) {
-			$result['result'] = false;
-			$result['error'][] = 'nonum_id';
-		}
-		
-		if($result['result']) {
-			$sql_exist = "SELECT * FROM m_spot_type WHERE spot_type_id = :spot_type_id";
-			$query_exist = DB::query($sql_exist);
-			$query_exist->param('spot_type_id', $spot_type_id);
-			$result_exist = $query_exist->execute()->as_array();
-			
-			if(!count($result_exist)) {
-				$result['result'] = false;
-				$result['error'][] = 'noexist';
-			}
-		}
-		
-		return $result;
-	}
-	
-	/*
-	 * 更新景点类别前更新信息查验
-	 */
-	public static function CheckUpdateSpotType($params) {
-		$result = array(
-			'result' => true,
-			'error' => array(),
-		);
-		
-		if(!is_numeric($params['spot_type_id'])) {
-			$result['result'] = false;
-			$result['error'][] = 'nonum_id';
-		}
-		
-		if(empty($params['spot_type_name'])) {
-			$result['result'] = false;
-			$result['error'][] = 'empty_name';
-		}
-		
-		if($result['result']) {
-			$sql_duplication = "SELECT * FROM m_spot_type WHERE spot_type_name = :spot_type_name";
-			$query_duplication = DB::query($sql_duplication);
-			$query_duplication->param('spot_type_name', $params['spot_type_name']);
-			$result_duplication = $query_duplication->execute()->as_array();
-			
-			if(count($result_duplication)) {
-				if($result_duplication[0]['spot_type_id'] == $params['spot_type_id']) {
-					$result['result'] = false;
-					$result['error'][] = 'nomodify';
-				} else {
-					$result['result'] = false;
-					$result['error'][] = 'duplication';
-				}
-			}
-		}
-		
-		return $result;
 	}
 
 }

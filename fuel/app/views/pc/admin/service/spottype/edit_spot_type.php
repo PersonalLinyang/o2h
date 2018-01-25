@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>添加景点类别 - O2H管理系统</title>
+	<title><?php echo $page_title; ?> - O2H管理系统</title>
 	<?php echo Asset::css('pc/admin/common.css'); ?>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 	<?php echo Asset::js('pc/admin/common.js'); ?>
@@ -15,23 +15,23 @@
 		<?php endif; ?>
 		
 		<div class="content-main">
-			<h1>添加景点类别</h1>
+			<h1><?php echo $page_title; ?></h1>
 			<form method="post" action="" class="content-form">
 				<table class="tb-content-form">
 					<tr>
 						<th>景点类别名称</th>
-						<td><input type="text" name="name" value="<?php echo $input_name; ?>" /></td>
+						<td><input type="text" name="spot_type_name" value="<?php echo $input_spot_type_name; ?>" /></td>
 					</tr>
 					<tr>
 						<td colspan="2">
 							<ul class="button-group">
-								<li class="button-yes btn-form-submit">添加</li>
+								<li class="button-yes btn-form-submit">保存</li>
 								<li class="button-no"><a href="/admin/spot_type_list/">取消</a></li>
 							</ul>
 						</td>
 					</tr>
 				</table>
-				<input type="hidden" name="page" value="add_spot_type" />
+				<input type="hidden" name="page" value="<?php echo $form_page_index; ?>" />
 			</form>
 		</div>
 	</div>

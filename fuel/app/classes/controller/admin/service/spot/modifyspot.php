@@ -29,7 +29,11 @@ class Controller_Admin_Service_Spot_Modifyspot extends Controller_Admin_App
 				$data['error_message'] = '';
 				
 				//获取原本景点信息
-				$spot = Model_Spot::SelectSpot(array('spot_id' => $spot_id));
+				$params_select = array(
+					'spot_id' => $spot_id,
+					'active_only' => 1,
+				);
+				$spot = Model_Spot::SelectSpot($params_select);
 				
 				if(!$spot) {
 					//不存在该ID的景点
@@ -51,7 +55,7 @@ class Controller_Admin_Service_Spot_Modifyspot extends Controller_Admin_App
 				//获取地区列表
 				$data['area_list'] = Model_Area::GetAreaList(array('active_only' => true));
 				//获取景点类型列表
-				$data['spot_type_list'] = Model_SpotType::GetSpotTypeListAll();
+				$data['spot_type_list'] = Model_SpotType::SelectSpotTypeList(array('active_only' => true));
 				
 				//form控件默认值设定
 				$data['input_spot_name'] = $spot['spot_name'];
@@ -94,7 +98,7 @@ class Controller_Admin_Service_Spot_Modifyspot extends Controller_Admin_App
 					$error_message_list = array();
 					
 					if($_POST['page'] != $data['form_page_index']) {
-						//景点信息修改页
+						//数据来源不是景点信息修改页
 						return Response::forge(View::forge($this->template . '/admin/error/access_error', $data, false));
 					} else {
 						//form控件当前值设定
@@ -369,8 +373,8 @@ class Controller_Admin_Service_Spot_Modifyspot extends Controller_Admin_App
 									}
 								}
 								
-								//添加成功 页面跳转
-								$_SESSION['add_user_type_success'] = true;
+								//更新成功 页面跳转
+								$_SESSION['modify_spot_success'] = true;
 								header('Location: //' . $_SERVER['HTTP_HOST'] . '/admin/spot_detail/' . $spot_id . '/');
 								exit;
 							} else {
@@ -378,8 +382,8 @@ class Controller_Admin_Service_Spot_Modifyspot extends Controller_Admin_App
 							}
 						} else {
 							//获取错误信息
-							foreach($result_check['error'] as $insert_error) {
-								switch($insert_error) {
+							foreach($result_check['error'] as $update_error) {
+								switch($update_error) {
 									case 'empty_spot_name': 
 										$error_message_list[] = '请输入景点名';
 										break;
@@ -443,7 +447,6 @@ class Controller_Admin_Service_Spot_Modifyspot extends Controller_Admin_App
 				//调用View
 				return Response::forge(View::forge($this->template . '/admin/service/spot/edit_spot', $data, false));
 			}
-			exit;
 		} catch (Exception $e) {
 			//发生系统异常
 			return Response::forge(View::forge($this->template . '/admin/error/system_error', $data, false));

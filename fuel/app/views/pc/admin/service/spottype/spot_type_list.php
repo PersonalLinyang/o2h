@@ -5,10 +5,10 @@
 	<title>景点类别一览 - O2H管理系统</title>
 	<?php echo Asset::css('pc/admin/common.css'); ?>
 	<?php echo Asset::css('pc/admin/error.css'); ?>
-	<?php echo Asset::css('pc/admin/service/spot_type_list.css'); ?>
+	<?php echo Asset::css('pc/admin/service/spot_type/spot_type_list.css'); ?>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 	<?php echo Asset::js('pc/admin/common.js'); ?>
-	<?php echo Asset::js('pc/admin/service/spot_type_list.js'); ?>
+	<?php echo Asset::js('pc/admin/service/spot_type/spot_type_list.js'); ?>
 </head>
 <body class="body-common">
 	<?php echo $header; ?>
@@ -44,7 +44,7 @@
 					<?php foreach($spot_type_list as $spot_type): ?>
 					<tr>
 						<td><p class="btn-controller btn-delete" data-value="<?php echo $spot_type['spot_type_id']; ?>" data-name="<?php echo $spot_type['spot_type_name']; ?>">削除</p></td>
-						<td><p class="btn-controller"><a href="/admin/modify_spot_type/<?php echo $spot_type['spot_type_id']; ?>">修改名称</a></p></td>
+						<td><p class="btn-controller btn-modify"><a href="/admin/modify_spot_type/<?php echo $spot_type['spot_type_id']; ?>/">修改</a></p></td>
 						<td><?php echo $spot_type['spot_type_name']; ?></td>
 						<td><?php echo $spot_type['spot_count']; ?></td>
 						<td><p class="btn-controller"><a href="/admin/spot_list/?select_spot_type%5B%5D=<?php echo $spot_type['spot_type_id']; ?>">景点一览</a></p></td>
@@ -68,7 +68,7 @@
 		<div class="popup-delete popup">
 			<div class="popup-title">景点类别确认</div>
 			<div class="popup-content center">
-				<p>景点类别一经删除将无法还原，<br/>当景点类别被删除时，使用该景点类别的景点将被设置为未设定，<br/>确定要删除「景点类别-<span class="popup-delete-name"></span>」吗？</p>
+				<p>景点类别一经删除将无法还原，<br/>确定要删除「景点类别-<span class="popup-delete-name"></span>」吗？</p>
 			</div>
 			<div class="popup-controller">
 				<form action="/admin/delete_spot_type/" method="post" id="form-delete">
