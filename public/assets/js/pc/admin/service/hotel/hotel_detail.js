@@ -1,0 +1,1 @@
+$(function(){$(".btn-hotel-status").click(function(){$(".popup-shadow").show();$(".popup-hotel-status").fadeIn()});$("#popup-hotel-status-yes").click(function(){$("#form-hotel-status").submit()});$("#popup-hotel-status-no").click(function(){$(".popup-shadow").hide();$(".popup-hotel-status").hide()})});

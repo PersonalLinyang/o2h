@@ -4,22 +4,24 @@
 	<meta charset="utf-8">
 	<title><?php echo $hotel_info['hotel_name']; ?> - O2H管理系统</title>
 	<?php echo Asset::css('pc/admin/common.css'); ?>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+	<?php echo Asset::js('common/jquery-1.9.1.min.js'); ?>
 	<?php echo Asset::js('pc/admin/common.js'); ?>
-	<?php echo Asset::js('pc/admin/service/hotel_detail.js'); ?>
+	<?php echo Asset::js('pc/admin/service/hotel/hotel_detail.js'); ?>
 </head>
 <body class="body-common">
 	<?php echo $header; ?>
 	<div class="content-area">
 		<div class="content-menu">
 			<ul class="content-menu-list">
+				<?php if($edit_able_flag): ?>
 				<li class="content-menu-button"><a href="/admin/modify_hotel/<?php echo $hotel_info['hotel_id']; ?>/">信息修改</a></li>
 				<?php if($hotel_info['hotel_status'] == '1'): ?>
 				<li class="content-menu-button btn-hotel-status">设为未公开</li>
 				<?php else: ?>
 				<li class="content-menu-button btn-hotel-status">设为公开</li>
-				<?php endif; ?>
-				<li class="content-menu-button"><a href="/admin/hotel_list/">酒店一览</a></li>
+				<?php endif; //hotel_info['hotel_status'] ?>
+				<?php endif; //edit_able_flag ?>
+				<li class="content-menu-button"><a href="<?php echo $hotel_list_url; ?>">酒店一览</a></li>
 			</ul>
 		</div>
 		
@@ -48,7 +50,7 @@
 				</tr>
 				<tr>
 					<th>价格</th>
-					<td><?php echo $hotel_info['hotel_price'] ? ($hotel_info['hotel_price'] . '元/人夜') : ''; ?></td>
+					<td><?php echo $hotel_info['hotel_price'] ? ($hotel_info['hotel_price'] . '日元/人夜') : ''; ?></td>
 				</tr>
 				<tr>
 					<th>公开状态</th>
@@ -63,6 +65,12 @@
 					<td><?php echo date('Y年m月d日　H:i:s', strtotime($hotel_info['modified_at'])); ?></td>
 				</tr>
 			</table>
+			<p class="system-comment">
+				※ 本酒店由<?php echo $hotel_info['created_name']; ?>于<?php echo date('Y年m月d日H:i', strtotime($hotel_info['created_at'])); ?>登录
+				<?php if($hotel_info['created_at'] != $hotel_info['modified_at']): ?>
+				，<?php if($hotel_info['modified_name'] != $hotel_info['created_name']): ?>由<?php echo $hotel_info['modified_name']; ?><?php endif; ?>于<?php echo date('Y年m月d日H:i', strtotime($hotel_info['modified_at'])); ?>更新至当前状态
+				<?php endif; ?>
+			</p>
 		</div>
 		
 		<div class="popup-shadow"></div>
@@ -75,7 +83,7 @@
 			</div>
 			<div class="popup-controller">
 				<form action="/admin/modify_hotel_status/" method="post" id="form-hotel-status">
-					<input type="hidden" name="modify_value" value="protected" />
+					<input type="hidden" name="modify_value" value="0" />
 					<input type="hidden" name="modify_id" value="<?php echo $hotel_info['hotel_id']; ?>" />
 					<input type="hidden" name="page" value="hotel_detail" />
 				</form>
@@ -93,7 +101,7 @@
 			</div>
 			<div class="popup-controller">
 				<form action="/admin/modify_hotel_status/" method="post" id="form-hotel-status">
-					<input type="hidden" name="modify_value" value="publish" />
+					<input type="hidden" name="modify_value" value="1" />
 					<input type="hidden" name="modify_id" value="<?php echo $hotel_info['hotel_id']; ?>" />
 					<input type="hidden" name="page" value="hotel_detail" />
 				</form>

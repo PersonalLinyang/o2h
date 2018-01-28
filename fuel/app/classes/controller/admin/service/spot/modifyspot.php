@@ -23,17 +23,13 @@ class Controller_Admin_Service_Spot_Modifyspot extends Controller_Admin_App
 				//景点ID不是数字
 				return Response::forge(View::forge($this->template . '/admin/error/access_error', $data, false));
 			} elseif(!Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 6)) {
-				//当前登陆用户不具备添加景点的权限
+				//当前登陆用户不具备修改景点的权限
 				return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
 			} else {
 				$data['error_message'] = '';
 				
 				//获取原本景点信息
-				$params_select = array(
-					'spot_id' => $spot_id,
-					'active_only' => 1,
-				);
-				$spot = Model_Spot::SelectSpot($params_select);
+				$spot = Model_Spot::SelectSpot(array('spot_id' => $spot_id, 'active_only' => true));
 				
 				if(!$spot) {
 					//不存在该ID的景点
@@ -50,7 +46,12 @@ class Controller_Admin_Service_Spot_Modifyspot extends Controller_Admin_App
 				//表单页面索引
 				$data['form_page_index'] = 'modify_spot';
 				//返回页URL
-				$data['return_page_url'] = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : ('/admin/spot_detail/' . $spot_id . '/') ;
+				$data['return_page_url'] = '/admin/spot_detail/' . $spot_id . '/';
+				if(isset($_SERVER['HTTP_REFERER'])) {
+					if(strstr($_SERVER['HTTP_REFERER'], 'admin/spot_list')) {
+						$data['return_page_url'] = $_SERVER['HTTP_REFERER'];
+					}
+				}
 				
 				//获取地区列表
 				$data['area_list'] = Model_Area::GetAreaList(array('active_only' => true));
@@ -466,7 +467,7 @@ class Controller_Admin_Service_Spot_Modifyspot extends Controller_Admin_App
 					$spot_id = $_POST['modify_id'];
 					
 					//获取景点信息
-					$spot = Model_Spot::SelectSpot(array('spot_id' => $spot_id, 'active_only' => 1));
+					$spot = Model_Spot::SelectSpot(array('spot_id' => $spot_id, 'active_only' => true));
 					
 					if($spot) {
 						if($spot['created_by'] == $_SESSION['login_user']['id']) {

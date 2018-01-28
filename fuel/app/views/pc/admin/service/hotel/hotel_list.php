@@ -5,10 +5,10 @@
 	<title>酒店管理 - O2H管理系统</title>
 	<?php echo Asset::css('pc/admin/common.css'); ?>
 	<?php echo Asset::css('pc/admin/error.css'); ?>
-	<?php echo Asset::css('pc/admin/service/hotel_list.css'); ?>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+	<?php echo Asset::css('pc/admin/service/hotel/hotel_list.css'); ?>
+	<?php echo Asset::js('common/jquery-1.9.1.min.js'); ?>
 	<?php echo Asset::js('pc/admin/common.js'); ?>
-	<?php echo Asset::js('pc/admin/service/hotel_list.js'); ?>
+	<?php echo Asset::js('pc/admin/service/hotel/hotel_list.js'); ?>
 </head>
 <body class="body-common">
 	<?php echo $header; ?>
@@ -58,7 +58,10 @@
 						<tr>
 							<th>价格</th>
 							<td>
-								<input type="text" name="select_price_min" class="price" value="<?php echo $select_price_min; ?>" />～<input type="text" name="select_price_max" class="price" value="<?php echo $select_price_max; ?>" />元
+								<input type="text" name="select_price_min" class="price" value="<?php echo $select_price_min; ?>" />
+								～
+								<input type="text" name="select_price_max" class="price" value="<?php echo $select_price_max; ?>" />
+								日元/人夜
 							</td>
 						</tr>
 					</table>
@@ -69,10 +72,10 @@
 							<td>
 								<input type="radio" name="sort_column" value="hotel_name" id="rdb-sort-name" <?php echo $sort_column == "hotel_name" ? 'checked ' : ''; ?>/>
 								<label class="lbl-for-radio<?php echo $sort_column == 'hotel_name' ? ' active' : ''; ?>" for="rdb-sort-name" data-for="rdb-sort-column">酒店名</label>
-								<input type="radio" name="sort_column" value="hotel_area_id" id="rdb-sort-area" <?php echo $sort_column == "hotel_area_id" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_column == 'hotel_area_id' ? ' active' : ''; ?>" for="rdb-sort-area" data-for="rdb-sort-column">所属地区</label>
-								<input type="radio" name="sort_column" value="hotel_type_id" id="rdb-sort-type" <?php echo $sort_column == "hotel_type_id" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_column == 'hotel_type_id' ? ' active' : ''; ?>" for="rdb-sort-type" data-for="rdb-sort-column">酒店类型</label>
+								<input type="radio" name="sort_column" value="hotel_area" id="rdb-sort-area" <?php echo $sort_column == "hotel_area" ? 'checked ' : ''; ?>/>
+								<label class="lbl-for-radio<?php echo $sort_column == 'hotel_area' ? ' active' : ''; ?>" for="rdb-sort-area" data-for="rdb-sort-column">所属地区</label>
+								<input type="radio" name="sort_column" value="hotel_type" id="rdb-sort-type" <?php echo $sort_column == "hotel_type" ? 'checked ' : ''; ?>/>
+								<label class="lbl-for-radio<?php echo $sort_column == 'hotel_type' ? ' active' : ''; ?>" for="rdb-sort-type" data-for="rdb-sort-column">酒店类型</label>
 								<input type="radio" name="sort_column" value="hotel_status" id="rdb-sort-status" <?php echo $sort_column == "hotel_status" ? 'checked ' : ''; ?>/>
 								<label class="lbl-for-radio<?php echo $sort_column == 'hotel_status' ? ' active' : ''; ?>" for="rdb-sort-status" data-for="rdb-sort-column">公开状况</label>
 								<input type="radio" name="sort_column" value="hotel_price" id="rdb-sort-price" <?php echo $sort_column == "hotel_price" ? 'checked ' : ''; ?>/>
@@ -96,7 +99,7 @@
 				</form>
 				<ul class="button-group">
 					<li class="button-yes" id="btn-content-menu-select-submit">筛选排序</li>
-					<li class="button-yes"><a href="/admin/hotel_list/">恢复初始</a></li>
+					<li class="button"><a href="/admin/hotel_list/">恢复初始</a></li>
 					<li class="button-no" id="btn-content-menu-select-cancel">取消</li>
 				</ul>
 			</div>
@@ -127,7 +130,7 @@
 						<th class="th-status">状态</th>
 						<th class="th-area">所属地区</th>
 						<th class="th-type">酒店类别</th>
-						<th class="th-price">价格<br>(元/人夜)</th>
+						<th class="th-price">价格<br>(日元/人夜)</th>
 						<th class="th-created-at">登录日</th>
 						<th class="th-modified-at">更新日</th>
 					</tr>
@@ -212,7 +215,7 @@
 				<p>酒店一经删除将无法还原，<br/>当酒店被删除时，使用该酒店的路线及客户信息中的相关信息也将被同时清除，<br/>确定要删除当前选中的所有酒店吗？</p>
 			</div>
 			<div class="popup-controller">
-				<form action="/admin/delete_checked_hotel/" method="post" id="form-delete-checked">
+				<form action="/admin/delete_hotel_checked/" method="post" id="form-delete-checked">
 					<?php foreach($hotel_list as $hotel): ?>
 					<input type="checkbox" name="delete_id_checked[]" id="delete-id-checked-<?php echo $hotel['hotel_id']; ?>" value="<?php echo $hotel['hotel_id']; ?>">
 					<?php endforeach; ?>

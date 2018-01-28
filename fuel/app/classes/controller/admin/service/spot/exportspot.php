@@ -44,9 +44,9 @@ class Controller_Admin_Service_Spot_Exportspot extends Controller_Admin_App
 						'price_max' => isset($_POST['select_price_max']) ? $_POST['select_price_max'] : '',
 						'sort_column' => isset($_POST['sort_column']) ? $_POST['sort_column'] : 'created_at',
 						'sort_method' => isset($_POST['sort_method']) ? $_POST['sort_method'] : 'desc',
-						'active_only' => 1,
-						'price_flag' => 1,
-						'detail_flag' => 1,
+						'active_only' => true,
+						'price_flag' => true,
+						'detail_flag' => true,
 					);
 					
 					$result_select = Model_Spot::SelectSpotList($params_select);

@@ -333,7 +333,7 @@ class Model_Spot extends Model
 						$sql_where[] = " ts.delete_flag = 0 ";
 						break;
 					case 'sort_column':
-						$sort_column_list = array('spot_name', 'spot_area_id', 'spot_type_id', 'spot_status', 'spot_price', 'created_at', 'modified_at', 'detail_number');
+						$sort_column_list = array('spot_name', 'spot_area', 'spot_type', 'spot_status', 'spot_price', 'created_at', 'modified_at');
 						if(in_array($param_value, $sort_column_list)) {
 							$sql_order_column = $param_value;
 						}

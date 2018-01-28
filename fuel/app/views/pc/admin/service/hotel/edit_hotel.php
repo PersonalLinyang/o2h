@@ -2,9 +2,9 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>酒店信息修改 - O2H管理系统</title>
+	<title><?php echo $page_title; ?> - O2H管理系统</title>
 	<?php echo Asset::css('pc/admin/common.css'); ?>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+	<?php echo Asset::js('common/jquery-1.9.1.min.js'); ?>
 	<?php echo Asset::js('pc/admin/common.js'); ?>
 </head>
 <body class="body-common">
@@ -15,7 +15,7 @@
 		<?php endif; ?>
 		
 		<div class="content-main">
-			<h1>酒店信息修改</h1>
+			<h1><?php echo $page_title; ?></h1>
 			<form method="post" action="" class="content-form" enctype="multipart/form-data">
 				<table class="tb-content-form">
 					<tr>
@@ -50,7 +50,7 @@
 					</tr>
 					<tr>
 						<th>价格</th>
-						<td><input type="text" name="hotel_price" value="<?php echo $input_hotel_price; ?>"/></td>
+						<td><input type="text" name="hotel_price" value="<?php echo $input_hotel_price; ?>" /></td>
 					</tr>
 					<tr>
 						<th>公开状态</th>
@@ -65,12 +65,12 @@
 						<td colspan="2">
 							<ul class="button-group">
 								<li class="button-yes btn-form-submit">保存</li>
-								<li class="button-no"><a href="/admin/hotel_detail/<?php echo $hotel_id; ?>/">取消</a></li>
+								<li class="button-no"><a href="<?php echo $return_page_url; ?>">取消</a></li>
 							</ul>
 						</td>
 					</tr>
 				</table>
-				<input type="hidden" name="page" value="modify_hotel" />
+				<input type="hidden" name="page" value="<?php echo $form_page_index; ?>" />
 			</form>
 		</div>
 	</div>

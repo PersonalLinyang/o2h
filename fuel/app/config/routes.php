@@ -25,20 +25,20 @@ return array(
 	'admin/delete_spot_type'                 => 'admin/service/spottype/deletespottype/index',
 	
 	//酒店管理
-	'admin/hotel_list'               => 'admin/service/hotellist/index',
-	'admin/hotel_list/(:page)'       => 'admin/service/hotellist/index/$1',
-	'admin/add_hotel'                => 'admin/service/addhotel/index',
-	'admin/hotel_detail/(:hotel_id)' => 'admin/service/hoteldetail/index/$1',
-	'admin/modify_hotel_status'      => 'admin/service/hoteldetail/modifyhotelstatus',
-	'admin/modify_hotel/(:hotel_id)' => 'admin/service/modifyhotel/index/$1',
-	'admin/delete_hotel'             => 'admin/service/hotellist/deletehotel',
-	'admin/delete_checked_hotel'     => 'admin/service/hotellist/deletecheckedhotel',
+	'admin/hotel_list'               => 'admin/service/hotel/hotellist/index',
+	'admin/hotel_list/(:page)'       => 'admin/service/hotel/hotellist/index/$1',
+	'admin/hotel_detail/(:hotel_id)' => 'admin/service/hotel/hoteldetail/index/$1',
+	'admin/add_hotel'                => 'admin/service/hotel/addhotel/index',
+	'admin/modify_hotel/(:hotel_id)' => 'admin/service/hotel/modifyhotel/index/$1',
+	'admin/modify_hotel_status'      => 'admin/service/hotel/modifyhotel/modifyhotelstatus',
+	'admin/delete_hotel'             => 'admin/service/hotel/deletehotel/index',
+	'admin/delete_hotel_checked'     => 'admin/service/hotel/deletehotel/deletehotelchecked',
 	
 	//酒店类别管理
-	'admin/hotel_type_list'                    => 'admin/service/hoteltypelist',
-	'admin/add_hotel_type'                     => 'admin/service/addhoteltype',
-	'admin/modify_hotel_type/(:hotel_type_id)' => 'admin/service/modifyhoteltype/index/$1',
-	'admin/delete_hotel_type'                  => 'admin/service/hoteltypelist/deletehoteltype',
+	'admin/hotel_type_list'                    => 'admin/service/hoteltype/hoteltypelist',
+	'admin/add_hotel_type'                     => 'admin/service/hoteltype/addhoteltype',
+	'admin/modify_hotel_type/(:hotel_type_id)' => 'admin/service/hoteltype/modifyhoteltype/index/$1',
+	'admin/delete_hotel_type'                  => 'admin/service/hoteltype/deletehoteltype/index',
 	
 	//餐饮管理
 	'admin/restaurant_list'                    => 'admin/service/restaurantlist/index',

@@ -31,7 +31,7 @@ class Controller_Admin_Service_Spottype_Modifyspottype extends Controller_Admin_
 				//获取原本景点类别信息
 				$params_select = array(
 					'spot_type_id' => $spot_type_id,
-					'active_only' => 1,
+					'active_only' => true,
 				);
 				$spot_type = Model_Spottype::SelectSpotType($params_select);
 				

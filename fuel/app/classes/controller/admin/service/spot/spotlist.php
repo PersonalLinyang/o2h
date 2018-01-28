@@ -43,12 +43,12 @@ class Controller_Admin_Service_Spot_Spotlist extends Controller_Admin_App
 				$data['delete_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 7);
 				//是否具备其他用户所登陆的景点删除权限
 				$data['delete_other_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'authority', 3);
-				//是否具备景点类别管理权限
-				$data['spot_type_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 10);
 				//是否具备批量导入景点信息权限
 				$data['import_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 8);
 				//是否具备导出景点信息权限
 				$data['export_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 9);
+				//是否具备景点类别管理权限
+				$data['spot_type_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 10);
 				
 				//每页现实景点数
 				$num_per_page = 20;
@@ -88,7 +88,7 @@ class Controller_Admin_Service_Spot_Spotlist extends Controller_Admin_App
 					'sort_method' => $data['sort_method'],
 					'page' => $page,
 					'num_per_page' => $num_per_page,
-					'active_only' => 1,
+					'active_only' => true,
 				);
 				
 				$result_select = Model_Spot::SelectSpotList($params_select);

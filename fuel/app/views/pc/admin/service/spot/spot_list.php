@@ -6,7 +6,7 @@
 	<?php echo Asset::css('pc/admin/common.css'); ?>
 	<?php echo Asset::css('pc/admin/error.css'); ?>
 	<?php echo Asset::css('pc/admin/service/spot/spot_list.css'); ?>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+	<?php echo Asset::js('common/jquery-1.9.1.min.js'); ?>
 	<?php echo Asset::js('pc/admin/common.js'); ?>
 	<?php echo Asset::js('pc/admin/service/spot/spot_list.js'); ?>
 </head>
@@ -94,12 +94,14 @@
 								<label class="lbl-for-radio<?php echo $sort_column == 'spot_name' ? ' active' : ''; ?>" for="rdb-sort-name" data-for="rdb-sort-column">景点名</label>
 								<input type="radio" name="sort_column" value="spot_status" id="rdb-sort-status" <?php echo $sort_column == "spot_status" ? 'checked ' : ''; ?>/>
 								<label class="lbl-for-radio<?php echo $sort_column == 'spot_status' ? ' active' : ''; ?>" for="rdb-sort-status" data-for="rdb-sort-column">公开状况</label>
-								<input type="radio" name="sort_column" value="spot_area_id" id="rdb-sort-area" <?php echo $sort_column == "spot_area_id" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_column == 'spot_area_id' ? ' active' : ''; ?>" for="rdb-sort-area" data-for="rdb-sort-column">所属地区</label>
-								<input type="radio" name="sort_column" value="spot_type_id" id="rdb-sort-type" <?php echo $sort_column == "spot_type_id" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_column == 'spot_type_id' ? ' active' : ''; ?>" for="rdb-sort-type" data-for="rdb-sort-column">景点类型</label>
+								<input type="radio" name="sort_column" value="spot_area" id="rdb-sort-area" <?php echo $sort_column == "spot_area" ? 'checked ' : ''; ?>/>
+								<label class="lbl-for-radio<?php echo $sort_column == 'spot_area' ? ' active' : ''; ?>" for="rdb-sort-area" data-for="rdb-sort-column">所属地区</label>
+								<input type="radio" name="sort_column" value="spot_type" id="rdb-sort-type" <?php echo $sort_column == "spot_type" ? 'checked ' : ''; ?>/>
+								<label class="lbl-for-radio<?php echo $sort_column == 'spot_type' ? ' active' : ''; ?>" for="rdb-sort-type" data-for="rdb-sort-column">景点类型</label>
 								<input type="radio" name="sort_column" value="spot_price" id="rdb-sort-price" <?php echo $sort_column == "spot_price" ? 'checked ' : ''; ?>/>
 								<label class="lbl-for-radio<?php echo $sort_column == 'spot_price' ? ' active' : ''; ?>" for="rdb-sort-price" data-for="rdb-sort-column">收费状况</label>
+								<input type="radio" name="sort_column" value="created_at" id="rdb-sort-created-at" <?php echo $sort_column == "created_at" ? 'checked ' : ''; ?>/>
+								<label class="lbl-for-radio<?php echo $sort_column == 'created_at' ? ' active' : ''; ?>" for="rdb-sort-created-at" data-for="rdb-sort-column">登录时间</label>
 								<input type="radio" name="sort_column" value="modified_at" id="rdb-sort-modified-at" <?php echo $sort_column == "modified_at" ? 'checked ' : ''; ?>/>
 								<label class="lbl-for-radio<?php echo $sort_column == 'modified_at' ? ' active' : ''; ?>" for="rdb-sort-modified-at" data-for="rdb-sort-column">最近更新</label>
 							</td>

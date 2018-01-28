@@ -30,7 +30,12 @@ class Controller_Admin_Service_Spot_Addspot extends Controller_Admin_App
 				//表单页面索引
 				$data['form_page_index'] = 'add_spot';
 				//返回页URL
-				$data['return_page_url'] = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '/admin/spot_list/';
+				$data['return_page_url'] = '/admin/spot_list/';
+				if(isset($_SERVER['HTTP_REFERER'])) {
+					if(strstr($_SERVER['HTTP_REFERER'], 'admin/spot_list')) {
+						$data['return_page_url'] = $_SERVER['HTTP_REFERER'];
+					}
+				}
 				
 				//获取地区列表
 				$data['area_list'] = Model_Area::GetAreaList(array('active_only' => true));
@@ -230,15 +235,13 @@ class Controller_Admin_Service_Spot_Addspot extends Controller_Admin_App
 							$result_insert = Model_Spot::InsertSpot($params_insert);
 							
 							if($result_insert) {
-								$spot_id = $result_insert[0];
-								
 								//将图片临时文件转存至景点图片文件夹
 								foreach($data['input_spot_detail_list'] as $spot_detail) {
 									foreach($spot_detail['image_list'] as $image_info) {
 										$file_name_tmp = DOCROOT . 'assets/img/' . $image_info['image_name'];
 										
 										//调整PC用图片尺寸
-										$file_directory_pc = DOCROOT . 'assets/img/pc/upload/spot/' . $spot_id . '/' . $spot_detail['spot_detail_id'] . '/';
+										$file_directory_pc = DOCROOT . 'assets/img/pc/upload/spot/' . $result_insert . '/' . $spot_detail['spot_detail_id'] . '/';
 										if(!file_exists($file_directory_pc)) {
 											mkdir($file_directory_pc, 0777, TRUE);
 										}
@@ -249,7 +252,7 @@ class Controller_Admin_Service_Spot_Addspot extends Controller_Admin_App
 										}
 										
 										//调整SP用图片尺寸
-										$file_directory_sp = DOCROOT . 'assets/img/sp/upload/spot/' . $spot_id . '/' . $spot_detail['spot_detail_id'] . '/';
+										$file_directory_sp = DOCROOT . 'assets/img/sp/upload/spot/' . $result_insert . '/' . $spot_detail['spot_detail_id'] . '/';
 										if(!file_exists($file_directory_sp)) {
 											mkdir($file_directory_sp, 0777, TRUE);
 										}
@@ -266,7 +269,7 @@ class Controller_Admin_Service_Spot_Addspot extends Controller_Admin_App
 								
 								//添加成功 页面跳转
 								$_SESSION['add_spot_success'] = true;
-								header('Location: //' . $_SERVER['HTTP_HOST'] . '/admin/spot_detail/' . $spot_id . '/');
+								header('Location: //' . $_SERVER['HTTP_HOST'] . '/admin/spot_detail/' . $result_insert . '/');
 								exit;
 							} else {
 								$error_message_list[] = '数据库错误：数据添加失败';

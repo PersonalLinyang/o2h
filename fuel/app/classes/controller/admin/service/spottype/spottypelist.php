@@ -28,8 +28,8 @@ class Controller_Admin_Service_Spottype_Spottypelist extends Controller_Admin_Ap
 				
 				//获取景点类别信息
 				$params_select = array(
-					'active_only' => 1,
-					'spot_count_flag' => 1,
+					'active_only' => true,
+					'spot_count_flag' => true,
 				);
 				
 				$data['spot_type_list'] = Model_SpotType::SelectSpotTypeList($params_select);
