@@ -18,7 +18,7 @@ class Controller_Admin_Service_Restaurant_Modifyrestaurant extends Controller_Ad
 		//调用共用Header
 		$data['header'] = Request::forge('admin/common/header')->execute()->response();
 		
-//		try {
+		try {
 			if(!is_numeric($restaurant_id)) {
 				//餐饮ID不是数字
 				return Response::forge(View::forge($this->template . '/admin/error/access_error', $data, false));
@@ -152,10 +152,10 @@ class Controller_Admin_Service_Restaurant_Modifyrestaurant extends Controller_Ad
 				//调用View
 				return Response::forge(View::forge($this->template . '/admin/service/restaurant/edit_restaurant', $data, false));
 			}
-//		} catch (Exception $e) {
-//			//发生系统异常
-//			return Response::forge(View::forge($this->template . '/admin/error/system_error', $data, false));
-//		}
+		} catch (Exception $e) {
+			//发生系统异常
+			return Response::forge(View::forge($this->template . '/admin/error/system_error', $data, false));
+		}
 	}
 	
 	/**
@@ -165,7 +165,7 @@ class Controller_Admin_Service_Restaurant_Modifyrestaurant extends Controller_Ad
 	 */
 	public function action_modifyrestaurantstatus($param = null)
 	{
-//		try {
+		try {
 			if(isset($_POST['page'], $_POST['modify_id'], $_POST['modify_value'])) {
 				if(is_numeric($_POST['modify_id']) && $_POST['page'] == 'restaurant_detail') {
 					$restaurant_id = $_POST['modify_id'];
@@ -210,12 +210,12 @@ class Controller_Admin_Service_Restaurant_Modifyrestaurant extends Controller_Ad
 			$_SESSION['modify_restaurant_status_error'] = true;
 			header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/restaurant_detail/' . $_POST['modify_id'] . '/');
 			exit;
-//		} catch (Exception $e) {
-//			//发生系统异常
-//			$_SESSION['modify_restaurant_status_error'] = true;
-//			header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/restaurant_detail/' . $_POST['modify_id'] . '/');
-//			exit;
-//		}
+		} catch (Exception $e) {
+			//发生系统异常
+			$_SESSION['modify_restaurant_status_error'] = true;
+			header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/restaurant_detail/' . $_POST['modify_id'] . '/');
+			exit;
+		}
 	}
 
 }

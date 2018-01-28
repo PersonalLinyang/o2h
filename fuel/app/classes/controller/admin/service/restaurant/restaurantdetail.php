@@ -18,7 +18,7 @@ class Controller_Admin_Service_Restaurant_Restaurantdetail extends Controller_Ad
 		//调用共用Header
 		$data['header'] = Request::forge('admin/common/header')->execute()->response();
 		
-//		try {
+		try {
 			if(!is_numeric($restaurant_id)) {
 				//餐饮ID不是数字
 				return Response::forge(View::forge($this->template . '/admin/error/access_error', $data, false));
@@ -84,10 +84,10 @@ class Controller_Admin_Service_Restaurant_Restaurantdetail extends Controller_Ad
 				//调用View
 				return Response::forge(View::forge($this->template . '/admin/service/restaurant/restaurant_detail', $data, false));
 			}
-//		} catch (Exception $e) {
-//			//发生系统异常
-//			return Response::forge(View::forge($this->template . '/admin/error/system_error', $data, false));
-//		}
+		} catch (Exception $e) {
+			//发生系统异常
+			return Response::forge(View::forge($this->template . '/admin/error/system_error', $data, false));
+		}
 	}
 
 }

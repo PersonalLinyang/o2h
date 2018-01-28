@@ -63,10 +63,10 @@ class Controller_Admin_Service_Restaurant_Deleterestaurant extends Controller_Ad
 						break;
 				}
 			}
-//		} catch (Exception $e) {
-//			//发生系统异常
-//			$_SESSION['delete_restaurant_error'] = 'error_system';
-//		}
+		} catch (Exception $e) {
+			//发生系统异常
+			$_SESSION['delete_restaurant_error'] = 'error_system';
+		}
 		header('Location: ' . $header_url);
 		exit;
 	}
@@ -79,7 +79,7 @@ class Controller_Admin_Service_Restaurant_Deleterestaurant extends Controller_Ad
 	public function action_deleterestaurantchecked($param = null)
 	{
 		$header_url = '//' . $_SERVER['HTTP_HOST'] . '/admin/restaurant_list/';
-//		try {
+		try {
 			if(!isset($_POST['page'])) {
 				//删除所需的数据不全
 				$_SESSION['delete_restaurant_checked_error'] = 'error_system';
@@ -128,10 +128,10 @@ class Controller_Admin_Service_Restaurant_Deleterestaurant extends Controller_Ad
 						break;
 				}
 			}
-//		} catch (Exception $e) {
-//			//发生系统异常
-//			$_SESSION['delete_restaurant_error'] = 'error_system';
-//		}
+		} catch (Exception $e) {
+			//发生系统异常
+			$_SESSION['delete_restaurant_error'] = 'error_system';
+		}
 		header('Location: ' . $header_url);
 		exit;
 	}
