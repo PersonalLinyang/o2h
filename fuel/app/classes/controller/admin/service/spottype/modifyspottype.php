@@ -120,7 +120,7 @@ class Controller_Admin_Service_Spottype_Modifyspottype extends Controller_Admin_
 				}
 				
 				//调用View
-				return Response::forge(View::forge($this->template . '/admin/service/spottype/edit_spot_type', $data, false));
+				return Response::forge(View::forge($this->template . '/admin/service/spot_type/edit_spot_type', $data, false));
 			}
 		} catch (Exception $e) {
 			//发生系统异常

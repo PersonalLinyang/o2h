@@ -98,7 +98,7 @@ class Controller_Admin_Service_Spottype_Spottypelist extends Controller_Admin_Ap
 				}
 				
 				//调用View
-				return Response::forge(View::forge($this->template . '/admin/service/spottype/spot_type_list', $data, false));
+				return Response::forge(View::forge($this->template . '/admin/service/spot_type/spot_type_list', $data, false));
 			}
 		} catch (Exception $e) {
 			//发生系统异常

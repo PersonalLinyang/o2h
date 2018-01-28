@@ -5,10 +5,10 @@
 	<title>餐饮类别一览 - O2H管理系统</title>
 	<?php echo Asset::css('pc/admin/common.css'); ?>
 	<?php echo Asset::css('pc/admin/error.css'); ?>
-	<?php echo Asset::css('pc/admin/service/restaurant_type_list.css'); ?>
+	<?php echo Asset::css('pc/admin/service/restaurant_type/restaurant_type_list.css'); ?>
 	<?php echo Asset::js('common/jquery-1.9.1.min.js'); ?>
 	<?php echo Asset::js('pc/admin/common.js'); ?>
-	<?php echo Asset::js('pc/admin/service/restaurant_type_list.js'); ?>
+	<?php echo Asset::js('pc/admin/service/restaurant_type/restaurant_type_list.js'); ?>
 </head>
 <body class="body-common">
 	<?php echo $header; ?>
@@ -44,7 +44,7 @@
 					<?php foreach($restaurant_type_list as $restaurant_type): ?>
 					<tr>
 						<td><p class="btn-controller btn-delete" data-value="<?php echo $restaurant_type['restaurant_type_id']; ?>" data-name="<?php echo $restaurant_type['restaurant_type_name']; ?>">削除</p></td>
-						<td><p class="btn-controller"><a href="/admin/modify_restaurant_type/<?php echo $restaurant_type['restaurant_type_id']; ?>">修改名称</a></p></td>
+						<td><p class="btn-controller btn-modify"><a href="/admin/modify_restaurant_type/<?php echo $restaurant_type['restaurant_type_id']; ?>/">修改</a></p></td>
 						<td><?php echo $restaurant_type['restaurant_type_name']; ?></td>
 						<td><?php echo $restaurant_type['restaurant_count']; ?></td>
 						<td><p class="btn-controller"><a href="/admin/restaurant_list/?select_restaurant_type%5B%5D=<?php echo $restaurant_type['restaurant_type_id']; ?>">餐饮一览</a></p></td>
@@ -68,7 +68,7 @@
 		<div class="popup-delete popup">
 			<div class="popup-title">餐饮类别确认</div>
 			<div class="popup-content center">
-				<p>餐饮类别一经删除将无法还原，<br/>当餐饮类别被删除时，使用该餐饮类别的餐饮将被设置为未设定，<br/>确定要删除「餐饮类别-<span class="popup-delete-name"></span>」吗？</p>
+				<p>餐饮类别一经删除将无法还原，<br/>确定要删除「餐饮类别-<span class="popup-delete-name"></span>」吗？</p>
 			</div>
 			<div class="popup-controller">
 				<form action="/admin/delete_restaurant_type/" method="post" id="form-delete">

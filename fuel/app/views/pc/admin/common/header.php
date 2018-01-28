@@ -26,13 +26,14 @@
 							<?php if(in_array('9', $login_user_permission['sub_group'])) : ?>
 							<li><a href="/admin/spot_list/" class="sub-navi-link">景点管理</a></li>
 							<?php endif; ?>
+							<?php if(in_array('10', $login_user_permission['sub_group'])) : ?>
+							<li><a href="/admin/restaurant_list/" class="sub-navi-link">餐饮管理</a></li>
+							<?php endif; ?>
 							<?php if(in_array('11', $login_user_permission['sub_group'])) : ?>
 							<li><a href="/admin/hotel_list/" class="sub-navi-link">酒店管理</a></li>
 							<?php endif; ?>
 <!--
 							<li><a href="/admin/" class="sub-navi-link">线路管理</a></li>
-							<li><a href="/admin/" class="sub-navi-link">酒店管理</a></li>
-							<li><a href="/admin/" class="sub-navi-link">餐饮管理</a></li>
 							<li><a href="/admin/" class="sub-navi-link">特辑网页管理</a></li>
 -->
 						</ul>

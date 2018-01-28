@@ -7,7 +7,6 @@ class Model_Hotel extends Model
 	 * 添加酒店
 	 */
 	public static function InsertHotel($params) {
-		//添加酒店
 		try {
 			//添加酒店
 			$sql = "INSERT INTO t_hotel(hotel_name, hotel_area, hotel_type, hotel_price, hotel_status, "
@@ -65,9 +64,9 @@ class Model_Hotel extends Model
 		try {
 			//更新酒店
 			$sql = "UPDATE t_hotel "
-						. "SET hotel_name=:hotel_name, hotel_area=:hotel_area, hotel_type=:hotel_type, "
-						. "hotel_price=:hotel_price, hotel_status=:hotel_status, modified_at=:modified_at, modified_by=:modified_by "
-						. "WHERE hotel_id=:hotel_id";
+				. "SET hotel_name=:hotel_name, hotel_area=:hotel_area, hotel_type=:hotel_type, "
+				. "hotel_price=:hotel_price, hotel_status=:hotel_status, modified_at=:modified_at, modified_by=:modified_by "
+				. "WHERE hotel_id=:hotel_id";
 			$query = DB::query($sql);
 			$query->param('hotel_id', $params['hotel_id']);
 			$query->param('hotel_name', $params['hotel_name']);
@@ -89,7 +88,7 @@ class Model_Hotel extends Model
 	 * 更新酒店状态
 	 */
 	public static function UpdateHotelStatus($params) {
-//		try {
+		try {
 			$sql = "UPDATE t_hotel SET hotel_status = :hotel_status WHERE hotel_id = :hotel_id";
 			$query = DB::query($sql);
 			$query->param('hotel_id', $params['hotel_id']);
@@ -97,16 +96,16 @@ class Model_Hotel extends Model
 			$result = $query->execute();
 			
 			return true;
-//		} catch (Exception $e) {
-//			return false;
-//		}
+		} catch (Exception $e) {
+			return false;
+		}
 	}
-
+	
 	/*
 	 * 按条件获得酒店列表
 	 */
 	public static function SelectHotelList($params) {
-//		try {
+		try {
 			$sql_where = array();
 			$sql_params = array();
 			$sql_order_column = "created_at";
@@ -246,16 +245,16 @@ class Model_Hotel extends Model
 				}
 			}
 			return false;
-//		} catch (Exception $e) {
-//			return false;
-//		}
+		} catch (Exception $e) {
+			return false;
+		}
 	}
 	
 	/*
 	 * 获取特定单个酒店信息
 	 */
 	public static function SelectHotel($params) {
-//		try {
+		try {
 			$sql_where = array();
 			$sql_params = array();
 			
@@ -291,9 +290,9 @@ class Model_Hotel extends Model
 			} else {
 				return false;
 			}
-//		} catch (Exception $e) {
-//			return false;
-//		}
+		} catch (Exception $e) {
+			return false;
+		}
 	}
 	
 	/*
@@ -446,199 +445,6 @@ class Model_Hotel extends Model
 		} catch (Exception $e) {
 			return true;
 		}
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*
-	 * 根据ID删除酒店
-	 */
-	public static function DeleteHotelById($hotel_id) {
-		$sql_delete = "DELETE FROM t_hotel WHERE hotel_id = :hotel_id";
-		$query_delete = DB::query($sql_delete);
-		$query_delete->param('hotel_id', $hotel_id);
-		$result_delete = $query_delete->execute();
-		
-		return $result_delete;
-	}
-	
-	/*
-	 * 根据ID删除酒店(批量)
-	 */
-	public static function DeleteHotelByIdList($hotel_id_list) {
-		$sql_where_list = array();
-		$sql_param_list = array();
-		foreach($hotel_id_list as $hotel_id_counter => $hotel_id) {
-			$sql_where_list[] = ':hotel_id_' . $hotel_id_counter;
-			$sql_param_list[':hotel_id_' . $hotel_id_counter] = $hotel_id;
-		}
-		$sql_where = implode(', ', $sql_where_list);
-		$sql_delete = "DELETE FROM t_hotel WHERE hotel_id IN (" . $sql_where . ")";
-		$query_delete = DB::query($sql_delete);
-		foreach($sql_param_list as $key => $value) {
-			$query_delete->param($key, $value);
-		}
-		$result_delete = $query_delete->execute();
-		
-		return $result_delete;
-	}
-	
-	/*
-	 * 根据ID获取酒店详细信息`
-	 */
-	public static function SelectHotelInfoByHotelId($hotel_id) {
-		if(!is_numeric($hotel_id)) {
-			return false;
-		}
-		
-		$sql_hotel = "SELECT th.hotel_id, th.hotel_name, th.hotel_area hotel_area_id, ma.area_name hotel_area_name, ma.area_description hotel_area_description, " 
-				. "th.hotel_type hotel_type_id, mht.hotel_type_name, th.hotel_price, th.hotel_status, th.created_at, th.modified_at " 
-				. "FROM t_hotel th " 
-				. "LEFT JOIN m_area ma ON th.hotel_area = ma.area_id " 
-				. "LEFT JOIN m_hotel_type mht ON th.hotel_type = mht.hotel_type_id " 
-				. "WHERE th.hotel_id = :hotel_id ";
-		$query_hotel = DB::query($sql_hotel);
-		$query_hotel->param('hotel_id', $hotel_id);
-		$result_hotel = $query_hotel->execute()->as_array();
-		
-		if(count($result_hotel) == 1) {
-			$result = $result_hotel[0];
-			return $result;
-		} else {
-			return false;
-		}
-	}
-
-	/*
-	 * 获得全部酒店数
-	 */
-	public static function GetHotelTotalCount() {
-		$sql = "SELECT count(*) hotel_count FROM t_hotel";
-		$query = DB::query($sql);
-		$result = $query->execute()->as_array();
-		
-		if(count($result) == 1) {
-			return intval($result[0]['hotel_count']);
-		} else {
-			return false;
-		}
-	}
-	
-	/*
-	 * 删除酒店前删除ID查验
-	 */
-	public static function CheckDeleteHotelById($hotel_id) {
-		$result = array(
-			'result' => true,
-			'error' => array(),
-		);
-		
-		if(!is_numeric($hotel_id)) {
-			$result['result'] = false;
-			$result['error'][] = 'nonum_id';
-		}
-		
-		if($result['result']) {
-			$sql_exist = "SELECT * FROM t_hotel WHERE hotel_id = :hotel_id";
-			$query_exist = DB::query($sql_exist);
-			$query_exist->param('hotel_id', $hotel_id);
-			$result_exist = $query_exist->execute()->as_array();
-			
-			if(!count($result_exist)) {
-				$result['result'] = false;
-				$result['error'][] = 'noexist';
-			}
-		}
-		
-		return $result;
-	}
-	
-	/*
-	 * 删除酒店前删除ID查验(批量)
-	 */
-	public static function CheckDeleteHotelByIdList($hotel_id_list) {
-		$result = array(
-			'result' => true,
-			'error' => array(),
-		);
-		
-		foreach($hotel_id_list as $hotel_id) {
-			if(!is_numeric($hotel_id)) {
-				$result['result'] = false;
-				$result['error'][] = 'nonum_id';
-				break;
-			}
-		}
-		
-		if($result['result']) {
-			$sql_where_list = array();
-			$sql_param_list = array();
-			foreach($hotel_id_list as $hotel_id_counter => $hotel_id) {
-				$sql_where_list[] = ':hotel_id_' . $hotel_id_counter;
-				$sql_param_list[':hotel_id_' . $hotel_id_counter] = $hotel_id;
-			}
-			$sql_where = implode(', ', $sql_where_list);
-			$sql_exist = "SELECT * FROM t_hotel WHERE hotel_id IN (" . $sql_where . ")";
-			$query_exist = DB::query($sql_exist);
-			foreach($sql_param_list as $key => $value) {
-				$query_exist->param($key, $value);
-			}
-			$result_exist = $query_exist->execute()->as_array();
-			
-			if(count($result_exist) != count($hotel_id_list)) {
-				$result['result'] = false;
-				$result['error'][] = 'noexist_hotel_id';
-			}
-		}
-		
-		return $result;
-	}
-	
-	/*
-	 * 修改酒店前修改信息查验
-	 */
-	public static function CheckUpdateHotel($params) {
-		$result = array(
-			'result' => true,
-			'error' => array(),
-		);
-		//酒店名称
-		if(empty($params['hotel_name'])) {
-			$result['result'] = false;
-			$result['error'][] = 'empty_name';
-		}
-		//酒店区域
-		if(!is_numeric($params['hotel_area'])) {
-			$result['result'] = false;
-			$result['error'][] = 'nonum_area';
-		}
-		//酒店类型
-		if(!is_numeric($params['hotel_type'])) {
-			$result['result'] = false;
-			$result['error'][] = 'nonum_type';
-		}
-		//价格
-		if(!is_numeric($params['hotel_price'])) {
-			$result['result'] = false;
-			$result['error'][] = 'nonum_price';
-		} elseif($params['hotel_price'] < 0) {
-			$result['result'] = false;
-			$result['error'][] = 'minus_price';
-		}
-		//公开状态
-		if(!in_array($params['hotel_status'], array('0', '1'))) {
-			$result['result'] = false;
-			$result['error'][] = 'nobool_status';
-		}
-		
-		return $result;
 	}
 
 }

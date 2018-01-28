@@ -19,7 +19,7 @@ class Controller_Admin_Service_Hoteltype_Hoteltypelist extends Controller_Admin_
 		$data['header'] = Request::forge('admin/common/header')->execute()->response();
 		
 		try {
-			if(!Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 10)) {
+			if(!Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 20)) {
 				//当前登陆用户不具备酒店类别管理的权限
 				return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
 			} else {
@@ -98,7 +98,7 @@ class Controller_Admin_Service_Hoteltype_Hoteltypelist extends Controller_Admin_
 				}
 				
 				//调用View
-				return Response::forge(View::forge($this->template . '/admin/service/hoteltype/hotel_type_list', $data, false));
+				return Response::forge(View::forge($this->template . '/admin/service/hotel_type/hotel_type_list', $data, false));
 			}
 		} catch (Exception $e) {
 			//发生系统异常

@@ -18,7 +18,7 @@ class Controller_Admin_Service_Hotel_Hotellist extends Controller_Admin_App
 		//调用共用Header
 		$data['header'] = Request::forge('admin/common/header')->execute()->response();
 		
-//		try {
+		try {
 			if(!is_numeric($page)) {
 				//页数不是数字
 				return Response::forge(View::forge($this->template . '/admin/error/access_error', $data, false));
@@ -74,7 +74,7 @@ class Controller_Admin_Service_Hotel_Hotellist extends Controller_Admin_App
 				$data['page_number'] = 1;
 				$data['page'] = $page;
 				
-				//获取景点信息
+				//获取酒店信息
 				$params_select = array(
 					'hotel_name' => $data['select_name'] ? explode(' ', $data['select_name']) : array(),
 					'hotel_status' => $data['select_status'],
@@ -103,13 +103,31 @@ class Controller_Admin_Service_Hotel_Hotellist extends Controller_Admin_App
 					}
 				}
 				
+				if(isset($_SESSION['delete_hotel_success'])) {
+					$data['success_message'] = '酒店削除成功';
+					unset($_SESSION['delete_hotel_success']);
+				}
+				if(isset($_SESSION['delete_hotel_error'])) {
+					$data['error_message'] = '酒店削除失敗';
+					unset($_SESSION['delete_hotel_error']);
+				}
+				
+				if(isset($_SESSION['delete_checked_hotel_success'])) {
+					$data['success_message'] = '选中酒店削除成功';
+					unset($_SESSION['delete_checked_hotel_success']);
+				}
+				if(isset($_SESSION['delete_checked_hotel_error'])) {
+					$data['error_message'] = '选中酒店削除失敗';
+					unset($_SESSION['delete_checked_hotel_error']);
+				}
+				
 				//调用View
 				return Response::forge(View::forge($this->template . '/admin/service/hotel/hotel_list', $data, false));
 			}
-//		} catch (Exception $e) {
-//			//发生系统异常
-//			return Response::forge(View::forge($this->template . '/admin/error/system_error', $data, false));
-//		}
+		} catch (Exception $e) {
+			//发生系统异常
+			return Response::forge(View::forge($this->template . '/admin/error/system_error', $data, false));
+		}
 	}
 
 

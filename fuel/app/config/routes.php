@@ -41,20 +41,20 @@ return array(
 	'admin/delete_hotel_type'                  => 'admin/service/hoteltype/deletehoteltype/index',
 	
 	//餐饮管理
-	'admin/restaurant_list'                    => 'admin/service/restaurantlist/index',
-	'admin/restaurant_list/(:page)'            => 'admin/service/restaurantlist/index/$1',
-	'admin/add_restaurant'                     => 'admin/service/addrestaurant/index',
-	'admin/restaurant_detail/(:restaurant_id)' => 'admin/service/restaurantdetail/index/$1',
-	'admin/modify_restaurant_status'           => 'admin/service/restaurantdetail/modifyrestaurantstatus',
-	'admin/modify_restaurant/(:restaurant_id)' => 'admin/service/modifyrestaurant/index/$1',
-	'admin/delete_restaurant'                  => 'admin/service/restaurantlist/deleterestaurant',
-	'admin/delete_checked_restaurant'          => 'admin/service/restaurantlist/deletecheckedrestaurant',
+	'admin/restaurant_list'                    => 'admin/service/restaurant/restaurantlist/index',
+	'admin/restaurant_list/(:page)'            => 'admin/service/restaurant/restaurantlist/index/$1',
+	'admin/restaurant_detail/(:restaurant_id)' => 'admin/service/restaurant/restaurantdetail/index/$1',
+	'admin/add_restaurant'                     => 'admin/service/restaurant/addrestaurant/index',
+	'admin/modify_restaurant/(:restaurant_id)' => 'admin/service/restaurant/modifyrestaurant/index/$1',
+	'admin/modify_restaurant_status'           => 'admin/service/restaurant/modifyrestaurant/modifyrestaurantstatus',
+	'admin/delete_restaurant'                  => 'admin/service/restaurant/deleterestaurant/index',
+	'admin/delete_restaurant_checked'          => 'admin/service/restaurant/deleterestaurant/deleterestaurantchecked',
 	
 	//餐饮类别管理
-	'admin/restaurant_type_list'                         => 'admin/service/restauranttypelist',
-	'admin/add_restaurant_type'                          => 'admin/service/addrestauranttype',
-	'admin/modify_restaurant_type/(:restaurant_type_id)' => 'admin/service/modifyrestauranttype/index/$1',
-	'admin/delete_restaurant_type'                       => 'admin/service/restauranttypelist/deleterestauranttype',
+	'admin/restaurant_type_list'                         => 'admin/service/restauranttype/restauranttypelist',
+	'admin/add_restaurant_type'                          => 'admin/service/restauranttype/addrestauranttype',
+	'admin/modify_restaurant_type/(:restaurant_type_id)' => 'admin/service/restauranttype/modifyrestauranttype/index/$1',
+	'admin/delete_restaurant_type'                       => 'admin/service/restauranttype/deleterestauranttype/index',
 	
 	//旅游路线管理
 	'admin/route_list'               => 'admin/service/routelist/index',

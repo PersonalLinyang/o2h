@@ -1,5 +1,5 @@
 /* 内容菜单按钮部分 筛选部分 */
-.content-menu-select th {
+.content-menu-select table th {
 	width: 120px;
 	
 	&.th-parent {
@@ -7,16 +7,12 @@
 	}
 }
 
-/* 内容菜单按钮部分 筛选部分 票价 */
-#form-content-menu-select {
-	float: left;
-	
-	.price {
-		width: 110px;
-	}
+/* 内容菜单按钮部分 筛选部分 价格 */
+#form-content-menu-select .price {
+	width: 110px;
 }
 
-/* 景点一览表 */
+/* 餐饮一览表 */
 .div-content-list {
 	width: 100%;
 	
@@ -45,15 +41,19 @@
 	}
 	
 	.th-type {
-		width: 100px;
+		width: 160px;
 	}
 	
 	.th-price {
-		width: 130px;
+		width: 124px;
+	}
+	
+	.th-created-at {
+		width: 100px;
 	}
 	
 	.th-modified-at {
-		width: 130px;
+		width: 100px;
 	}
 	
 	.lbl-for-check {
@@ -71,14 +71,5 @@
 		width: 50px;
 		margin-left: 5px;
 		margin-right: 5px;
-	}
-}
-
-/* 筛选部分票价显隐 */
-#area-select-price {
-	display: none;
-	
-	&.active {
-		display: block;
 	}
 }

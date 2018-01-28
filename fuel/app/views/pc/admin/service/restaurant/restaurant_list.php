@@ -5,10 +5,10 @@
 	<title>餐饮管理 - O2H管理系统</title>
 	<?php echo Asset::css('pc/admin/common.css'); ?>
 	<?php echo Asset::css('pc/admin/error.css'); ?>
-	<?php echo Asset::css('pc/admin/service/restaurant_list.css'); ?>
+	<?php echo Asset::css('pc/admin/service/restaurant/restaurant_list.css'); ?>
 	<?php echo Asset::js('common/jquery-1.9.1.min.js'); ?>
 	<?php echo Asset::js('pc/admin/common.js'); ?>
-	<?php echo Asset::js('pc/admin/service/restaurant_list.js'); ?>
+	<?php echo Asset::js('pc/admin/service/restaurant/restaurant_list.js'); ?>
 </head>
 <body class="body-common">
 	<?php echo $header; ?>
@@ -58,7 +58,10 @@
 						<tr>
 							<th>参考价位</th>
 							<td>
-								<input type="text" name="select_price_min" class="price" value="<?php echo $select_price_min; ?>" />～<input type="text" name="select_price_max" class="price" value="<?php echo $select_price_max; ?>" />元
+								<input type="text" name="select_price_min" class="price" value="<?php echo $select_price_min; ?>" />
+								～
+								<input type="text" name="select_price_max" class="price" value="<?php echo $select_price_max; ?>" />
+								日元/人
 							</td>
 						</tr>
 					</table>
@@ -118,7 +121,7 @@
 			<div class="div-content-list">
 				<p>
 					共为您检索到<span class="strong"><?php echo $restaurant_count; ?></span>条餐饮信息
-					目前显示的是其中的第<span class="strong"><?php echo $start_number; ?></span>～<span class="strong"><?php echo $end_number; ?></span>条
+					目前显示的是其中的第<span class="strong"><?php echo $start_number; ?></span><?php if($start_number != $end_number): ?>～<span class="strong"><?php echo $end_number; ?></span><?php endif; ?>条
 				</p>
 				<table class="tb-content-list">
 					<tr>
@@ -129,8 +132,7 @@
 						<th class="th-status">状态</th>
 						<th class="th-area">所属地区</th>
 						<th class="th-type">餐饮类别</th>
-						<th class="th-price">价格<br>(元/人)</th>
-						<th class="th-created-at">登录日</th>
+						<th class="th-price">价格(日元/人)</th>
 						<th class="th-modified-at">更新日</th>
 					</tr>
 					<?php foreach($restaurant_list as $restaurant): ?>
@@ -143,7 +145,6 @@
 						<td><?php echo $restaurant['restaurant_area_name']; ?></td>
 						<td><?php echo $restaurant['restaurant_type_name']; ?></td>
 						<td><?php echo ($restaurant['restaurant_price_min'] || $restaurant['restaurant_price_max']) ? ($restaurant['restaurant_price_min'] . '～' . $restaurant['restaurant_price_max']) : ''; ?></td>
-						<td><?php echo date('Y/m/d', strtotime($restaurant['created_at'])); ?></td>
 						<td><?php echo date('Y/m/d', strtotime($restaurant['modified_at'])); ?></td>
 					</tr>
 					<?php endforeach; ?>
@@ -214,7 +215,7 @@
 				<p>餐饮一经删除将无法还原，<br/>当餐饮被删除时，使用该餐饮的路线及客户信息中的相关信息也将被同时清除，<br/>确定要删除当前选中的所有餐饮吗？</p>
 			</div>
 			<div class="popup-controller">
-				<form action="/admin/delete_checked_restaurant/" method="post" id="form-delete-checked">
+				<form action="/admin/delete_restaurant_checked/" method="post" id="form-delete-checked">
 					<?php foreach($restaurant_list as $restaurant): ?>
 					<input type="checkbox" name="delete_id_checked[]" id="delete-id-checked-<?php echo $restaurant['restaurant_id']; ?>" value="<?php echo $restaurant['restaurant_id']; ?>">
 					<?php endforeach; ?>

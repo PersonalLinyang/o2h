@@ -6,19 +6,21 @@
 	<?php echo Asset::css('pc/admin/common.css'); ?>
 	<?php echo Asset::js('common/jquery-1.9.1.min.js'); ?>
 	<?php echo Asset::js('pc/admin/common.js'); ?>
-	<?php echo Asset::js('pc/admin/service/restaurant_detail.js'); ?>
+	<?php echo Asset::js('pc/admin/service/restaurant/restaurant_detail.js'); ?>
 </head>
 <body class="body-common">
 	<?php echo $header; ?>
 	<div class="content-area">
 		<div class="content-menu">
 			<ul class="content-menu-list">
+				<?php if($edit_able_flag): ?>
 				<li class="content-menu-button"><a href="/admin/modify_restaurant/<?php echo $restaurant_info['restaurant_id']; ?>/">信息修改</a></li>
 				<?php if($restaurant_info['restaurant_status'] == '1'): ?>
 				<li class="content-menu-button btn-restaurant-status">设为未公开</li>
 				<?php else: ?>
 				<li class="content-menu-button btn-restaurant-status">设为公开</li>
-				<?php endif; ?>
+				<?php endif; //restaurant_info['restaurant_status'] ?>
+				<?php endif; //edit_able_flag ?>
 				<li class="content-menu-button"><a href="/admin/restaurant_list/">餐饮一览</a></li>
 			</ul>
 		</div>
@@ -75,7 +77,7 @@
 			</div>
 			<div class="popup-controller">
 				<form action="/admin/modify_restaurant_status/" method="post" id="form-restaurant-status">
-					<input type="hidden" name="modify_value" value="protected" />
+					<input type="hidden" name="modify_value" value="0" />
 					<input type="hidden" name="modify_id" value="<?php echo $restaurant_info['restaurant_id']; ?>" />
 					<input type="hidden" name="page" value="restaurant_detail" />
 				</form>
@@ -93,7 +95,7 @@
 			</div>
 			<div class="popup-controller">
 				<form action="/admin/modify_restaurant_status/" method="post" id="form-restaurant-status">
-					<input type="hidden" name="modify_value" value="publish" />
+					<input type="hidden" name="modify_value" value="1" />
 					<input type="hidden" name="modify_id" value="<?php echo $restaurant_info['restaurant_id']; ?>" />
 					<input type="hidden" name="page" value="restaurant_detail" />
 				</form>

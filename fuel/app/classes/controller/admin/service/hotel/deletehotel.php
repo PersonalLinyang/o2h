@@ -14,7 +14,7 @@ class Controller_Admin_Service_Hotel_Deletehotel extends Controller_Admin_App
 	public function action_index($param = 1)
 	{
 		$header_url = '//' . $_SERVER['HTTP_HOST'] . '/admin/hotel_list/';
-//		try {
+		try {
 			if(!isset($_POST['page'])) {
 				//删除所需的数据不全
 				$_SESSION['delete_hotel_error'] = 'error_system';
@@ -22,7 +22,7 @@ class Controller_Admin_Service_Hotel_Deletehotel extends Controller_Admin_App
 				if(!isset($_POST['delete_id'])) {
 					//删除所需的数据不全
 					$_SESSION['delete_hotel_error'] = 'error_system';
-				} elseif(!Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 7)) {
+				} elseif(!Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 17)) {
 					//当前登陆用户不具备削除酒店的权限
 					$_SESSION['delete_hotel_error'] = 'error_permission';
 				} else {
@@ -30,7 +30,7 @@ class Controller_Admin_Service_Hotel_Deletehotel extends Controller_Admin_App
 					$params_delete = array(
 						'hotel_id_list' => array($_POST['delete_id']),
 						'deleted_by' => $_SESSION['login_user']['id'],
-						'self_only' => !Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'authority', 3),
+						'self_only' => !Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'authority', 7),
 					);
 					
 					$result_check = Model_Hotel::CheckDeleteHotel($params_delete);
@@ -63,10 +63,10 @@ class Controller_Admin_Service_Hotel_Deletehotel extends Controller_Admin_App
 						break;
 				}
 			}
-//		} catch (Exception $e) {
-//			//发生系统异常
-//			$_SESSION['delete_hotel_error'] = 'error_system';
-//		}
+		} catch (Exception $e) {
+			//发生系统异常
+			$_SESSION['delete_hotel_error'] = 'error_system';
+		}
 		header('Location: ' . $header_url);
 		exit;
 	}
@@ -87,7 +87,7 @@ class Controller_Admin_Service_Hotel_Deletehotel extends Controller_Admin_App
 				if(!isset($_POST['delete_id_checked'])) {
 					//删除所需的数据不全
 					$_SESSION['delete_hotel_checked_error'] = 'empty_hotel_id';
-				} elseif(!Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 7)) {
+				} elseif(!Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 17)) {
 					//当前登陆用户不具备削除酒店的权限
 					$_SESSION['delete_hotel_checked_error'] = 'error_permission';
 				} else {
@@ -95,7 +95,7 @@ class Controller_Admin_Service_Hotel_Deletehotel extends Controller_Admin_App
 					$params_delete = array(
 						'hotel_id_list' => $_POST['delete_id_checked'],
 						'deleted_by' => $_SESSION['login_user']['id'],
-						'self_only' => !Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'authority', 3),
+						'self_only' => !Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'authority', 7),
 					);
 					
 					$result_check = Model_Hotel::CheckDeleteHotel($params_delete);

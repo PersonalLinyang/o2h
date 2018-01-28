@@ -17,6 +17,7 @@ class Controller_Admin_Service_Hotel_Addhotel extends Controller_Admin_App
 		
 		//调用共用Header
 		$data['header'] = Request::forge('admin/common/header')->execute()->response();
+		
 		try {
 			if(!Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 16)) {
 				//当前登陆用户不具备添加酒店的权限

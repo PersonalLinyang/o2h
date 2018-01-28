@@ -119,7 +119,7 @@
 			<div class="div-content-list">
 				<p>
 					共为您检索到<span class="strong"><?php echo $hotel_count; ?></span>条酒店信息
-					目前显示的是其中的第<span class="strong"><?php echo $start_number; ?></span>～<span class="strong"><?php echo $end_number; ?></span>条
+					目前显示的是其中的第<span class="strong"><?php echo $start_number; ?></span><?php if($start_number != $end_number): ?>～<span class="strong"><?php echo $end_number; ?></span><?php endif; ?>条
 				</p>
 				<table class="tb-content-list">
 					<tr>
@@ -131,7 +131,6 @@
 						<th class="th-area">所属地区</th>
 						<th class="th-type">酒店类别</th>
 						<th class="th-price">价格<br>(日元/人夜)</th>
-						<th class="th-created-at">登录日</th>
 						<th class="th-modified-at">更新日</th>
 					</tr>
 					<?php foreach($hotel_list as $hotel): ?>
@@ -144,7 +143,6 @@
 						<td><?php echo $hotel['hotel_area_name']; ?></td>
 						<td><?php echo $hotel['hotel_type_name']; ?></td>
 						<td><?php echo $hotel['hotel_price']; ?></td>
-						<td><?php echo date('Y/m/d', strtotime($hotel['created_at'])); ?></td>
 						<td><?php echo date('Y/m/d', strtotime($hotel['modified_at'])); ?></td>
 					</tr>
 					<?php endforeach; ?>

@@ -22,7 +22,7 @@ class Controller_Admin_Service_Hoteltype_Deletehoteltype extends Controller_Admi
 				if(!isset($_POST['delete_id'])) {
 					//删除所需的数据不全
 					$_SESSION['delete_hotel_type_error'] = 'error_system';
-				} elseif(!Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 10)) {
+				} elseif(!Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 20)) {
 					//当前登陆用户不具备酒店类别管理的权限
 					return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
 				} else {

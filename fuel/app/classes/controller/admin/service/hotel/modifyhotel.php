@@ -18,11 +18,11 @@ class Controller_Admin_Service_Hotel_Modifyhotel extends Controller_Admin_App
 		//调用共用Header
 		$data['header'] = Request::forge('admin/common/header')->execute()->response();
 		
-//		try {
+		try {
 			if(!is_numeric($hotel_id)) {
 				//酒店ID不是数字
 				return Response::forge(View::forge($this->template . '/admin/error/access_error', $data, false));
-			} elseif(!Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 6)) {
+			} elseif(!Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 16)) {
 				//当前登陆用户不具备修改酒店的权限
 				return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
 			} else {
@@ -147,10 +147,10 @@ class Controller_Admin_Service_Hotel_Modifyhotel extends Controller_Admin_App
 				//调用View
 				return Response::forge(View::forge($this->template . '/admin/service/hotel/edit_hotel', $data, false));
 			}
-//		} catch (Exception $e) {
-//			//发生系统异常
-//			return Response::forge(View::forge($this->template . '/admin/error/system_error', $data, false));
-//		}
+		} catch (Exception $e) {
+			//发生系统异常
+			return Response::forge(View::forge($this->template . '/admin/error/system_error', $data, false));
+		}
 	}
 	
 	/**
@@ -160,7 +160,7 @@ class Controller_Admin_Service_Hotel_Modifyhotel extends Controller_Admin_App
 	 */
 	public function action_modifyhotelstatus($param = null)
 	{
-//		try {
+		try {
 			if(isset($_POST['page'], $_POST['modify_id'], $_POST['modify_value'])) {
 				if(is_numeric($_POST['modify_id']) && $_POST['page'] == 'hotel_detail') {
 					$hotel_id = $_POST['modify_id'];
@@ -205,12 +205,12 @@ class Controller_Admin_Service_Hotel_Modifyhotel extends Controller_Admin_App
 			$_SESSION['modify_hotel_status_error'] = true;
 			header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/hotel_detail/' . $_POST['modify_id'] . '/');
 			exit;
-//		} catch (Exception $e) {
-//			//发生系统异常
-//			$_SESSION['modify_hotel_status_error'] = true;
-//			header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/hotel_detail/' . $_POST['modify_id'] . '/');
-//			exit;
-//		}
+		} catch (Exception $e) {
+			//发生系统异常
+			$_SESSION['modify_hotel_status_error'] = true;
+			header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/hotel_detail/' . $_POST['modify_id'] . '/');
+			exit;
+		}
 	}
 
 }
