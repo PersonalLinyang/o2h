@@ -57,8 +57,8 @@ class Controller_Admin_Service_Hoteltype_AddHotelType extends Controller_Admin_A
 							$result_insert = Model_Hoteltype::InsertHotelType($params_insert);
 							
 							if($result_insert) {
-								//更新酒店信息导入模板
-								$result_excel = Model_Hoteltype::ModifyHotelModelExcel();
+								//更新批量导入酒店用模板
+								$result_excel = Model_Hotel::ModifyHotelModelExcel();
 								
 								if($result_excel) {
 									//添加成功 页面跳转
@@ -66,7 +66,7 @@ class Controller_Admin_Service_Hoteltype_AddHotelType extends Controller_Admin_A
 									header('Location: //' . $_SERVER['HTTP_HOST'] . '/admin/hotel_type_list/');
 									exit;
 								} else {
-									//添加成功 页面跳转
+									//添加成功 但模板更新失败 页面跳转
 									$_SESSION['add_hotel_type_error'] = 'error_excel';
 									header('Location: //' . $_SERVER['HTTP_HOST'] . '/admin/hotel_type_list/');
 									exit;

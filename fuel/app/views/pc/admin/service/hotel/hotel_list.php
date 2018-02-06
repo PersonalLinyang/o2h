@@ -15,16 +15,31 @@
 	<div class="content-area">
 		<div class="content-menu">
 			<ul class="content-menu-list">
+				<?php if($edit_able_flag): ?>
 				<li><a href="/admin/add_hotel/">添加酒店</a></li>
+				<?php endif; ?>
+				<?php if($delete_able_flag): ?>
 				<li id="btn-content-menu-delete-checked">删除选中酒店</li>
+				<?php endif; ?>
 				<li id="btn-content-menu-select">筛选排序</li>
+				<?php if($import_able_flag): ?>
+				<li class="btn-content-menu" id="btn-content-menu-import">批量导入酒店</li>
+				<?php endif; ?>
+				<?php if($export_able_flag): ?>
+				<li class="btn-content-menu" id="btn-content-menu-export">导出酒店列表</li>
+				<?php endif; ?>
+				<?php if($hotel_type_able_flag): ?>
 				<li><a href="/admin/hotel_type_list/">酒店类别管理</a></li>
+				<?php endif; ?>
+				<?php if($room_type_able_flag): ?>
+				<li><a href="/admin/room_type_list/">房型管理</a></li>
+				<?php endif; ?>
 			</ul>
 			<div class="content-menu-select" id="div-content-menu-select">
 				<form action="/admin/hotel_list/" method="get" id="form-content-menu-select">
 					<table>
 						<tr>
-							<th rowspan="5" class="th-parent">筛选条件</th>
+							<th rowspan="6" class="th-parent">筛选条件</th>
 							<th>酒店名</th>
 							<td><input type="text" name="select_name" value="<?php echo $select_name; ?>" /></td>
 						</tr>
@@ -50,8 +65,8 @@
 							<th>酒店类别</th>
 							<td>
 								<?php foreach($hotel_type_list as $hotel_type): ?>
-								<input type="checkbox" name="select_hotel_type[]" value="<?php echo $hotel_type['hotel_type_id']; ?>" id="chb-select-type-<?php echo $hotel_type['hotel_type_id']; ?>" <?php echo in_array($hotel_type['hotel_type_id'], $select_hotel_type) ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-check<?php echo in_array($hotel_type['hotel_type_id'], $select_hotel_type) ? ' active' : ''; ?>" for="chb-select-type-<?php echo $hotel_type['hotel_type_id']; ?>"><?php echo $hotel_type['hotel_type_name']; ?></label>
+								<input type="checkbox" name="select_hotel_type[]" value="<?php echo $hotel_type['hotel_type_id']; ?>" id="chb-select-room-<?php echo $hotel_type['hotel_type_id']; ?>" <?php echo in_array($hotel_type['hotel_type_id'], $select_hotel_type) ? 'checked ' : ''; ?>/>
+								<label class="lbl-for-check<?php echo in_array($hotel_type['hotel_type_id'], $select_hotel_type) ? ' active' : ''; ?>" for="chb-select-room-<?php echo $hotel_type['hotel_type_id']; ?>"><?php echo $hotel_type['hotel_type_name']; ?></label>
 								<?php endforeach; ?>
 							</td>
 						</tr>
@@ -62,6 +77,15 @@
 								～
 								<input type="text" name="select_price_max" class="price" value="<?php echo $select_price_max; ?>" />
 								日元/人夜
+							</td>
+						</tr>
+						<tr>
+							<th>房型</th>
+							<td>
+								<?php foreach($room_type_list as $room_type): ?>
+								<input type="checkbox" name="select_room_type[]" value="<?php echo $room_type['room_type_id']; ?>" id="chb-select-type-<?php echo $room_type['room_type_id']; ?>" <?php echo in_array($room_type['room_type_id'], $select_room_type) ? 'checked ' : ''; ?>/>
+								<label class="lbl-for-check<?php echo in_array($room_type['room_type_id'], $select_room_type) ? ' active' : ''; ?>" for="chb-select-type-<?php echo $room_type['room_type_id']; ?>"><?php echo $room_type['room_type_name']; ?></label>
+								<?php endforeach; ?>
 							</td>
 						</tr>
 					</table>
@@ -103,6 +127,47 @@
 					<li class="button-no" id="btn-content-menu-select-cancel">取消</li>
 				</ul>
 			</div>
+			
+			<?php if($import_able_flag): ?>
+			<div class="content-menu-import content-menu-control-area" id="div-content-menu-import">
+				<form action="/admin/import_hotel/" method="post" id="form-content-menu-import" enctype="multipart/form-data">
+					<div class="upload-area">
+						<label>
+							<input type="file" name="file_hotel_list" accept=".xls,.xlsx" class="file-content-menu" />
+							<p class="btn-upload">请上传写有要导入的景点信息的Excel文件</p>
+						</label>
+					</div>
+					<input type="hidden" name="page" value="hotel_list" />
+				</form>
+				<ul class="button-group">
+					<li class="button-yes" id="btn-content-menu-import-submit">导入</li>
+					<li class="button"><a href="/assets/xls/model/import_hotel_model.xls" download>下载模板</a></li>
+					<li class="button-no" id="btn-content-menu-import-cancel">取消</li>
+				</ul>
+			</div>
+			<?php endif; ?>
+			
+			<?php if($export_able_flag): ?>
+			<div class="content-menu-export content-menu-control-area" id="div-content-menu-export">
+				<form action="/admin/export_hotel/" method="post" id="form-content-menu-export" enctype="multipart/form-data">
+					<input type="hidden" name="select_name" value="<?php echo $select_name; ?>" />
+					<input type="hidden" name="select_status" value="<?php echo implode(',', $select_status); ?>" />
+					<input type="hidden" name="select_area" value="<?php echo implode(',', $select_area); ?>" />
+					<input type="hidden" name="select_hotel_type" value="<?php echo implode(',', $select_hotel_type); ?>" />
+					<input type="hidden" name="select_price_min" value="<?php echo $select_price_min; ?>" />
+					<input type="hidden" name="select_price_max" value="<?php echo $select_price_max; ?>" />
+					<input type="hidden" name="sort_column" value="<?php echo $sort_column; ?>" />
+					<input type="hidden" name="sort_method" value="<?php echo $sort_method; ?>" />
+					<input type="hidden" name="export_model" value="" id="hid-content-menu-export-model" />
+					<input type="hidden" name="page" value="hotel_list" />
+				</form>
+				<ul class="button-group">
+					<li class="button-yes" class="btn-content-menu-export" id="btn-content-menu-export-review">阅览模式导出</li>
+					<li class="button-yes" class="btn-content-menu-export" id="btn-content-menu-export-backup">备份模式导出</li>
+					<li class="button-no" id="btn-content-menu-export-cancel">取消</li>
+				</ul>
+			</div>
+			<?php endif; ?>
 		</div>
 		
 		<?php if($success_message): ?>
@@ -123,9 +188,13 @@
 				</p>
 				<table class="tb-content-list">
 					<tr>
+						<?php if($delete_able_flag): ?>
 						<th class="th-check"></th>
 						<th class="th-delete"></th>
+						<?php endif; ?>
+						<?php if($edit_able_flag): ?>
 						<th class="th-modify"></th>
+						<?php endif; ?>
 						<th class="th-name">酒店名</th>
 						<th class="th-status">状态</th>
 						<th class="th-area">所属地区</th>
@@ -135,9 +204,25 @@
 					</tr>
 					<?php foreach($hotel_list as $hotel): ?>
 					<tr>
-						<td><label class="lbl-for-check" for="delete-id-checked-<?php echo $hotel['hotel_id']; ?>"></label></td>
-						<td><p class="btn-controller btn-delete" data-value="<?php echo $hotel['hotel_id']; ?>" data-name="<?php echo $hotel['hotel_name']; ?>">削除</p></td>
-						<td><p class="btn-controller btn-modify"><a href="/admin/modify_hotel/<?php echo $hotel['hotel_id']; ?>/">修改</a></p></td>
+						<?php if($delete_able_flag): ?>
+						<td>
+							<?php if($user_id_self == $hotel['created_by'] || $delete_other_able_flag): ?>
+							<label class="lbl-for-check" for="delete-id-checked-<?php echo $hotel['hotel_id']; ?>"></label>
+							<?php endif; ?>
+						</td>
+						<td>
+							<?php if($user_id_self == $hotel['created_by'] || $delete_other_able_flag): ?>
+							<p class="btn-controller btn-delete" data-value="<?php echo $hotel['hotel_id']; ?>" data-name="<?php echo $hotel['hotel_name']; ?>">削除</p>
+							<?php endif; ?>
+						</td>
+						<?php endif; ?>
+						<?php if($edit_able_flag): ?>
+						<td>
+							<?php if($user_id_self == $hotel['created_by'] || $edit_other_able_flag): ?>
+							<p class="btn-controller btn-modify"><a href="/admin/modify_hotel/<?php echo $hotel['hotel_id']; ?>/">修改</a></p>
+							<?php endif; ?>
+						</td>
+						<?php endif; ?>
 						<td><a href="/admin/hotel_detail/<?php echo $hotel['hotel_id']; ?>/"><?php echo $hotel['hotel_name']; ?></a></td>
 						<td><?php echo $hotel['hotel_status'] == '1' ? '公开' : '未公开'; ?></td>
 						<td><?php echo $hotel['hotel_area_name']; ?></td>
@@ -188,6 +273,7 @@
 		</div>
 		<?php endif; ?>
 		
+		<?php if($delete_able_flag): ?>
 		<div class="popup-shadow"></div>
 		
 		<div class="popup-delete popup">
@@ -225,6 +311,7 @@
 				</ul>
 			</div>
 		</div>
+		<?php endif; ?>
 	</div>
 </body>
 </html>

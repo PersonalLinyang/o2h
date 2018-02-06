@@ -28,7 +28,7 @@
 						<td><input type="text" name="spot_name" value="<?php echo $input_spot_name; ?>" /></td>
 					</tr>
 					<tr>
-						<th>景点所属地区</th>
+						<th>景点地区</th>
 						<td>
 							<select name="spot_area">
 								<option value=""></option>

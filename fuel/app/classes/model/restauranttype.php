@@ -4,7 +4,7 @@ class Model_Restauranttype extends Model
 {
 
 	/*
-	 * 添加餐饮类别
+	 * 添加餐饮店类别
 	 */
 	public static function InsertRestaurantType($params) {
 		try {
@@ -14,7 +14,7 @@ class Model_Restauranttype extends Model
 			$result = $query->execute();
 			
 			if($result) {
-				//新餐饮类别ID
+				//新餐饮店类别ID
 				$restaurant_type_id = intval($result[0]);
 				return $restaurant_type_id;
 			} else {
@@ -26,11 +26,11 @@ class Model_Restauranttype extends Model
 	}
 	
 	/*
-	 * 删除餐饮类别
+	 * 删除餐饮店类别
 	 */
 	public static function DeleteRestaurantType($params) {
 		try {
-			//删除餐饮类别
+			//删除餐饮店类别
 			$sql_type = "UPDATE m_restaurant_type SET delete_flag = 1 WHERE restaurant_type_id = :restaurant_type_id";
 			$query_type = DB::query($sql_type);
 			$query_type->param('restaurant_type_id', $params['restaurant_type_id']);
@@ -43,7 +43,7 @@ class Model_Restauranttype extends Model
 	}
 	
 	/*
-	 * 更新餐饮类别名称
+	 * 更新餐饮店类别名称
 	 */
 	public static function UpdateRestaurantType($params) {
 		try {
@@ -59,7 +59,7 @@ class Model_Restauranttype extends Model
 		}
 	}
 	
-	//获得符合特定条件的餐饮类别
+	//获得符合特定条件的餐饮店类别
 	public static function SelectRestaurantTypeList($params) {
 		try{
 			$sql_select = array();
@@ -68,11 +68,11 @@ class Model_Restauranttype extends Model
 			$sql_group_by = array();
 			$sql_params = array();
 			
-			//有效餐饮类别限定
+			//有效餐饮店类别限定
 			if(isset($params['active_only'])) {
 				$sql_where[] = " mst.delete_flag = 0 ";
 			}
-			//获取所属餐饮数
+			//获取所属餐饮店数
 			if(isset($params['restaurant_count_flag'])) {
 				$sql_select[] = " COUNT(ts.restaurant_id) restaurant_count ";
 				$sql_from[] = " LEFT JOIN (SELECT * FROM t_restaurant WHERE delete_flag=0) ts ON ts.restaurant_type = mst.restaurant_type_id ";
@@ -97,14 +97,14 @@ class Model_Restauranttype extends Model
 	}
 	
 	/*
-	 * 获取特定单个餐饮类别信息
+	 * 获取特定单个餐饮店类别信息
 	 */
 	public static function SelectRestaurantType($params) {
 		try {
 			$sql_where = array();
 			$sql_params = array();
 			
-			//餐饮类别ID限定
+			//餐饮店类别ID限定
 			if(isset($params['restaurant_type_id'])) {
 				$sql_where[] = " mst.restaurant_type_id = :restaurant_type_id ";
 				$sql_params['restaurant_type_id'] = $params['restaurant_type_id'];
@@ -136,7 +136,7 @@ class Model_Restauranttype extends Model
 	}
 	
 	/*
-	 * 编辑餐饮类别前编辑信息查验
+	 * 编辑餐饮店类别前编辑信息查验
 	 */
 	public static function CheckEditRestaurantType($params) {
 		$result = array(
@@ -144,7 +144,7 @@ class Model_Restauranttype extends Model
 			'error' => array(),
 		);
 		
-		//餐饮类别名称
+		//餐饮店类别名称
 		if(empty($params['restaurant_type_name'])) {
 			$result['result'] = false;
 			$result['error'][] = 'empty_restaurant_type_name';
@@ -160,7 +160,7 @@ class Model_Restauranttype extends Model
 	}
 	
 	/*
-	 * 删除餐饮类别前删除信息查验
+	 * 删除餐饮店类别前删除信息查验
 	 */
 	public static function CheckDeleteRestaurantType($params) {
 		$result = array(
@@ -175,7 +175,7 @@ class Model_Restauranttype extends Model
 			$result['result'] = false;
 			$result['error'][] = 'error_restaurant_type_id';
 		} else {
-			//获取餐饮信息
+			//获取餐饮店信息
 			$params_select = array(
 				'restaurant_type' => array($params['restaurant_type_id']),
 				'active_only' => 1,
@@ -192,7 +192,7 @@ class Model_Restauranttype extends Model
 	}
 	
 	/*
-	 * 检查餐饮类别ID是否存在
+	 * 检查餐饮店类别ID是否存在
 	 */
 	public static function CheckRestaurantTypeIdExist($restaurant_type_id, $active_check = 0) {
 		try {
@@ -212,7 +212,7 @@ class Model_Restauranttype extends Model
 	}
 	
 	/*
-	 * 餐饮类别名称重复查验
+	 * 餐饮店类别名称重复查验
 	 */
 	public static function CheckRestaurantTypeNameDuplication($restaurant_type_id, $restaurant_type_name) {
 		try {
@@ -232,61 +232,6 @@ class Model_Restauranttype extends Model
 			}
 		} catch (Exception $e) {
 			return true;
-		}
-	}
-	
-	/*
-	 * 餐饮信息上传用模板Excel更新
-	 */
-	public static function ModifyRestaurantModelExcel() {
-		try {
-			//修改餐饮上传用模板Excel
-			//Excel处理用组件
-			include_once(APPPATH . 'modules/PHPExcel-1.8/Classes/PHPExcel.php');
-			include_once(APPPATH . 'modules/PHPExcel-1.8/Classes/PHPExcel/IOFactory.php');
-			
-			//读取模板
-			$xls_model = PHPExcel_IOFactory::load(DOCROOT . '/assets/xls/model/import_restaurant_model.xls');
-			$sheet_type = $xls_model->getSheetByName('restaurant_type');
-			
-			//删除原有信息
-			$sheet_type->removeColumn('A');
-			
-			//写入餐饮类别名列表
-			$restaurant_type_list = Model_RestaurantType::SelectRestaurantTypeList(array('active_only' => 1));
-			$row_counter = 1;
-			foreach($restaurant_type_list as $restaurant_type) {
-				$sheet_type->setCellValue('B' . $row_counter, $restaurant_type['restaurant_type_name']);
-				$row_counter++;
-			}
-			
-			//删除原有信息
-			$sheet_type->removeColumn('A');
-			
-			//写入餐饮类别名列表
-			$restaurant_type_list = Model_RestaurantType::SelectRestaurantTypeList(array('active_only' => 1));
-			$row_counter = 1;
-			foreach($restaurant_type_list as $restaurant_type) {
-				$sheet_type->setCellValue('B' . $row_counter, $restaurant_type['restaurant_type_name']);
-				$row_counter++;
-			}
-			
-			//删除原有信息
-			$sheet_type->removeColumn('A');
-			
-			//更新文件
-			$writer_xls = PHPExcel_IOFactory::createWriter($xls_model, 'Excel2007');
-			$writer_xls->save(DOCROOT . '/assets/xls/model/import_restaurant_model.xls');
-			
-			//释放缓存
-			$xls_model->disconnectWorksheets();
-			unset($writer_xls);
-			unset($sheet_type);
-			unset($xls_model);
-			
-			return true;
-		} catch (Exception $e) {
-			return false;
 		}
 	}
 

@@ -1,13 +1,13 @@
 <?php
 /* 
- * 餐饮详细信息页
+ * 餐饮店详细信息页
  */
 
 class Controller_Admin_Service_Restaurant_Restaurantdetail extends Controller_Admin_App
 {
 
 	/**
-	 * 餐饮详细信息页
+	 * 餐饮店详细信息页
 	 * @access  public
 	 * @return  Response
 	 */
@@ -20,10 +20,10 @@ class Controller_Admin_Service_Restaurant_Restaurantdetail extends Controller_Ad
 		
 		try {
 			if(!is_numeric($restaurant_id)) {
-				//餐饮ID不是数字
+				//餐饮店ID不是数字
 				return Response::forge(View::forge($this->template . '/admin/error/access_error', $data, false));
 			} elseif(!Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'sub_group', 10)) {
-				//当前登陆用户不具备查看餐饮的权限
+				//当前登陆用户不具备查看餐饮店的权限
 				return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
 			} else {
 				$data['success_message'] = '';
@@ -44,41 +44,42 @@ class Controller_Admin_Service_Restaurant_Restaurantdetail extends Controller_Ad
 				//暂时保留一览页URL
 				$_SESSION['restaurant_list_url_detail'] = $data['restaurant_list_url'];
 				
-				//获取餐饮信息
+				//获取餐饮店信息
 				$restaurant = Model_Restaurant::SelectRestaurant(array('restaurant_id' => $restaurant_id, 'active_only' => true));
 				
 				if(!$restaurant) {
-					//不存在该ID的餐饮
+					//不存在该ID的餐饮店
 					return Response::forge(View::forge($this->template . '/admin/error/access_error', $data, false));
 					exit;
 				}
 				
-				//餐饮信息
+				//餐饮店信息
 				$data['restaurant_info'] = $restaurant;
 				
 				if($restaurant['created_by'] == $_SESSION['login_user']['id']) {
-					//是否具备餐饮编辑权限
+					//是否具备餐饮店编辑权限
 					$data['edit_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 11);
 				} else {
-					//是否具备修改其他用户所登陆的餐饮信息权限
+					//是否具备修改其他用户所登陆的餐饮店信息权限
 					$data['edit_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'authority', 4);
 				}
 				
-				if(isset($_SESSION['modify_restaurant_status_success'])) {
-					$data['success_message'] = '餐饮公开状态更新成功';
-					unset($_SESSION['modify_restaurant_status_success']);
-				}
-				if(isset($_SESSION['modify_restaurant_status_error'])) {
-					$data['error_message'] = '餐饮公开状态更新失敗 请重新尝试';
-					unset($_SESSION['modify_restaurant_status_error']);
-				}
+				//输出提示信息
 				if(isset($_SESSION['add_restaurant_success'])) {
-					$data['success_message'] = '餐饮添加成功';
+					$data['success_message'] = '餐饮店添加成功';
 					unset($_SESSION['add_restaurant_success']);
 				}
 				if(isset($_SESSION['modify_restaurant_success'])) {
-					$data['success_message'] = '餐饮信息修改成功';
+					$data['success_message'] = '餐饮店信息修改成功';
 					unset($_SESSION['modify_restaurant_success']);
+				}
+				if(isset($_SESSION['modify_restaurant_status_success'])) {
+					$data['success_message'] = '餐饮店公开状态更新成功';
+					unset($_SESSION['modify_restaurant_status_success']);
+				}
+				if(isset($_SESSION['modify_restaurant_status_error'])) {
+					$data['error_message'] = '餐饮店公开状态更新失敗 请重新尝试';
+					unset($_SESSION['modify_restaurant_status_error']);
 				}
 				
 				//调用View

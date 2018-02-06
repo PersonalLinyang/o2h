@@ -51,7 +51,7 @@
 							</td>
 						</tr>
 						<tr>
-							<th>景点所属地区</th>
+							<th>景点地区</th>
 							<td>
 								<?php foreach($area_list as $area): ?>
 								<input type="checkbox" name="select_area[]" value="<?php echo $area['area_id']; ?>" id="chb-select-area-<?php echo $area['area_id']; ?>" <?php echo in_array($area['area_id'], $select_area) ? 'checked ' : ''; ?>/>
@@ -95,7 +95,7 @@
 								<input type="radio" name="sort_column" value="spot_status" id="rdb-sort-status" <?php echo $sort_column == "spot_status" ? 'checked ' : ''; ?>/>
 								<label class="lbl-for-radio<?php echo $sort_column == 'spot_status' ? ' active' : ''; ?>" for="rdb-sort-status" data-for="rdb-sort-column">公开状况</label>
 								<input type="radio" name="sort_column" value="spot_area" id="rdb-sort-area" <?php echo $sort_column == "spot_area" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_column == 'spot_area' ? ' active' : ''; ?>" for="rdb-sort-area" data-for="rdb-sort-column">所属地区</label>
+								<label class="lbl-for-radio<?php echo $sort_column == 'spot_area' ? ' active' : ''; ?>" for="rdb-sort-area" data-for="rdb-sort-column">景点地区</label>
 								<input type="radio" name="sort_column" value="spot_type" id="rdb-sort-type" <?php echo $sort_column == "spot_type" ? 'checked ' : ''; ?>/>
 								<label class="lbl-for-radio<?php echo $sort_column == 'spot_type' ? ' active' : ''; ?>" for="rdb-sort-type" data-for="rdb-sort-column">景点类型</label>
 								<input type="radio" name="sort_column" value="spot_price" id="rdb-sort-price" <?php echo $sort_column == "spot_price" ? 'checked ' : ''; ?>/>
@@ -194,7 +194,7 @@
 						<?php endif; ?>
 						<th class="th-name">景点名</th>
 						<th class="th-status">状态</th>
-						<th class="th-area">所属地区</th>
+						<th class="th-area">景点地区</th>
 						<th class="th-type">景点类别</th>
 						<th class="th-price">收费状况</th>
 						<th class="th-modified-at">最近更新</th>
@@ -264,18 +264,19 @@
 		<div class="content-main">
 			<p class="error-icon">！</p>
 			<p class="error-text">
-				对不起，未能查找到符合筛选条件的景点信息<br/>
-				请确认筛选条件后重新进行筛选排序
+				对不起，未能找到符合条件的景点<br/>
+				请确认条件后重新进行筛选排序
 			</p>
 		</div>
 		<?php endif; ?>
 		
+		<?php if($delete_able_flag): ?>
 		<div class="popup-shadow"></div>
 		
 		<div class="popup-delete popup">
-			<div class="popup-title">删除景点确认</div>
+			<div class="popup-title">景点删除确认</div>
 			<div class="popup-content center">
-				<p>景点一经删除将无法还原，<br/>当景点被删除时，使用该景点的路线及客户信息中的相关信息也将被同时清除，<br/>确定要删除「景点-<span class="popup-delete-name"></span>」吗？</p>
+				<p>景点一经删除将无法还原，<br/>确定要删除景点-「<span class="popup-delete-name"></span>」吗？</p>
 			</div>
 			<div class="popup-controller">
 				<form action="/admin/delete_spot/" method="post" id="form-delete">
@@ -290,9 +291,9 @@
 		</div>
 		
 		<div class="popup-delete-checked popup">
-			<div class="popup-title">删除景点确认</div>
+			<div class="popup-title">景点删除确认</div>
 			<div class="popup-content center">
-				<p>景点一经删除将无法还原，<br/>当景点被删除时，使用该景点的路线及客户信息中的相关信息也将被同时清除，<br/>确定要删除当前选中的所有景点吗？</p>
+				<p>景点一经删除将无法还原，<br/>确定要删除当前选中的所有景点吗？</p>
 			</div>
 			<div class="popup-controller">
 				<form action="/admin/delete_spot_checked/" method="post" id="form-delete-checked">
@@ -307,6 +308,7 @@
 				</ul>
 			</div>
 		</div>
+		<?php endif; ?>
 	</div>
 </body>
 </html>

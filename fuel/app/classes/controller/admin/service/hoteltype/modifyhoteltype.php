@@ -7,7 +7,7 @@ class Controller_Admin_Service_Hoteltype_Modifyhoteltype extends Controller_Admi
 {
 
 	/**
-	 * 酒店类别名称修改页
+	 * 酒店类别修改页
 	 * @access  public
 	 * @return  Response
 	 */
@@ -42,7 +42,7 @@ class Controller_Admin_Service_Hoteltype_Modifyhoteltype extends Controller_Admi
 				}
 				
 				//页面标题
-				$data['page_title'] ='酒店类别信息修改';
+				$data['page_title'] ='酒店类别修改';
 				//表单页面索引
 				$data['form_page_index'] = 'modify_hotel_type';
 				
@@ -73,22 +73,22 @@ class Controller_Admin_Service_Hoteltype_Modifyhoteltype extends Controller_Admi
 							$result_update = Model_Hoteltype::UpdateHotelType($params_update);
 							
 							if($result_update) {
-								//更新酒店信息导入模板
-								$result_excel = Model_Hoteltype::ModifyHotelModelExcel();
+								//更新批量导入酒店用模板
+								$result_excel = Model_Hotel::ModifyHotelModelExcel();
 								
 								if($result_excel) {
-									//添加成功 页面跳转
+									//修改成功 页面跳转
 									$_SESSION['modify_hotel_type_success'] = true;
 									header('Location: //' . $_SERVER['HTTP_HOST'] . '/admin/hotel_type_list/');
 									exit;
 								} else {
-									//添加成功 页面跳转
+									//修改成功 但模板更新失败 页面跳转
 									$_SESSION['modify_hotel_type_error'] = 'error_excel';
 									header('Location: //' . $_SERVER['HTTP_HOST'] . '/admin/hotel_type_list/');
 									exit;
 								}
 							} else {
-								$error_message_list[] = '数据库错误：数据添加失败';
+								$error_message_list[] = '数据库错误：数据修改失败';
 							}
 						} else {
 							//获取错误信息

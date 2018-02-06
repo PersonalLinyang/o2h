@@ -65,6 +65,14 @@ class Controller_Admin_Service_Spot_Spotdetail extends Controller_Admin_App
 				}
 				
 				//输出提示信息
+				if(isset($_SESSION['add_spot_success'])) {
+					$data['success_message'] = '景点添加成功';
+					unset($_SESSION['add_spot_success']);
+				}
+				if(isset($_SESSION['modify_spot_success'])) {
+					$data['success_message'] = '景点修改成功';
+					unset($_SESSION['modify_spot_success']);
+				}
 				if(isset($_SESSION['modify_spot_status_success'])) {
 					$data['success_message'] = '景点公开状态更新成功';
 					unset($_SESSION['modify_spot_status_success']);
@@ -72,14 +80,6 @@ class Controller_Admin_Service_Spot_Spotdetail extends Controller_Admin_App
 				if(isset($_SESSION['modify_spot_status_error'])) {
 					$data['error_message'] = '景点公开状态更新失敗';
 					unset($_SESSION['modify_spot_status_error']);
-				}
-				if(isset($_SESSION['add_spot_success'])) {
-					$data['success_message'] = '景点添加成功';
-					unset($_SESSION['add_spot_success']);
-				}
-				if(isset($_SESSION['modify_spot_success'])) {
-					$data['success_message'] = '景点信息修改成功';
-					unset($_SESSION['modify_spot_success']);
 				}
 				
 				//调用View

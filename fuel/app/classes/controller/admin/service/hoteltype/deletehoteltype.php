@@ -7,13 +7,12 @@ class Controller_Admin_Service_Hoteltype_Deletehoteltype extends Controller_Admi
 {
 
 	/**
-	 * 削除单个酒店类别
+	 * 削除酒店类别
 	 * @access  public
 	 * @return  Response
 	 */
 	public function action_index($param = 1)
 	{
-		$header_url = '//' . $_SERVER['HTTP_HOST'] . '/admin/hotel_type_list/';
 		try {
 			if(!isset($_POST['page'])) {
 				//删除所需的数据不全
@@ -37,8 +36,8 @@ class Controller_Admin_Service_Hoteltype_Deletehoteltype extends Controller_Admi
 						$result_delete = Model_Hoteltype::DeleteHotelType($params_delete);
 						
 						if($result_delete) {
-							//更新酒店信息导入模板
-							$result_excel = Model_Hoteltype::ModifyHotelModelExcel();
+							//更新批量导入酒店用模板
+							$result_excel = Model_Hotel::ModifyHotelModelExcel();
 							
 							if($result_excel) {
 								//削除成功
@@ -55,25 +54,12 @@ class Controller_Admin_Service_Hoteltype_Deletehoteltype extends Controller_Admi
 						$_SESSION['delete_hotel_type_error'] = $result_check['error'][0];
 					}
 				}
-				
-				//页面返回目标
-				switch($_POST['page']) {
-					case 'hotel_type_list':
-						if(isset($_SERVER['HTTP_REFERER'])) {
-							if(strstr($_SERVER['HTTP_REFERER'], 'admin/hotel_type_list')) {
-								$header_url = $_SERVER['HTTP_REFERER'];
-							}
-						}
-						break;
-					default:
-						break;
-				}
 			}
 		} catch (Exception $e) {
 			//发生系统异常
 			$_SESSION['delete_hotel_type_error'] = 'error_system';
 		}
-		header('Location: ' . $header_url);
+		header('Location: //' . $_SERVER['HTTP_HOST'] . '/admin/hotel_type_list/');
 		exit;
 	}
 

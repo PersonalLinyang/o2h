@@ -15,10 +15,22 @@
 	<div class="content-area">
 		<div class="content-menu">
 			<ul class="content-menu-list">
+				<?php if($edit_able_flag): ?>
 				<li><a href="/admin/add_restaurant/">添加餐饮</a></li>
+				<?php endif; ?>
+				<?php if($delete_able_flag): ?>
 				<li id="btn-content-menu-delete-checked">删除选中餐饮</li>
+				<?php endif; ?>
 				<li id="btn-content-menu-select">筛选排序</li>
+				<?php if($import_able_flag): ?>
+				<li class="btn-content-menu" id="btn-content-menu-import">批量导入餐饮</li>
+				<?php endif; ?>
+				<?php if($export_able_flag): ?>
+				<li class="btn-content-menu" id="btn-content-menu-export">导出餐饮列表</li>
+				<?php endif; ?>
+				<?php if($restaurant_type_able_flag): ?>
 				<li><a href="/admin/restaurant_type_list/">餐饮类别管理</a></li>
+				<?php endif; ?>
 			</ul>
 			<div class="content-menu-select" id="div-content-menu-select">
 				<form action="/admin/restaurant_list/" method="get" id="form-content-menu-select">
@@ -101,10 +113,51 @@
 				</form>
 				<ul class="button-group">
 					<li class="button-yes" id="btn-content-menu-select-submit">筛选排序</li>
-					<li class="button-yes"><a href="/admin/restaurant_list/">恢复初始</a></li>
+					<li class="button"><a href="/admin/restaurant_list/">恢复初始</a></li>
 					<li class="button-no" id="btn-content-menu-select-cancel">取消</li>
 				</ul>
 			</div>
+			
+			<?php if($import_able_flag): ?>
+			<div class="content-menu-import content-menu-control-area" id="div-content-menu-import">
+				<form action="/admin/import_restaurant/" method="post" id="form-content-menu-import" enctype="multipart/form-data">
+					<div class="upload-area">
+						<label>
+							<input type="file" name="file_restaurant_list" accept=".xls,.xlsx" class="file-content-menu" />
+							<p class="btn-upload">请上传写有要导入的景点信息的Excel文件</p>
+						</label>
+					</div>
+					<input type="hidden" name="page" value="restaurant_list" />
+				</form>
+				<ul class="button-group">
+					<li class="button-yes" id="btn-content-menu-import-submit">导入</li>
+					<li class="button"><a href="/assets/xls/model/import_restaurant_model.xls" download>下载模板</a></li>
+					<li class="button-no" id="btn-content-menu-import-cancel">取消</li>
+				</ul>
+			</div>
+			<?php endif; ?>
+			
+			<?php if($export_able_flag): ?>
+			<div class="content-menu-export content-menu-control-area" id="div-content-menu-export">
+				<form action="/admin/export_restaurant/" method="post" id="form-content-menu-export" enctype="multipart/form-data">
+					<input type="hidden" name="select_name" value="<?php echo $select_name; ?>" />
+					<input type="hidden" name="select_status" value="<?php echo implode(',', $select_status); ?>" />
+					<input type="hidden" name="select_area" value="<?php echo implode(',', $select_area); ?>" />
+					<input type="hidden" name="select_restaurant_type" value="<?php echo implode(',', $select_restaurant_type); ?>" />
+					<input type="hidden" name="select_price_min" value="<?php echo $select_price_min; ?>" />
+					<input type="hidden" name="select_price_max" value="<?php echo $select_price_max; ?>" />
+					<input type="hidden" name="sort_column" value="<?php echo $sort_column; ?>" />
+					<input type="hidden" name="sort_method" value="<?php echo $sort_method; ?>" />
+					<input type="hidden" name="export_model" value="" id="hid-content-menu-export-model" />
+					<input type="hidden" name="page" value="restaurant_list" />
+				</form>
+				<ul class="button-group">
+					<li class="button-yes" class="btn-content-menu-export" id="btn-content-menu-export-review">阅览模式导出</li>
+					<li class="button-yes" class="btn-content-menu-export" id="btn-content-menu-export-backup">备份模式导出</li>
+					<li class="button-no" id="btn-content-menu-export-cancel">取消</li>
+				</ul>
+			</div>
+			<?php endif; ?>
 		</div>
 		
 		<?php if($success_message): ?>
@@ -137,9 +190,25 @@
 					</tr>
 					<?php foreach($restaurant_list as $restaurant): ?>
 					<tr>
-						<td><label class="lbl-for-check" for="delete-id-checked-<?php echo $restaurant['restaurant_id']; ?>"></label></td>
-						<td><p class="btn-controller btn-delete" data-value="<?php echo $restaurant['restaurant_id']; ?>" data-name="<?php echo $restaurant['restaurant_name']; ?>">削除</p></td>
-						<td><p class="btn-controller btn-modify"><a href="/admin/modify_restaurant/<?php echo $restaurant['restaurant_id']; ?>/">修改</a></p></td>
+						<?php if($delete_able_flag): ?>
+						<td>
+							<?php if($user_id_self == $restaurant['created_by'] || $delete_other_able_flag): ?>
+							<label class="lbl-for-check" for="delete-id-checked-<?php echo $restaurant['restaurant_id']; ?>"></label>
+							<?php endif; ?>
+						</td>
+						<td>
+							<?php if($user_id_self == $restaurant['created_by'] || $delete_other_able_flag): ?>
+							<p class="btn-controller btn-delete" data-value="<?php echo $restaurant['restaurant_id']; ?>" data-name="<?php echo $restaurant['restaurant_name']; ?>">削除</p>
+							<?php endif; ?>
+						</td>
+						<?php endif; ?>
+						<?php if($edit_able_flag): ?>
+						<td>
+							<?php if($user_id_self == $restaurant['created_by'] || $edit_other_able_flag): ?>
+							<p class="btn-controller btn-modify"><a href="/admin/modify_restaurant/<?php echo $restaurant['restaurant_id']; ?>/">修改</a></p>
+							<?php endif; ?>
+						</td>
+						<?php endif; ?>
 						<td><a href="/admin/restaurant_detail/<?php echo $restaurant['restaurant_id']; ?>/"><?php echo $restaurant['restaurant_name']; ?></a></td>
 						<td><?php echo $restaurant['restaurant_status'] == '1' ? '公开' : '未公开'; ?></td>
 						<td><?php echo $restaurant['restaurant_area_name']; ?></td>
@@ -190,6 +259,7 @@
 		</div>
 		<?php endif; ?>
 		
+		<?php if($delete_able_flag): ?>
 		<div class="popup-shadow"></div>
 		
 		<div class="popup-delete popup">
@@ -227,6 +297,7 @@
 				</ul>
 			</div>
 		</div>
+		<?php endif; ?>
 	</div>
 </body>
 </html>

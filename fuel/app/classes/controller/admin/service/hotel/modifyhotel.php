@@ -1,13 +1,13 @@
 <?php
 /* 
- * 酒店信息修改页
+ * 酒店修改页
  */
 
 class Controller_Admin_Service_Hotel_Modifyhotel extends Controller_Admin_App
 {
 
 	/**
-	 * 酒店信息修改页
+	 * 酒店修改页
 	 * @access  public
 	 * @return  Response
 	 */
@@ -42,7 +42,7 @@ class Controller_Admin_Service_Hotel_Modifyhotel extends Controller_Admin_App
 				}
 				
 				//页面标题
-				$data['page_title'] ='酒店信息修改';
+				$data['page_title'] ='酒店修改';
 				//表单页面索引
 				$data['form_page_index'] = 'modify_hotel';
 				//返回页URL
@@ -57,6 +57,8 @@ class Controller_Admin_Service_Hotel_Modifyhotel extends Controller_Admin_App
 				$data['area_list'] = Model_Area::GetAreaList(array('active_only' => true));
 				//获取酒店类型列表
 				$data['hotel_type_list'] = Model_HotelType::SelectHotelTypeList(array('active_only' => true));
+				//获取房型列表
+				$data['room_type_list'] = Model_RoomType::SelectRoomTypeList(array('active_only' => true));
 				
 				//form控件默认值设定
 				$data['input_hotel_name'] = $hotel['hotel_name'];
@@ -64,6 +66,11 @@ class Controller_Admin_Service_Hotel_Modifyhotel extends Controller_Admin_App
 				$data['input_hotel_type'] = $hotel['hotel_type'];
 				$data['input_hotel_price'] = $hotel['hotel_price'];
 				$data['input_hotel_status'] = $hotel['hotel_status'];
+				$room_type_id_list = array();
+				foreach($hotel['room_type_list'] as $room_type) {
+					$room_type_id_list[] = $room_type['room_type_id'];
+				}
+				$data['input_room_type'] = $room_type_id_list;
 				
 				if(isset($_POST['page'])) {
 					$error_message_list = array();
@@ -78,6 +85,7 @@ class Controller_Admin_Service_Hotel_Modifyhotel extends Controller_Admin_App
 						$data['input_hotel_type'] = isset($_POST['hotel_type']) ? $_POST['hotel_type'] : $data['input_hotel_type'];
 						$data['input_hotel_price'] = isset($_POST['hotel_price']) ? trim($_POST['hotel_price']) : $data['input_hotel_price'];
 						$data['input_hotel_status'] = isset($_POST['hotel_status']) ? $_POST['hotel_status'] : $data['input_hotel_status'];
+						$data['input_room_type'] = isset($_POST['room_type']) ? $_POST['room_type'] : $data['input_room_type'];
 						
 						//修改酒店用数据生成
 						$params_update = array(
@@ -87,6 +95,7 @@ class Controller_Admin_Service_Hotel_Modifyhotel extends Controller_Admin_App
 							'hotel_type' => $data['input_hotel_type'],
 							'hotel_price' => $data['input_hotel_price'],
 							'hotel_status' => $data['input_hotel_status'],
+							'room_type_list' => $data['input_room_type'],
 							'created_by' => $hotel['created_by'],
 							'modified_by' => $_SESSION['login_user']['id'],
 						);
@@ -104,7 +113,7 @@ class Controller_Admin_Service_Hotel_Modifyhotel extends Controller_Admin_App
 								header('Location: //' . $_SERVER['HTTP_HOST'] . '/admin/hotel_detail/' . $hotel_id . '/');
 								exit;
 							} else {
-								$error_message_list[] = '数据库错误：数据添加失败';
+								$error_message_list[] = '数据库错误：数据修改失败';
 							}
 						} else {
 							//获取错误信息

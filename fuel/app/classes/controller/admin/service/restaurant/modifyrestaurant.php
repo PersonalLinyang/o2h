@@ -1,13 +1,13 @@
 <?php
 /* 
- * 餐饮信息修改页
+ * 餐饮店修改页
  */
 
 class Controller_Admin_Service_Restaurant_Modifyrestaurant extends Controller_Admin_App
 {
 
 	/**
-	 * 餐饮信息修改页
+	 * 餐饮店修改页
 	 * @access  public
 	 * @return  Response
 	 */
@@ -20,29 +20,29 @@ class Controller_Admin_Service_Restaurant_Modifyrestaurant extends Controller_Ad
 		
 		try {
 			if(!is_numeric($restaurant_id)) {
-				//餐饮ID不是数字
+				//餐饮店ID不是数字
 				return Response::forge(View::forge($this->template . '/admin/error/access_error', $data, false));
 			} elseif(!Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 11)) {
-				//当前登陆用户不具备修改餐饮的权限
+				//当前登陆用户不具备修改餐饮店的权限
 				return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
 			} else {
 				$data['error_message'] = '';
 				
-				//获取原本餐饮信息
+				//获取原本餐饮店信息
 				$restaurant = Model_Restaurant::SelectRestaurant(array('restaurant_id' => $restaurant_id, 'active_only' => true));
 				
 				if(!$restaurant) {
-					//不存在该ID的餐饮
+					//不存在该ID的餐饮店
 					return Response::forge(View::forge($this->template . '/admin/error/access_error', $data, false));
 					exit;
 				} elseif(!Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'authority', 4) && $restaurant['created_by'] != $_SESSION['login_user']['id']) {
-					//该ID的餐饮为其他用户创建且当前登陆用户不具备编辑他人创建餐饮的权限
+					//该ID的餐饮店为其他用户创建且当前登陆用户不具备编辑他人创建餐饮店的权限
 					return Response::forge(View::forge($this->template . '/admin/error/permission_error', $data, false));
 					exit;
 				}
 				
 				//页面标题
-				$data['page_title'] ='餐饮信息修改';
+				$data['page_title'] ='餐饮店修改';
 				//表单页面索引
 				$data['form_page_index'] = 'modify_restaurant';
 				//返回页URL
@@ -55,7 +55,7 @@ class Controller_Admin_Service_Restaurant_Modifyrestaurant extends Controller_Ad
 				
 				//获取地区列表
 				$data['area_list'] = Model_Area::GetAreaList(array('active_only' => true));
-				//获取餐饮类型列表
+				//获取餐饮店类型列表
 				$data['restaurant_type_list'] = Model_RestaurantType::SelectRestaurantTypeList(array('active_only' => true));
 				
 				//form控件默认值设定
@@ -70,7 +70,7 @@ class Controller_Admin_Service_Restaurant_Modifyrestaurant extends Controller_Ad
 					$error_message_list = array();
 					
 					if($_POST['page'] != $data['form_page_index']) {
-						//数据来源不是餐饮信息修改页
+						//数据来源不是餐饮店信息修改页
 						return Response::forge(View::forge($this->template . '/admin/error/access_error', $data, false));
 					} else {
 						//form控件当前值设定
@@ -128,11 +128,12 @@ class Controller_Admin_Service_Restaurant_Modifyrestaurant extends Controller_Ad
 									case 'empty_restaurant_type': 
 										$error_message_list[] = '请选择餐饮店类别';
 										break;
-									case 'noint_restaurant_price_min': 
-									case 'minus_restaurant_price_min': 
-									case 'noint_restaurant_price_max': 
-									case 'minus_restaurant_price_max': 
+									case 'noint_restaurant_price': 
+									case 'minus_restaurant_price': 
 										$error_message_list[] = '请在价格部分输入非负整数';
+										break;
+									case 'error_restaurant_price': 
+										$error_message_list[] = '最低价不能高于最高价';
 										break;
 									default:
 										$error_message_list[] = '发生系统错误,请重新尝试添加';
@@ -159,7 +160,7 @@ class Controller_Admin_Service_Restaurant_Modifyrestaurant extends Controller_Ad
 	}
 	
 	/**
-	 * 餐饮公开状态更新
+	 * 餐饮店公开状态更新
 	 * @access  public
 	 * @return  Response
 	 */
@@ -170,15 +171,15 @@ class Controller_Admin_Service_Restaurant_Modifyrestaurant extends Controller_Ad
 				if(is_numeric($_POST['modify_id']) && $_POST['page'] == 'restaurant_detail') {
 					$restaurant_id = $_POST['modify_id'];
 					
-					//获取餐饮信息
+					//获取餐饮店信息
 					$restaurant = Model_Restaurant::SelectRestaurant(array('restaurant_id' => $restaurant_id, 'active_only' => true));
 					
 					if($restaurant) {
 						if($restaurant['created_by'] == $_SESSION['login_user']['id']) {
-							//是否具备餐饮编辑权限
+							//是否具备餐饮店编辑权限
 							$edit_able_flag = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 11);
 						} else {
-							//是否具备修改其他用户所登陆的餐饮信息权限
+							//是否具备修改其他用户所登陆的餐饮店信息权限
 							$edit_able_flag = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'authority', 4);
 						}
 						

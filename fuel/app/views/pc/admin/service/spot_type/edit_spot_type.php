@@ -19,7 +19,7 @@
 			<form method="post" action="" class="content-form">
 				<table class="tb-content-form">
 					<tr>
-						<th>景点类别名称</th>
+						<th>景点类别名</th>
 						<td><input type="text" name="spot_type_name" value="<?php echo $input_spot_type_name; ?>" /></td>
 					</tr>
 					<tr>

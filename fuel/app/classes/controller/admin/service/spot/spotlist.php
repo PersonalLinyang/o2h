@@ -57,10 +57,10 @@ class Controller_Admin_Service_Spot_Spotlist extends Controller_Admin_App
 				
 				//检索条件
 				$data['select_name'] = isset($_GET['select_name']) ? preg_replace('/( |　)/', ' ', $_GET['select_name']) : '';
-				$data['select_status'] = isset($_GET['select_status']) ? $_GET['select_status'] : array();
-				$data['select_area'] = isset($_GET['select_area']) ? $_GET['select_area'] : array();
-				$data['select_spot_type'] = isset($_GET['select_spot_type']) ? $_GET['select_spot_type'] : array();
-				$data['select_free_flag'] = isset($_GET['select_free_flag']) ? $_GET['select_free_flag'] : array();
+				$data['select_status'] = isset($_GET['select_status']) && is_array($_GET['select_status']) ? $_GET['select_status'] : array();
+				$data['select_area'] = isset($_GET['select_area']) && is_array($_GET['select_area']) ? $_GET['select_area'] : array();
+				$data['select_spot_type'] = isset($_GET['select_spot_type']) && is_array($_GET['select_spot_type']) ? $_GET['select_spot_type'] : array();
+				$data['select_free_flag'] = isset($_GET['select_free_flag']) && is_array($_GET['select_free_flag']) ? $_GET['select_free_flag'] : array();
 				$data['select_price_min'] = isset($_GET['select_price_min']) ? $_GET['select_price_min'] : '';
 				$data['select_price_max'] = isset($_GET['select_price_max']) ? $_GET['select_price_max'] : '';
 				$data['sort_column'] = isset($_GET['sort_column']) ? $_GET['sort_column'] : 'created_at';
@@ -103,38 +103,6 @@ class Controller_Admin_Service_Spot_Spotlist extends Controller_Admin_App
 					if($spot_count > $num_per_page) {
 						$data['page_number'] = ceil($spot_count/$num_per_page);
 					}
-				}
-				
-				//景点批量导入处理
-				if(isset($_SESSION['import_spot_success'])) {
-					$data['success_message'] = '景点批量导入成功';
-					unset($_SESSION['import_spot_success']);
-				}
-				if(isset($_SESSION['import_spot_error'])) {
-					switch($_SESSION['import_spot_error']) {
-						case 'error_permission':
-							$data['error_message'] = '您不具备批量导入景点的权限';
-							break;
-						case 'noexist_file':
-							$data['error_message'] = '请上传写入景点信息的excel文件';
-							break;
-						case 'noexcel_file':
-							$data['error_message'] = '您上传的文件格式不符合要求,请上传Excel文件';
-							break;
-						case 'empty_spot_name':
-							$data['error_message'] = '您上传的文件中未写入任何景点名';
-							break;
-						case 'noexist_sheet':
-							$data['error_message'] = '您上传的文件不包含批量导入所必须的工作表';
-							break;
-						case 'error_upload':
-							$data['error_message'] = '部分景点未能成功导入,请<a href="/assets/xls/tmp/' . $_SESSION['login_user']['id'] . '/spot/import_spot_error.xls" download>点击此处</a>下载异常报告';
-							break;
-						default:
-							$data['error_message'] = '发生系统错误,请尝试重新批量导入';
-							break;
-					}
-					unset($_SESSION['import_spot_error']);
 				}
 				
 				//景点削除处理
@@ -190,6 +158,38 @@ class Controller_Admin_Service_Spot_Spotlist extends Controller_Admin_App
 							break;
 					}
 					unset($_SESSION['delete_spot_checked_error']);
+				}
+				
+				//景点批量导入处理
+				if(isset($_SESSION['import_spot_success'])) {
+					$data['success_message'] = '景点批量导入成功';
+					unset($_SESSION['import_spot_success']);
+				}
+				if(isset($_SESSION['import_spot_error'])) {
+					switch($_SESSION['import_spot_error']) {
+						case 'error_permission':
+							$data['error_message'] = '您不具备批量导入景点的权限';
+							break;
+						case 'noexist_file':
+							$data['error_message'] = '请上传写入景点信息的Excel文件';
+							break;
+						case 'noexcel_file':
+							$data['error_message'] = '您上传的文件格式不符合要求,请上传Excel文件';
+							break;
+						case 'empty_spot_name':
+							$data['error_message'] = '您上传的文件中未写入任何景点名';
+							break;
+						case 'noexist_sheet':
+							$data['error_message'] = '您上传的文件不包含批量导入所必须的表';
+							break;
+						case 'error_import':
+							$data['error_message'] = '部分景点未能成功导入,请<a href="/assets/xls/tmp/' . $_SESSION['login_user']['id'] . '/spot/import_spot_error.xls" download>点击此处</a>下载异常报告';
+							break;
+						default:
+							$data['error_message'] = '发生系统错误,请尝试重新批量导入';
+							break;
+					}
+					unset($_SESSION['import_spot_error']);
 				}
 				
 				//景点导出处理

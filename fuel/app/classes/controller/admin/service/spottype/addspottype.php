@@ -57,8 +57,8 @@ class Controller_Admin_Service_Spottype_AddSpotType extends Controller_Admin_App
 							$result_insert = Model_Spottype::InsertSpotType($params_insert);
 							
 							if($result_insert) {
-								//更新景点信息导入模板
-								$result_excel = Model_Spottype::ModifySpotModelExcel();
+								//更新批量导入景点用模板
+								$result_excel = Model_Spot::ModifySpotModelExcel();
 								
 								if($result_excel) {
 									//添加成功 页面跳转
@@ -66,7 +66,7 @@ class Controller_Admin_Service_Spottype_AddSpotType extends Controller_Admin_App
 									header('Location: //' . $_SERVER['HTTP_HOST'] . '/admin/spot_type_list/');
 									exit;
 								} else {
-									//添加成功 页面跳转
+									//添加成功 但模板更新失败 页面跳转
 									$_SESSION['add_spot_type_error'] = 'error_excel';
 									header('Location: //' . $_SERVER['HTTP_HOST'] . '/admin/spot_type_list/');
 									exit;

@@ -57,6 +57,10 @@
 					<td><?php echo $hotel_info['hotel_status'] == '1' ? '公开' : '未公开'; ?></td>
 				</tr>
 				<tr>
+					<th>可选房型</th>
+					<td><?php echo implode('、', $room_type_name_list); ?></td>
+				</tr>
+				<tr>
 					<th>登录时间</th>
 					<td><?php echo date('Y年m月d日　H:i:s', strtotime($hotel_info['created_at'])); ?></td>
 				</tr>

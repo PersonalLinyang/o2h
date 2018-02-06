@@ -16,7 +16,7 @@
 		<div class="content-menu">
 			<ul class="content-menu-list">
 				<li class="content-menu-button"><a href="/admin/add_spot_type/">添加景点类别</a></li>
-				<li class="content-menu-button"><a href="/admin/spot_list/">景点一览</a></li>
+				<li class="content-menu-button"><a href="<?php echo $spot_list_url; ?>">景点一览</a></li>
 			</ul>
 		</div>
 		
@@ -47,7 +47,7 @@
 						<td><p class="btn-controller btn-modify"><a href="/admin/modify_spot_type/<?php echo $spot_type['spot_type_id']; ?>/">修改</a></p></td>
 						<td><?php echo $spot_type['spot_type_name']; ?></td>
 						<td><?php echo $spot_type['spot_count']; ?></td>
-						<td><p class="btn-controller"><a href="/admin/spot_list/?select_spot_type%5B%5D=<?php echo $spot_type['spot_type_id']; ?>">景点一览</a></p></td>
+						<td><p class="btn-controller"><a href="/admin/spot_list/?select_spot_type%5B%5D=<?php echo $spot_type['spot_type_id']; ?>">关联景点</a></p></td>
 					</tr>
 					<?php endforeach; ?>
 				</table>
@@ -57,7 +57,7 @@
 		<div class="content-main">
 			<p class="error-icon">！</p>
 			<p class="error-text">
-				对不起，本系统尚未添加任何景点类别信息<br/>
+				对不起，未能找到任何景点类别信息<br/>
 				请在添加景点类别后确认本页
 			</p>
 		</div>
@@ -66,9 +66,9 @@
 		<div class="popup-shadow"></div>
 		
 		<div class="popup-delete popup">
-			<div class="popup-title">景点类别确认</div>
+			<div class="popup-title">景点类别删除确认</div>
 			<div class="popup-content center">
-				<p>景点类别一经删除将无法还原，<br/>确定要删除「景点类别-<span class="popup-delete-name"></span>」吗？</p>
+				<p>景点类别一经删除将无法还原，<br/>确定要删除景点类别-「<span class="popup-delete-name"></span>」吗？</p>
 			</div>
 			<div class="popup-controller">
 				<form action="/admin/delete_spot_type/" method="post" id="form-delete">

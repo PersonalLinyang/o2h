@@ -60,7 +60,7 @@ class Controller_Admin_Service_Spot_Exportspot extends Controller_Admin_App
 							$xls_export->getProperties()->setCreator('O2H Information Manage System');
 							$xls_export->setActiveSheetIndex(0);
 							$sheet_spot = $xls_export->getActiveSheet();
-							$sheet_spot->setTitle('spot');
+							$sheet_spot->setTitle('景点');
 							
 							//设定自动换行并改变列宽
 							$sheet_spot->getDefaultStyle()->getAlignment()->setWrapText(true);
@@ -80,7 +80,7 @@ class Controller_Admin_Service_Spot_Exportspot extends Controller_Admin_App
 							$sheet_spot->setCellValue('B1', '景点地区');
 							$sheet_spot->setCellValue('C1', '景点类别');
 							$sheet_spot->setCellValue('D1', '免/收费');
-							$sheet_spot->setCellValue('E1', '票价');
+							$sheet_spot->setCellValue('E1', '票价(日元)');
 							$sheet_spot->setCellValue('F1', '特别价格');
 							$sheet_spot->setCellValue('G1', '景点详情名');
 							$sheet_spot->setCellValue('H1', '景点描述');
@@ -146,8 +146,8 @@ class Controller_Admin_Service_Spot_Exportspot extends Controller_Admin_App
 							//备份模式导出
 							//读取模板
 							$xls_export = PHPExcel_IOFactory::load(DOCROOT . '/assets/xls/model/import_spot_model.xls');
-							$sheet_spot = $xls_export->getSheetByName('spot');
-							$sheet_detail = $xls_export->getSheetByName('spot_detail');
+							$sheet_spot = $xls_export->getSheetByName('景点');
+							$sheet_detail = $xls_export->getSheetByName('景点详情');
 							
 							//写入景点信息
 							$row_spot_counter = 3;
@@ -197,12 +197,12 @@ class Controller_Admin_Service_Spot_Exportspot extends Controller_Admin_App
 							
 							exit;
 						} else {
-							//未能取得任何景点信息
-							$_SESSION['export_spot_error'] = 'empty_spot_list';
+							//导出模式无法识别
+							$_SESSION['export_spot_error'] = 'error_system';
 						}
 					} else {
-						//导出模式无法识别
-						$_SESSION['export_spot_error'] = 'error_system';
+						//未能取得任何景点信息
+						$_SESSION['export_spot_error'] = 'empty_spot_list';
 					}
 				}
 				

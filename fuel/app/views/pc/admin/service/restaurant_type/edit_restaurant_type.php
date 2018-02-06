@@ -19,7 +19,7 @@
 			<form method="post" action="" class="content-form">
 				<table class="tb-content-form">
 					<tr>
-						<th>餐饮类别名称</th>
+						<th>餐饮店类别名</th>
 						<td><input type="text" name="restaurant_type_name" value="<?php echo $input_restaurant_type_name; ?>" /></td>
 					</tr>
 					<tr>

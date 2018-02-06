@@ -59,10 +59,10 @@ class Controller_Admin_User_Usertype_Addusertype extends Controller_Admin_App
 						//form控件当前值设定
 						$data['input_user_type_name'] = isset($_POST['user_type_name']) ? trim($_POST['user_type_name']) : $data['input_user_type_name'];
 						$data['input_special_level'] = (isset($_POST['special_level']) && $data['special_able_flag']) ? trim($_POST['special_level']) : $data['input_special_level'];
-						$data['input_master_group'] = isset($_POST['master_group']) ? (is_array($_POST['master_group']) ? $_POST['master_group'] : $data['input_master_group']) : array();
-						$data['input_sub_group'] = isset($_POST['sub_group']) ? (is_array($_POST['sub_group']) ? $_POST['sub_group'] : $data['input_sub_group']) : array();
-						$data['input_function'] = isset($_POST['function']) ? (is_array($_POST['function']) ? $_POST['function'] : $data['input_function']) : array();
-						$data['input_authority'] = isset($_POST['authority']) ? (is_array($_POST['authority']) ? $_POST['authority'] : $data['input_authority']) : array();
+						$data['input_master_group'] = isset($_POST['master_group']) && is_array($_POST['master_group']) ? $_POST['master_group'] : $data['input_master_group'];
+						$data['input_sub_group'] = isset($_POST['sub_group']) && is_array($_POST['sub_group']) ? $_POST['sub_group'] : $data['input_sub_group'];
+						$data['input_function'] = isset($_POST['function']) && is_array($_POST['function']) ? $_POST['function'] : $data['input_function'];
+						$data['input_authority'] = isset($_POST['authority']) && is_array($_POST['authority']) ? $_POST['authority'] : $data['input_authority'];
 						
 						//添加用户类型用数据生成
 						$param_insert = array(

@@ -23,7 +23,7 @@ class Controller_Admin_Service_Spot_Importspot extends Controller_Admin_App
 				if(!isset($_FILES['file_spot_list']['name'])) {
 					//未上传任何文件
 					$_SESSION['import_spot_error'] = 'noexist_file';
-				} elseif($_FILES['file_spot_list']['type'] != 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+				} elseif($_FILES['file_spot_list']['type'] != 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' && $_FILES['file_spot_list']['type'] != 'application/vnd.ms-excel') {
 					//上传的文件不是Excel
 					$_SESSION['import_spot_error'] = 'noexcel_file';
 				} elseif(!Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 8)) {
@@ -78,15 +78,15 @@ class Controller_Admin_Service_Spot_Importspot extends Controller_Admin_App
 						$xls_upload = PHPExcel_IOFactory::createReader('Excel2007')->load($filepath);
 					}
 					
-					if(!$xls_upload->sheetNameExists('spot') || !$xls_upload->sheetNameExists('spot_detail')) {
+					if(!$xls_upload->sheetNameExists('景点') || !$xls_upload->sheetNameExists('景点详情')) {
 						//必要的sheet不存在
 						$_SESSION['import_spot_error'] = 'noexist_sheet';
 					} else {
 						//添加数据整理
 						//景点Sheet
-						$sheet_spot = $xls_upload->getSheetByName('spot');
+						$sheet_spot = $xls_upload->getSheetByName('景点');
 						//景点详情Sheet
-						$sheet_detail = $xls_upload->getSheetByName('spot_detail');
+						$sheet_detail = $xls_upload->getSheetByName('景点详情');
 						
 						//逐行获取数据
 						foreach($sheet_spot->getRowIterator() as $row_id => $row) {
@@ -94,29 +94,23 @@ class Controller_Admin_Service_Spot_Importspot extends Controller_Admin_App
 							if($row_id > 2 && $sheet_spot->getCell('A' . $row_id)->getValue()) {
 								$spot_info = array();
 								//逐个单元格获取数据
-								$error_flag = false;
 								foreach($row->getCellIterator() as $cell_id => $cell_date) {
 									switch($cell_id) {
 										case 'A':
 											//景点名
 											$spot_name = strval($cell_date->getCalculatedValue());
-											if(isset($spot_tmpid_list[$spot_name])) {
-												$error_flag = true;
-												$error_list_spot[$row_id][] = '此前已存在此景点名,请勿重复添加';
-											} else {
+											$spot_info['spot_name'] = $spot_name;
+											if(!isset($spot_tmpid_list[$spot_name])) {
 												$spot_tmpid_list[$spot_name] = $row_id;
-												$spot_info['spot_name'] = $spot_name;
 											}
 											break;
 										case 'B':
 											//景点地区
 											$spot_area_name = $cell_date->getCalculatedValue();
 											if(!$spot_area_name) {
-												$error_flag = true;
-												$error_list_spot[$row_id][] = '景点地区不能为空,请选择景点地区';
+												$spot_info['spot_area'] = '';
 											} elseif(!isset($area_master_list[$spot_area_name])) {
-												$error_flag = true;
-												$error_list_spot[$row_id][] = '系统中不存在选中的地区,请下载最新上传模板';
+												$spot_info['spot_area'] = -1;
 											} else {
 												$spot_info['spot_area'] = $area_master_list[$spot_area_name];
 											}
@@ -125,11 +119,9 @@ class Controller_Admin_Service_Spot_Importspot extends Controller_Admin_App
 											//景点类别
 											$spot_type_name = $cell_date->getCalculatedValue();
 											if(!$spot_type_name) {
-												$error_flag = true;
-												$error_list_spot[$row_id][] = '景点类别不能为空,请选择景点类别';
+												$spot_info['spot_type'] = '';
 											} elseif(!isset($type_master_list[$spot_type_name])) {
-												$error_flag = true;
-												$error_list_spot[$row_id][] = '系统中不存在选中的景点类别,请下载最新上传模板';
+												$spot_info['spot_type'] = -1;
 											} else {
 												$spot_info['spot_type'] = $type_master_list[$spot_type_name];
 											}
@@ -138,11 +130,9 @@ class Controller_Admin_Service_Spot_Importspot extends Controller_Admin_App
 											//免/收费
 											$spot_free_flag = $cell_date->getCalculatedValue();
 											if(!$spot_free_flag) {
-												$error_flag = true;
-												$error_list_spot[$row_id][] = '免/收费不能为空,请选择免/收费';
+												$spot_info['free_flag'] = '';
 											} elseif(!isset($free_flag_master_list[$spot_free_flag])) {
-												$error_flag = true;
-												$error_list_spot[$row_id][] = '免/收费部分不符合要求,请从下拉菜单中选择';
+												$spot_info['free_flag'] = -1;
 											} else {
 												$spot_info['free_flag'] = $free_flag_master_list[$spot_free_flag];
 											}
@@ -165,7 +155,6 @@ class Controller_Admin_Service_Spot_Importspot extends Controller_Admin_App
 															'special_price' => $special_price[1],
 														);
 													} else {
-														$error_flag = true;
 														$error_list_spot[$row_id][] = '特殊价格部分不符合要求,请按照范例格式重新填写';
 													}
 												}
@@ -174,21 +163,19 @@ class Controller_Admin_Service_Spot_Importspot extends Controller_Admin_App
 											break;
 									}
 								}
-								if(!$error_flag) {
-									$spot_list[$row_id] = array(
-										'spot_id' => '',
-										'spot_name' => $spot_info['spot_name'],
-										'spot_area' => $spot_info['spot_area'],
-										'spot_type' => $spot_info['spot_type'],
-										'free_flag' => $spot_info['free_flag'],
-										'spot_price' => $spot_info['spot_price'],
-										'spot_status' => 0,
-										'created_by' => $login_user_id,
-										'modified_by' => $login_user_id,
-										'special_price_list' => $spot_info['special_price_list'],
-										'spot_detail_list' => array(),
-									);
-								}
+								$spot_list[$row_id] = array(
+									'spot_id' => '',
+									'spot_name' => $spot_info['spot_name'],
+									'spot_area' => $spot_info['spot_area'],
+									'spot_type' => $spot_info['spot_type'],
+									'free_flag' => $spot_info['free_flag'],
+									'spot_price' => $spot_info['spot_price'],
+									'spot_status' => 0,
+									'created_by' => $login_user_id,
+									'modified_by' => $login_user_id,
+									'special_price_list' => $spot_info['special_price_list'],
+									'spot_detail_list' => array(),
+								);
 							}
 						}
 						
@@ -206,7 +193,6 @@ class Controller_Admin_Service_Spot_Importspot extends Controller_Admin_App
 								//跳过表头与范例
 								if($row_id > 2 && $sheet_detail->getCell('A' . $row_id)->getValue()) {
 									$spot_detail = array();
-									$error_flag = false;
 									//逐个单元格获取数据
 									foreach ($row->getCellIterator() as $cell_id => $cell_date) {
 										switch($cell_id) {
@@ -221,7 +207,6 @@ class Controller_Admin_Service_Spot_Importspot extends Controller_Admin_App
 													}
 													$spot_detail['spot_detail_id'] = $detail_num + 1;
 												} else {
-													$error_flag = true;
 													$error_list_detail[$row_id][] = '不属于本次添加的景点,请确认景点名是否正确';
 												}
 												break;
@@ -253,7 +238,7 @@ class Controller_Admin_Service_Spot_Importspot extends Controller_Admin_App
 												break;
 										}
 									}
-									if(!$error_flag && isset($spot_list[$spot_id])) {
+									if(isset($spot_list[$spot_id])) {
 										$spot_list[$spot_id]['spot_detail_list'][] = array(
 											'row_id' => $row_id,
 											'spot_detail_id' => $spot_detail['spot_detail_id'],
@@ -301,6 +286,21 @@ class Controller_Admin_Service_Spot_Importspot extends Controller_Admin_App
 												case 'dup_spot_name': 
 													$error_list_spot[$row_id][] = '该景点名与系统中其他景点重复,请选用其他景点名';
 													break;
+												case 'empty_spot_area': 
+													$error_list_spot[$row_id][] = '景点地区不能空白,请选择景点地区';
+													break;
+												case 'error_spot_area': 
+													$error_list_spot[$row_id][] = '所选中的景点地区不存在,请下载最新的模板';
+													break;
+												case 'empty_spot_type': 
+													$error_list_spot[$row_id][] = '景点类别不能空白,请选择景点类别';
+													break;
+												case 'error_spot_type': 
+													$error_list_spot[$row_id][] = '所选中的景点类别不存在,请下载最新的模板';
+													break;
+												case 'empty_spot_price': 
+													$error_list_spot[$row_id][] = '价格不能空白,请一个非负整数';
+													break;
 												case 'noint_spot_price': 
 												case 'minus_spot_price': 
 													$error_list_spot[$row_id][] = '价格部分不符合要求,请输入一个非负整数';
@@ -316,22 +316,22 @@ class Controller_Admin_Service_Spot_Importspot extends Controller_Admin_App
 													$error_list_spot[$row_id][] = '特殊价格部分不符合要求,请输入非负整数';
 													break;
 												case 'empty_spot_detail': 
-													$error_list_spot[$row_id][] = 'spot_detail中没有相应的详情信息,请至少为景点添加一个详情';
+													$error_list_spot[$row_id][] = '景点详情表中没有相应的详情信息,请至少为景点添加一个详情';
 													break;
 												case 'empty_spot_detail_name': 
-													$error_list_spot[$row_id][] = 'spot_detail中景点详情名不能空白,请输入景点详情名';
+													$error_list_spot[$row_id][] = '景点详情表中景点详情名不能空白,请输入景点详情名';
 													break;
 												case 'long_spot_detail_name': 
-													$error_list_spot[$row_id][] = 'spot_detail中景点详情名不能超过100字,请调整景点详情名';
+													$error_list_spot[$row_id][] = '景点详情表中景点详情名不能超过100字,请调整景点详情名';
 													break;
 												case 'empty_spot_description_text': 
-													$error_list_spot[$row_id][] = 'spot_detail中景点介绍不能空白,请输入景点介绍';
+													$error_list_spot[$row_id][] = '景点详情表中景点介绍不能空白,请输入景点介绍';
 													break;
 												case 'overyear_spot_se_month': 
-													$error_list_spot[$row_id][] = 'spot_detail中开始与结束的时间间隔不能超过1年';
+													$error_list_spot[$row_id][] = '景点详情表中开始与结束的时间间隔不能超过1年';
 													break;
 												case 'minus_spot_se_month': 
-													$error_list_spot[$row_id][] = 'spot_detail中结束不能在开始之前';
+													$error_list_spot[$row_id][] = '景点详情表中结束不能在开始之前';
 													break;
 												default:
 													$error_list_spot[$row_id][] = '发生系统错误,请重新尝试添加';
@@ -391,6 +391,9 @@ class Controller_Admin_Service_Spot_Importspot extends Controller_Admin_App
 									mkdir($file_directory_tmp, 0777, TRUE);
 								}
 								$writer_xls->save($file_directory_tmp . 'import_spot_error.xls');
+								
+								//部分景点未能成功导入
+								$_SESSION['import_spot_error'] = 'error_import';
 								
 								//释放缓存
 								$xls_upload->disconnectWorksheets();

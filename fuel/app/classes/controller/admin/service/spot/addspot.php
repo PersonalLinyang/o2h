@@ -288,7 +288,7 @@ class Controller_Admin_Service_Spot_Addspot extends Controller_Admin_App
 										$error_message_list[] = '该景点名与其他景点重复,请选用其他景点名';
 										break;
 									case 'empty_spot_area': 
-										$error_message_list[] = '请选择景点所属地区';
+										$error_message_list[] = '请选择景点地区';
 										break;
 									case 'empty_spot_type': 
 										$error_message_list[] = '请选择景点类别';

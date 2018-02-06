@@ -1,13 +1,13 @@
 <?php
 /* 
- * 景点信息修改页
+ * 景点修改页
  */
 
 class Controller_Admin_Service_Spot_Modifyspot extends Controller_Admin_App
 {
 
 	/**
-	 * 景点信息修改页
+	 * 景点修改页
 	 * @access  public
 	 * @return  Response
 	 */
@@ -42,7 +42,7 @@ class Controller_Admin_Service_Spot_Modifyspot extends Controller_Admin_App
 				}
 				
 				//页面标题
-				$data['page_title'] ='景点信息修改';
+				$data['page_title'] ='景点修改';
 				//表单页面索引
 				$data['form_page_index'] = 'modify_spot';
 				//返回页URL
@@ -379,7 +379,7 @@ class Controller_Admin_Service_Spot_Modifyspot extends Controller_Admin_App
 								header('Location: //' . $_SERVER['HTTP_HOST'] . '/admin/spot_detail/' . $spot_id . '/');
 								exit;
 							} else {
-								$error_message_list[] = '数据库错误：数据添加失败';
+								$error_message_list[] = '数据库错误：数据修改失败';
 							}
 						} else {
 							//获取错误信息
@@ -395,7 +395,7 @@ class Controller_Admin_Service_Spot_Modifyspot extends Controller_Admin_App
 										$error_message_list[] = '该景点名与其他景点重复,请选用其他景点名';
 										break;
 									case 'empty_spot_area': 
-										$error_message_list[] = '请选择景点所属地区';
+										$error_message_list[] = '请选择景点地区';
 										break;
 									case 'empty_spot_type': 
 										$error_message_list[] = '请选择景点类别';

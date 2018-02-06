@@ -55,6 +55,11 @@ class Controller_Admin_Service_Hotel_Hoteldetail extends Controller_Admin_App
 				
 				//酒店信息
 				$data['hotel_info'] = $hotel;
+				$room_type_name_list = array();
+				foreach($hotel['room_type_list'] as $room_type) {
+					$room_type_name_list[] = $room_type['room_type_name'];
+				}
+				$data['room_type_name_list'] = $room_type_name_list;
 				
 				if($hotel['created_by'] == $_SESSION['login_user']['id']) {
 					//是否具备酒店编辑权限
@@ -65,14 +70,6 @@ class Controller_Admin_Service_Hotel_Hoteldetail extends Controller_Admin_App
 				}
 				
 				//输出提示信息
-				if(isset($_SESSION['modify_hotel_status_success'])) {
-					$data['success_message'] = '酒店公开状态更新成功';
-					unset($_SESSION['modify_hotel_status_success']);
-				}
-				if(isset($_SESSION['modify_hotel_status_error'])) {
-					$data['error_message'] = '酒店公开状态更新失敗 请重新尝试';
-					unset($_SESSION['modify_hotel_status_error']);
-				}
 				if(isset($_SESSION['add_hotel_success'])) {
 					$data['success_message'] = '酒店添加成功';
 					unset($_SESSION['add_hotel_success']);
@@ -80,6 +77,14 @@ class Controller_Admin_Service_Hotel_Hoteldetail extends Controller_Admin_App
 				if(isset($_SESSION['modify_hotel_success'])) {
 					$data['success_message'] = '酒店信息修改成功';
 					unset($_SESSION['modify_hotel_success']);
+				}
+				if(isset($_SESSION['modify_hotel_status_success'])) {
+					$data['success_message'] = '酒店公开状态更新成功';
+					unset($_SESSION['modify_hotel_status_success']);
+				}
+				if(isset($_SESSION['modify_hotel_status_error'])) {
+					$data['error_message'] = '酒店公开状态更新失敗 请重新尝试';
+					unset($_SESSION['modify_hotel_status_error']);
 				}
 				
 				//调用View

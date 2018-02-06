@@ -41,6 +41,8 @@ class Controller_Admin_Service_Hotel_Addhotel extends Controller_Admin_App
 				$data['area_list'] = Model_Area::GetAreaList(array('active_only' => true));
 				//获取酒店类型列表
 				$data['hotel_type_list'] = Model_HotelType::SelectHotelTypeList(array('active_only' => true));
+				//获取房型列表
+				$data['room_type_list'] = Model_RoomType::SelectRoomTypeList(array('active_only' => true));
 				
 				//form控件默认值设定
 				$data['input_hotel_name'] = '';
@@ -48,6 +50,7 @@ class Controller_Admin_Service_Hotel_Addhotel extends Controller_Admin_App
 				$data['input_hotel_type'] = '';
 				$data['input_hotel_price'] = '';
 				$data['input_hotel_status'] = '';
+				$data['input_room_type'] = array();
 				
 				if(isset($_POST['page'])) {
 					$error_message_list = array();
@@ -62,6 +65,7 @@ class Controller_Admin_Service_Hotel_Addhotel extends Controller_Admin_App
 						$data['input_hotel_type'] = isset($_POST['hotel_type']) ? $_POST['hotel_type'] : $data['input_hotel_type'];
 						$data['input_hotel_price'] = isset($_POST['hotel_price']) ? trim($_POST['hotel_price']) : $data['input_hotel_price'];
 						$data['input_hotel_status'] = isset($_POST['hotel_status']) ? $_POST['hotel_status'] : $data['input_hotel_status'];
+						$data['input_room_type'] = isset($_POST['room_type']) ? $_POST['room_type'] : $data['input_room_type'];
 						
 						//添加酒店用数据生成
 						$params_insert = array(
@@ -71,6 +75,7 @@ class Controller_Admin_Service_Hotel_Addhotel extends Controller_Admin_App
 							'hotel_type' => $data['input_hotel_type'],
 							'hotel_price' => $data['input_hotel_price'],
 							'hotel_status' => $data['input_hotel_status'],
+							'room_type_list' => $data['input_room_type'],
 							'created_by' => $_SESSION['login_user']['id'],
 							'modified_by' => $_SESSION['login_user']['id'],
 						);
@@ -110,6 +115,9 @@ class Controller_Admin_Service_Hotel_Addhotel extends Controller_Admin_App
 									case 'noint_hotel_price': 
 									case 'minus_hotel_price': 
 										$error_message_list[] = '请在价格部分输入非负整数';
+										break;
+									case 'empty_room': 
+										$error_message_list[] = '请选择至少选择一种房型';
 										break;
 									default:
 										$error_message_list[] = '发生系统错误,请重新尝试添加';

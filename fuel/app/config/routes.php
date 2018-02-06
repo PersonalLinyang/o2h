@@ -31,6 +31,8 @@ return array(
 	'admin/add_hotel'                => 'admin/service/hotel/addhotel/index',
 	'admin/modify_hotel/(:hotel_id)' => 'admin/service/hotel/modifyhotel/index/$1',
 	'admin/modify_hotel_status'      => 'admin/service/hotel/modifyhotel/modifyhotelstatus',
+	'admin/import_hotel'             => 'admin/service/hotel/importhotel/index',
+	'admin/export_hotel'             => 'admin/service/hotel/exporthotel/index',
 	'admin/delete_hotel'             => 'admin/service/hotel/deletehotel/index',
 	'admin/delete_hotel_checked'     => 'admin/service/hotel/deletehotel/deletehotelchecked',
 	
@@ -40,6 +42,12 @@ return array(
 	'admin/modify_hotel_type/(:hotel_type_id)' => 'admin/service/hoteltype/modifyhoteltype/index/$1',
 	'admin/delete_hotel_type'                  => 'admin/service/hoteltype/deletehoteltype/index',
 	
+	//房型管理
+	'admin/room_type_list'                   => 'admin/service/roomtype/roomtypelist/index',
+	'admin/add_room_type'                    => 'admin/service/roomtype/addroomtype/index',
+	'admin/modify_room_type/(:room_type_id)' => 'admin/service/roomtype/modifyroomtype/index/$1',
+	'admin/delete_room_type'                 => 'admin/service/roomtype/deleteroomtype/index',
+	
 	//餐饮管理
 	'admin/restaurant_list'                    => 'admin/service/restaurant/restaurantlist/index',
 	'admin/restaurant_list/(:page)'            => 'admin/service/restaurant/restaurantlist/index/$1',
@@ -47,6 +55,8 @@ return array(
 	'admin/add_restaurant'                     => 'admin/service/restaurant/addrestaurant/index',
 	'admin/modify_restaurant/(:restaurant_id)' => 'admin/service/restaurant/modifyrestaurant/index/$1',
 	'admin/modify_restaurant_status'           => 'admin/service/restaurant/modifyrestaurant/modifyrestaurantstatus',
+	'admin/import_restaurant'                  => 'admin/service/restaurant/importrestaurant/index',
+	'admin/export_restaurant'                  => 'admin/service/restaurant/exportrestaurant/index',
 	'admin/delete_restaurant'                  => 'admin/service/restaurant/deleterestaurant/index',
 	'admin/delete_restaurant_checked'          => 'admin/service/restaurant/deleterestaurant/deleterestaurantchecked',
 	

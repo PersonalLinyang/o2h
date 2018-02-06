@@ -109,16 +109,16 @@ class Model_Spot extends Model
 			$result_spot = $query_spot->execute();
 			
 			//删除景点详情
-			$sql_detail_delete = "DELETE FROM e_spot_detail WHERE spot_id IN :spot_id_list";
-			$query_detail_delete = DB::query($sql_detail_delete);
-			$query_detail_delete->param('spot_id_list', $params['spot_id_list']);
-			$result_detail_delete = $query_detail_delete->execute();
+			$sql_detail = "DELETE FROM e_spot_detail WHERE spot_id IN :spot_id_list";
+			$query_detail = DB::query($sql_detail);
+			$query_detail->param('spot_id_list', $params['spot_id_list']);
+			$result_detail = $query_detail->execute();
 			
 			//删除特别价格
-			$sql_price_delete = "DELETE FROM e_spot_special_price WHERE spot_id IN :spot_id_list";
-			$query_price_delete = DB::query($sql_price_delete);
-			$query_price_delete->param('spot_id_list', $params['spot_id_list']);
-			$result_price_delete = $query_price_delete->execute();
+			$sql_price = "DELETE FROM e_spot_special_price WHERE spot_id IN :spot_id_list";
+			$query_price = DB::query($sql_price);
+			$query_price->param('spot_id_list', $params['spot_id_list']);
+			$result_price = $query_price->execute();
 			
 			return $result_spot;
 		} catch (Exception $e) {
@@ -253,12 +253,10 @@ class Model_Spot extends Model
 			foreach($params as $param_key => $param_value) {
 				switch($param_key) {
 					case 'spot_id_list':
-						$sql_sub_where = array();
-						foreach($param_value as $status_key => $status) {
-							$sql_sub_where[] = ":spot_id_" . $status_key;
-							$sql_params['spot_id_' . $status_key] = $status;
+						if(count($param_value)) {
+							$sql_where[] = " ts.spot_id_ IN :spot_id_list ";
+							$sql_params['spot_id_list'] = $param_value;
 						}
-						$sql_where[] = " ts.spot_id IN (" . implode(', ', $sql_sub_where) . ") ";
 						break;
 					case 'spot_name':
 						if(count($param_value)) {
@@ -272,32 +270,20 @@ class Model_Spot extends Model
 						break;
 					case 'spot_status':
 						if(count($param_value)) {
-							$sql_sub_where = array();
-							foreach($param_value as $status_key => $status) {
-								$sql_sub_where[] = ":spot_status_" . $status_key;
-								$sql_params['spot_status_' . $status_key] = $status;
-							}
-							$sql_where[] = " ts.spot_status IN (" . implode(', ', $sql_sub_where) . ") ";
+							$sql_where[] = " ts.spot_status IN :spot_status_list ";
+							$sql_params['spot_status_list'] = $param_value;
 						}
 						break;
 					case 'spot_area':
 						if(count($param_value)) {
-							$sql_sub_where = array();
-							foreach($param_value as $area_key => $area) {
-								$sql_sub_where[] = ":spot_area_" . $area_key;
-								$sql_params['spot_area_' . $area_key] = $area;
-							}
-							$sql_where[] = " ts.spot_area IN (" . implode(', ', $sql_sub_where) . ") ";
+							$sql_where[] = " ts.spot_area IN :spot_area_list ";
+							$sql_params['spot_area_list'] = $param_value;
 						}
 						break;
 					case 'spot_type':
 						if(count($param_value)) {
-							$sql_sub_where = array();
-							foreach($param_value as $type_key => $type) {
-								$sql_sub_where[] = ":spot_type_" . $type_key;
-								$sql_params['spot_type_' . $type_key] = $type;
-							}
-							$sql_where[] = " ts.spot_type IN (" . implode(', ', $sql_sub_where) . ") ";
+							$sql_where[] = " ts.spot_type IN :spot_type_list ";
+							$sql_params['spot_type_list'] = $param_value;
 						}
 						break;
 					case 'free_flag':
@@ -597,7 +583,10 @@ class Model_Spot extends Model
 			$result['error'][] = 'nobool_free_flag';
 		} elseif($params['free_flag'] == '0') {
 			//价格
-			if(!is_numeric($params['spot_price']) || !is_int($params['spot_price'] + 0)) {
+			if(empty($params['spot_price'])) {
+				$result['result'] = false;
+				$result['error'][] = 'empty_spot_price';
+			} elseif(!is_numeric($params['spot_price']) || !is_int($params['spot_price'] + 0)) {
 				$result['result'] = false;
 				$result['error'][] = 'noint_spot_price';
 			} elseif(intval($params['spot_price']) < 0) {
@@ -857,6 +846,82 @@ class Model_Spot extends Model
 		}
 		
 		return $result;
+	}
+	
+	/*
+	 * 批量导入景点用模板Excel更新
+	 */
+	public static function ModifySpotModelExcel() {
+		try {
+			//修改批量导入景点用模板Excel
+			//Excel处理用组件
+			include_once(APPPATH . 'modules/PHPExcel-1.8/Classes/PHPExcel.php');
+			include_once(APPPATH . 'modules/PHPExcel-1.8/Classes/PHPExcel/IOFactory.php');
+			
+			//读取模板
+			$xls = PHPExcel_IOFactory::load(DOCROOT . '/assets/xls/model/import_spot_model.xls');
+			$sheet_spot = $xls->getSheetByName('景点');
+			$sheet_detail = $xls->getSheetByName('景点详情');
+			
+			//景点类别名列表
+			$configs = array();
+			$spot_type_list = Model_SpotType::SelectSpotTypeList(array('active_only' => 1));
+			foreach($spot_type_list as $spot_type) {
+				$configs[] = $spot_type['spot_type_name'];
+			}
+			
+			for($row_counter = 3; $row_counter < 101; $row_counter++) {
+				//编辑景点-景点地区下拉列表
+				$validation_area = $sheet_spot->getCell('B' . $row_counter)->getDataValidation();
+				$validation_area->setType( PHPExcel_Cell_DataValidation::TYPE_LIST );
+				$validation_area->setAllowBlank(true);
+				$validation_area->setShowDropDown(true);
+				$validation_area->setFormula1('"北海道地方,東北地方,関東地方,中部地方,近畿地方,中国地方,四国地方,九州地方"');
+				
+				//编辑景点-景点类别下拉列表
+				$validation_type = $sheet_spot->getCell('C' . $row_counter)->getDataValidation();
+				$validation_type->setType( PHPExcel_Cell_DataValidation::TYPE_LIST );
+				$validation_type->setAllowBlank(true);
+				$validation_type->setShowDropDown(true);
+				$validation_type->setFormula1('"' . implode(',', $configs) . '"');
+				
+				//编辑景点-收/免费下拉列表
+				$validation_free = $sheet_spot->getCell('D' . $row_counter)->getDataValidation();
+				$validation_free->setType( PHPExcel_Cell_DataValidation::TYPE_LIST );
+				$validation_free->setAllowBlank(true);
+				$validation_free->setShowDropDown(true);
+				$validation_free->setFormula1('"收费,免费"');
+				
+				//编辑景点详情-开始下拉列表
+				$validation_free = $sheet_detail->getCell('D' . $row_counter)->getDataValidation();
+				$validation_free->setType( PHPExcel_Cell_DataValidation::TYPE_LIST );
+				$validation_free->setAllowBlank(true);
+				$validation_free->setShowDropDown(true);
+				$validation_free->setFormula1('"1月,2月,3月,4月,5月,6月,7月,8月,9月,10月,11月,12月"');
+				
+				//编辑景点详情-结束下拉列表
+				$validation_free = $sheet_detail->getCell('E' . $row_counter)->getDataValidation();
+				$validation_free->setType( PHPExcel_Cell_DataValidation::TYPE_LIST );
+				$validation_free->setAllowBlank(true);
+				$validation_free->setShowDropDown(true);
+				$validation_free->setFormula1('"1月,2月,3月,4月,5月,6月,7月,8月,9月,10月,11月,12月,次年1月,次年2月,次年3月,次年4月,次年5月,次年6月,次年7月,次年8月,次年9月,次年10月,次年11月,次年12月"');
+			}
+			
+			//更新文件
+			$writer = PHPExcel_IOFactory::createWriter($xls, 'Excel2007');
+			$writer->save(DOCROOT . '/assets/xls/model/import_spot_model.xls');
+			
+			//释放缓存
+			$xls->disconnectWorksheets();
+			unset($writer);
+			unset($sheet_spot);
+			unset($sheet_detail);
+			unset($xls);
+			
+			return true;
+		} catch (Exception $e) {
+			return false;
+		}
 	}
 
 }

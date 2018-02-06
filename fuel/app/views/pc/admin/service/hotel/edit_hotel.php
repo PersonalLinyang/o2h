@@ -62,6 +62,17 @@
 						</td>
 					</tr>
 					<tr>
+						<th>可选房型</th>
+						<td>
+							<?php foreach($room_type_list as $room_type): ?>
+							<input type="checkbox" name="room_type[]" value="<?php echo $room_type['room_type_id']; ?>" id="room_type-<?php echo $room_type['room_type_id']; ?>" <?php echo in_array($room_type['room_type_id'], $input_room_type) ? 'checked ' : '';?>/>
+							<label for="room_type-<?php echo $room_type['room_type_id']; ?>" class="lbl-for-check<?php echo in_array($room_type['room_type_id'], $input_room_type) ? ' active' : '';?>">
+								<?php echo $room_type['room_type_name']; ?>
+							</label>
+							<?php endforeach; ?>
+						</td>
+					</tr>
+					<tr>
 						<td colspan="2">
 							<ul class="button-group">
 								<li class="button-yes btn-form-submit">保存</li>

@@ -234,61 +234,6 @@ class Model_Spottype extends Model
 			return true;
 		}
 	}
-	
-	/*
-	 * 景点信息上传用模板Excel更新
-	 */
-	public static function ModifySpotModelExcel() {
-		try {
-			//修改景点上传用模板Excel
-			//Excel处理用组件
-			include_once(APPPATH . 'modules/PHPExcel-1.8/Classes/PHPExcel.php');
-			include_once(APPPATH . 'modules/PHPExcel-1.8/Classes/PHPExcel/IOFactory.php');
-			
-			//读取模板
-			$xls_model = PHPExcel_IOFactory::load(DOCROOT . '/assets/xls/model/import_spot_model.xls');
-			$sheet_type = $xls_model->getSheetByName('spot_type');
-			
-			//删除原有信息
-			$sheet_type->removeColumn('A');
-			
-			//写入景点类别名列表
-			$spot_type_list = Model_SpotType::SelectSpotTypeList(array('active_only' => 1));
-			$row_counter = 1;
-			foreach($spot_type_list as $spot_type) {
-				$sheet_type->setCellValue('B' . $row_counter, $spot_type['spot_type_name']);
-				$row_counter++;
-			}
-			
-			//删除原有信息
-			$sheet_type->removeColumn('A');
-			
-			//写入景点类别名列表
-			$spot_type_list = Model_SpotType::SelectSpotTypeList(array('active_only' => 1));
-			$row_counter = 1;
-			foreach($spot_type_list as $spot_type) {
-				$sheet_type->setCellValue('B' . $row_counter, $spot_type['spot_type_name']);
-				$row_counter++;
-			}
-			
-			//删除原有信息
-			$sheet_type->removeColumn('A');
-			
-			//更新文件
-			$writer_xls = PHPExcel_IOFactory::createWriter($xls_model, 'Excel2007');
-			$writer_xls->save(DOCROOT . '/assets/xls/model/import_spot_model.xls');
-			
-			//释放缓存
-			$xls_model->disconnectWorksheets();
-			unset($writer_xls);
-			unset($sheet_type);
-			unset($xls_model);
-			
-			return true;
-		} catch (Exception $e) {
-			return false;
-		}
-	}
 
 }
 

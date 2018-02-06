@@ -7,13 +7,12 @@ class Controller_Admin_Service_Spottype_Deletespottype extends Controller_Admin_
 {
 
 	/**
-	 * 削除单个景点类别
+	 * 削除景点类别
 	 * @access  public
 	 * @return  Response
 	 */
 	public function action_index($param = 1)
 	{
-		$header_url = '//' . $_SERVER['HTTP_HOST'] . '/admin/spot_type_list/';
 		try {
 			if(!isset($_POST['page'])) {
 				//删除所需的数据不全
@@ -37,8 +36,8 @@ class Controller_Admin_Service_Spottype_Deletespottype extends Controller_Admin_
 						$result_delete = Model_Spottype::DeleteSpotType($params_delete);
 						
 						if($result_delete) {
-							//更新景点信息导入模板
-							$result_excel = Model_Spottype::ModifySpotModelExcel();
+							//更新批量导入景点用模板
+							$result_excel = Model_Spot::ModifySpotModelExcel();
 							
 							if($result_excel) {
 								//削除成功
@@ -55,25 +54,12 @@ class Controller_Admin_Service_Spottype_Deletespottype extends Controller_Admin_
 						$_SESSION['delete_spot_type_error'] = $result_check['error'][0];
 					}
 				}
-				
-				//页面返回目标
-				switch($_POST['page']) {
-					case 'spot_type_list':
-						if(isset($_SERVER['HTTP_REFERER'])) {
-							if(strstr($_SERVER['HTTP_REFERER'], 'admin/spot_type_list')) {
-								$header_url = $_SERVER['HTTP_REFERER'];
-							}
-						}
-						break;
-					default:
-						break;
-				}
 			}
 		} catch (Exception $e) {
 			//发生系统异常
 			$_SESSION['delete_spot_type_error'] = 'error_system';
 		}
-		header('Location: ' . $header_url);
+		header('Location: //' . $_SERVER['HTTP_HOST'] . '/admin/spot_type_list/');
 		exit;
 	}
 

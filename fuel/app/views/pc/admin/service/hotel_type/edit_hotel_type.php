@@ -19,7 +19,7 @@
 			<form method="post" action="" class="content-form">
 				<table class="tb-content-form">
 					<tr>
-						<th>酒店类别名称</th>
+						<th>酒店类别名</th>
 						<td><input type="text" name="hotel_type_name" value="<?php echo $input_hotel_type_name; ?>" /></td>
 					</tr>
 					<tr>
