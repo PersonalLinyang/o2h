@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>餐饮管理 - O2H管理系统</title>
+	<title>餐饮店管理 - O2H管理系统</title>
 	<?php echo Asset::css('pc/admin/common.css'); ?>
 	<?php echo Asset::css('pc/admin/error.css'); ?>
 	<?php echo Asset::css('pc/admin/service/restaurant/restaurant_list.css'); ?>
@@ -16,28 +16,28 @@
 		<div class="content-menu">
 			<ul class="content-menu-list">
 				<?php if($edit_able_flag): ?>
-				<li><a href="/admin/add_restaurant/">添加餐饮</a></li>
+				<li><a href="/admin/add_restaurant/">添加餐饮店</a></li>
 				<?php endif; ?>
 				<?php if($delete_able_flag): ?>
-				<li id="btn-content-menu-delete-checked">删除选中餐饮</li>
+				<li id="btn-content-menu-delete-checked">删除选中餐饮店</li>
 				<?php endif; ?>
-				<li id="btn-content-menu-select">筛选排序</li>
+				<li class="btn-content-menu" id="btn-content-menu-select">筛选排序</li>
 				<?php if($import_able_flag): ?>
-				<li class="btn-content-menu" id="btn-content-menu-import">批量导入餐饮</li>
+				<li class="btn-content-menu" id="btn-content-menu-import">批量导入餐饮店</li>
 				<?php endif; ?>
 				<?php if($export_able_flag): ?>
-				<li class="btn-content-menu" id="btn-content-menu-export">导出餐饮列表</li>
+				<li class="btn-content-menu" id="btn-content-menu-export">导出餐饮店列表</li>
 				<?php endif; ?>
 				<?php if($restaurant_type_able_flag): ?>
-				<li><a href="/admin/restaurant_type_list/">餐饮类别管理</a></li>
+				<li><a href="/admin/restaurant_type_list/">餐饮店类别管理</a></li>
 				<?php endif; ?>
 			</ul>
-			<div class="content-menu-select" id="div-content-menu-select">
+			<div class="content-menu-select content-menu-control-area" id="div-content-menu-select">
 				<form action="/admin/restaurant_list/" method="get" id="form-content-menu-select">
 					<table>
 						<tr>
 							<th rowspan="5" class="th-parent">筛选条件</th>
-							<th>餐饮名</th>
+							<th>餐饮店名</th>
 							<td><input type="text" name="select_name" value="<?php echo $select_name; ?>" /></td>
 						</tr>
 						<tr>
@@ -50,7 +50,7 @@
 							</td>
 						</tr>
 						<tr>
-							<th>餐饮所属地区</th>
+							<th>餐饮店所属地区</th>
 							<td>
 								<?php foreach($area_list as $area): ?>
 								<input type="checkbox" name="select_area[]" value="<?php echo $area['area_id']; ?>" id="chb-select-area-<?php echo $area['area_id']; ?>" <?php echo in_array($area['area_id'], $select_area) ? 'checked ' : ''; ?>/>
@@ -59,7 +59,7 @@
 							</td>
 						</tr>
 						<tr>
-							<th>餐饮类别</th>
+							<th>餐饮店类别</th>
 							<td>
 								<?php foreach($restaurant_type_list as $restaurant_type): ?>
 								<input type="checkbox" name="select_restaurant_type[]" value="<?php echo $restaurant_type['restaurant_type_id']; ?>" id="chb-select-type-<?php echo $restaurant_type['restaurant_type_id']; ?>" <?php echo in_array($restaurant_type['restaurant_type_id'], $select_restaurant_type) ? 'checked ' : ''; ?>/>
@@ -83,11 +83,11 @@
 							<th>排序项目</th>
 							<td>
 								<input type="radio" name="sort_column" value="restaurant_name" id="rdb-sort-name" <?php echo $sort_column == "restaurant_name" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_column == 'restaurant_name' ? ' active' : ''; ?>" for="rdb-sort-name" data-for="rdb-sort-column">餐饮名</label>
+								<label class="lbl-for-radio<?php echo $sort_column == 'restaurant_name' ? ' active' : ''; ?>" for="rdb-sort-name" data-for="rdb-sort-column">餐饮店名</label>
 								<input type="radio" name="sort_column" value="restaurant_area_id" id="rdb-sort-area" <?php echo $sort_column == "restaurant_area_id" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_column == 'restaurant_area_id' ? ' active' : ''; ?>" for="rdb-sort-area" data-for="rdb-sort-column">所属地区</label>
+								<label class="lbl-for-radio<?php echo $sort_column == 'restaurant_area_id' ? ' active' : ''; ?>" for="rdb-sort-area" data-for="rdb-sort-column">餐饮店地区</label>
 								<input type="radio" name="sort_column" value="restaurant_type_id" id="rdb-sort-type" <?php echo $sort_column == "restaurant_type_id" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_column == 'restaurant_type_id' ? ' active' : ''; ?>" for="rdb-sort-type" data-for="rdb-sort-column">餐饮类型</label>
+								<label class="lbl-for-radio<?php echo $sort_column == 'restaurant_type_id' ? ' active' : ''; ?>" for="rdb-sort-type" data-for="rdb-sort-column">餐饮店类型</label>
 								<input type="radio" name="sort_column" value="restaurant_status" id="rdb-sort-status" <?php echo $sort_column == "restaurant_status" ? 'checked ' : ''; ?>/>
 								<label class="lbl-for-radio<?php echo $sort_column == 'restaurant_status' ? ' active' : ''; ?>" for="rdb-sort-status" data-for="rdb-sort-column">公开状况</label>
 								<input type="radio" name="sort_column" value="restaurant_price_min" id="rdb-sort-price_min" <?php echo $sort_column == "restaurant_price_min" ? 'checked ' : ''; ?>/>
@@ -170,10 +170,10 @@
 		
 		<?php if($restaurant_count): ?>
 		<div class="content-main">
-			<h1>餐饮一览</h1>
+			<h1>餐饮店一览</h1>
 			<div class="div-content-list">
 				<p>
-					共为您检索到<span class="strong"><?php echo $restaurant_count; ?></span>条餐饮信息
+					共为您检索到<span class="strong"><?php echo $restaurant_count; ?></span>条餐饮店信息
 					目前显示的是其中的第<span class="strong"><?php echo $start_number; ?></span><?php if($start_number != $end_number): ?>～<span class="strong"><?php echo $end_number; ?></span><?php endif; ?>条
 				</p>
 				<table class="tb-content-list">
@@ -181,10 +181,10 @@
 						<th class="th-check"></th>
 						<th class="th-delete"></th>
 						<th class="th-modify"></th>
-						<th class="th-name">餐饮名</th>
+						<th class="th-name">餐饮店名</th>
 						<th class="th-status">状态</th>
-						<th class="th-area">所属地区</th>
-						<th class="th-type">餐饮类别</th>
+						<th class="th-area">餐饮店地区</th>
+						<th class="th-type">餐饮店类别</th>
 						<th class="th-price">价格(日元/人)</th>
 						<th class="th-modified-at">更新日</th>
 					</tr>
@@ -253,7 +253,7 @@
 		<div class="content-main">
 			<p class="error-icon">！</p>
 			<p class="error-text">
-				对不起，未能查找到符合筛选条件的餐饮信息<br/>
+				对不起，未能查找到符合条件的餐饮店信息<br/>
 				请确认筛选条件后重新进行筛选排序
 			</p>
 		</div>
@@ -263,9 +263,9 @@
 		<div class="popup-shadow"></div>
 		
 		<div class="popup-delete popup">
-			<div class="popup-title">删除餐饮确认</div>
+			<div class="popup-title">删除餐饮店确认</div>
 			<div class="popup-content center">
-				<p>餐饮一经删除将无法还原，<br/>当餐饮被删除时，使用该餐饮的路线及客户信息中的相关信息也将被同时清除，<br/>确定要删除「餐饮-<span class="popup-delete-name"></span>」吗？</p>
+				<p>餐饮店一经删除将无法还原，<br/>确定要删除餐饮店-「<span class="popup-delete-name"></span>」吗？</p>
 			</div>
 			<div class="popup-controller">
 				<form action="/admin/delete_restaurant/" method="post" id="form-delete">
@@ -280,9 +280,9 @@
 		</div>
 		
 		<div class="popup-delete-checked popup">
-			<div class="popup-title">删除餐饮确认</div>
+			<div class="popup-title">删除餐饮店确认</div>
 			<div class="popup-content center">
-				<p>餐饮一经删除将无法还原，<br/>当餐饮被删除时，使用该餐饮的路线及客户信息中的相关信息也将被同时清除，<br/>确定要删除当前选中的所有餐饮吗？</p>
+				<p>餐饮店一经删除将无法还原，<br/>确定要删除当前选中的所有餐饮店吗？</p>
 			</div>
 			<div class="popup-controller">
 				<form action="/admin/delete_restaurant_checked/" method="post" id="form-delete-checked">

@@ -20,7 +20,7 @@
 				<table class="tb-content-form">
 					<tr>
 						<th>景点类别名</th>
-						<td><input type="text" name="spot_type_name" value="<?php echo $input_spot_type_name; ?>" /></td>
+						<td><input type="text" name="spot_type_name" value="<?php echo $input_spot_type_name; ?>" maxlength="50" placeholder="请输入景点类别名(50字以内)" /></td>
 					</tr>
 					<tr>
 						<td colspan="2">

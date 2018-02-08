@@ -77,6 +77,7 @@
 			</p>
 		</div>
 		
+		<?php if($edit_able_flag): ?>
 		<div class="popup-shadow"></div>
 		
 		<?php if($hotel_info['hotel_status'] == '1'): ?>
@@ -115,7 +116,8 @@
 				</ul>
 			</div>
 		</div>
-		<?php endif; ?>
+		<?php endif; //hotel_info['hotel_status'] ?>
+		<?php endif; //edit_able_flag ?>
 	</div>
 </body>
 </html>

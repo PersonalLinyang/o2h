@@ -41,11 +41,11 @@ $(function(){
 			html.push('<table class="content-form-talbe-inner">');
 				html.push('<tr>');
 					html.push('<th>景点详情名</th>');
-					html.push('<td><input type="text" name="spot_detail_name_' + detail_id + '" /></td>');
+					html.push('<td><input type="text" name="spot_detail_name_' + detail_id + '" maxlength="100" placeholder="请输入景点详情名(100字以内)" /></td>');
 				html.push('</tr>');
 				html.push('<tr>');
 					html.push('<th>景点介绍</th>');
-					html.push('<td><textarea name="spot_description_text_' + detail_id + '"></textarea></td>');
+					html.push('<td><textarea name="spot_description_text_' + detail_id + '" placeholder="请输入景点介绍"></textarea></td>');
 				html.push('</tr>');
 				html.push('<tr>');
 					html.push('<th>景点图片</th>');

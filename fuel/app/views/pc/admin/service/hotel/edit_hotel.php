@@ -20,13 +20,13 @@
 				<table class="tb-content-form">
 					<tr>
 						<th>酒店名</th>
-						<td><input type="text" name="hotel_name" value="<?php echo $input_hotel_name; ?>" /></td>
+						<td><input type="text" name="hotel_name" value="<?php echo $input_hotel_name; ?>" maxlength="100" placeholder="请输入酒店名(100字以内)" /></td>
 					</tr>
 					<tr>
-						<th>酒店所属地区</th>
+						<th>酒店地区</th>
 						<td>
 							<select name="hotel_area">
-								<option value=""></option>
+								<option value="" class="placeholder">--请选择酒店地区--</option>
 								<?php foreach($area_list as $area): ?>
 								<option value="<?php echo $area['area_id']; ?>"<?php echo $input_hotel_area == $area['area_id'] ? ' selected' : ''; ?>>
 									<?php echo $area['area_description']; ?>
@@ -39,7 +39,7 @@
 						<th>酒店类别</th>
 						<td>
 							<select name="hotel_type">
-								<option value=""></option>
+								<option value="" class="placeholder">--请选择酒店类别--</option>
 								<?php foreach($hotel_type_list as $hotel_type): ?>
 								<option value="<?php echo $hotel_type['hotel_type_id']; ?>"<?php echo $input_hotel_type == $hotel_type['hotel_type_id'] ? ' selected' : ''; ?>>
 									<?php echo $hotel_type['hotel_type_name']; ?>
@@ -50,7 +50,7 @@
 					</tr>
 					<tr>
 						<th>价格</th>
-						<td><input type="text" name="hotel_price" value="<?php echo $input_hotel_price; ?>" /></td>
+						<td><input type="text" name="hotel_price" value="<?php echo $input_hotel_price; ?>" placeholder="请输入价格(数字)" /></td>
 					</tr>
 					<tr>
 						<th>公开状态</th>

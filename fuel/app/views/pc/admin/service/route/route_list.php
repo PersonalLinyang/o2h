@@ -2,25 +2,35 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>路线管理 - O2H管理系统</title>
+	<title>旅游路线管理 - O2H管理系统</title>
 	<?php echo Asset::css('pc/admin/common.css'); ?>
 	<?php echo Asset::css('pc/admin/error.css'); ?>
-	<?php echo Asset::css('pc/admin/service/route_list.css'); ?>
+	<?php echo Asset::css('pc/admin/service/route/route_list.css'); ?>
 	<?php echo Asset::js('common/jquery-1.9.1.min.js'); ?>
 	<?php echo Asset::js('pc/admin/common.js'); ?>
-	<?php echo Asset::js('pc/admin/service/route_list.js'); ?>
+	<?php echo Asset::js('pc/admin/service/route/route_list.js'); ?>
 </head>
 <body class="body-common">
 	<?php echo $header; ?>
 	<div class="content-area">
 		<div class="content-menu">
 			<ul class="content-menu-list">
-				<li><a href="/admin/add_route/">添加路线</a></li>
-				<li id="btn-content-menu-delete-checked">删除选中路线</li>
-				<li id="btn-content-menu-select">筛选排序</li>
-				<li><a href="/admin/route_type_list/">路线类别管理</a></li>
+				<?php if($edit_able_flag): ?>
+				<li><a href="/admin/add_route/">添加旅游路线</a></li>
+				<?php endif; ?>
+				<?php if($delete_able_flag): ?>
+				<li id="btn-content-menu-delete-checked">删除选中旅游路线</li>
+				<?php endif; ?>
+				<li class="btn-content-menu" id="btn-content-menu-select">筛选排序</li>
+				<?php if($import_able_flag): ?>
+				<li class="btn-content-menu" id="btn-content-menu-import">批量导入旅游路线</li>
+				<?php endif; ?>
+				<?php if($export_able_flag): ?>
+				<li class="btn-content-menu" id="btn-content-menu-export">导出旅游路线列表</li>
+				<?php endif; ?>
 			</ul>
-			<div class="content-menu-select" id="div-content-menu-select">
+			
+			<div class="content-menu-select content-menu-control-area" id="div-content-menu-select">
 				<form action="/admin/route_list/" method="get" id="form-content-menu-select">
 					<table>
 						<tr>
@@ -68,9 +78,9 @@
 						<tr>
 							<th rowspan="2" class="th-parent">排序条件</th>
 							<th>排序项目</th>
-							<td class="long">
+							<td class="td-long">
 								<input type="radio" name="sort_column" value="route_name" id="rdb-sort-name" <?php echo $sort_column == "route_name" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_column == 'route_name' ? ' active' : ''; ?>" for="rdb-sort-name" data-for="rdb-sort-column">路线名</label>
+								<label class="lbl-for-radio<?php echo $sort_column == 'route_name' ? ' active' : ''; ?>" for="rdb-sort-name" data-for="rdb-sort-column">旅游路线名</label>
 								<input type="radio" name="sort_column" value="route_status" id="rdb-sort-status" <?php echo $sort_column == "route_status" ? 'checked ' : ''; ?>/>
 								<label class="lbl-for-radio<?php echo $sort_column == 'route_status' ? ' active' : ''; ?>" for="rdb-sort-status" data-for="rdb-sort-column">公开状况</label>
 								<input type="radio" name="sort_column" value="route_price_min" id="rdb-sort-price_min" <?php echo $sort_column == "route_price_min" ? 'checked ' : ''; ?>/>
@@ -95,7 +105,7 @@
 						</tr>
 						<tr>
 							<th>排序方式</th>
-							<td class="long">
+							<td class="td-long">
 								<input type="radio" name="sort_method" value="asc" id="rdb-sort-asc" <?php echo $sort_method == "asc" ? 'checked ' : ''; ?>/>
 								<label class="lbl-for-radio<?php echo $sort_method == 'asc' ? ' active' : ''; ?>" for="rdb-sort-asc" data-for="rdb-sort-method">升序</label>
 								<input type="radio" name="sort_method" value="desc" id="rdb-sort-desc" <?php echo $sort_method == "desc" ? 'checked ' : ''; ?>/>
@@ -110,6 +120,45 @@
 					<li class="button-no" id="btn-content-menu-select-cancel">取消</li>
 				</ul>
 			</div>
+			
+			<?php if($import_able_flag): ?>
+			<div class="content-menu-import content-menu-control-area" id="div-content-menu-import">
+				<form action="/admin/import_route/" method="post" id="form-content-menu-import" enctype="multipart/form-data">
+					<div class="upload-area">
+						<label>
+							<input type="file" name="file_route_list" accept=".xls,.xlsx" class="file-content-menu" />
+							<p class="btn-upload">请上传写有要导入的景点信息的Excel文件</p>
+						</label>
+					</div>
+					<input type="hidden" name="page" value="route_list" />
+				</form>
+				<ul class="button-group">
+					<li class="button-yes" id="btn-content-menu-import-submit">导入</li>
+					<li class="button"><a href="/assets/xls/model/import_route_model.xls" download>下载模板</a></li>
+					<li class="button-no" id="btn-content-menu-import-cancel">取消</li>
+				</ul>
+			</div>
+			<?php endif; ?>
+			
+			<?php if($export_able_flag): ?>
+			<div class="content-menu-export content-menu-control-area" id="div-content-menu-export">
+				<form action="/admin/export_route/" method="post" id="form-content-menu-export" enctype="multipart/form-data">
+					<input type="hidden" name="select_name" value="<?php echo $select_name; ?>" />
+					<input type="hidden" name="select_status" value="<?php echo implode(',', $select_status); ?>" />
+					<input type="hidden" name="select_price_min" value="<?php echo $select_price_min; ?>" />
+					<input type="hidden" name="select_price_max" value="<?php echo $select_price_max; ?>" />
+					<input type="hidden" name="sort_column" value="<?php echo $sort_column; ?>" />
+					<input type="hidden" name="sort_method" value="<?php echo $sort_method; ?>" />
+					<input type="hidden" name="export_model" value="" id="hid-content-menu-export-model" />
+					<input type="hidden" name="page" value="route_list" />
+				</form>
+				<ul class="button-group">
+					<li class="button-yes" class="btn-content-menu-export" id="btn-content-menu-export-review">阅览模式导出</li>
+					<li class="button-yes" class="btn-content-menu-export" id="btn-content-menu-export-backup">备份模式导出</li>
+					<li class="button-no" id="btn-content-menu-export-cancel">取消</li>
+				</ul>
+			</div>
+			<?php endif; ?>
 		</div>
 		
 		<?php if($success_message): ?>
@@ -122,43 +171,65 @@
 		
 		<?php if($route_count): ?>
 		<div class="content-main">
-			<h1>路线一览</h1>
+			<h1>旅游路线一览</h1>
 			<div class="div-content-list">
 				<p>
-					共为您检索到<span class="strong"><?php echo $route_count; ?></span>条路线信息
-					目前显示的是其中的第<span class="strong"><?php echo $start_number; ?></span>～<span class="strong"><?php echo $end_number; ?></span>条
+					共为您检索到<span class="strong"><?php echo $route_count; ?></span>条旅游路线信息
+					目前显示的是其中的第<span class="strong"><?php echo $start_number; ?></span><?php if($start_number != $end_number): ?>～<span class="strong"><?php echo $end_number; ?></span><?php endif; ?>条
 				</p>
 				<table class="tb-content-list">
 					<tr>
-						<th class="th-check"></th>
-						<th class="th-delete"></th>
-						<th class="th-modify"></th>
-						<th class="th-name">路线名</th>
-						<th class="th-status">状态</th>
-						<th class="th-price">价格<br>(元)</th>
-						<th class="th-cost">基本成本<br>(元)</th>
-						<th class="th-cost">交通费<br>(元)</th>
-						<th class="th-cost">停车费<br>(元)</th>
-						<th class="th-cost">成本合计<br>(元)</th>
-						<th class="th-day">天数</th>
-						<th class="th-date">登录日</th>
-						<th class="th-date">更新日</th>
+						<?php if($delete_able_flag): ?>
+						<th class="th-check" rowspan="2"></th>
+						<th class="th-delete" rowspan="2"></th>
+						<?php endif; ?>
+						<?php if($edit_able_flag): ?>
+						<th class="th-modify" rowspan="2"></th>
+						<?php endif; ?>
+						<th class="th-name" rowspan="2">旅游路线名</th>
+						<th class="th-status" rowspan="2">状态</th>
+						<th class="th-price" rowspan="2">价格<br>(元)</th>
+						<th colspan="3">成本(元)</th>
+						<th class="th-day" rowspan="2">天数</th>
+						<th class="th-date" rowspan="2">最近更新</th>
+					</tr>
+					<tr>
+						<th class="th-cost">基本成本</th>
+						<th class="th-cost">交通费</th>
+						<th class="th-cost">停车费</th>
 					</tr>
 					<?php foreach($route_list as $route): ?>
 					<tr>
-						<td><label class="lbl-for-check" for="delete-id-checked-<?php echo $route['route_id']; ?>"></label></td>
-						<td><p class="btn-controller btn-delete" data-value="<?php echo $route['route_id']; ?>" data-name="<?php echo $route['route_name']; ?>">削除</p></td>
-						<td><p class="btn-controller btn-modify"><a href="/admin/modify_route/<?php echo $route['route_id']; ?>/">修改</a></p></td>
-						<td><a href="/admin/route_detail/<?php echo $route['route_id']; ?>/"><?php echo $route['route_name']; ?></a></td>
-						<td><?php echo $route['route_status'] == '1' ? '公开' : '未公开'; ?></td>
-						<td><?php echo ($route['route_price_min'] || $route['route_price_max']) ? ($route['route_price_min'] . '～' . $route['route_price_max']) : ''; ?></td>
+						<?php if($delete_able_flag): ?>
+						<td rowspan="2">
+							<?php if($user_id_self == $route['created_by'] || $delete_other_able_flag): ?>
+							<label class="lbl-for-check" for="delete-id-checked-<?php echo $route['route_id']; ?>"></label>
+							<?php endif; ?>
+						</td>
+						<td rowspan="2">
+							<?php if($user_id_self == $route['created_by'] || $delete_other_able_flag): ?>
+							<p class="btn-controller btn-delete" data-value="<?php echo $route['route_id']; ?>" data-name="<?php echo $route['route_name']; ?>">削除</p>
+							<?php endif; ?>
+						</td>
+						<?php endif; ?>
+						<?php if($edit_able_flag): ?>
+						<td rowspan="2">
+							<?php if($user_id_self == $route['created_by'] || $edit_other_able_flag): ?>
+							<p class="btn-controller btn-modify"><a href="/admin/modify_route/<?php echo $route['route_id']; ?>/">修改</a></p>
+							<?php endif; ?>
+						</td>
+						<?php endif; ?>
+						<td rowspan="2"><a href="/admin/route_detail/<?php echo $route['route_id']; ?>/"><?php echo $route['route_name']; ?></a></td>
+						<td rowspan="2"><?php echo $route['route_status'] == '1' ? '公开' : '未公开'; ?></td>
+						<td rowspan="2"><?php echo ($route['route_price_min'] || $route['route_price_max']) ? ($route['route_price_min'] . '～<br>' . $route['route_price_max']) : ''; ?></td>
 						<td><?php echo $route['route_base_cost']; ?></td>
 						<td><?php echo $route['route_traffic_cost']; ?></td>
 						<td><?php echo $route['route_parking_cost']; ?></td>
-						<td><?php echo $route['route_total_cost']; ?></td>
-						<td><?php echo $route['detail_day_number']; ?></td>
-						<td><?php echo date('y/m/d', strtotime($route['created_at'])); ?></td>
-						<td><?php echo date('y/m/d', strtotime($route['modified_at'])); ?></td>
+						<td rowspan="2"><?php echo $route['detail_day_number']; ?></td>
+						<td rowspan="2"><?php echo date('y年m月d日', strtotime($route['modified_at'])); ?></td>
+					</tr>
+					<tr>
+						<td colspan="3">合计：<?php echo $route['route_total_cost']; ?></td>
 					</tr>
 					<?php endforeach; ?>
 				</table>
@@ -197,18 +268,19 @@
 		<div class="content-main">
 			<p class="error-icon">！</p>
 			<p class="error-text">
-				对不起，未能查找到符合筛选条件的路线信息<br/>
+				对不起，未能查找到符合条件的旅游路线信息<br/>
 				请确认筛选条件后重新进行筛选排序
 			</p>
 		</div>
 		<?php endif; ?>
 		
+		<?php if($delete_able_flag): ?>
 		<div class="popup-shadow"></div>
 		
 		<div class="popup-delete popup">
-			<div class="popup-title">删除路线确认</div>
+			<div class="popup-title">删除旅游路线确认</div>
 			<div class="popup-content center">
-				<p>路线一经删除将无法还原，<br/>当路线被删除时，使用该路线的路线及客户信息中的相关信息也将被同时清除，<br/>确定要删除「路线-<span class="popup-delete-name"></span>」吗？</p>
+				<p>旅游路线一经删除将无法还原，<br/>确定要删除旅游路线-「<span class="popup-delete-name"></span>」吗？</p>
 			</div>
 			<div class="popup-controller">
 				<form action="/admin/delete_route/" method="post" id="form-delete">
@@ -223,12 +295,12 @@
 		</div>
 		
 		<div class="popup-delete-checked popup">
-			<div class="popup-title">删除路线确认</div>
+			<div class="popup-title">删除旅游路线确认</div>
 			<div class="popup-content center">
-				<p>路线一经删除将无法还原，<br/>当路线被删除时，使用该路线的路线及客户信息中的相关信息也将被同时清除，<br/>确定要删除当前选中的所有路线吗？</p>
+				<p>旅游路线一经删除将无法还原，<br/>确定要删除当前选中的所有旅游路线吗？</p>
 			</div>
 			<div class="popup-controller">
-				<form action="/admin/delete_checked_route/" method="post" id="form-delete-checked">
+				<form action="/admin/delete_route_checked/" method="post" id="form-delete-checked">
 					<?php foreach($route_list as $route): ?>
 					<input type="checkbox" name="delete_id_checked[]" id="delete-id-checked-<?php echo $route['route_id']; ?>" value="<?php echo $route['route_id']; ?>">
 					<?php endforeach; ?>
@@ -240,6 +312,7 @@
 				</ul>
 			</div>
 		</div>
+		<?php endif; ?>
 	</div>
 </body>
 </html>

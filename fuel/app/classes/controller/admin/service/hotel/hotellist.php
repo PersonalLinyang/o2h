@@ -54,7 +54,7 @@ class Controller_Admin_Service_Hotel_Hotellist extends Controller_Admin_App
 				//是否具备房型管理权限
 				$data['room_type_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 21);
 				
-				//每页现实酒店数
+				//每页显示酒店数
 				$num_per_page = 20;
 				//本页前后最大可链接页数
 				$data['page_link_max'] = 3;

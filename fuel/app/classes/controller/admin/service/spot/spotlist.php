@@ -50,7 +50,7 @@ class Controller_Admin_Service_Spot_Spotlist extends Controller_Admin_App
 				//是否具备景点类别管理权限
 				$data['spot_type_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 10);
 				
-				//每页现实景点数
+				//每页显示景点数
 				$num_per_page = 20;
 				//本页前后最大可链接页数
 				$data['page_link_max'] = 3;
@@ -124,6 +124,9 @@ class Controller_Admin_Service_Spot_Spotlist extends Controller_Admin_App
 						case 'error_db':
 							$data['error_message'] = '发生数据库错误,请重新尝试删除';
 							break;
+						case 'error_image':
+							$data['error_message'] = '景点数据删除成功,但未能成功删除关联的图片文件,请联系系统开发人员进行手动删除';
+							break;
 						default:
 							$data['error_message'] = '发生系统错误,请尝试重新删除';
 							break;
@@ -152,6 +155,9 @@ class Controller_Admin_Service_Spot_Spotlist extends Controller_Admin_App
 							break;
 						case 'error_db':
 							$data['error_message'] = '发生数据库错误,请重新尝试删除';
+							break;
+						case 'error_image':
+							$data['error_message'] = '景点数据删除成功,但未能成功删除关联的图片文件,请联系系统开发人员进行手动删除';
 							break;
 						default:
 							$data['error_message'] = '发生系统错误,请尝试重新删除';
@@ -219,6 +225,28 @@ class Controller_Admin_Service_Spot_Spotlist extends Controller_Admin_App
 			//发生系统异常
 			return Response::forge(View::forge($this->template . '/admin/error/system_error', $data, false));
 		}
+	}
+
+	/**
+	 * 获取景点列表
+	 * @access  public
+	 * @return  Response
+	 */
+	public function action_apisimplespotlist($page = null)
+	{
+		$result = array('result' => false, 'spot_list' => array());
+		try {
+			$allow_page_list = array('add_route');
+			
+			if(isset($_POST['page'])) {
+				if(in_array($_POST['page'], $allow_page_list)) {
+					$spot_list = Model_Spot::SelectSpotSimpleList(array('active_only' => true, 'spot_status' => array(1)));
+					$result = array('result' => true, 'spot_list' => $spot_list);
+				}
+			}
+		} catch (Exception $e) {
+		}
+		return json_encode($result);
 	}
 
 }

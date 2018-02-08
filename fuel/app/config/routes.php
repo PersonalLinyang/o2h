@@ -18,6 +18,9 @@ return array(
 	'admin/delete_spot'            => 'admin/service/spot/deletespot/index',
 	'admin/delete_spot_checked'    => 'admin/service/spot/deletespot/deletespotchecked',
 	
+	//景点相关接口
+	'admin/api_simple_spot_list'      => 'admin/service/spot/spotlist/apisimplespotlist',
+	
 	//景点类别管理
 	'admin/spot_type_list'                   => 'admin/service/spottype/spottypelist/index',
 	'admin/add_spot_type'                    => 'admin/service/spottype/addspottype/index',
@@ -67,15 +70,14 @@ return array(
 	'admin/delete_restaurant_type'                       => 'admin/service/restauranttype/deleterestauranttype/index',
 	
 	//旅游路线管理
-	'admin/route_list'               => 'admin/service/routelist/index',
-	'admin/route_list/(:page)'       => 'admin/service/routelist/index/$1',
-	'admin/add_route'                => 'admin/service/addroute',
-	'admin/add_route/spot_list'      => 'admin/service/addroute/spotlist',
-	'admin/route_detail/(:route_id)' => 'admin/service/routedetail/index/$1',
-	'admin/modify_route_status'      => 'admin/service/routedetail/modifyroutestatus',
-	'admin/modify_route/(:route_id)' => 'admin/service/modifyroute/index/$1',
-	'admin/delete_route'             => 'admin/service/routelist/deleteroute',
-	'admin/delete_checked_route'     => 'admin/service/routelist/deletecheckedroute',
+	'admin/route_list'               => 'admin/service/route/routelist/index',
+	'admin/route_list/(:page)'       => 'admin/service/route/routelist/index/$1',
+	'admin/route_detail/(:route_id)' => 'admin/service/route/routedetail/index/$1',
+	'admin/add_route'                => 'admin/service/route/addroute/index',
+	'admin/modify_route/(:route_id)' => 'admin/service/route/modifyroute/index/$1',
+	'admin/modify_route_status'      => 'admin/service/route/modifyroute/modifyroutestatus',
+	'admin/delete_route'             => 'admin/service/route/deleteroute/index',
+	'admin/delete_route_checked'     => 'admin/service/route/deleteroute/deleteroutechecked',
 	
 	//顾客管理
 	'admin/add_customer'                         => 'admin/customer/addcustomer',

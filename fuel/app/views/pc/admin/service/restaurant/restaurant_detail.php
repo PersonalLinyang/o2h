@@ -21,7 +21,7 @@
 				<li class="content-menu-button btn-restaurant-status">设为公开</li>
 				<?php endif; //restaurant_info['restaurant_status'] ?>
 				<?php endif; //edit_able_flag ?>
-				<li class="content-menu-button"><a href="/admin/restaurant_list/">餐饮一览</a></li>
+				<li class="content-menu-button"><a href="/admin/restaurant_list/">餐饮店一览</a></li>
 			</ul>
 		</div>
 		
@@ -34,18 +34,18 @@
 		<?php endif; ?>
 		
 		<div class="content-main">
-			<h1>餐饮信息 - <?php echo $restaurant_info['restaurant_name']; ?></h1>
+			<h1>餐饮店信息 - <?php echo $restaurant_info['restaurant_name']; ?></h1>
 			<table class="tb-content-detail">
 				<tr>
-					<th>餐饮名</th>
+					<th>餐饮店名</th>
 					<td><?php echo $restaurant_info['restaurant_name']; ?></td>
 				</tr>
 				<tr>
-					<th>餐饮所属地区</th>
+					<th>餐饮店地区</th>
 					<td><?php echo $restaurant_info['restaurant_area_description']; ?></td>
 				</tr>
 				<tr>
-					<th>餐饮类别</th>
+					<th>餐饮店类别</th>
 					<td><?php echo $restaurant_info['restaurant_type_name']; ?></td>
 				</tr>
 				<tr>
@@ -67,13 +67,14 @@
 			</table>
 		</div>
 		
+		<?php if($edit_able_flag): ?>
 		<div class="popup-shadow"></div>
 		
 		<?php if($restaurant_info['restaurant_status'] == '1'): ?>
 		<div class="popup-restaurant-status popup">
-			<div class="popup-title">未公开餐饮设置确认</div>
+			<div class="popup-title">未公开餐饮店设置确认</div>
 			<div class="popup-content center">
-				<p>餐饮设置为未公开餐饮后普通用户将无法通过宣传系统查看本餐饮的详细信息，<br/>确定要将餐饮「<?php echo $restaurant_info['restaurant_name']; ?>」设置为未公开吗？</p>
+				<p>餐饮店设置为未公开餐饮店后普通用户将无法通过宣传系统查看本餐饮店的详细信息，<br/>确定要将餐饮店-「<?php echo $restaurant_info['restaurant_name']; ?>」设置为未公开吗？</p>
 			</div>
 			<div class="popup-controller">
 				<form action="/admin/modify_restaurant_status/" method="post" id="form-restaurant-status">
@@ -89,9 +90,9 @@
 		</div>
 		<?php else: ?>
 		<div class="popup-restaurant-status popup">
-			<div class="popup-title">公开餐饮设置确认</div>
+			<div class="popup-title">公开餐饮店设置确认</div>
 			<div class="popup-content center">
-				<p>餐饮设置为公开餐饮后普通用户将可以通过宣传系统查看本餐饮的详细信息，<br/>确定要将餐饮「<?php echo $restaurant_info['restaurant_name']; ?>」设置为公开吗？</p>
+				<p>餐饮店设置为公开餐饮店后普通用户将可以通过宣传系统查看本餐饮店的详细信息，<br/>确定要将餐饮店-「<?php echo $restaurant_info['restaurant_name']; ?>」设置为公开吗？</p>
 			</div>
 			<div class="popup-controller">
 				<form action="/admin/modify_restaurant_status/" method="post" id="form-restaurant-status">
@@ -105,7 +106,8 @@
 				</ul>
 			</div>
 		</div>
-		<?php endif; ?>
+		<?php endif; //restaurant_info['restaurant_status']?>
+		<?php endif; //edit_able_flag ?>
 	</div>
 </body>
 </html>

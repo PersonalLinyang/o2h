@@ -4,6 +4,7 @@ $(function(){
 	function bind_delete_detail(detail_day) {
 		$('#btn-detail-delete-' + detail_day).click(function(){
 			$(this).closest('.route-detail-block').remove();
+			detail_day_sort();
 		});
 	}
 	
@@ -107,21 +108,24 @@ $(function(){
 							html.push('<ul class="ul-spot-list" id="ul-spot-list-' + detail_day + '">');
 								$.ajax({
 									type: "POST",
-									url: '/admin/add_route/spot_list/',
+									url: '/admin/api_simple_spot_list/',
 									data: {page: 'add_route'},
 									dataType: "json",
-									success: function(spot_list) {
-										var html_ul = [];
-										$.each(spot_list,function(index,val){
-											html_ul.push('<li data-spotid="' + val.spot_id + '" data-spotname="' + val.spot_name + '">');
-												html_ul.push('<p class="btn-spot-select" id="btn-spot-select-' + detail_day + '-' + val.spot_id + '"></p>');
-												html_ul.push(val.spot_name);
-											html_ul.push('</li>');
-										});
-										$('#ul-spot-list-' + detail_day).append(html_ul.join(''));
-										$.each(spot_list,function(index,val){
-											bind_select_spot(detail_day, val.spot_id);
-										});
+									success: function(result) {
+										if(result.result) {
+											spot_list = result.spot_list;
+											var html_ul = [];
+											$.each(spot_list,function(index,val){
+												html_ul.push('<li data-spotid="' + val.spot_id + '" data-spotname="' + val.spot_name + '">');
+													html_ul.push('<p class="btn-spot-select" id="btn-spot-select-' + detail_day + '-' + val.spot_id + '"></p>');
+													html_ul.push(val.spot_name);
+												html_ul.push('</li>');
+											});
+											$('#ul-spot-list-' + detail_day).append(html_ul.join(''));
+											$.each(spot_list,function(index,val){
+												bind_select_spot(detail_day, val.spot_id);
+											});
+										}
 									},
 									error: function(XMLHttpRequest, textStatus, errorThrown) {
 										console.log("XMLHttpRequest : " + XMLHttpRequest.status);
@@ -161,6 +165,7 @@ $(function(){
 	//绑定初始删除详细日程按钮
 	$('.btn-detail-delete').click(function(){
 		$(this).closest('.route-detail-block').remove();
+		detail_day_sort();
 	});
 	
 	//绑定初始详细日程显示/隐藏详情按钮

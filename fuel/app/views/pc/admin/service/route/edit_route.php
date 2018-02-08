@@ -2,15 +2,15 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>添加路线 - O2H管理系统</title>
+	<title><?php echo $page_title; ?> - O2H管理系统</title>
 	<?php echo Asset::css('common/jquery-ui.min.css'); ?>
 	<?php echo Asset::css('pc/admin/common.css'); ?>
-	<?php echo Asset::css('pc/admin/service/edit_route.css'); ?>
+	<?php echo Asset::css('pc/admin/service/route/edit_route.css'); ?>
 	<?php echo Asset::js('common/jquery-1.9.1.min.js'); ?>
 	<?php echo Asset::js('common/jquery-ui.min.js'); ?>
 	<?php echo Asset::js('common/jquery.uploadThumbs.min.js'); ?>
 	<?php echo Asset::js('pc/admin/common.js'); ?>
-	<?php echo Asset::js('pc/admin/service/edit_route.js'); ?>
+	<?php echo Asset::js('pc/admin/service/route/edit_route.js'); ?>
 </head>
 <body class="body-common">
 	<?php echo $header; ?>
@@ -20,11 +20,11 @@
 		<?php endif; ?>
 		
 		<div class="content-main">
-			<h1>添加路线</h1>
+			<h1><?php echo $page_title; ?></h1>
 			<form method="post" action="" class="content-form" enctype="multipart/form-data">
 				<table class="tb-content-form">
 					<tr>
-						<th>路线名</th>
+						<th>旅游路线名</th>
 						<td><input type="text" name="route_name" value="<?php echo $input_route_name; ?>" maxlength="100" placeholder="请输入路线名(100字以内)" /></td>
 					</tr>
 					<tr>
@@ -40,6 +40,7 @@
 									<img src="<?php echo $input_main_image; ?>" class="thumb">
 									<input type="hidden" name="main_image_tmp" value="<?php echo $input_main_image; ?>" />
 									<?php endif; ?>
+									<input type="hidden" name="main_image_url" value="<?php echo $main_image_url; ?>" />
 								</div>
 								<div class="upload-area">
 									<label>
@@ -53,8 +54,8 @@
 					<tr>
 						<th>价格</th>
 						<td>
-							<input type="text" name="route_price_min" class="price" value="<?php echo $input_route_price_min; ?>" placeholder="请输入底价(数字)" /> ～
-							<input type="text" name="route_price_max" class="price" value="<?php echo $input_route_price_max; ?>" placeholder="请输入顶价(数字)" />
+							<input type="text" name="route_price_min" class="price" value="<?php echo $input_route_price_min; ?>" placeholder="请输入最低价(数字)" /> ～
+							<input type="text" name="route_price_max" class="price" value="<?php echo $input_route_price_max; ?>" placeholder="请输入最高价(数字)" />
 						</td>
 					</tr>
 					<tr>
@@ -165,12 +166,12 @@
 						<td colspan="2">
 							<ul class="button-group">
 								<li class="button-yes btn-form-submit">添加</li>
-								<li class="button-no"><a href="/admin/route_list/">取消</a></li>
+								<li class="button-no"><a href="<?php echo $return_page_url; ?>">取消</a></li>
 							</ul>
 						</td>
 					</tr>
 				</table>
-				<input type="hidden" name="page" value="add_route" />
+				<input type="hidden" name="page" value="<?php echo $form_page_index; ?>" />
 			</form>
 		</div>
 	</div>

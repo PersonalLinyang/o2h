@@ -20,14 +20,14 @@
 			<form method="post" action="" class="content-form" enctype="multipart/form-data">
 				<table class="tb-content-form">
 					<tr>
-						<th>餐饮名</th>
-						<td><input type="text" name="restaurant_name" value="<?php echo $input_restaurant_name; ?>" /></td>
+						<th>餐饮店名</th>
+						<td><input type="text" name="restaurant_name" value="<?php echo $input_restaurant_name; ?>" maxlength="100" placeholder="请输入餐饮店名(100字以内)" /></td>
 					</tr>
 					<tr>
-						<th>餐饮所属地区</th>
+						<th>餐饮店地区</th>
 						<td>
 							<select name="restaurant_area">
-								<option value=""></option>
+								<option value="" class="placeholder">--请选择餐饮店地区--</option>
 								<?php foreach($area_list as $area): ?>
 								<option value="<?php echo $area['area_id']; ?>"<?php echo $input_restaurant_area == $area['area_id'] ? ' selected' : ''; ?>>
 									<?php echo $area['area_description']; ?>
@@ -37,10 +37,10 @@
 						</td>
 					</tr>
 					<tr>
-						<th>餐饮类别</th>
+						<th>餐饮店类别</th>
 						<td>
 							<select name="restaurant_type">
-								<option value=""></option>
+								<option value="" class="placeholder">--请选择餐饮店类别--</option>
 								<?php foreach($restaurant_type_list as $restaurant_type): ?>
 								<option value="<?php echo $restaurant_type['restaurant_type_id']; ?>"<?php echo $input_restaurant_type == $restaurant_type['restaurant_type_id'] ? ' selected' : ''; ?>>
 									<?php echo $restaurant_type['restaurant_type_name']; ?>
@@ -52,8 +52,8 @@
 					<tr>
 						<th>价格</th>
 						<td>
-							<input type="text" name="restaurant_price_min" class="price" value="<?php echo $input_restaurant_price_min; ?>" /> ～
-							<input type="text" name="restaurant_price_max" class="price" value="<?php echo $input_restaurant_price_max; ?>" />
+							<input type="text" name="restaurant_price_min" class="price" value="<?php echo $input_restaurant_price_min; ?>" placeholder="请输入最低价(数字)" /> ～
+							<input type="text" name="restaurant_price_max" class="price" value="<?php echo $input_restaurant_price_max; ?>" placeholder="请输入最高价(数字)" />
 						</td>
 					</tr>
 					<tr>

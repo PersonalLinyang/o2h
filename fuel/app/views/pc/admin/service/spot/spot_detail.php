@@ -112,6 +112,7 @@
 			<?php endforeach; ?>
 		</div>
 		
+		<?php if($edit_able_flag): ?>
 		<div class="popup-shadow"></div>
 		
 		<?php if($spot_info['spot_status'] == '1'): ?>
@@ -150,7 +151,8 @@
 				</ul>
 			</div>
 		</div>
-		<?php endif; ?>
+		<?php endif; //spot_info['spot_status'] ?>
+		<?php endif; //edit_able_flag ?>
 	</div>
 </body>
 </html>

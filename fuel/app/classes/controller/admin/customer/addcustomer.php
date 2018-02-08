@@ -26,7 +26,7 @@ class Controller_Admin_Customer_Addcustomer extends Controller_Admin_App
 			$data['customer_source_list'] = Model_Customersource::GetCustomerSourceListActive();
 			$data['user_list'] = Model_User::GetUserSimpleListActive();
 			$data['route_list'] = Model_Route::GetRouteSimpleListActive();
-			$data['spot_list'] = Model_Spot::SelectSpotSimpleListActive();
+			$data['spot_list'] = Model_Spot::SelectSpotSimpleList(array('active_only' => true, 'spot_status' => array(1)));
 			$data['hotel_type_list'] = Model_Hoteltype::GetHotelTypeListActive();
 			$data['room_type_list'] = Model_Roomtype::GetRoomTypeListActive();
 			$data['customer_cost_type_list'] = Model_Customercosttype::GetCustomerCostTypeListActive();

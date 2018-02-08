@@ -39,8 +39,31 @@ class Controller_Admin_Service_Spot_Deletespot extends Controller_Admin_App
 						$result_delete = Model_Spot::DeleteSpot($params_delete);
 						
 						if($result_delete) {
-							//削除成功
-							$_SESSION['delete_spot_success'] = true;
+							//删除图片
+							try {
+								$device_index_list = array('pc', 'sp');
+								foreach($device_index_list as $device_index) {
+									$dir_image = DOCROOT . 'assets/img/' . $device_index . '/upload/spot/' . $_POST['delete_id'] . '/';
+									$dir_detail_list = scandir($dir_image);
+									foreach($dir_detail_list as $dir_detail) {
+										if($dir_detail != '.' && $dir_detail != '..') {
+											$file_image_list = scandir($dir_image . $dir_detail);
+											foreach($file_image_list as $file_image) {
+												if($file_image != '.' && $file_image != '..') {
+													unlink($dir_image . $dir_detail . '/' .  $file_image);
+												}
+											}
+											rmdir($dir_image . $dir_detail);
+										}
+									}
+									rmdir($dir_image);
+								}
+								//削除成功
+								$_SESSION['delete_spot_success'] = true;
+							} catch (Exception $e) {
+								//削除成功 但图片削除失败
+								$_SESSION['delete_spot_error'] = 'error_image';
+							}
 						} else {
 							//削除失败
 							$_SESSION['delete_spot_error'] = 'error_db';
@@ -102,10 +125,34 @@ class Controller_Admin_Service_Spot_Deletespot extends Controller_Admin_App
 					
 					if($result_check['result']) {
 						$result_delete = Model_Spot::DeleteSpot($params_delete);
-						
 						if($result_delete) {
-							//削除成功
-							$_SESSION['delete_spot_checked_success'] = true;
+							//删除图片
+							try {
+								$device_index_list = array('pc', 'sp');
+								foreach($device_index_list as $device_index) {
+									foreach($_POST['delete_id_checked'] as $delete_id) {
+										$dir_image = DOCROOT . 'assets/img/' . $device_index . '/upload/spot/' . $delete_id . '/';
+										$dir_detail_list = scandir($dir_image);
+										foreach($dir_detail_list as $dir_detail) {
+											if($dir_detail != '.' && $dir_detail != '..') {
+												$file_image_list = scandir($dir_image . $dir_detail);
+												foreach($file_image_list as $file_image) {
+													if($file_image != '.' && $file_image != '..') {
+														unlink($dir_image . $dir_detail . '/' .  $file_image);
+													}
+												}
+												rmdir($dir_image . $dir_detail);
+											}
+										}
+										rmdir($dir_image);
+									}
+								}
+								//削除成功
+								$_SESSION['delete_spot_checked_success'] = true;
+							} catch (Exception $e) {
+								//削除成功 但图片削除失败
+								$_SESSION['delete_spot_checked_error'] = 'error_image';
+							}
 						} else {
 							//削除失败
 							$_SESSION['delete_spot_checked_error'] = 'error_db';

@@ -580,6 +580,7 @@ class Model_Hotel extends Model
 			}
 			
 			//编辑「参考-可选房型」表
+			$sheet_room->removeColumn('A');
 			$row_counter = 1;
 			foreach($room_type_list as $room_type) {
 				$sheet_room->setCellValue('B' . $row_counter, $room_type['room_type_name']);

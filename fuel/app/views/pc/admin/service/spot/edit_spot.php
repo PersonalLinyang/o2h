@@ -25,13 +25,13 @@
 				<table class="tb-content-form">
 					<tr>
 						<th>景点名</th>
-						<td><input type="text" name="spot_name" value="<?php echo $input_spot_name; ?>" /></td>
+						<td><input type="text" name="spot_name" value="<?php echo $input_spot_name; ?>" maxlength="100" placeholder="请输入景点名(100字以内)" /></td>
 					</tr>
 					<tr>
 						<th>景点地区</th>
 						<td>
 							<select name="spot_area">
-								<option value=""></option>
+								<option value="" class="placeholder">--请选择景点地区--</option>
 								<?php foreach($area_list as $area): ?>
 								<option value="<?php echo $area['area_id']; ?>"<?php echo $input_spot_area == $area['area_id'] ? ' selected' : ''; ?>>
 									<?php echo $area['area_description']; ?>
@@ -44,7 +44,7 @@
 						<th>景点类别</th>
 						<td>
 							<select name="spot_type">
-								<option value=""></option>
+								<option value="" class="placeholder">--请选择景点类别--</option>
 								<?php foreach($spot_type_list as $spot_type): ?>
 								<option value="<?php echo $spot_type['spot_type_id']; ?>"<?php echo $input_spot_type == $spot_type['spot_type_id'] ? ' selected' : ''; ?>>
 									<?php echo $spot_type['spot_type_name']; ?>
@@ -63,7 +63,7 @@
 								<label class="lbl-for-radio<?php echo $input_free_flag == '0' ? '' : ' active'; ?>" for="free-flag-1" data-for="chk-free-flag">免费</label>
 							</div>
 							<div class="div-spot-price-area"<?php echo $input_free_flag == '0' ? '' : ' style="display: none;"'; ?>>
-								<input type="number" name="spot_price" value="<?php echo $input_spot_price; ?>" />
+								<input type="number" name="spot_price" value="<?php echo $input_spot_price; ?>" placeholder="请输入价格(数字)" />
 								<table class="tb-add-row-table tb-special-price">
 									<tr>
 										<th class="th-name">价格条件</th>
@@ -98,11 +98,18 @@
 									<table class="content-form-talbe-inner">
 										<tr>
 											<th>景点详情名</th>
-											<td><input type="text" name="spot_detail_name_<?php echo $spot_detail['spot_detail_id']; ?>" value="<?php echo $spot_detail['spot_detail_name']; ?>" /></td>
+											<td>
+												<input type="text" name="spot_detail_name_<?php echo $spot_detail['spot_detail_id']; ?>" value="<?php echo $spot_detail['spot_detail_name']; ?>"
+														 maxlength="100" placeholder="请输入景点详情名(100字以内)" />
+											</td>
 										</tr>
 										<tr>
 											<th>景点介绍</th>
-											<td><textarea name="spot_description_text_<?php echo $spot_detail['spot_detail_id']; ?>"><?php echo $spot_detail['spot_description_text']; ?></textarea></td>
+											<td>
+												<textarea name="spot_description_text_<?php echo $spot_detail['spot_detail_id']; ?>" placeholder="请输入景点介绍">
+													<?php echo $spot_detail['spot_description_text']; ?>
+												</textarea>
+											</td>
 										</tr>
 										<tr>
 											<th>景点图片</th>

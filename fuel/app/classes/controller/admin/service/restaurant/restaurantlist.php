@@ -50,7 +50,7 @@ class Controller_Admin_Service_Restaurant_Restaurantlist extends Controller_Admi
 				//是否具备餐饮店类别管理权限
 				$data['restaurant_type_able_flag'] = Model_Permission::CheckPermissionByUser($_SESSION['login_user']['id'], 'function', 15);
 				
-				//每页现实景点数
+				//每页显示景点数
 				$num_per_page = 20;
 				//本页前后最大可链接页数
 				$data['page_link_max'] = 3;

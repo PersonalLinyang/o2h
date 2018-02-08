@@ -17,12 +17,12 @@
 	box-sizing: border-box;
 	text-align: center;
 	vertical-align: middle;
-}
-
-.thumb-area img.thumb {
-	max-width: 546px;
-	max-height: 230px;
-	vertical-align:bottom;
+	
+	.thumb {
+		max-width: 546px;
+		max-height: 230px;
+		vertical-align:bottom;
+	}
 }
 
 /* 图片按钮区域 */
@@ -31,36 +31,38 @@
 }
 
 /* 图片上传按钮 */
-.upload-area label {
-	display:inline-block;
-	position:relative;
-	overflow:hidden;
-	vertical-align:middle;
-}
-
-.upload-area label input[type="file"] {
-	position:absolute;
-	top:0;
-	right:0;
-	cursor:pointer;
-	font-size:100px;
-	opacity:0.01;
-	-ms-filter:"alpha(opacity=1)";
-}
-
-.upload-area label .btn-thumb-upload {
-	font-size: 16px;
-	width: 60px;
-	height: 26px;
-	text-align: center;
-	vertical-align: middle;
-	line-height: 26px;
-	color: #21610B;
-	background: #BCF5A9;
-	border-radius: 15px;
-	border: 2px solid #31B404;
-	cursor: pointer;
-	float: left;
+.upload-area {
+	label {
+		display:inline-block;
+		position:relative;
+		overflow:hidden;
+		vertical-align:middle;
+	}
+	
+	input[type="file"] {
+		position:absolute;
+		top:0;
+		right:0;
+		cursor:pointer;
+		font-size:100px;
+		opacity:0.01;
+		-ms-filter:"alpha(opacity=1)";
+	}
+	
+	.btn-thumb-upload {
+		font-size: 16px;
+		width: 60px;
+		height: 26px;
+		text-align: center;
+		vertical-align: middle;
+		line-height: 26px;
+		color: #21610B;
+		background: #BCF5A9;
+		border-radius: 15px;
+		border: 2px solid #31B404;
+		cursor: pointer;
+		float: left;
+	}
 }
 
 /* 价格输入栏 */
@@ -77,10 +79,10 @@
 	border-radius: 5px;
 	padding: 10px;
 	box-sizing: border-box;
-}
-
-.route-detail-block:first-child {
-	margin-top: 0px;
+	
+	&:first-child {
+		margin-top: 0px;
+	}
 }
 
 /* 详细日程顶端按钮区域 */
@@ -135,24 +137,26 @@
 	margin-top: 0px;
 	margin-bottom: 0px;
 	overflow: hidden;
-}
-.ul-spot-list-selected li {
-	background: #D5B797;
-	display: table;
-	overflow: hidden;
-	float: left;
-	padding-left: 10px;
-	padding-right: 10px;
-	border-radius: 25px;
-	border: 1px solid #713E00;
-	margin-bottom: 3px;
-	margin-left: 8px;
-}
-.ul-spot-list-selected li .btn-spot-unselect {
-	float: right;
-	margin-left: 5px;
-	cursor: pointer;
-	user-select: none;
+	
+	li {
+		background: #D5B797;
+		display: table;
+		overflow: hidden;
+		float: left;
+		padding-left: 10px;
+		padding-right: 10px;
+		border-radius: 25px;
+		border: 1px solid #713E00;
+		margin-bottom: 3px;
+		margin-left: 8px;
+	}
+	
+	.btn-spot-unselect {
+		float: right;
+		margin-left: 5px;
+		cursor: pointer;
+		user-select: none;
+	}
 }
 
 /* 景点搜索区 输入框 */
@@ -168,35 +172,37 @@
 	border-top-right-radius: 5px;
 	background: #D5B797;
 	position: relative;
+	
+	&:before {
+		content: " ";
+		width: 12px;
+		height: 12px;
+		border: 2px solid #C1C1C1;
+		border-radius: 8px;
+		position: absolute;
+		top: 10px;
+		left: 280px;
+	}
+	
+	&:after {
+		content: " ";
+		width: 0px;
+		height: 0px;
+		border-top: 1px solid #C1C1C1;
+		border-bottom: 1px solid #C1C1C1;
+		border-left: 5px solid #C1C1C1;
+		border-right: 5px solid #C1C1C1;
+		position: absolute;
+		top: 25px;
+		left: 291px;
+		transform: rotate(45deg);
+	}
 }
 
 .content-form .div-spot-search .txt-spot-search {
 	width: 300px;
 	border-radius: 15px;
 	border-width: 1px;
-}
-.div-spot-search:before {
-	content: " ";
-	width: 12px;
-	height: 12px;
-	border: 2px solid #C1C1C1;
-	border-radius: 8px;
-	position: absolute;
-	top: 10px;
-	left: 280px;
-}
-.div-spot-search:after {
-	content: " ";
-	width: 0px;
-	height: 0px;
-	border-top: 1px solid #C1C1C1;
-	border-bottom: 1px solid #C1C1C1;
-	border-left: 5px solid #C1C1C1;
-	border-right: 5px solid #C1C1C1;
-	position: absolute;
-	top: 25px;
-	left: 291px;
-	transform: rotate(45deg);
 }
 
 /* 景点搜索区 景点列表 */
@@ -211,54 +217,61 @@
 	border-right: 2px solid #713E00;
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
-}
-.ul-spot-list li {
-	border-bottom: 1px solid #713E00;
-	overflow: hidden;
-	background: #EBCF89;
-	padding-left: 10px;
-	padding-top: 3px;
-	padding-bottom: 3px;
-	margin-right: 10px;
-	line-height: 20px;
-}
-.ul-spot-list li .btn-spot-select {
-	width: 18px;
-	height: 18px;
-	border: 1px solid #713E00;
-	float: left;
-	position: relative;
-	cursor: pointer;
-	margin-right: 5px;
-}
-.ul-spot-list li .btn-spot-select:before {
-	content: " ";
-	border-left: 6px solid transparent;
-	border-right: 6px solid transparent;
-	border-bottom: 6px solid #713E00;
-	position: absolute;
-	top: 3px;
-	left: 3px;
-}
-.ul-spot-list li .btn-spot-select:after {
-	content: " ";
-	border-left: 2px solid #713E00;
-	border-right: 2px solid #713E00;
-	border-bottom: 6px solid #713E00;
-	position: absolute;
-	top: 9px;
-	left: 7px;
-}
-.ul-spot-list li .btn-spot-select:hover {
-	background: #713E00;
-}
-.ul-spot-list li .btn-spot-select:hover:before {
-	border-bottom: 6px solid #EBCF89;
-}
-.ul-spot-list li .btn-spot-select:hover:after {
-	border-left: 2px solid #EBCF89;
-	border-right: 2px solid #EBCF89;
-	border-bottom: 6px solid #EBCF89;
+	
+	li {
+		border-bottom: 1px solid #713E00;
+		overflow: hidden;
+		background: #EBCF89;
+		padding-left: 10px;
+		padding-top: 3px;
+		padding-bottom: 3px;
+		margin-right: 10px;
+		line-height: 20px;
+	}
+	
+	.btn-spot-select {
+		width: 18px;
+		height: 18px;
+		border: 1px solid #713E00;
+		float: left;
+		position: relative;
+		cursor: pointer;
+		margin-right: 5px;
+		
+		&:before {
+			content: " ";
+			border-left: 6px solid transparent;
+			border-right: 6px solid transparent;
+			border-bottom: 6px solid #713E00;
+			position: absolute;
+			top: 3px;
+			left: 3px;
+		}
+		
+		&:after {
+			content: " ";
+			border-left: 2px solid #713E00;
+			border-right: 2px solid #713E00;
+			border-bottom: 6px solid #713E00;
+			position: absolute;
+			top: 9px;
+			left: 7px;
+		}
+		
+		&:hover {
+			background: #713E00;
+			
+			&:before {
+				border-bottom: 6px solid #EBCF89;
+			}
+			
+			&:after {
+				border-left: 2px solid #EBCF89;
+				border-right: 2px solid #EBCF89;
+				border-bottom: 6px solid #EBCF89;
+			}
+		}
+	}
 }
 
 /* 详细日程添加按钮 */
@@ -275,20 +288,20 @@
 	cursor: pointer;
 	text-align: center;
 	position: relative;
-}
-
-#route-detail-add:before {
-	content: "+";
-	width: 20px;
-	height: 20px;
-	border: 2px dashed #713E00;
-	border-radius: 12px;
-	position: absolute;
-	top: 13px;
-	left: 50%;
-	margin-left: -80px;
-	font-size: 22px;
-	line-height: 18px;
+	
+	&:before {
+		content: "+";
+		width: 20px;
+		height: 20px;
+		border: 2px dashed #713E00;
+		border-radius: 12px;
+		position: absolute;
+		top: 13px;
+		left: 50%;
+		margin-left: -80px;
+		font-size: 22px;
+		line-height: 18px;
+	}
 }
 
 /* 详细日程删除按钮 */

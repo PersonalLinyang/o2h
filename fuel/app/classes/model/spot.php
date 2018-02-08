@@ -254,7 +254,7 @@ class Model_Spot extends Model
 				switch($param_key) {
 					case 'spot_id_list':
 						if(count($param_value)) {
-							$sql_where[] = " ts.spot_id_ IN :spot_id_list ";
+							$sql_where[] = " ts.spot_id IN :spot_id_list ";
 							$sql_params['spot_id_list'] = $param_value;
 						}
 						break;
@@ -419,6 +419,56 @@ class Model_Spot extends Model
 				}
 			}
 			return false;
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	/*
+	 * 按条件获得景点简易列表
+	 */
+	public static function SelectSpotSimpleList($params) {
+		try {
+			$sql_where = array();
+			$sql_params = array();
+			$sql_order_column = "created_at";
+			$sql_order_method = "desc";
+			
+			//检索条件处理
+			foreach($params as $param_key => $param_value) {
+				switch($param_key) {
+					case 'spot_id_list':
+						if(count($param_value)) {
+							$sql_where[] = " ts.spot_id IN :spot_id_list ";
+							$sql_params['spot_id_list'] = $param_value;
+						}
+						break;
+					case 'spot_status':
+						if(count($param_value)) {
+							$sql_where[] = " ts.spot_status IN :spot_status_list ";
+							$sql_params['spot_status_list'] = $param_value;
+						}
+						break;
+					case 'active_only':
+						$sql_where[] = " ts.delete_flag = 0 ";
+						break;
+					default:
+						break;
+				}
+			}
+			
+			//符合条件的景点简易列表获取
+			$sql = "SELECT ts.spot_id, ts.spot_name "
+						. "FROM t_spot ts "
+						. (count($sql_where) ? (" WHERE " . implode(" AND ", $sql_where)) : "")
+						. "ORDER BY " . $sql_order_column . " " . $sql_order_method;
+			$query = DB::query($sql);
+			foreach($sql_params as $param_key => $param_value) {
+				$query->param($param_key, $param_value);
+			}
+			$result = $query->execute()->as_array();
+			
+			return $result;
 		} catch (Exception $e) {
 			return false;
 		}
@@ -764,90 +814,6 @@ class Model_Spot extends Model
 		}
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*
-	 * 获得全部有效公开景点信息的简易列表
-	 */
-	public static function SelectSpotSimpleListActive() {
-		$sql = "SELECT spot_id, spot_name FROM t_spot WHERE delete_flag = 0 AND spot_status = 1 ORDER BY spot_id";
-		$query = DB::query($sql);
-		$result = $query->execute()->as_array();
-		
-		return $result;
-	}
-
-	/*
-	 * 获得特定景点信息的简易列表
-	 */
-	public static function SelectSpotSimpleListById($spot_id_list) {
-		$result = array();
-		if(is_array($spot_id_list)) {
-			if(count($spot_id_list)) {
-				$sql = "SELECT spot_id, spot_name FROM t_spot WHERE spot_id IN (".implode(',', $spot_id_list).") ORDER BY spot_id";
-				$query = DB::query($sql);
-				$result = $query->execute()->as_array();
-			}
-		}
-		
-		return $result;
-	}
-	
-	/*
-	 * 检查一组景点ID是否全部有效
-	 */
-	public static function CheckActiveSpotIdList($spot_id_list) {
-		$result = false;
-		
-		if(is_array($spot_id_list)) {
-			if(!count($spot_id_list)) {
-				$result = true;
-			} else {
-				foreach($spot_id_list as $spot_id) {
-					if(!is_numeric($spot_id)) {
-						return false;
-					}
-				}
-				
-				$sql_where_list = array();
-				$sql_param_list = array();
-				foreach($spot_id_list as $spot_id_counter => $spot_id) {
-					$sql_where_list[] = ':spot_id_' . $spot_id_counter;
-					$sql_param_list[':spot_id_' . $spot_id_counter] = $spot_id;
-				}
-				$sql_where = implode(', ', $sql_where_list);
-				$sql = "SELECT * FROM t_spot WHERE spot_id IN (" . $sql_where . ")";
-				$query = DB::query($sql);
-				foreach($sql_param_list as $key => $value) {
-					$query->param($key, $value);
-				}
-				$result = $query->execute()->as_array();
-				
-				if(count($result) == count($spot_id_list)) {
-					$result = true;
-				}
-			}
-		}
-		
-		return $result;
-	}
-	
 	/*
 	 * 批量导入景点用模板Excel更新
 	 */
@@ -922,6 +888,63 @@ class Model_Spot extends Model
 		} catch (Exception $e) {
 			return false;
 		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	 * 检查一组景点ID是否全部有效
+	 */
+	public static function CheckActiveSpotIdList($spot_id_list) {
+		$result = false;
+		
+		if(is_array($spot_id_list)) {
+			if(!count($spot_id_list)) {
+				$result = true;
+			} else {
+				foreach($spot_id_list as $spot_id) {
+					if(!is_numeric($spot_id)) {
+						return false;
+					}
+				}
+				
+				$sql_where_list = array();
+				$sql_param_list = array();
+				foreach($spot_id_list as $spot_id_counter => $spot_id) {
+					$sql_where_list[] = ':spot_id_' . $spot_id_counter;
+					$sql_param_list[':spot_id_' . $spot_id_counter] = $spot_id;
+				}
+				$sql_where = implode(', ', $sql_where_list);
+				$sql = "SELECT * FROM t_spot WHERE spot_id IN (" . $sql_where . ")";
+				$query = DB::query($sql);
+				foreach($sql_param_list as $key => $value) {
+					$query->param($key, $value);
+				}
+				$result = $query->execute()->as_array();
+				
+				if(count($result) == count($spot_id_list)) {
+					$result = true;
+				}
+			}
+		}
+		
+		return $result;
 	}
 
 }

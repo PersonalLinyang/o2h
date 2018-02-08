@@ -20,7 +20,7 @@
 				<table class="tb-content-form">
 					<tr>
 						<th>餐饮店类别名</th>
-						<td><input type="text" name="restaurant_type_name" value="<?php echo $input_restaurant_type_name; ?>" /></td>
+						<td><input type="text" name="restaurant_type_name" value="<?php echo $input_restaurant_type_name; ?>" maxlength="50" placeholder="请输入餐饮店类别名(50字以内)" /></td>
 					</tr>
 					<tr>
 						<td colspan="2">

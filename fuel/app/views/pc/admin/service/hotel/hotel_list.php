@@ -21,7 +21,7 @@
 				<?php if($delete_able_flag): ?>
 				<li id="btn-content-menu-delete-checked">删除选中酒店</li>
 				<?php endif; ?>
-				<li id="btn-content-menu-select">筛选排序</li>
+				<li class="btn-content-menu" id="btn-content-menu-select">筛选排序</li>
 				<?php if($import_able_flag): ?>
 				<li class="btn-content-menu" id="btn-content-menu-import">批量导入酒店</li>
 				<?php endif; ?>
@@ -35,7 +35,7 @@
 				<li><a href="/admin/room_type_list/">房型管理</a></li>
 				<?php endif; ?>
 			</ul>
-			<div class="content-menu-select" id="div-content-menu-select">
+			<div class="content-menu-select content-menu-control-area" id="div-content-menu-select">
 				<form action="/admin/hotel_list/" method="get" id="form-content-menu-select">
 					<table>
 						<tr>

@@ -6,20 +6,22 @@
 	<?php echo Asset::css('pc/admin/common.css'); ?>
 	<?php echo Asset::js('common/jquery-1.9.1.min.js'); ?>
 	<?php echo Asset::js('pc/admin/common.js'); ?>
-	<?php echo Asset::js('pc/admin/service/route_detail.js'); ?>
+	<?php echo Asset::js('pc/admin/service/route/route_detail.js'); ?>
 </head>
 <body class="body-common">
 	<?php echo $header; ?>
 	<div class="content-area">
 		<div class="content-menu">
 			<ul class="content-menu-list">
-				<li class="content-menu-button"><a href="/admin/modify_route/<?php echo $route_info['route_id']; ?>/">信息修改</a></li>
+				<?php if($edit_able_flag): ?>
+				<li class="content-menu-button"><a href="/admin/modify_route/<?php echo $route_info['route_id']; ?>/">修改旅游路线</a></li>
 				<?php if($route_info['route_status'] == '1'): ?>
 				<li class="content-menu-button btn-route-status">设为未公开</li>
 				<?php else: ?>
 				<li class="content-menu-button btn-route-status">设为公开</li>
-				<?php endif; ?>
-				<li class="content-menu-button"><a href="/admin/route_list/">路线一览</a></li>
+				<?php endif; //route_info['route_status'] ?>
+				<?php endif; //edit_able_flag ?>
+				<li class="content-menu-button"><a href="/admin/route_list/">旅游路线一览</a></li>
 			</ul>
 		</div>
 		
@@ -32,15 +34,15 @@
 		<?php endif; ?>
 		
 		<div class="content-main">
-			<h1>路线信息 - <?php echo $route_info['route_name']; ?></h1>
+			<h1>旅游路线信息 - <?php echo $route_info['route_name']; ?></h1>
 			<h3>基本信息</h3>
 			<table class="tb-content-detail">
 				<tr>
-					<th>路线名</th>
+					<th>旅游路线名</th>
 					<td><?php echo $route_info['route_name']; ?></td>
 				</tr>
 				<tr>
-					<th>路线简介</th>
+					<th>旅游路线简介</th>
 					<td><?php echo nl2br($route_info['route_description']); ?></td>
 				</tr>
 				<tr>
@@ -75,15 +77,13 @@
 					<th>公开状态</th>
 					<td><?php echo $route_info['route_status'] == '1' ? '公开' : '未公开'; ?></td>
 				</tr>
-				<tr>
-					<th>登录时间</th>
-					<td><?php echo date('Y年m月d日　H:i:s', strtotime($route_info['created_at'])); ?></td>
-				</tr>
-				<tr>
-					<th>最新修改时间</th>
-					<td><?php echo date('Y年m月d日　H:i:s', strtotime($route_info['modified_at'])); ?></td>
-				</tr>
 			</table>
+			<p class="system-comment">
+				※ 本旅游路线由<?php echo $route_info['created_name']; ?>于<?php echo date('Y年m月d日H:i', strtotime($route_info['created_at'])); ?>登录
+				<?php if($route_info['created_at'] != $route_info['modified_at']): ?>
+				，<?php if($route_info['modified_name'] != $route_info['created_name']): ?>由<?php echo $route_info['modified_name']; ?><?php endif; ?>于<?php echo date('Y年m月d日H:i', strtotime($route_info['modified_at'])); ?>更新至当前状态
+				<?php endif; ?>
+			</p>
 			<h3>详细日程</h3>
 			<?php foreach($route_info['detail_list'] as $detail_info): ?>
 			<table class="tb-content-detail">
@@ -126,6 +126,7 @@
 			<?php endforeach; ?>
 		</div>
 		
+		<?php if($edit_able_flag): ?>
 		<div class="popup-shadow"></div>
 		
 		<?php if($route_info['route_status'] == '1'): ?>
@@ -136,7 +137,7 @@
 			</div>
 			<div class="popup-controller">
 				<form action="/admin/modify_route_status/" method="post" id="form-route-status">
-					<input type="hidden" name="modify_value" value="protected" />
+					<input type="hidden" name="modify_value" value="0" />
 					<input type="hidden" name="modify_id" value="<?php echo $route_info['route_id']; ?>" />
 					<input type="hidden" name="page" value="route_detail" />
 				</form>
@@ -154,7 +155,7 @@
 			</div>
 			<div class="popup-controller">
 				<form action="/admin/modify_route_status/" method="post" id="form-route-status">
-					<input type="hidden" name="modify_value" value="publish" />
+					<input type="hidden" name="modify_value" value="1" />
 					<input type="hidden" name="modify_id" value="<?php echo $route_info['route_id']; ?>" />
 					<input type="hidden" name="page" value="route_detail" />
 				</form>
@@ -164,7 +165,8 @@
 				</ul>
 			</div>
 		</div>
-		<?php endif; ?>
+		<?php endif; //route_info['route_status'] ?>
+		<?php endif; //edit_able_flag ?>
 	</div>
 </body>
 </html>
