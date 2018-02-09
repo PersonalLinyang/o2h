@@ -1,0 +1,238 @@
+/*
+ * 标签或控件共用样式
+ */
+
+/* header区域(跟从) */
+.header-area {
+	height: 0px;
+	position: fixed;
+	width: 100%;
+	min-width: 420px;
+	z-index: 9999;
+}
+
+/* MENU按钮 */
+.btn-header {
+	top: -71px;
+	left: 50%;
+	background-color: #F2F2F2;
+	border: 1px solid #D8D8D8;
+	width: 140px;
+	height: 140px;
+	border-radius: 71px;
+	position: relative;
+	margin-left: -71px;
+	box-shadow: rgba(0,0,0,0.5) 0px 2px 5px, 
+		inset rgba(255,255,255,0.25) 0px 1px 0px, 
+		inset rgba(0,0,0,0.25) 0px 0px 0px, 
+		inset rgba(255,255,255,0.03) 0px 20px 0px, 
+		inset rgba(0,0,0,0.15) 0px -20px 20px, 
+		inset rgba(255,255,255,0.05) 0px 20px 20px;
+	cursor: pointer;
+	user-select: none;
+	z-index: 9000;
+	
+	.active {
+		box-shadow: rgba(255,255,255,0.25) 0px 1px 0px, 
+			inset rgba(255,255,255,0) 0px 1px 0px, 
+			inset rgba(0,0,0,0.5) 0px 0px 5px, 
+			inset rgba(255,255,255,0.03) 0px 20px 0px, 
+			inset rgba(0,0,0,0.15) 0px -20px 20px, 
+			inset rgba(255,255,255,0.05) 0px 20px 20px;
+	}
+	
+	&:active {
+		box-shadow: rgba(255,255,255,0.25) 0px 1px 0px, 
+			inset rgba(255,255,255,0) 0px 1px 0px, 
+			inset rgba(0,0,0,0.5) 0px 0px 5px, 
+			inset rgba(255,255,255,0.03) 0px 20px 0px, 
+			inset rgba(0,0,0,0.15) 0px -20px 20px, 
+			inset rgba(255,255,255,0.05) 0px 20px 20px;
+	}
+}
+.btn-header-text {
+	position: absolute;
+	top: 115px;
+	left: 50%;
+	margin-left: -18px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 12px;
+	color: #FFFFFF;
+	text-shadow: rgba(0,0,0,0.9) 0px 1px 2px;
+}
+.btn-header-img {
+	position: absolute;
+	top: 75px;
+	left: 51px;
+}
+
+/* MENU链接 */
+.btn-menu {
+	width: 60px;
+	height: 60px;
+	-webkit-border-radius: 30px;
+	border-width: 1px;
+	border-style: solid;
+	position: relative;
+	left: 50%;
+	z-index: 8000;
+	cursor: pointer;
+	user-select: none;
+	
+	.link {
+		width: 60px;
+		height: 60px;
+		-webkit-border-radius: 30px;
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+	
+	.highlight {
+		width: 60px;
+		height: 60px;
+		position: absolute;
+		left: 0;
+		top: 0;
+		-webkit-border-radius: 30px;
+	}
+	
+	.img-icon {
+		position: absolute;
+		top: 5px;
+		left: 50%;
+		margin-left: -24px;
+	}
+	
+	.text {
+		position: absolute;
+		width: 100%;
+		top: 60px;
+		left: 0;
+		font-weight: bold;
+		font-size: 14px;
+		text-align: center;
+		text-shadow: rgba(0,0,0,0.9) 0px 1px 2px;
+		display: none;
+		
+		a {
+			color: #FFFFFF;
+			text-decoration: none;
+		}
+	}
+	
+	&:hover .text {
+		display: block;
+	}
+}
+
+/* MENU链接 返回主页 */
+.btn-menu-home {
+	border-color: #8A0808;
+	background: #CA0500 -webkit-gradient(radial,60 60,60,50 120,0,from(#CA0500),to(rgba(255,255,255,0.6)));
+	top: -172px;
+	margin-left: -31px;
+	opacity: 0;
+	
+	.highlight {
+		background: -webkit-gradient(linear,left top,45%bottom,from(rgba(255,255,255,0.7)),
+			color-stop(0.55,rgba(255,255,255,0.2)),color-stop(0.55,rgba(255,255,255,0)));
+	}
+	
+	&:hover {
+		background: #DF0101 -webkit-gradient(radial,60 60,60,50 120,0,from(#DF0101),to(rgba(255,255,255,0.6)));
+	}
+}
+
+/* MENU链接 旅游路线 */
+.btn-menu-route {
+	border-color: #8A4B08;
+	background: #CA9800 -webkit-gradient(radial,60 60,60,50 120,0,from(#CA9800),to(rgba(255,255,255,0.6)));
+	top: -234px;
+	margin-left: -31px;
+	opacity: 0;
+	
+	.highlight {
+		background: -webkit-gradient(linear,left top,45%bottom,from(rgba(255,255,255,0.7)),
+			color-stop(0.55,rgba(255,255,255,0.2)),color-stop(0.55,rgba(255,255,255,0)));
+	}
+	
+	&:hover {
+		background: #DFAD01 -webkit-gradient(radial,60 60,60,50 120,0,from(#DFAD01),to(rgba(255,255,255,0.6)));
+	}
+}
+
+/* MENU链接 特别编辑 */
+.btn-menu-feature {
+	border-color: #868A08;
+	background: #C8CA00 -webkit-gradient(radial,60 60,60,50 120,0,from(#C8CA00),to(rgba(255,255,255,0.6)));
+	top: -296px;
+	margin-left: -31px;
+	opacity: 0;
+	
+	.highlight {
+		background: -webkit-gradient(linear,left top,45%bottom,from(rgba(255,255,255,0.7)),
+			color-stop(0.55,rgba(255,255,255,0.2)),color-stop(0.55,rgba(255,255,255,0)));
+	}
+	
+	&:hover {
+		background: #DCDF01 -webkit-gradient(radial,60 60,60,50 120,0,from(#DCDF01),to(rgba(255,255,255,0.6)));
+	}
+}
+.btn-menu-feature
+.btn-menu-feature 
+
+/* MENU链接 开启旅程 */
+.btn-menu-entry {
+	border-color: #21610B;
+	background: #34CA00 -webkit-gradient(radial,60 60,60,50 120,0,from(#34CA00),to(rgba(255,255,255,0.6)));
+	top: -358px;
+	margin-left: -31px;
+	opacity: 0;
+	
+	.highlight {
+		background: -webkit-gradient(linear,left top,45%bottom,from(rgba(255,255,255,0.7)),
+			color-stop(0.55,rgba(255,255,255,0.2)),color-stop(0.55,rgba(255,255,255,0)));
+	}
+	
+	&:hover {
+		background: #06DF01 -webkit-gradient(radial,60 60,60,50 120,0,from(#06DF01),to(rgba(255,255,255,0.6)));
+	}
+}
+
+/* MENU链接 个人专属 */
+.btn-menu-member {
+	border-color: #0B615E;
+	background: #00CAB5 -webkit-gradient(radial,60 60,60,50 120,0,from(#00CAB5),to(rgba(255,255,255,0.6)));
+	top: -420px;
+	margin-left: -31px;
+	opacity: 0;
+	
+	.highlight {
+		background: -webkit-gradient(linear,left top,45%bottom,from(rgba(255,255,255,0.7)),
+			color-stop(0.55,rgba(255,255,255,0.2)),color-stop(0.55,rgba(255,255,255,0)));
+	}
+	
+	&:hover {
+		background: #01DFCD -webkit-gradient(radial,60 60,60,50 120,0,from(#01DFCD),to(rgba(255,255,255,0.6)));
+	}
+}
+
+/* MENU链接 关于我们 */
+.btn-menu-company {
+	border-color: #7b0e25;
+	background: #000ACA -webkit-gradient(radial,60 60,60,50 120,0,from(#000ACA),to(rgba(255,255,255,0.6)));
+	top: -482px;
+	margin-left: -31px;
+	opacity: 0;
+	
+	.highlight {
+		background: -webkit-gradient(linear,left top,45%bottom,from(rgba(255,255,255,0.7)),
+			color-stop(0.55,rgba(255,255,255,0.2)),color-stop(0.55,rgba(255,255,255,0)));
+	}
+	
+	&:hover {
+		background: #0101DF -webkit-gradient(radial,60 60,60,50 120,0,from(#0101DF),to(rgba(255,255,255,0.6)));
+	}
+}

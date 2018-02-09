@@ -1,0 +1,217 @@
+/* 内容主题区域 */
+.content-area {
+	width: 1036px;
+	margin-left: auto;
+	margin-right: auto;
+	overflow: hidden;
+}
+
+/* 表单区域 */
+.div-form-area {
+	position: relative;
+	float: left;
+	width: 500px;
+	border-width: 4px;
+	border-style: solid;
+	padding-bottom: 30px;
+	border-radius: 10px;
+	box-shadow: rgba(0,0,0,0.5) 0px 2px 5px, 
+		inset rgba(255,255,255,0.25) 0px 1px 0px, 
+		inset rgba(0,0,0,0.25) 0px 0px 0px, 
+		inset rgba(255,255,255,0.03) 0px 8px 0px, 
+		inset rgba(0,0,0,0.15) 0px -8px 8px, 
+		inset rgba(255,255,255,0.05) 0px 8px 8px;
+	
+	&:before {
+		content: " ";
+		position: absolute;
+		top: -39px;
+		background-color: #F2F2F2;
+		width: 70px;
+		height: 70px;
+		border-bottom-width: 4px;
+		border-bottom-style: solid;
+		border-left: 4px solid transparent;
+		border-right: 4px solid transparent;
+		border-radius: 39px;
+	}
+	
+	/* 引导文 */
+	.p-guide {
+		width: 340px;
+		margin-left: auto;
+		margin-right: auto;
+		text-align: center;
+		padding-top: 4px;
+		padding-bottom: 8px;
+		border-bottom-right-radius: 5px;
+		border-bottom-left-radius: 5px;
+		margin-bottom: 30px;
+		font-size: 18px;
+		font-weight: bold;
+		color: #FFFFFF;
+		user-select: none;
+		cursor: default;
+		text-shadow: rgba(0,0,0,0.9) 0px 1px 2px;
+		box-shadow: rgba(0,0,0,0.5) 0px 2px 5px, 
+			inset rgba(255,255,255,0.25) 0px 1px 0px, 
+			inset rgba(0,0,0,0.25) 0px 0px 0px, 
+			inset rgba(255,255,255,0.03) 0px 8px 0px, 
+			inset rgba(0,0,0,0.15) 0px -8px 8px, 
+			inset rgba(255,255,255,0.05) 0px 8px 8px;
+	}
+	
+	/* 标题 */
+	.p-title {
+		font-size: 24px;
+		font-weight: bold;
+		padding-left: 80px;
+		text-shadow: rgba(0,0,0,0.3) 0px 1px 2px;
+		padding-top: 4px;
+		padding-bottom: 4px;
+		user-select: none;
+		cursor: default;
+		
+		&.p-title-right {
+			padding-right: 80px;
+			text-align: right;
+		}
+	}
+	
+	/* 警告 */
+	.p-warning {
+		min-height: 20px;
+		font-size: 14px;
+		color: #FF0000;
+		padding-left: 60px;
+	}
+	
+	/* 表单 */
+	form {
+		width: 400px;
+		margin-bottom: 10px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
+/* 登陆区域 */
+.div-login-area {
+	border-color: #04B404;
+	background-color: #EFFBEF;
+	
+	&:before {
+		right: -41px;
+		border-bottom-color: #04B404;
+		transform: rotate(45deg);
+	}
+	
+	/* 引导文 */
+	.p-guide {
+		background-color: #04B404;
+	}
+	
+	/* 标题 */
+	.p-title {
+		color: #04B404;
+	}
+	
+	/* 忘记密码按钮 */
+	.btn-noactive {
+		background: #DF0101;
+	}
+	
+	/* 登录按钮 */
+	.btn-login.active {
+		background: #01DF01;
+	}
+}
+
+/* 登陆区域 表单 */
+#form-login {
+	margin-top: 20px;
+	
+	input {
+		margin-left: 5px;
+		margin-right: 5px;
+		margin-top: 15px;
+		border-color: #04B404;
+	}
+}
+
+/* 注册区域 */
+.div-access-area {
+	margin-left: 20px;
+	border-color: #0174DF;
+	background-color: #EFEFFB;
+	
+	&:before {
+		left: -41px;
+		border-bottom-color: #0174DF;
+		transform: rotate(-45deg);
+	}
+	
+	/* 引导文 */
+	.p-guide {
+		background-color: #0174DF;
+	}
+	
+	/* 标题 */
+	.p-title {
+		color: #0174DF;
+	}
+	
+	/* 必填项目 */
+	.p-must {
+		height: 20px;
+		font-weight: bold;
+		color: #0174DF;
+		text-align: center;
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+	
+	/* 注册按钮 */
+	.btn-access.active {
+		background: #0040FF;
+	}
+}
+
+/* 注册区域 表单 */
+#form-access {
+	/* 表格 */
+	table {
+		width: 100%;
+		
+		th {
+			text-align: left;
+			vertical-align: top;
+			padding-left: 10px;
+			padding-top: 10px;
+			color: #0174DF;
+		}
+		
+		td {
+			color: #0174DF;
+			padding-top: 7px;
+			padding-bottom: 7px;
+		}
+	}
+	
+	/* 单选按钮 */
+	.lbl-for-radio {
+		background-color: #0174DF;
+	}
+	
+	/* 文本框/密码 */
+	input[type="text"], input[type="password"] {
+		border-color: #0174DF;
+	}
+	
+	/* 下拉选择框 */
+	select {
+		margin-right: 4px;
+		width: 100%;
+		border-color: #0174DF;
+	}
+}
