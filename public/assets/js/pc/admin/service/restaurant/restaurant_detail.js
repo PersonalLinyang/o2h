@@ -1,0 +1,1 @@
+$(function(){$(".btn-restaurant-status").click(function(){$(".popup-shadow").show();$(".popup-restaurant-status").fadeIn()});$("#popup-restaurant-status-yes").click(function(){$("#form-restaurant-status").submit()});$("#popup-restaurant-status-no").click(function(){$(".popup-shadow").hide();$(".popup-restaurant-status").hide()})});

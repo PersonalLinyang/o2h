@@ -20,7 +20,7 @@ class Model_Customersource extends Model
 	public static function CheckCustomerSourceIdActive($customer_source_id) {
 		$sql = "SELECT customer_source_id FROM m_customer_source WHERE customer_source_id = :customer_source_id AND delete_flag = 0";
 		$query = DB::query($sql);
-		$query->param(':customer_source_id', $customer_source_id);
+		$query->param('customer_source_id', $customer_source_id);
 		$result = $query->execute()->as_array();
 		
 		if(count($result)) {

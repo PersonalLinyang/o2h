@@ -7,148 +7,162 @@ class Model_Hoteltype extends Model
 	 * 添加酒店类别
 	 */
 	public static function InsertHotelType($params) {
-		$sql_insert = "INSERT INTO m_hotel_type(hotel_type_name) VALUES(:hotel_type_name)";
-		$query_insert = DB::query($sql_insert);
-		$query_insert->param(':hotel_type_name', $params['hotel_type_name']);
-		$result_insert = $query_insert->execute();
-		
-		return $result_insert;
+		try {
+			$sql = "INSERT INTO m_hotel_type(hotel_type_name, delete_flag, sort_id) VALUES(:hotel_type_name, 0, 1)";
+			$query = DB::query($sql);
+			$query->param('hotel_type_name', $params['hotel_type_name']);
+			$result = $query->execute();
+			
+			if($result) {
+				//新酒店类别ID
+				$hotel_type_id = intval($result[0]);
+				return $hotel_type_id;
+			} else {
+				return false;
+			}
+		} catch (Exception $e) {
+			return false;
+		}
 	}
 	
 	/*
-	 * 根据ID删除酒店类别
+	 * 删除酒店类别
 	 */
-	public static function DeleteHotelTypeById($hotel_type_id) {
-		$sql_delete = "DELETE FROM m_hotel_type WHERE hotel_type_id = :hotel_type_id";
-		$query_delete = DB::query($sql_delete);
-		$query_delete->param(':hotel_type_id', $hotel_type_id);
-		$result_delete = $query_delete->execute();
-		
-		return $result_delete;
+	public static function DeleteHotelType($params) {
+		try {
+			//删除酒店类别
+			$sql_type = "UPDATE m_hotel_type SET delete_flag = 1 WHERE hotel_type_id = :hotel_type_id";
+			$query_type = DB::query($sql_type);
+			$query_type->param('hotel_type_id', $params['hotel_type_id']);
+			$result_type = $query_type->execute();
+			
+			return $result_type;
+		} catch (Exception $e) {
+			return false;
+		}
 	}
 	
 	/*
 	 * 更新酒店类别名称
 	 */
 	public static function UpdateHotelType($params) {
-		$sql_update = "UPDATE m_hotel_type SET hotel_type_name = :hotel_type_name WHERE hotel_type_id = :hotel_type_id";
-		$query_update = DB::query($sql_update);
-		$query_update->param(':hotel_type_id', $params['hotel_type_id']);
-		$query_update->param(':hotel_type_name', $params['hotel_type_name']);
-		$result_update = $query_update->execute();
-		
-		return $result_update;
-	}
-
-	/*
-	 * 获取全部有效酒店类别列表
-	 */
-	public static function GetHotelTypeListActive() {
-		$sql_hotel_type = "SELECT hotel_type_id, hotel_type_name FROM m_hotel_type WHERE delete_flag = 0 ORDER BY hotel_type_id";
-		$query_hotel_type = DB::query($sql_hotel_type);
-		$hotel_type_list = $query_hotel_type->execute()->as_array();
-		
-		return $hotel_type_list;
-	}
-
-	/*
-	 * 获取全部酒店类别信息
-	 */
-	public static function GetHotelTypeInfoAll() {
-		$sql_hotel_type = "SELECT mht.hotel_type_id, mht.hotel_type_name, COUNT(th.hotel_id) hotel_count "
-						. "FROM m_hotel_type mht LEFT JOIN t_hotel th ON th.hotel_type = mht.hotel_type_id " 
-						. "GROUP BY hotel_type_id, hotel_type_name ORDER BY hotel_type_id";
-		$query_hotel_type = DB::query($sql_hotel_type);
-		$hotel_type_list = $query_hotel_type->execute()->as_array();
-		
-		return $hotel_type_list;
-	}
-	
-	/*
-	 * 根据ID获取主功能组信息
-	 */
-	public static function SelectHotelTypeById($hotel_type_id) {
-		if(!is_numeric($hotel_type_id)) {
+		try {
+			$sql = "UPDATE m_hotel_type SET hotel_type_name = :hotel_type_name WHERE hotel_type_id = :hotel_type_id";
+			$query = DB::query($sql);
+			$query->param('hotel_type_id', $params['hotel_type_id']);
+			$query->param('hotel_type_name', $params['hotel_type_name']);
+			$result = $query->execute();
+			
+			return true;
+		} catch (Exception $e) {
 			return false;
 		}
-		
-		$sql = "SELECT * FROM m_hotel_type WHERE hotel_type_id = :hotel_type_id";
-		$query = DB::query($sql);
-		$query->param(':hotel_type_id', $hotel_type_id);
-		$result = $query->execute()->as_array();
-		
-		if(count($result) == 1) {
-			return $result[0];
-		} else {
+	}
+	
+	//获得符合特定条件的酒店类别
+	public static function SelectHotelTypeList($params) {
+		try{
+			$sql_select = array();
+			$sql_from = array();
+			$sql_where = array();
+			$sql_group_by = array();
+			$sql_params = array();
+			
+			//有效酒店类别限定
+			if(isset($params['active_only'])) {
+				$sql_where[] = " mst.delete_flag = 0 ";
+			}
+			//获取所属酒店数
+			if(isset($params['hotel_count_flag'])) {
+				$sql_select[] = " COUNT(ts.hotel_id) hotel_count ";
+				$sql_from[] = " LEFT JOIN (SELECT * FROM t_hotel WHERE delete_flag=0) ts ON ts.hotel_type = mst.hotel_type_id ";
+				$sql_group_by[] = " mst.hotel_type_id ";
+			}
+			
+			$sql = "SELECT mst.* " . (count($sql_select) ? (", " . implode(", ", $sql_select)) : "") 
+				. "FROM m_hotel_type mst " . (count($sql_from) ? implode(" ", array_unique($sql_from)) : "") 
+				. (count($sql_where) ? (" WHERE " . implode(" AND ", $sql_where)) : "") 
+				. (count($sql_group_by) ? (" GROUP BY " . implode(", ", array_unique($sql_group_by))) : "") 
+				. " ORDER BY mst.sort_id, mst.hotel_type_id";
+			$query = DB::query($sql);
+			foreach($sql_params as $param_key => $param_value) {
+				$query->param($param_key, $param_value);
+			}
+			$result = $query->execute()->as_array();
+			
+			return $result;
+		} catch (Exception $e) {
 			return false;
 		}
 	}
 	
 	/*
-	 * 添加酒店类别前添加信息查验
+	 * 获取特定单个酒店类别信息
 	 */
-	public static function CheckInsertHotelType($params) {
+	public static function SelectHotelType($params) {
+		try {
+			$sql_where = array();
+			$sql_params = array();
+			
+			//酒店类别ID限定
+			if(isset($params['hotel_type_id'])) {
+				$sql_where[] = " mst.hotel_type_id = :hotel_type_id ";
+				$sql_params['hotel_type_id'] = $params['hotel_type_id'];
+			}
+			//有效性限定
+			if(isset($params['active_only'])) {
+				if($params['active_only']) {
+					$sql_where[] = " mst.delete_flag = 0 ";
+				}
+			}
+			
+			//数据获取
+			$sql = "SELECT * FROM m_hotel_type mst " 
+				. (count($sql_where) ? (" WHERE " . implode(" AND ", $sql_where)) : "");
+			$query = DB::query($sql);
+			foreach($sql_params as $param_key => $param_value) {
+				$query->param($param_key, $param_value);
+			}
+			$result = $query->execute()->as_array();
+			
+			if(count($result) == 1) {
+				return $result[0];
+			} else {
+				return false;
+			}
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	/*
+	 * 编辑酒店类别前编辑信息查验
+	 */
+	public static function CheckEditHotelType($params) {
 		$result = array(
 			'result' => true,
 			'error' => array(),
 		);
 		
-		if(!isset($params['hotel_type_name'])) {
+		//酒店类别名称
+		if(empty($params['hotel_type_name'])) {
 			$result['result'] = false;
-			$result['error'][] = 'noset_name';
-		} elseif(empty($params['hotel_type_name'])) {
+			$result['error'][] = 'empty_hotel_type_name';
+		} elseif(mb_strlen($params['hotel_type_name']) > 50) {
 			$result['result'] = false;
-			$result['error'][] = 'empty_name';
-		}
-		
-		if($result['result']) {
-			$sql_duplication = "SELECT * FROM m_hotel_type WHERE hotel_type_name = :hotel_type_name";
-			$query_duplication = DB::query($sql_duplication);
-			$query_duplication->param(':hotel_type_name', $params['hotel_type_name']);
-			$result_duplication = $query_duplication->execute()->as_array();
-			
-			if(count($result_duplication)) {
-				$result['result'] = false;
-				$result['error'][] = 'duplication';
-			}
+			$result['error'][] = 'long_hotel_type_name';
+		} elseif(Model_Hoteltype::CheckHotelTypeNameDuplication($params['hotel_type_id'], $params['hotel_type_name'])) {
+			$result['result'] = false;
+			$result['error'][] = 'dup_hotel_type_name';
 		}
 		
 		return $result;
 	}
 	
 	/*
-	 * 删除酒店类别前删除ID查验
+	 * 删除酒店类别前删除信息查验
 	 */
-	public static function CheckDeleteHotelTypeById($hotel_type_id) {
-		$result = array(
-			'result' => true,
-			'error' => array(),
-		);
-		
-		if(!is_numeric($hotel_type_id)) {
-			$result['result'] = false;
-			$result['error'][] = 'nonum_id';
-		}
-		
-		if($result['result']) {
-			$sql_exist = "SELECT * FROM m_hotel_type WHERE hotel_type_id = :hotel_type_id";
-			$query_exist = DB::query($sql_exist);
-			$query_exist->param(':hotel_type_id', $hotel_type_id);
-			$result_exist = $query_exist->execute()->as_array();
-			
-			if(!count($result_exist)) {
-				$result['result'] = false;
-				$result['error'][] = 'noexist';
-			}
-		}
-		
-		return $result;
-	}
-	
-	/*
-	 * 更新酒店类别前更新信息查验
-	 */
-	public static function CheckUpdateHotelType($params) {
+	public static function CheckDeleteHotelType($params) {
 		$result = array(
 			'result' => true,
 			'error' => array(),
@@ -156,28 +170,21 @@ class Model_Hoteltype extends Model
 		
 		if(!is_numeric($params['hotel_type_id'])) {
 			$result['result'] = false;
-			$result['error'][] = 'nonum_id';
-		}
-		
-		if(empty($params['hotel_type_name'])) {
+			$result['error'][] = 'nonum_hotel_type_id';
+		} elseif(!Model_Hoteltype::CheckHotelTypeIdExist($params['hotel_type_id'], 1)) {
 			$result['result'] = false;
-			$result['error'][] = 'empty_name';
-		}
-		
-		if($result['result']) {
-			$sql_duplication = "SELECT * FROM m_hotel_type WHERE hotel_type_name = :hotel_type_name";
-			$query_duplication = DB::query($sql_duplication);
-			$query_duplication->param(':hotel_type_name', $params['hotel_type_name']);
-			$result_duplication = $query_duplication->execute()->as_array();
+			$result['error'][] = 'error_hotel_type_id';
+		} else {
+			//获取酒店信息
+			$params_select = array(
+				'hotel_type' => array($params['hotel_type_id']),
+				'active_only' => 1,
+			);
+			$hotel_select = Model_Hotel::SelectHotelList($params_select);
 			
-			if(count($result_duplication)) {
-				if($result_duplication[0]['hotel_type_id'] == $params['hotel_type_id']) {
-					$result['result'] = false;
-					$result['error'][] = 'nomodify';
-				} else {
-					$result['result'] = false;
-					$result['error'][] = 'duplication';
-				}
+			if($hotel_select['hotel_count']) {
+				$result['result'] = false;
+				$result['error'][] = 'error_hotel_list';
 			}
 		}
 		
@@ -187,16 +194,44 @@ class Model_Hoteltype extends Model
 	/*
 	 * 检查酒店类别ID是否存在
 	 */
-	public static function CheckExistHotelTypeId($hotel_type_id) {
-		$sql = "SELECT * FROM m_hotel_type WHERE hotel_type_id = :hotel_type_id";
-		$query = DB::query($sql);
-		$query->param(':hotel_type_id', $hotel_type_id);
-		$result = $query->execute()->as_array();
-		
-		if(count($result)) {
-			return true;
-		} else {
+	public static function CheckHotelTypeIdExist($hotel_type_id, $active_check = 0) {
+		try {
+			$sql = "SELECT hotel_type_id FROM m_hotel_type WHERE hotel_type_id = :hotel_type_id " . ($active_check ? " AND delete_flag = 0 " : "");
+			$query = DB::query($sql);
+			$query->param('hotel_type_id', $hotel_type_id);
+			$result = $query->execute()->as_array();
+			
+			if(count($result)) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception $e) {
 			return false;
+		}
+	}
+	
+	/*
+	 * 酒店类别名称重复查验
+	 */
+	public static function CheckHotelTypeNameDuplication($hotel_type_id, $hotel_type_name) {
+		try {
+			//数据获取
+			$sql = "SELECT hotel_type_id FROM m_hotel_type WHERE hotel_type_name = :hotel_type_name AND delete_flag = 0" . ($hotel_type_id ? " AND hotel_type_id != :hotel_type_id " : "");
+			$query = DB::query($sql);
+			if($hotel_type_id) {
+				$query->param('hotel_type_id', $hotel_type_id);
+			}
+			$query->param('hotel_type_name', $hotel_type_name);
+			$result = $query->execute()->as_array();
+			
+			if(count($result)) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception $e) {
+			return true;
 		}
 	}
 

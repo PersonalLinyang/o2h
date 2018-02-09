@@ -1,0 +1,81 @@
+/* 内容菜单按钮部分 筛选部分 */
+.content-menu-select table {
+	th {
+		width: 120px;
+		
+		&.th-parent {
+			width: 100px;
+		}
+	}
+	
+	td {
+		width: 400px;
+		
+		&.td-long {
+			width: auto;
+		}
+	}
+}
+
+/* 内容菜单按钮部分 筛选部分 价格 */
+#form-content-menu-select input[type="text"].price {
+	width: 132px;
+}
+
+/* 路线一览表 */
+.div-content-list {
+	width: 100%;
+	
+	.th-check {
+		width: 34px;
+	}
+	
+	.th-delete {
+		width: 62px;
+	}
+	
+	.th-modify {
+		width: 62px;
+	}
+	
+	.th-name {
+		width: auto;
+	}
+	
+	.th-status {
+		width: 60px;
+	}
+	
+	.th-price {
+		width: 124px;
+	}
+	
+	.th-cost {
+		width: 72px;
+	}
+	
+	.th-day {
+		width: 40px;
+	}
+	
+	.th-date {
+		width: 130px;
+	}
+	
+	.lbl-for-check {
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+	
+	.btn-delete {
+		width: 50px;
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+	
+	.btn-modify {
+		width: 50px;
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+}

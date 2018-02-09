@@ -4,140 +4,165 @@ class Model_Restauranttype extends Model
 {
 
 	/*
-	 * 添加餐饮类别
+	 * 添加餐饮店类别
 	 */
 	public static function InsertRestaurantType($params) {
-		$sql_insert = "INSERT INTO m_restaurant_type(restaurant_type_name) VALUES(:restaurant_type_name)";
-		$query_insert = DB::query($sql_insert);
-		$query_insert->param(':restaurant_type_name', $params['restaurant_type_name']);
-		$result_insert = $query_insert->execute();
-		
-		return $result_insert;
+		try {
+			$sql = "INSERT INTO m_restaurant_type(restaurant_type_name, delete_flag, sort_id) VALUES(:restaurant_type_name, 0, 1)";
+			$query = DB::query($sql);
+			$query->param('restaurant_type_name', $params['restaurant_type_name']);
+			$result = $query->execute();
+			
+			if($result) {
+				//新餐饮店类别ID
+				$restaurant_type_id = intval($result[0]);
+				return $restaurant_type_id;
+			} else {
+				return false;
+			}
+		} catch (Exception $e) {
+			return false;
+		}
 	}
 	
 	/*
-	 * 根据ID删除餐饮类别
+	 * 删除餐饮店类别
 	 */
-	public static function DeleteRestaurantTypeById($restaurant_type_id) {
-		$sql_delete = "DELETE FROM m_restaurant_type WHERE restaurant_type_id = :restaurant_type_id";
-		$query_delete = DB::query($sql_delete);
-		$query_delete->param(':restaurant_type_id', $restaurant_type_id);
-		$result_delete = $query_delete->execute();
-		
-		return $result_delete;
+	public static function DeleteRestaurantType($params) {
+		try {
+			//删除餐饮店类别
+			$sql_type = "UPDATE m_restaurant_type SET delete_flag = 1 WHERE restaurant_type_id = :restaurant_type_id";
+			$query_type = DB::query($sql_type);
+			$query_type->param('restaurant_type_id', $params['restaurant_type_id']);
+			$result_type = $query_type->execute();
+			
+			return $result_type;
+		} catch (Exception $e) {
+			return false;
+		}
 	}
 	
 	/*
-	 * 更新餐饮类别名称
+	 * 更新餐饮店类别名称
 	 */
 	public static function UpdateRestaurantType($params) {
-		$sql_update = "UPDATE m_restaurant_type SET restaurant_type_name = :restaurant_type_name WHERE restaurant_type_id = :restaurant_type_id";
-		$query_update = DB::query($sql_update);
-		$query_update->param(':restaurant_type_id', $params['restaurant_type_id']);
-		$query_update->param(':restaurant_type_name', $params['restaurant_type_name']);
-		$result_update = $query_update->execute();
-		
-		return $result_update;
-	}
-
-	/*
-	 * 获取全部餐饮类别信息
-	 */
-	public static function GetRestaurantTypeListAll() {
-		$sql_restaurant_type = "SELECT mrt.restaurant_type_id, mrt.restaurant_type_name, COUNT(tr.restaurant_id) restaurant_count "
-						. "FROM m_restaurant_type mrt LEFT JOIN t_restaurant tr ON tr.restaurant_type = mrt.restaurant_type_id " 
-						. "GROUP BY restaurant_type_id, restaurant_type_name ORDER BY restaurant_type_id";
-		$query_restaurant_type = DB::query($sql_restaurant_type);
-		$restaurant_type_list = $query_restaurant_type->execute()->as_array();
-		
-		return $restaurant_type_list;
-	}
-	
-	/*
-	 * 根据ID获取主功能组信息
-	 */
-	public static function SelectRestaurantTypeById($restaurant_type_id) {
-		if(!is_numeric($restaurant_type_id)) {
-			return false;
-		}
-		
-		$sql = "SELECT * FROM m_restaurant_type WHERE restaurant_type_id = :restaurant_type_id";
-		$query = DB::query($sql);
-		$query->param(':restaurant_type_id', $restaurant_type_id);
-		$result = $query->execute()->as_array();
-		
-		if(count($result) == 1) {
-			return $result[0];
-		} else {
+		try {
+			$sql = "UPDATE m_restaurant_type SET restaurant_type_name = :restaurant_type_name WHERE restaurant_type_id = :restaurant_type_id";
+			$query = DB::query($sql);
+			$query->param('restaurant_type_id', $params['restaurant_type_id']);
+			$query->param('restaurant_type_name', $params['restaurant_type_name']);
+			$result = $query->execute();
+			
+			return true;
+		} catch (Exception $e) {
 			return false;
 		}
 	}
 	
+	//获得符合特定条件的餐饮店类别
+	public static function SelectRestaurantTypeList($params) {
+		try{
+			$sql_select = array();
+			$sql_from = array();
+			$sql_where = array();
+			$sql_group_by = array();
+			$sql_params = array();
+			
+			//有效餐饮店类别限定
+			if(isset($params['active_only'])) {
+				$sql_where[] = " mst.delete_flag = 0 ";
+			}
+			//获取所属餐饮店数
+			if(isset($params['restaurant_count_flag'])) {
+				$sql_select[] = " COUNT(ts.restaurant_id) restaurant_count ";
+				$sql_from[] = " LEFT JOIN (SELECT * FROM t_restaurant WHERE delete_flag=0) ts ON ts.restaurant_type = mst.restaurant_type_id ";
+				$sql_group_by[] = " mst.restaurant_type_id ";
+			}
+			
+			$sql = "SELECT mst.* " . (count($sql_select) ? (", " . implode(", ", $sql_select)) : "") 
+				. "FROM m_restaurant_type mst " . (count($sql_from) ? implode(" ", array_unique($sql_from)) : "") 
+				. (count($sql_where) ? (" WHERE " . implode(" AND ", $sql_where)) : "") 
+				. (count($sql_group_by) ? (" GROUP BY " . implode(", ", array_unique($sql_group_by))) : "") 
+				. " ORDER BY mst.sort_id, mst.restaurant_type_id";
+			$query = DB::query($sql);
+			foreach($sql_params as $param_key => $param_value) {
+				$query->param($param_key, $param_value);
+			}
+			$result = $query->execute()->as_array();
+			
+			return $result;
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
 	/*
-	 * 添加餐饮类别前添加信息查验
+	 * 获取特定单个餐饮店类别信息
 	 */
-	public static function CheckInsertRestaurantType($params) {
+	public static function SelectRestaurantType($params) {
+		try {
+			$sql_where = array();
+			$sql_params = array();
+			
+			//餐饮店类别ID限定
+			if(isset($params['restaurant_type_id'])) {
+				$sql_where[] = " mst.restaurant_type_id = :restaurant_type_id ";
+				$sql_params['restaurant_type_id'] = $params['restaurant_type_id'];
+			}
+			//有效性限定
+			if(isset($params['active_only'])) {
+				if($params['active_only']) {
+					$sql_where[] = " mst.delete_flag = 0 ";
+				}
+			}
+			
+			//数据获取
+			$sql = "SELECT * FROM m_restaurant_type mst " 
+				. (count($sql_where) ? (" WHERE " . implode(" AND ", $sql_where)) : "");
+			$query = DB::query($sql);
+			foreach($sql_params as $param_key => $param_value) {
+				$query->param($param_key, $param_value);
+			}
+			$result = $query->execute()->as_array();
+			
+			if(count($result) == 1) {
+				return $result[0];
+			} else {
+				return false;
+			}
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	/*
+	 * 编辑餐饮店类别前编辑信息查验
+	 */
+	public static function CheckEditRestaurantType($params) {
 		$result = array(
 			'result' => true,
 			'error' => array(),
 		);
 		
-		if(!isset($params['restaurant_type_name'])) {
+		//餐饮店类别名称
+		if(empty($params['restaurant_type_name'])) {
 			$result['result'] = false;
-			$result['error'][] = 'noset_name';
-		} elseif(empty($params['restaurant_type_name'])) {
+			$result['error'][] = 'empty_restaurant_type_name';
+		} elseif(mb_strlen($params['restaurant_type_name']) > 50) {
 			$result['result'] = false;
-			$result['error'][] = 'empty_name';
-		}
-		
-		if($result['result']) {
-			$sql_duplication = "SELECT * FROM m_restaurant_type WHERE restaurant_type_name = :restaurant_type_name";
-			$query_duplication = DB::query($sql_duplication);
-			$query_duplication->param(':restaurant_type_name', $params['restaurant_type_name']);
-			$result_duplication = $query_duplication->execute()->as_array();
-			
-			if(count($result_duplication)) {
-				$result['result'] = false;
-				$result['error'][] = 'duplication';
-			}
+			$result['error'][] = 'long_restaurant_type_name';
+		} elseif(Model_Restauranttype::CheckRestaurantTypeNameDuplication($params['restaurant_type_id'], $params['restaurant_type_name'])) {
+			$result['result'] = false;
+			$result['error'][] = 'dup_restaurant_type_name';
 		}
 		
 		return $result;
 	}
 	
 	/*
-	 * 删除餐饮类别前删除ID查验
+	 * 删除餐饮店类别前删除信息查验
 	 */
-	public static function CheckDeleteRestaurantTypeById($restaurant_type_id) {
-		$result = array(
-			'result' => true,
-			'error' => array(),
-		);
-		
-		if(!is_numeric($restaurant_type_id)) {
-			$result['result'] = false;
-			$result['error'][] = 'nonum_id';
-		}
-		
-		if($result['result']) {
-			$sql_exist = "SELECT * FROM m_restaurant_type WHERE restaurant_type_id = :restaurant_type_id";
-			$query_exist = DB::query($sql_exist);
-			$query_exist->param(':restaurant_type_id', $restaurant_type_id);
-			$result_exist = $query_exist->execute()->as_array();
-			
-			if(!count($result_exist)) {
-				$result['result'] = false;
-				$result['error'][] = 'noexist';
-			}
-		}
-		
-		return $result;
-	}
-	
-	/*
-	 * 更新餐饮类别前更新信息查验
-	 */
-	public static function CheckUpdateRestaurantType($params) {
+	public static function CheckDeleteRestaurantType($params) {
 		$result = array(
 			'result' => true,
 			'error' => array(),
@@ -145,32 +170,69 @@ class Model_Restauranttype extends Model
 		
 		if(!is_numeric($params['restaurant_type_id'])) {
 			$result['result'] = false;
-			$result['error'][] = 'nonum_id';
-		}
-		
-		if(empty($params['restaurant_type_name'])) {
+			$result['error'][] = 'nonum_restaurant_type_id';
+		} elseif(!Model_Restauranttype::CheckRestaurantTypeIdExist($params['restaurant_type_id'], 1)) {
 			$result['result'] = false;
-			$result['error'][] = 'empty_name';
-		}
-		
-		if($result['result']) {
-			$sql_duplication = "SELECT * FROM m_restaurant_type WHERE restaurant_type_name = :restaurant_type_name";
-			$query_duplication = DB::query($sql_duplication);
-			$query_duplication->param(':restaurant_type_name', $params['restaurant_type_name']);
-			$result_duplication = $query_duplication->execute()->as_array();
+			$result['error'][] = 'error_restaurant_type_id';
+		} else {
+			//获取餐饮店信息
+			$params_select = array(
+				'restaurant_type' => array($params['restaurant_type_id']),
+				'active_only' => 1,
+			);
+			$restaurant_select = Model_Restaurant::SelectRestaurantList($params_select);
 			
-			if(count($result_duplication)) {
-				if($result_duplication[0]['restaurant_type_id'] == $params['restaurant_type_id']) {
-					$result['result'] = false;
-					$result['error'][] = 'nomodify';
-				} else {
-					$result['result'] = false;
-					$result['error'][] = 'duplication';
-				}
+			if($restaurant_select['restaurant_count']) {
+				$result['result'] = false;
+				$result['error'][] = 'error_restaurant_list';
 			}
 		}
 		
 		return $result;
+	}
+	
+	/*
+	 * 检查餐饮店类别ID是否存在
+	 */
+	public static function CheckRestaurantTypeIdExist($restaurant_type_id, $active_check = 0) {
+		try {
+			$sql = "SELECT restaurant_type_id FROM m_restaurant_type WHERE restaurant_type_id = :restaurant_type_id " . ($active_check ? " AND delete_flag = 0 " : "");
+			$query = DB::query($sql);
+			$query->param('restaurant_type_id', $restaurant_type_id);
+			$result = $query->execute()->as_array();
+			
+			if(count($result)) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	/*
+	 * 餐饮店类别名称重复查验
+	 */
+	public static function CheckRestaurantTypeNameDuplication($restaurant_type_id, $restaurant_type_name) {
+		try {
+			//数据获取
+			$sql = "SELECT restaurant_type_id FROM m_restaurant_type WHERE restaurant_type_name = :restaurant_type_name AND delete_flag = 0" . ($restaurant_type_id ? " AND restaurant_type_id != :restaurant_type_id " : "");
+			$query = DB::query($sql);
+			if($restaurant_type_id) {
+				$query->param('restaurant_type_id', $restaurant_type_id);
+			}
+			$query->param('restaurant_type_name', $restaurant_type_name);
+			$result = $query->execute()->as_array();
+			
+			if(count($result)) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception $e) {
+			return true;
+		}
 	}
 
 }

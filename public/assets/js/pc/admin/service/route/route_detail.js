@@ -1,0 +1,1 @@
+$(function(){$(".btn-route-status").click(function(){$(".popup-shadow").show();$(".popup-route-status").fadeIn()});$("#popup-route-status-yes").click(function(){$("#form-route-status").submit()});$("#popup-route-status-no").click(function(){$(".popup-shadow").hide();$(".popup-route-status").hide()})});

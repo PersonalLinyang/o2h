@@ -20,7 +20,7 @@ class Model_Travelreason extends Model
 	public static function CheckTravelReasonIdActive($travel_reason_id) {
 		$sql = "SELECT travel_reason_id FROM m_travel_reason WHERE travel_reason_id = :travel_reason_id AND delete_flag = 0";
 		$query = DB::query($sql);
-		$query->param(':travel_reason_id', $travel_reason_id);
+		$query->param('travel_reason_id', $travel_reason_id);
 		$result = $query->execute()->as_array();
 		
 		if(count($result)) {

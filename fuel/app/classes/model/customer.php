@@ -78,7 +78,7 @@ class Model_Customer extends Model
 			if(count($sql_customer_spot_value_list)) {
 				$sql_customer_spot = "INSERT INTO r_customer_spot(customer_id, spot_id) VALUES" . implode(", ", $sql_customer_spot_value_list);
 				$query_customer_spot = DB::query($sql_customer_spot);
-				$query_customer_spot->param(':customer_id', $customer_id);
+				$query_customer_spot->param('customer_id', $customer_id);
 				foreach($sql_customer_spot_param_list as $param_key => $param_value) {
 					$query_customer_spot->param($param_key, $param_value);
 				}
@@ -90,7 +90,7 @@ class Model_Customer extends Model
 				$sql_hotel_reserve = "INSERT INTO t_hotel_reserve(customer_id, row_id, hotel_type, room_type, people_num, room_num, day_num, comment) "
 									. "VALUES" . implode(", ", $sql_hotel_reserve_value_list);
 				$query_hotel_reserve = DB::query($sql_hotel_reserve);
-				$query_hotel_reserve->param(':customer_id', $customer_id);
+				$query_hotel_reserve->param('customer_id', $customer_id);
 				foreach($sql_hotel_reserve_param_list as $param_key => $param_value) {
 					$query_hotel_reserve->param($param_key, $param_value);
 				}
@@ -103,7 +103,7 @@ class Model_Customer extends Model
 									. "customer_cost_day, customer_cost_people, customer_cost_each, customer_cost_total) "
 									. "VALUES" . implode(", ", $sql_customer_cost_value_list);
 				$query_customer_cost = DB::query($sql_customer_cost);
-				$query_customer_cost->param(':customer_id', $customer_id);
+				$query_customer_cost->param('customer_id', $customer_id);
 				foreach($sql_customer_cost_param_list as $param_key => $param_value) {
 					$query_customer_cost->param($param_key, $param_value);
 				}
@@ -138,7 +138,7 @@ class Model_Customer extends Model
 					. "FROM t_customer tc "
 					. "WHERE tc.customer_id = :customer_id ";
 		$query_customer = DB::query($sql_customer);
-		$query_customer->param(':customer_id', $customer_id);
+		$query_customer->param('customer_id', $customer_id);
 		$result_customer = $query_customer->execute()->as_array();
 		
 		if(count($result_customer) == 1) {
@@ -154,7 +154,7 @@ class Model_Customer extends Model
 							. "WHERE rcs.customer_id = :customer_id "
 							. "ORDER BY rcs.spot_id ASC ";
 			$query_customer_spot = DB::query($sql_customer_spot);
-			$query_customer_spot->param(':customer_id', $customer_id);
+			$query_customer_spot->param('customer_id', $customer_id);
 			$result_customer_spot = $query_customer_spot->execute()->as_array();
 			
 			if(count($result_customer_spot)) {
@@ -171,7 +171,7 @@ class Model_Customer extends Model
 							. "WHERE thr.customer_id = :customer_id "
 							. "ORDER BY thr.row_id ASC ";
 			$query_hotel_reserve = DB::query($sql_hotel_reserve);
-			$query_hotel_reserve->param(':customer_id', $customer_id);
+			$query_hotel_reserve->param('customer_id', $customer_id);
 			$result_hotel_reserve = $query_hotel_reserve->execute()->as_array();
 			
 			if(count($result_hotel_reserve)) {
@@ -186,7 +186,7 @@ class Model_Customer extends Model
 							. "WHERE tcc.customer_id = :customer_id "
 							. "ORDER BY tcc.row_id ASC ";
 			$query_customer_cost = DB::query($sql_customer_cost);
-			$query_customer_cost->param(':customer_id', $customer_id);
+			$query_customer_cost->param('customer_id', $customer_id);
 			$result_customer_cost = $query_customer_cost->execute()->as_array();
 			
 			if(count($result_customer_cost)) {

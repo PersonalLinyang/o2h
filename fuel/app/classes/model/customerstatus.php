@@ -20,7 +20,7 @@ class Model_Customerstatus extends Model
 	public static function CheckCustomerStatusIdActive($customer_status_id) {
 		$sql = "SELECT customer_status_id FROM m_customer_status WHERE customer_status_id = :customer_status_id AND delete_flag = 0";
 		$query = DB::query($sql);
-		$query->param(':customer_status_id', $customer_status_id);
+		$query->param('customer_status_id', $customer_status_id);
 		$result = $query->execute()->as_array();
 		
 		if(count($result)) {

@@ -33,8 +33,11 @@ desktop.ini
 /fuel/app/config/crypt.php
 
 
+/public/assets/src/.sass-cache/
 /public/assets/img/tmp/
 /public/assets/img/pc/upload/
 /public/assets/img/sp/upload/
+/public/assets/xls/model/
+/public/assets/xls/tmp/
 /public/.htaccess
 /public/.htpasswd

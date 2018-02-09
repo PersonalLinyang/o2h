@@ -28,7 +28,6 @@ class Controller_Admin_Login extends Controller_App
 				if($login_user) {
 					$_SESSION['login_user']['id'] = $login_user['user_id'];
 					$_SESSION['login_user']['name'] = $login_user['user_name'];
-					$_SESSION['login_user']['permission'] = $login_user['user_permission'];
 					
 					header( 'Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/' );
 					exit;

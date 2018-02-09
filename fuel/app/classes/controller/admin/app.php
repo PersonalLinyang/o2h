@@ -15,25 +15,26 @@ class Controller_Admin_App extends Controller
 	 */
 	public function before() {
 
-		$ua = $_SERVER['HTTP_USER_AGENT'];
-		
-		//根据登陆终端切换显示内容
-		if ((strpos($ua, 'iPhone') !== false)
-	    || (strpos($ua, 'Windows Phone') !== false)
-	    || (strpos($ua, 'DoCoMo') !== false)
-	    || (strpos($ua, 'KDDI') !== false)
-	    || (strpos($ua, 'SoftBank') !== false)
-	    || (strpos($ua, 'Vodafone') !== false)
-	    || (strpos($ua, 'J-PHONE') !== false)
-	    || (strpos($ua, 'Android') !== false && strpos($ua, 'Mobile') !== false)) {
-			$this->template = 'sp';
-		}
+//		$ua = $_SERVER['HTTP_USER_AGENT'];
+//		
+//		//根据登陆终端切换显示内容
+//		if ((strpos($ua, 'iPhone') !== false)
+//	    || (strpos($ua, 'Windows Phone') !== false)
+//	    || (strpos($ua, 'DoCoMo') !== false)
+//	    || (strpos($ua, 'KDDI') !== false)
+//	    || (strpos($ua, 'SoftBank') !== false)
+//	    || (strpos($ua, 'Vodafone') !== false)
+//	    || (strpos($ua, 'J-PHONE') !== false)
+//	    || (strpos($ua, 'Android') !== false && strpos($ua, 'Mobile') !== false)) {
+//			$this->template = 'sp';
+//		}
 
 		//北京时间
 		date_default_timezone_set('PRC');
-
 		
-		session_start();
+		if(!isset($_SESSION)){ 
+			session_start();
+		}
 		$data = array();
 		
 		//未登陆时向登陆页跳转
