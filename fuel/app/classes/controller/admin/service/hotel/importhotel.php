@@ -194,7 +194,7 @@ class Controller_Admin_Service_Hotel_Importhotel extends Controller_Admin_App
 												$error_list_hotel[$row_id][] = '所选中的酒店类别不存在,请下载最新的模板';
 												break;
 											case 'empty_hotel_price': 
-												$error_list_hotel[$row_id][] = '价格不能空白,请一个非负整数';
+												$error_list_hotel[$row_id][] = '价格不能空白,请输入一个非负整数';
 												break;
 											case 'noint_hotel_price': 
 											case 'minus_hotel_price': 
@@ -204,7 +204,7 @@ class Controller_Admin_Service_Hotel_Importhotel extends Controller_Admin_App
 												$error_list_hotel[$row_id][] = '可选房型不能空白,请输入可选房型';
 												break;
 											case 'error_room': 
-												$error_list_hotel[$row_id][] = '所选中的可选房型不存在,请下载最新的模板,并参考「参考-可选房型」表';
+												$error_list_hotel[$row_id][] = '所输入的可选房型不存在,请下载最新的模板,并参考「参考-可选房型」表';
 												break;
 											default:
 												$error_list_hotel[$row_id][] = '发生系统错误,请重新尝试添加';

@@ -63,6 +63,7 @@ class Controller_Admin_Service_Spot_Spotlist extends Controller_Admin_App
 				$data['select_free_flag'] = isset($_GET['select_free_flag']) && is_array($_GET['select_free_flag']) ? $_GET['select_free_flag'] : array();
 				$data['select_price_min'] = isset($_GET['select_price_min']) ? $_GET['select_price_min'] : '';
 				$data['select_price_max'] = isset($_GET['select_price_max']) ? $_GET['select_price_max'] : '';
+				$data['select_self_flag'] = isset($_GET['select_self_flag']) ? $_GET['select_self_flag'] : false;
 				$data['sort_column'] = isset($_GET['sort_column']) ? $_GET['sort_column'] : 'created_at';
 				$data['sort_method'] = isset($_GET['sort_method']) ? $_GET['sort_method'] : 'desc';
 				$data['get_params'] = count($_GET) ? '?' . http_build_query($_GET) : '';
@@ -90,6 +91,9 @@ class Controller_Admin_Service_Spot_Spotlist extends Controller_Admin_App
 					'num_per_page' => $num_per_page,
 					'active_only' => true,
 				);
+				if($data['select_self_flag']) {
+					$params_select['created_by'] = $_SESSION['login_user']['id'];
+				}
 				
 				$result_select = Model_Spot::SelectSpotList($params_select);
 				

@@ -37,7 +37,7 @@
 				<form action="/admin/spot_list/" method="get" id="form-content-menu-select">
 					<table>
 						<tr>
-							<th rowspan="5" class="th-parent">筛选条件</th>
+							<th rowspan="6" class="th-parent">筛选条件</th>
 							<th>景点名</th>
 							<td><input type="text" name="select_name" value="<?php echo $select_name; ?>" /></td>
 						</tr>
@@ -82,6 +82,13 @@
 									<input type="text" name="select_price_max" class="price" value="<?php echo $select_price_max; ?>" />
 									日元/人
 								</p>
+							</td>
+						</tr>
+						<tr>
+							<th>登录者</th>
+							<td>
+								<input type="checkbox" name="select_self_flag" value="1" id="chb-select-self-flag" <?php echo $select_self_flag == 1 ? 'checked ' : ''; ?>/>
+								<label class="lbl-for-check<?php echo $select_self_flag == 1 ? ' active' : ''; ?>" for="chb-select-self-flag">仅显示由我登录的景点</label>
 							</td>
 						</tr>
 					</table>
@@ -153,6 +160,7 @@
 					<input type="hidden" name="select_free_flag" value="<?php echo implode(',', $select_free_flag); ?>" />
 					<input type="hidden" name="select_price_min" value="<?php echo $select_price_min; ?>" />
 					<input type="hidden" name="select_price_max" value="<?php echo $select_price_max; ?>" />
+					<input type="hidden" name="select_self_flag" value="<?php echo $select_self_flag; ?>" />
 					<input type="hidden" name="sort_column" value="<?php echo $sort_column; ?>" />
 					<input type="hidden" name="sort_method" value="<?php echo $sort_method; ?>" />
 					<input type="hidden" name="export_model" value="" id="hid-content-menu-export-model" />

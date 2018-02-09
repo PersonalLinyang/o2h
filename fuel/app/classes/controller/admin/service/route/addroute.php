@@ -63,7 +63,7 @@ class Controller_Admin_Service_Route_AddRoute extends Controller_Admin_App
 						$data['input_route_name'] = isset($_POST['route_name']) ? trim($_POST['route_name']) : $data['input_route_name'];
 						$data['input_route_description'] = isset($_POST['route_description']) ? trim($_POST['route_description']) : $data['input_route_description'];
 						$data['input_route_price_min'] = isset($_POST['route_price_min']) ? trim($_POST['route_price_min']) : $data['input_route_price_min'];
-						$data['input_route_price_max'] = isset($_POST['route_price_min']) ? trim($_POST['route_price_min']) : $data['input_route_price_min'];
+						$data['input_route_price_max'] = isset($_POST['route_price_max']) ? trim($_POST['route_price_max']) : $data['input_route_price_max'];
 						$data['input_route_base_cost'] = isset($_POST['route_base_cost']) ? trim($_POST['route_base_cost']) : $data['input_route_base_cost'];
 						$data['input_route_traffic_cost'] = isset($_POST['route_traffic_cost']) ? trim($_POST['route_traffic_cost']) : $data['input_route_traffic_cost'];
 						$data['input_route_parking_cost'] = isset($_POST['route_parking_cost']) ? trim($_POST['route_parking_cost']) : $data['input_route_parking_cost'];

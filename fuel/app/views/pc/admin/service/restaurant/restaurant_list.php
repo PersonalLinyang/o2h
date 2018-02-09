@@ -36,7 +36,7 @@
 				<form action="/admin/restaurant_list/" method="get" id="form-content-menu-select">
 					<table>
 						<tr>
-							<th rowspan="5" class="th-parent">筛选条件</th>
+							<th rowspan="6" class="th-parent">筛选条件</th>
 							<th>餐饮店名</th>
 							<td><input type="text" name="select_name" value="<?php echo $select_name; ?>" /></td>
 						</tr>
@@ -76,6 +76,13 @@
 								日元/人
 							</td>
 						</tr>
+						<tr>
+							<th>登录者</th>
+							<td>
+								<input type="checkbox" name="select_self_flag" value="1" id="chb-select-self-flag" <?php echo $select_self_flag == 1 ? 'checked ' : ''; ?>/>
+								<label class="lbl-for-check<?php echo $select_self_flag == 1 ? ' active' : ''; ?>" for="chb-select-self-flag">仅显示由我登录的餐饮店</label>
+							</td>
+						</tr>
 					</table>
 					<table>
 						<tr>
@@ -91,13 +98,13 @@
 								<input type="radio" name="sort_column" value="restaurant_status" id="rdb-sort-status" <?php echo $sort_column == "restaurant_status" ? 'checked ' : ''; ?>/>
 								<label class="lbl-for-radio<?php echo $sort_column == 'restaurant_status' ? ' active' : ''; ?>" for="rdb-sort-status" data-for="rdb-sort-column">公开状况</label>
 								<input type="radio" name="sort_column" value="restaurant_price_min" id="rdb-sort-price_min" <?php echo $sort_column == "restaurant_price_min" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_column == 'restaurant_price_min' ? ' active' : ''; ?>" for="rdb-sort-price_min" data-for="rdb-sort-column">低价格</label>
+								<label class="lbl-for-radio<?php echo $sort_column == 'restaurant_price_min' ? ' active' : ''; ?>" for="rdb-sort-price_min" data-for="rdb-sort-column">最低价</label>
 								<input type="radio" name="sort_column" value="restaurant_price_max" id="rdb-sort-price_max" <?php echo $sort_column == "restaurant_price_max" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_column == 'restaurant_price_max' ? ' active' : ''; ?>" for="rdb-sort-price_max" data-for="rdb-sort-column">高价格</label>
+								<label class="lbl-for-radio<?php echo $sort_column == 'restaurant_price_max' ? ' active' : ''; ?>" for="rdb-sort-price_max" data-for="rdb-sort-column">最高价</label>
 								<input type="radio" name="sort_column" value="created_at" id="rdb-sort-created-at" <?php echo $sort_column == "created_at" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_column == 'created_at' ? ' active' : ''; ?>" for="rdb-sort-created-at" data-for="rdb-sort-column">登录日</label>
+								<label class="lbl-for-radio<?php echo $sort_column == 'created_at' ? ' active' : ''; ?>" for="rdb-sort-created-at" data-for="rdb-sort-column">登录时间</label>
 								<input type="radio" name="sort_column" value="modified_at" id="rdb-sort-modified-at" <?php echo $sort_column == "modified_at" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_column == 'modified_at' ? ' active' : ''; ?>" for="rdb-sort-modified-at" data-for="rdb-sort-column">更新日</label>
+								<label class="lbl-for-radio<?php echo $sort_column == 'modified_at' ? ' active' : ''; ?>" for="rdb-sort-modified-at" data-for="rdb-sort-column">最近更新</label>
 							</td>
 						</tr>
 						<tr>
@@ -146,6 +153,7 @@
 					<input type="hidden" name="select_restaurant_type" value="<?php echo implode(',', $select_restaurant_type); ?>" />
 					<input type="hidden" name="select_price_min" value="<?php echo $select_price_min; ?>" />
 					<input type="hidden" name="select_price_max" value="<?php echo $select_price_max; ?>" />
+					<input type="hidden" name="select_self_flag" value="<?php echo $select_self_flag; ?>" />
 					<input type="hidden" name="sort_column" value="<?php echo $sort_column; ?>" />
 					<input type="hidden" name="sort_method" value="<?php echo $sort_method; ?>" />
 					<input type="hidden" name="export_model" value="" id="hid-content-menu-export-model" />
@@ -186,7 +194,7 @@
 						<th class="th-area">餐饮店地区</th>
 						<th class="th-type">餐饮店类别</th>
 						<th class="th-price">价格(日元/人)</th>
-						<th class="th-modified-at">更新日</th>
+						<th class="th-modified-at">最近更新</th>
 					</tr>
 					<?php foreach($restaurant_list as $restaurant): ?>
 					<tr>

@@ -62,6 +62,7 @@ class Controller_Admin_Service_Restaurant_Restaurantlist extends Controller_Admi
 				$data['select_restaurant_type'] = isset($_GET['select_restaurant_type']) && is_array($_GET['select_restaurant_type']) ? $_GET['select_restaurant_type'] : array();
 				$data['select_price_min'] = isset($_GET['select_price_min']) ? $_GET['select_price_min'] : '';
 				$data['select_price_max'] = isset($_GET['select_price_max']) ? $_GET['select_price_max'] : '';
+				$data['select_self_flag'] = isset($_GET['select_self_flag']) ? $_GET['select_self_flag'] : false;
 				$data['sort_column'] = isset($_GET['sort_column']) ? $_GET['sort_column'] : 'created_at';
 				$data['sort_method'] = isset($_GET['sort_method']) ? $_GET['sort_method'] : 'desc';
 				$data['get_params'] = count($_GET) ? '?' . http_build_query($_GET) : '';
@@ -88,6 +89,9 @@ class Controller_Admin_Service_Restaurant_Restaurantlist extends Controller_Admi
 					'num_per_page' => $num_per_page,
 					'active_only' => true,
 				);
+				if($data['select_self_flag']) {
+					$params_select['created_by'] = $_SESSION['login_user']['id'];
+				}
 				
 				$result_select = Model_Restaurant::SelectRestaurantList($params_select);
 				

@@ -39,7 +39,7 @@
 				<form action="/admin/hotel_list/" method="get" id="form-content-menu-select">
 					<table>
 						<tr>
-							<th rowspan="6" class="th-parent">筛选条件</th>
+							<th rowspan="7" class="th-parent">筛选条件</th>
 							<th>酒店名</th>
 							<td><input type="text" name="select_name" value="<?php echo $select_name; ?>" /></td>
 						</tr>
@@ -71,6 +71,15 @@
 							</td>
 						</tr>
 						<tr>
+							<th>可选房型</th>
+							<td>
+								<?php foreach($room_type_list as $room_type): ?>
+								<input type="checkbox" name="select_room_type[]" value="<?php echo $room_type['room_type_id']; ?>" id="chb-select-type-<?php echo $room_type['room_type_id']; ?>" <?php echo in_array($room_type['room_type_id'], $select_room_type) ? 'checked ' : ''; ?>/>
+								<label class="lbl-for-check<?php echo in_array($room_type['room_type_id'], $select_room_type) ? ' active' : ''; ?>" for="chb-select-type-<?php echo $room_type['room_type_id']; ?>"><?php echo $room_type['room_type_name']; ?></label>
+								<?php endforeach; ?>
+							</td>
+						</tr>
+						<tr>
 							<th>价格</th>
 							<td>
 								<input type="text" name="select_price_min" class="price" value="<?php echo $select_price_min; ?>" />
@@ -80,12 +89,10 @@
 							</td>
 						</tr>
 						<tr>
-							<th>房型</th>
+							<th>登录者</th>
 							<td>
-								<?php foreach($room_type_list as $room_type): ?>
-								<input type="checkbox" name="select_room_type[]" value="<?php echo $room_type['room_type_id']; ?>" id="chb-select-type-<?php echo $room_type['room_type_id']; ?>" <?php echo in_array($room_type['room_type_id'], $select_room_type) ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-check<?php echo in_array($room_type['room_type_id'], $select_room_type) ? ' active' : ''; ?>" for="chb-select-type-<?php echo $room_type['room_type_id']; ?>"><?php echo $room_type['room_type_name']; ?></label>
-								<?php endforeach; ?>
+								<input type="checkbox" name="select_self_flag" value="1" id="chb-select-self-flag" <?php echo $select_self_flag == 1 ? 'checked ' : ''; ?>/>
+								<label class="lbl-for-check<?php echo $select_self_flag == 1 ? ' active' : ''; ?>" for="chb-select-self-flag">仅显示由我登录的酒店</label>
 							</td>
 						</tr>
 					</table>
@@ -105,9 +112,9 @@
 								<input type="radio" name="sort_column" value="hotel_price" id="rdb-sort-price" <?php echo $sort_column == "hotel_price" ? 'checked ' : ''; ?>/>
 								<label class="lbl-for-radio<?php echo $sort_column == 'hotel_price' ? ' active' : ''; ?>" for="rdb-sort-price" data-for="rdb-sort-column">价格</label>
 								<input type="radio" name="sort_column" value="created_at" id="rdb-sort-created-at" <?php echo $sort_column == "created_at" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_column == 'created_at' ? ' active' : ''; ?>" for="rdb-sort-created-at" data-for="rdb-sort-column">登录日</label>
+								<label class="lbl-for-radio<?php echo $sort_column == 'created_at' ? ' active' : ''; ?>" for="rdb-sort-created-at" data-for="rdb-sort-column">登录时间</label>
 								<input type="radio" name="sort_column" value="modified_at" id="rdb-sort-modified-at" <?php echo $sort_column == "modified_at" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_column == 'modified_at' ? ' active' : ''; ?>" for="rdb-sort-modified-at" data-for="rdb-sort-column">更新日</label>
+								<label class="lbl-for-radio<?php echo $sort_column == 'modified_at' ? ' active' : ''; ?>" for="rdb-sort-modified-at" data-for="rdb-sort-column">最近更新</label>
 							</td>
 						</tr>
 						<tr>
@@ -154,8 +161,10 @@
 					<input type="hidden" name="select_status" value="<?php echo implode(',', $select_status); ?>" />
 					<input type="hidden" name="select_area" value="<?php echo implode(',', $select_area); ?>" />
 					<input type="hidden" name="select_hotel_type" value="<?php echo implode(',', $select_hotel_type); ?>" />
+					<input type="hidden" name="select_room_type" value="<?php echo implode(',', $select_room_type); ?>" />
 					<input type="hidden" name="select_price_min" value="<?php echo $select_price_min; ?>" />
 					<input type="hidden" name="select_price_max" value="<?php echo $select_price_max; ?>" />
+					<input type="hidden" name="select_self_flag" value="<?php echo $select_self_flag; ?>" />
 					<input type="hidden" name="sort_column" value="<?php echo $sort_column; ?>" />
 					<input type="hidden" name="sort_method" value="<?php echo $sort_method; ?>" />
 					<input type="hidden" name="export_model" value="" id="hid-content-menu-export-model" />
@@ -199,8 +208,9 @@
 						<th class="th-status">状态</th>
 						<th class="th-area">所属地区</th>
 						<th class="th-type">酒店类别</th>
+						<th class="th-type">可选房型</th>
 						<th class="th-price">价格<br>(日元/人夜)</th>
-						<th class="th-modified-at">更新日</th>
+						<th class="th-modified-at">最近更新</th>
 					</tr>
 					<?php foreach($hotel_list as $hotel): ?>
 					<tr>
@@ -227,6 +237,11 @@
 						<td><?php echo $hotel['hotel_status'] == '1' ? '公开' : '未公开'; ?></td>
 						<td><?php echo $hotel['hotel_area_name']; ?></td>
 						<td><?php echo $hotel['hotel_type_name']; ?></td>
+						<td>
+							<?php foreach($hotel['room_type_list'] as $room_type): ?>
+							<?php echo $room_type['room_type_name'] . ' '; ?>
+							<?php endforeach; ?>
+						</td>
 						<td><?php echo $hotel['hotel_price']; ?></td>
 						<td><?php echo date('Y/m/d', strtotime($hotel['modified_at'])); ?></td>
 					</tr>

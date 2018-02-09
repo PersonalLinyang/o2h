@@ -34,8 +34,8 @@
 				<form action="/admin/route_list/" method="get" id="form-content-menu-select">
 					<table>
 						<tr>
-							<th rowspan="5" class="th-parent">筛选条件</th>
-							<th>路线名</th>
+							<th rowspan="6" class="th-parent">筛选条件</th>
+							<th>旅游路线名</th>
 							<td><input type="text" name="select_name" value="<?php echo $select_name; ?>" /></td>
 						</tr>
 						<tr>
@@ -73,6 +73,13 @@
 								<input type="text" name="select_total_cost_min" class="price" value="<?php echo $select_total_cost_min; ?>" />～<input type="text" name="select_total_cost_max" class="price" value="<?php echo $select_total_cost_max; ?>" />元
 							</td>
 						</tr>
+						<tr>
+							<th>登录者</th>
+							<td>
+								<input type="checkbox" name="select_self_flag" value="1" id="chb-select-self-flag" <?php echo $select_self_flag == 1 ? 'checked ' : ''; ?>/>
+								<label class="lbl-for-check<?php echo $select_self_flag == 1 ? ' active' : ''; ?>" for="chb-select-self-flag">仅显示由我登录的旅游路线</label>
+							</td>
+						</tr>
 					</table>
 					<table>
 						<tr>
@@ -96,9 +103,9 @@
 								<input type="radio" name="sort_column" value="route_total_cost" id="rdb-sort-total-cost" <?php echo $sort_column == "route_total_cost" ? 'checked ' : ''; ?>/>
 								<label class="lbl-for-radio<?php echo $sort_column == 'route_total_cost' ? ' active' : ''; ?>" for="rdb-sort-total-cost" data-for="rdb-sort-column">成本合计</label>
 								<input type="radio" name="sort_column" value="created_at" id="rdb-sort-created-at" <?php echo $sort_column == "created_at" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_column == 'created_at' ? ' active' : ''; ?>" for="rdb-sort-created-at" data-for="rdb-sort-column">登录日</label>
+								<label class="lbl-for-radio<?php echo $sort_column == 'created_at' ? ' active' : ''; ?>" for="rdb-sort-created-at" data-for="rdb-sort-column">登录时间</label>
 								<input type="radio" name="sort_column" value="modified_at" id="rdb-sort-modified-at" <?php echo $sort_column == "modified_at" ? 'checked ' : ''; ?>/>
-								<label class="lbl-for-radio<?php echo $sort_column == 'modified_at' ? ' active' : ''; ?>" for="rdb-sort-modified-at" data-for="rdb-sort-column">更新日</label>
+								<label class="lbl-for-radio<?php echo $sort_column == 'modified_at' ? ' active' : ''; ?>" for="rdb-sort-modified-at" data-for="rdb-sort-column">最近更新</label>
 								<input type="radio" name="sort_column" value="detail_day_number" id="rdb-sort-detail-day-number" <?php echo $sort_column == "detail_day_number" ? 'checked ' : ''; ?>/>
 								<label class="lbl-for-radio<?php echo $sort_column == 'detail_day_number' ? ' active' : ''; ?>" for="rdb-sort-detail-day-number" data-for="rdb-sort-column">天数</label>
 							</td>
@@ -116,7 +123,7 @@
 				</form>
 				<ul class="button-group">
 					<li class="button-yes" id="btn-content-menu-select-submit">筛选排序</li>
-					<li class="button-yes"><a href="/admin/route_list/">恢复初始</a></li>
+					<li class="button"><a href="/admin/route_list/">恢复初始</a></li>
 					<li class="button-no" id="btn-content-menu-select-cancel">取消</li>
 				</ul>
 			</div>
@@ -147,6 +154,15 @@
 					<input type="hidden" name="select_status" value="<?php echo implode(',', $select_status); ?>" />
 					<input type="hidden" name="select_price_min" value="<?php echo $select_price_min; ?>" />
 					<input type="hidden" name="select_price_max" value="<?php echo $select_price_max; ?>" />
+					<input type="hidden" name="select_base_cost_min" value="<?php echo $select_base_cost_min; ?>" />
+					<input type="hidden" name="select_base_cost_max" value="<?php echo $select_base_cost_max; ?>" />
+					<input type="hidden" name="select_traffic_cost_min" value="<?php echo $select_traffic_cost_min; ?>" />
+					<input type="hidden" name="select_traffic_cost_max" value="<?php echo $select_traffic_cost_max; ?>" />
+					<input type="hidden" name="select_parking_cost_min" value="<?php echo $select_parking_cost_min; ?>" />
+					<input type="hidden" name="select_parking_cost_max" value="<?php echo $select_parking_cost_max; ?>" />
+					<input type="hidden" name="select_total_cost_min" value="<?php echo $select_total_cost_min; ?>" />
+					<input type="hidden" name="select_total_cost_max" value="<?php echo $select_total_cost_max; ?>" />
+					<input type="hidden" name="select_self_flag" value="<?php echo $select_self_flag; ?>" />
 					<input type="hidden" name="sort_column" value="<?php echo $sort_column; ?>" />
 					<input type="hidden" name="sort_method" value="<?php echo $sort_method; ?>" />
 					<input type="hidden" name="export_model" value="" id="hid-content-menu-export-model" />

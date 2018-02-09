@@ -62,6 +62,7 @@ class Controller_Admin_Service_Route_Routelist extends Controller_Admin_App
 				$data['select_parking_cost_max'] = isset($_GET['select_parking_cost_max']) ? $_GET['select_parking_cost_max'] : '';
 				$data['select_total_cost_min'] = isset($_GET['select_total_cost_min']) ? $_GET['select_total_cost_min'] : '';
 				$data['select_total_cost_max'] = isset($_GET['select_total_cost_max']) ? $_GET['select_total_cost_max'] : '';
+				$data['select_self_flag'] = isset($_GET['select_self_flag']) ? $_GET['select_self_flag'] : false;
 				$data['sort_column'] = isset($_GET['sort_column']) ? $_GET['sort_column'] : 'created_at';
 				$data['sort_method'] = isset($_GET['sort_method']) ? $_GET['sort_method'] : 'desc';
 				$data['get_params'] = count($_GET) ? '?' . http_build_query($_GET) : '';
@@ -94,6 +95,9 @@ class Controller_Admin_Service_Route_Routelist extends Controller_Admin_App
 					'num_per_page' => $num_per_page,
 					'active_only' => true,
 				);
+				if($data['select_self_flag']) {
+					$params_select['created_by'] = $_SESSION['login_user']['id'];
+				}
 				
 				$result_select = Model_Route::SelectRouteList($params_select);
 				
@@ -168,6 +172,58 @@ class Controller_Admin_Service_Route_Routelist extends Controller_Admin_App
 							break;
 					}
 					unset($_SESSION['delete_route_checked_error']);
+				}
+				
+				//旅游路线批量导入处理
+				if(isset($_SESSION['import_route_success'])) {
+					$data['success_message'] = '旅游路线批量导入成功';
+					unset($_SESSION['import_route_success']);
+				}
+				if(isset($_SESSION['import_route_error'])) {
+					switch($_SESSION['import_route_error']) {
+						case 'error_permission':
+							$data['error_message'] = '您不具备批量导入旅游路线的权限';
+							break;
+						case 'noexist_file':
+							$data['error_message'] = '请上传写入旅游路线信息的Excel文件';
+							break;
+						case 'noexcel_file':
+							$data['error_message'] = '您上传的文件格式不符合要求,请上传Excel文件';
+							break;
+						case 'empty_route_name':
+							$data['error_message'] = '您上传的文件中未写入任何旅游路线名';
+							break;
+						case 'noexist_sheet':
+							$data['error_message'] = '您上传的文件不包含批量导入所必须的表';
+							break;
+						case 'error_import':
+							$data['error_message'] = '部分旅游路线未能成功导入,请<a href="/assets/xls/tmp/' . $_SESSION['login_user']['id'] . '/route/import_route_error.xls" download>点击此处</a>下载异常报告';
+							break;
+						default:
+							$data['error_message'] = '发生系统错误,请尝试重新批量导入';
+							break;
+					}
+					unset($_SESSION['import_route_error']);
+				}
+				
+				//旅游路线导出处理
+				if(isset($_SESSION['export_route_success'])) {
+					$data['success_message'] = '旅游路线导出成功';
+					unset($_SESSION['export_route_success']);
+				}
+				if(isset($_SESSION['export_route_error'])) {
+					switch($_SESSION['export_route_error']) {
+						case 'error_permission':
+							$data['error_message'] = '您不具备导出旅游路线的权限';
+							break;
+						case 'empty_route_list':
+							$data['error_message'] = '未能找到符合条件的旅游路线,请调整筛选条件';
+							break;
+						default:
+							$data['error_message'] = '发生系统错误,请尝试重新删除';
+							break;
+					}
+					unset($_SESSION['export_route_error']);
 				}
 				
 				//调用View

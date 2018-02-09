@@ -181,7 +181,7 @@ class Controller_Admin_Service_Restaurant_Importrestaurant extends Controller_Ad
 												$error_list_restaurant[$row_id][] = '所选中的餐饮店类别不存在,请下载最新的模板';
 												break;
 											case 'empty_restaurant_price': 
-												$error_list_restaurant[$row_id][] = '价格不能空白,请一个非负整数';
+												$error_list_restaurant[$row_id][] = '价格不能空白,请输入一个非负整数';
 												break;
 											case 'noint_restaurant_price': 
 											case 'noint_restaurant_price': 

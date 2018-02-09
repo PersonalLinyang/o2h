@@ -44,19 +44,21 @@ class Controller_Admin_Service_Spot_Deletespot extends Controller_Admin_App
 								$device_index_list = array('pc', 'sp');
 								foreach($device_index_list as $device_index) {
 									$dir_image = DOCROOT . 'assets/img/' . $device_index . '/upload/spot/' . $_POST['delete_id'] . '/';
-									$dir_detail_list = scandir($dir_image);
-									foreach($dir_detail_list as $dir_detail) {
-										if($dir_detail != '.' && $dir_detail != '..') {
-											$file_image_list = scandir($dir_image . $dir_detail);
-											foreach($file_image_list as $file_image) {
-												if($file_image != '.' && $file_image != '..') {
-													unlink($dir_image . $dir_detail . '/' .  $file_image);
+									if(file_exists($dir_image)) {
+										$dir_detail_list = scandir($dir_image);
+										foreach($dir_detail_list as $dir_detail) {
+											if($dir_detail != '.' && $dir_detail != '..') {
+												$file_image_list = scandir($dir_image . $dir_detail);
+												foreach($file_image_list as $file_image) {
+													if($file_image != '.' && $file_image != '..') {
+														unlink($dir_image . $dir_detail . '/' .  $file_image);
+													}
 												}
+												rmdir($dir_image . $dir_detail);
 											}
-											rmdir($dir_image . $dir_detail);
 										}
+										rmdir($dir_image);
 									}
-									rmdir($dir_image);
 								}
 								//削除成功
 								$_SESSION['delete_spot_success'] = true;
@@ -132,19 +134,21 @@ class Controller_Admin_Service_Spot_Deletespot extends Controller_Admin_App
 								foreach($device_index_list as $device_index) {
 									foreach($_POST['delete_id_checked'] as $delete_id) {
 										$dir_image = DOCROOT . 'assets/img/' . $device_index . '/upload/spot/' . $delete_id . '/';
-										$dir_detail_list = scandir($dir_image);
-										foreach($dir_detail_list as $dir_detail) {
-											if($dir_detail != '.' && $dir_detail != '..') {
-												$file_image_list = scandir($dir_image . $dir_detail);
-												foreach($file_image_list as $file_image) {
-													if($file_image != '.' && $file_image != '..') {
-														unlink($dir_image . $dir_detail . '/' .  $file_image);
+										if(file_exists($dir_image)) {
+											$dir_detail_list = scandir($dir_image);
+											foreach($dir_detail_list as $dir_detail) {
+												if($dir_detail != '.' && $dir_detail != '..') {
+													$file_image_list = scandir($dir_image . $dir_detail);
+													foreach($file_image_list as $file_image) {
+														if($file_image != '.' && $file_image != '..') {
+															unlink($dir_image . $dir_detail . '/' .  $file_image);
+														}
 													}
+													rmdir($dir_image . $dir_detail);
 												}
-												rmdir($dir_image . $dir_detail);
 											}
+											rmdir($dir_image);
 										}
-										rmdir($dir_image);
 									}
 								}
 								//削除成功

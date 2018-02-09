@@ -35,14 +35,18 @@ class Controller_Admin_Service_Spot_Spotdetail extends Controller_Admin_App
 					if(strstr($_SERVER['HTTP_REFERER'], 'admin/spot_list')) {
 						//通过一览页链接进入
 						$data['spot_list_url'] = $_SERVER['HTTP_REFERER'];
+						//暂时保留一览页URL
+						$_SESSION['spot_list_url_detail'] = $data['spot_list_url'];
+					} elseif(strstr($_SERVER['HTTP_REFERER'], 'admin/route_detail')) {
+						//通过各类详情页链接进入
+						$data['spot_list_url'] = $_SERVER['HTTP_REFERER'];
 					} elseif(strstr($_SERVER['HTTP_REFERER'], 'admin/modify_spot/' . $spot_id) || strstr($_SERVER['HTTP_REFERER'], 'admin/spot_detail/' . $spot_id)) {
+						//通过修改页或状态修改按钮自动跳转进入
 						if(isset($_SESSION['spot_list_url_detail'])) {
 							$data['spot_list_url'] = $_SESSION['spot_list_url_detail'];
 						}
 					}
 				}
-				//暂时保留一览页URL
-				$_SESSION['spot_list_url_detail'] = $data['spot_list_url'];
 				
 				//获取景点信息
 				$spot = Model_Spot::SelectSpot(array('spot_id' => $spot_id, 'active_only' => true));

@@ -37,20 +37,21 @@ class Controller_Admin_Service_Route_Deleteroute extends Controller_Admin_App
 					
 					if($result_check['result']) {
 						$result_delete = Model_Route::DeleteRoute($params_delete);
-						
 						if($result_delete) {
 							//删除图片
 							try {
 								$device_index_list = array('pc', 'sp');
 								foreach($device_index_list as $device_index) {
 									$dir_image = DOCROOT . 'assets/img/' . $device_index . '/upload/route/' . $_POST['delete_id'] . '/';
-									$file_image_list = scandir($dir_image);
-									foreach($file_image_list as $file_image) {
-										if($file_image != '.' && $file_image != '..') {
-											unlink($dir_image . $file_image);
+									if(file_exists($dir_image)) {
+										$file_image_list = scandir($dir_image);
+										foreach($file_image_list as $file_image) {
+											if($file_image != '.' && $file_image != '..') {
+												unlink($dir_image . $file_image);
+											}
 										}
+										rmdir($dir_image);
 									}
-									rmdir($dir_image);
 								}
 								//削除成功
 								$_SESSION['delete_route_success'] = true;
@@ -127,13 +128,15 @@ class Controller_Admin_Service_Route_Deleteroute extends Controller_Admin_App
 								foreach($device_index_list as $device_index) {
 									foreach($_POST['delete_id_checked'] as $delete_id) {
 										$dir_image = DOCROOT . 'assets/img/' . $device_index . '/upload/route/' . $delete_id . '/';
-										$file_image_list = scandir($dir_image);
-										foreach($file_image_list as $file_image) {
-											if($file_image != '.' && $file_image != '..') {
-												unlink($dir_image . $file_image);
+										if(file_exists($dir_image)) {
+											$file_image_list = scandir($dir_image);
+											foreach($file_image_list as $file_image) {
+												if($file_image != '.' && $file_image != '..') {
+													unlink($dir_image . $file_image);
+												}
 											}
+											rmdir($dir_image);
 										}
-										rmdir($dir_image);
 									}
 								}
 								//削除成功

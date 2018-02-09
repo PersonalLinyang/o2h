@@ -45,6 +45,11 @@ class Controller_Admin_Service_Restaurant_Exportrestaurant extends Controller_Ad
 						'sort_method' => isset($_POST['sort_method']) ? $_POST['sort_method'] : 'desc',
 						'active_only' => true,
 					);
+					if(isset($_POST['select_self_flag'])) {
+						if($_POST['select_self_flag']) {
+							$params_select['created_by'] = $_SESSION['login_user']['id'];
+						}
+					}
 					
 					$result_select = Model_Restaurant::SelectRestaurantList($params_select);
 					

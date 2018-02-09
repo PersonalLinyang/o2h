@@ -327,9 +327,46 @@ class Model_Route extends Model
 					$result_route = $query_route->execute()->as_array();
 					
 					if(count($result_route)) {
+						$route_list = array();
+						$route_id_list = array();
+						foreach($result_route as $route) {
+							$route_list[$route['route_id']] = $route;
+							$route_list[$route['route_id']]['detail_list'] = array();
+							$route_id_list[] = intval($route['route_id']);
+						}
+						
+						//景点详情信息获取
+						if(isset($params['detail_flag'])) {
+							$sql_detail = "SELECT * FROM e_route_detail WHERE route_id IN :route_id_list ORDER BY route_id ASC, route_detail_day ASC";
+							$query_detail = DB::query($sql_detail);
+							$query_detail->param('route_id_list', $route_id_list);
+							$result_detail = $query_detail->execute()->as_array();
+							
+							if(count($result_detail)) {
+								foreach($result_detail as $route_detail) {
+									$spot_list = array();
+									if($route_detail['route_spot_list']) {
+										$spot_id_list = explode(',', $route_detail['route_spot_list']);
+										$spot_list = Model_Spot::SelectSpotSimpleList(array('spot_id_list' => $spot_id_list));
+									}
+									
+									$route_list[$route_detail['route_id']]['detail_list'][] = array(
+										'route_detail_day' => $route_detail['route_detail_day'],
+										'route_detail_title' => $route_detail['route_detail_title'],
+										'route_detail_content' => $route_detail['route_detail_content'],
+										'route_spot_list' => $spot_list,
+										'route_breakfast' => $route_detail['route_breakfast'],
+										'route_lunch' => $route_detail['route_lunch'],
+										'route_dinner' => $route_detail['route_dinner'],
+										'route_hotel' => $route_detail['route_hotel'],
+									);
+								}
+							}
+						}
+						
 						$result = array(
 							'route_count' => $route_count,
-							'route_list' => $result_route,
+							'route_list' => $route_list,
 							'start_number' => $sql_offset + 1,
 							'end_number' => count($result_route) + $sql_offset,
 						);
@@ -445,7 +482,7 @@ class Model_Route extends Model
 			$result['error'][] = 'dup_route_name';
 		}
 		
-		//路线简介
+		//旅游路线简介
 		if(empty($params['route_description'])) {
 			$result['result'] = false;
 			$result['error'][] = 'empty_route_description';
@@ -521,16 +558,16 @@ class Model_Route extends Model
 					$result['error'][] = 'empty_route_detail_day';
 				} elseif(!is_numeric($detail['route_detail_day']) || !is_int($detail['route_detail_day'] + 0)) {
 					$result['result'] = false;
-					$result['error'][] = 'noint_detail_day';
+					$result['error'][] = 'noint_route_detail_day';
 				} elseif($detail['route_detail_day'] < 0) {
 					$result['result'] = false;
-					$result['error'][] = 'minus_detail_day';
+					$result['error'][] = 'minus_route_detail_day';
 				} elseif($detail['route_detail_day'] > count($params['detail_list'])) {
 					$result['result'] = false;
-					$result['error'][] = 'over_detail_day';
+					$result['error'][] = 'over_route_detail_day';
 				} elseif(in_array($detail['route_detail_day'], $detail_day_list)) {
 					$result['result'] = false;
-					$result['error'][] = 'dup_detail_day';
+					$result['error'][] = 'dup_route_detail_day';
 				} else {
 					$detail_day_list[] = $detail['route_detail_day'];
 				}

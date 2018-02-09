@@ -39,6 +39,7 @@ class Controller_Admin_Service_Hotel_Exporthotel extends Controller_Admin_App
 						'hotel_status' => isset($_POST['select_status']) ? ($_POST['select_status'] ? explode(',', $_POST['select_status']) : array()) : array(),
 						'hotel_area' => isset($_POST['select_area']) ? ($_POST['select_area'] ? explode(',', $_POST['select_area']) : array()) : array(),
 						'hotel_type' => isset($_POST['select_hotel_type']) ? ($_POST['select_hotel_type'] ? explode(',', $_POST['select_hotel_type']) : array()) : array(),
+						'room_type' => isset($_POST['select_room_type']) ? ($_POST['select_room_type'] ? explode(',', $_POST['select_room_type']) : array()) : array(),
 						'price_min' => isset($_POST['select_price_min']) ? $_POST['select_price_min'] : '',
 						'price_max' => isset($_POST['select_price_max']) ? $_POST['select_price_max'] : '',
 						'sort_column' => isset($_POST['sort_column']) ? $_POST['sort_column'] : 'created_at',
@@ -46,6 +47,11 @@ class Controller_Admin_Service_Hotel_Exporthotel extends Controller_Admin_App
 						'active_only' => true,
 						'room_flag' => true,
 					);
+					if(isset($_POST['select_self_flag'])) {
+						if($_POST['select_self_flag']) {
+							$params_select['created_by'] = $_SESSION['login_user']['id'];
+						}
+					}
 					
 					$result_select = Model_Hotel::SelectHotelList($params_select);
 					

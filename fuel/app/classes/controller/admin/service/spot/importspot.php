@@ -139,7 +139,11 @@ class Controller_Admin_Service_Spot_Importspot extends Controller_Admin_App
 											break;
 										case 'E':
 											//一般票价
-											$spot_info['spot_price'] = strval($cell_date->getCalculatedValue());
+											if($spot_info['free_flag'] == 1) {
+												$spot_info['spot_price'] = '0';
+											} else {
+												$spot_info['spot_price'] = strval($cell_date->getCalculatedValue());
+											}
 											break;
 										case 'F':
 											//特殊价格
@@ -299,7 +303,7 @@ class Controller_Admin_Service_Spot_Importspot extends Controller_Admin_App
 													$error_list_spot[$row_id][] = '所选中的景点类别不存在,请下载最新的模板';
 													break;
 												case 'empty_spot_price': 
-													$error_list_spot[$row_id][] = '价格不能空白,请一个非负整数';
+													$error_list_spot[$row_id][] = '价格不能空白,请输入一个非负整数';
 													break;
 												case 'noint_spot_price': 
 												case 'minus_spot_price': 

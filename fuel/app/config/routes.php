@@ -76,6 +76,8 @@ return array(
 	'admin/add_route'                => 'admin/service/route/addroute/index',
 	'admin/modify_route/(:route_id)' => 'admin/service/route/modifyroute/index/$1',
 	'admin/modify_route_status'      => 'admin/service/route/modifyroute/modifyroutestatus',
+	'admin/import_route'             => 'admin/service/route/importroute/index',
+	'admin/export_route'             => 'admin/service/route/exportroute/index',
 	'admin/delete_route'             => 'admin/service/route/deleteroute/index',
 	'admin/delete_route_checked'     => 'admin/service/route/deleteroute/deleteroutechecked',
 	

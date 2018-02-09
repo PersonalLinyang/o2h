@@ -48,6 +48,11 @@ class Controller_Admin_Service_Spot_Exportspot extends Controller_Admin_App
 						'price_flag' => true,
 						'detail_flag' => true,
 					);
+					if(isset($_POST['select_self_flag'])) {
+						if($_POST['select_self_flag']) {
+							$params_select['created_by'] = $_SESSION['login_user']['id'];
+						}
+					}
 					
 					$result_select = Model_Spot::SelectSpotList($params_select);
 					
