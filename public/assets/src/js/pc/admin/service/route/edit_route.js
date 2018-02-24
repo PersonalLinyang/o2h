@@ -109,7 +109,7 @@ $(function(){
 								$.ajax({
 									type: "POST",
 									url: '/admin/api_simple_spot_list/',
-									data: {page: 'add_route'},
+									data: {page: 'edit_route'},
 									dataType: "json",
 									success: function(result) {
 										if(result.result) {

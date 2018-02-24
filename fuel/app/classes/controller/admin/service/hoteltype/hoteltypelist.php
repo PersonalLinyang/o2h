@@ -121,4 +121,26 @@ class Controller_Admin_Service_Hoteltype_Hoteltypelist extends Controller_Admin_
 		}
 	}
 
+	/**
+	 * 获取酒店类别列表
+	 * @access  public
+	 * @return  Response
+	 */
+	public function action_apihoteltypelist($page = null)
+	{
+		$result = array('result' => false, 'hotel_type_list' => array());
+		try {
+			$allow_page_list = array('edit_customer');
+			
+			if(isset($_POST['page'])) {
+				if(in_array($_POST['page'], $allow_page_list)) {
+					$hotel_type_list = Model_Hoteltype::SelectHotelTypeList(array('active_only' => true));
+					$result = array('result' => true, 'hotel_type_list' => $hotel_type_list);
+				}
+			}
+		} catch (Exception $e) {
+		}
+		return json_encode($result);
+	}
+
 }

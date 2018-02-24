@@ -92,8 +92,8 @@
 				<tr>
 					<th>负责人</th>
 					<td>
-						<?php if($customer_info['staff_id'] && $customer_info['staff_name']) : ?>
-						<a target="_blank" href="/admin/user_detail/<?php echo $customer_info['staff_id']; ?>/"><?php echo $customer_info['staff_name']; ?></a>
+						<?php if($customer_info['staff_name']) : ?>
+						<?php echo $customer_info['staff_name']; ?>
 						<?php else : ?>
 						-
 						<?php endif; ?>
@@ -209,6 +209,12 @@
 					<td><?php echo $customer_info['comment'] ? nl2br($customer_info['comment']) : '-'; ?></td>
 				</tr>
 			</table>
+			<p class="system-comment">
+				※ 本顾客由<?php echo $customer_info['created_name']; ?>于<?php echo date('Y年m月d日H:i', strtotime($customer_info['created_at'])); ?>登录
+				<?php if($customer_info['created_at'] != $customer_info['modified_at']): ?>
+				，<?php if($customer_info['modified_name'] != $customer_info['created_name']): ?>由<?php echo $customer_info['modified_name']; ?><?php endif; ?>于<?php echo date('Y年m月d日H:i', strtotime($customer_info['modified_at'])); ?>更新至当前状态
+				<?php endif; ?>
+			</p>
 			<?php if($customer_info['hotel_reserve_flag'] && count($customer_info['hotel_reserve_list'])) : ?>
 			<h3>酒店预约详情</h3>
 			<table class="tb-content-list" id="tb-hotel-reserve">

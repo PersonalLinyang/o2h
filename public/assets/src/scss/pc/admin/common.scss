@@ -264,6 +264,109 @@ input[type="file"] {
 	}
 }
 
+//jQuery ui Datepicker 日历
+#ui-datepicker-div {
+	border: 2px solid #713E00;
+	background: #EEE2C4;
+	color: #713E00;
+	
+	.ui-datepicker-header {
+		background: #713E00;
+		color: #EBCF89;
+		
+		.ui-datepicker-prev, .ui-datepicker-next {
+			border: 1px solid #EEE2C4;
+			background: #EEE2C4;
+			width: 22px;
+			height: 22px;
+			top: 5px;
+		}
+		
+		.ui-datepicker-prev {
+			left: 5px;
+			
+			&:before {
+				content: "";
+				position: absolute;
+				top: 3px;
+				left: 4px;
+				border-top: 8px solid transparent;
+				border-bottom: 8px solid transparent;
+				border-right: 12px solid #713E00;
+			}
+			
+			&:after {
+				content: "";
+				position: absolute;
+				top: 3px;
+				left: 8px;
+				border-top: 8px solid transparent;
+				border-bottom: 8px solid transparent;
+				border-right: 12px solid #EEE2C4;
+			}
+		}
+		
+		.ui-datepicker-next {
+			right: 5px;
+			
+			&:before {
+				content: "";
+				position: absolute;
+				top: 3px;
+				right: 4px;
+				border-top: 8px solid transparent;
+				border-bottom: 8px solid transparent;
+				border-left: 12px solid #713E00;
+			}
+			
+			&:after {
+				content: "";
+				position: absolute;
+				top: 3px;
+				right: 8px;
+				border-top: 8px solid transparent;
+				border-bottom: 8px solid transparent;
+				border-left: 12px solid #EEE2C4;
+			}
+		}
+		
+		.ui-datepicker-prev-hover, .ui-datepicker-next-hover {
+			background: #713E00;
+			border: 1px solid #EEE2C4;
+			cursor: pointer;
+		}
+		
+		.ui-datepicker-prev-hover {
+			&:before {
+				border-right-color: #EEE2C4;
+			}
+			
+			&:after {
+				border-right-color: #713E00;
+			}
+		}
+		
+		.ui-datepicker-next-hover {
+			&:before {
+				border-left-color: #EEE2C4;
+			}
+			
+			&:after {
+				border-left-color: #713E00;
+			}
+		}
+		
+		.ui-icon {
+			background-image: none;
+		}
+	}
+	
+	.ui-state-default {
+		color: #713E00;
+		border-color: #E1D2B3;
+	}
+}
+
 
 /*
 ## 顶部区域 

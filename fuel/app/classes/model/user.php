@@ -24,6 +24,55 @@ class Model_User extends Model
 	}
 	
 	/*
+	 * 按条件获得用户简易列表
+	 */
+	public static function SelectUserSimpleList($params) {
+		try {
+			$sql_where = array();
+			$sql_params = array();
+			$sql_order_column = "user_id";
+			$sql_order_method = "asc";
+			
+			//检索条件处理
+			foreach($params as $param_key => $param_value) {
+				switch($param_key) {
+					case 'active_only':
+						$sql_where[] = " tu.delete_flag = 0 ";
+						break;
+					case 'sort_column':
+						$sort_column_list = array('user_id', 'user_name');
+						if(in_array($param_value, $sort_column_list)) {
+							$sql_order_column = $param_value;
+						}
+						break;
+					case 'sort_method':
+						if(in_array($param_value, array('asc', 'desc'))) {
+							$sql_order_method = $param_value;
+						}
+						break;
+					default:
+						break;
+				}
+			}
+			
+			//符合条件的用户简易列表获取
+			$sql = "SELECT tu.user_id, tu.user_name "
+				. "FROM t_user tu "
+				. (count($sql_where) ? (" WHERE " . implode(" AND ", $sql_where)) : "")
+				. "ORDER BY " . $sql_order_column . " " . $sql_order_method;
+			$query = DB::query($sql);
+			foreach($sql_params as $param_key => $param_value) {
+				$query->param($param_key, $param_value);
+			}
+			$result = $query->execute()->as_array();
+			
+			return $result;
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	/*
 	 * 根据用户ID获得用户类型
 	 */
 	public static function SelectUserTypeById($user_id) {
@@ -36,6 +85,26 @@ class Model_User extends Model
 			$user_type = $result[0]['user_type'];
 			return $user_type;
 		} else {
+			return false;
+		}
+	}
+	
+	/*
+	 * 检查用户ID是否存在
+	 */
+	public static function CheckUserIdExist($user_id, $active_check = 0) {
+		try {
+			$sql = "SELECT user_id FROM t_user WHERE user_id = :user_id " . ($active_check ? " AND delete_flag = 0 " : "");
+			$query = DB::query($sql);
+			$query->param('user_id', $user_id);
+			$result = $query->execute()->as_array();
+			
+			if(count($result)) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception $e) {
 			return false;
 		}
 	}
@@ -56,22 +125,6 @@ class Model_User extends Model
 		$result = $query->execute()->as_array();
 		
 		return $result;
-	}
-	
-	/*
-	 * 检查用户ID是否在职
-	 */
-	public static function CheckUserIdActive($user_id) {
-		$sql = "SELECT user_id FROM t_user WHERE user_id = :user_id AND delete_flag = 0";
-		$query = DB::query($sql);
-		$query->param('user_id', $user_id);
-		$result = $query->execute()->as_array();
-		
-		if(count($result)) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 }

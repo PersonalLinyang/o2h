@@ -240,7 +240,7 @@ class Controller_Admin_Service_Spot_Spotlist extends Controller_Admin_App
 	{
 		$result = array('result' => false, 'spot_list' => array());
 		try {
-			$allow_page_list = array('add_route');
+			$allow_page_list = array('edit_route');
 			
 			if(isset($_POST['page'])) {
 				if(in_array($_POST['page'], $allow_page_list)) {

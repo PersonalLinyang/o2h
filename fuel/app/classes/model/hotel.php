@@ -34,8 +34,8 @@ class Model_Hotel extends Model
 				$sql_values_room = array();
 				$sql_params_room = array();
 				foreach($params['room_type_list'] as $param_key => $room_type_id) {
-					$sql_values_room[] = "(:hotel_id, :room_type_" . $param_key . ")";
-					$sql_params_room['room_type_' . $param_key] = $room_type_id;
+					$sql_values_room[] = "(:hotel_id, :room_type_id_" . $param_key . ")";
+					$sql_params_room['room_type_id_' . $param_key] = $room_type_id;
 				}
 				
 				if(count($sql_values_room)) {

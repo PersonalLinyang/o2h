@@ -47,8 +47,10 @@
 					<a class="main-navi-link">业务管理</a>
 					<div class="header-sub-navi">
 						<ul>
+							<?php if(in_array('13', $login_user_permission['sub_group'])) : ?>
+							<li><a href="/admin/customer_list/" class="sub-navi-link">顾客信息管理</a></li>
+							<?php endif; ?>
 <!--
-							<li><a href="/admin/" class="sub-navi-link">顾客管理</a></li>
 							<li><a href="/admin/" class="sub-navi-link">日程管理</a></li>
 -->
 						</ul>

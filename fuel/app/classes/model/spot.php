@@ -459,9 +459,9 @@ class Model_Spot extends Model
 			
 			//符合条件的景点简易列表获取
 			$sql = "SELECT ts.spot_id, ts.spot_name "
-						. "FROM t_spot ts "
-						. (count($sql_where) ? (" WHERE " . implode(" AND ", $sql_where)) : "")
-						. "ORDER BY " . $sql_order_column . " " . $sql_order_method;
+				. "FROM t_spot ts "
+				. (count($sql_where) ? (" WHERE " . implode(" AND ", $sql_where)) : "")
+				. "ORDER BY " . $sql_order_column . " " . $sql_order_method;
 			$query = DB::query($sql);
 			foreach($sql_params as $param_key => $param_value) {
 				$query->param($param_key, $param_value);
@@ -523,9 +523,9 @@ class Model_Spot extends Model
 				}
 				//数据获取
 				$sql_detail = "SELECT esd.* "
-									. "FROM e_spot_detail esd "
-									. (count($sql_where_detail) ? (" WHERE " . implode(" AND ", $sql_where_detail)) : "")
-									. " ORDER BY esd.spot_detail_id ASC ";
+							. "FROM e_spot_detail esd "
+							. (count($sql_where_detail) ? (" WHERE " . implode(" AND ", $sql_where_detail)) : "")
+							. " ORDER BY esd.spot_detail_id ASC ";
 				$query_detail = DB::query($sql_detail);
 				foreach($sql_params_detail as $param_key => $param_value) {
 					$query_detail->param($param_key, $param_value);
@@ -556,9 +556,9 @@ class Model_Spot extends Model
 				}
 				//数据获取
 				$sql_price = "SELECT essp.* "
-									. "FROM e_spot_special_price essp "
-									. (count($sql_where_price) ? (" WHERE " . implode(" AND ", $sql_where_price)) : "")
-									. " ORDER BY essp.special_price_id ASC ";
+							. "FROM e_spot_special_price essp "
+							. (count($sql_where_price) ? (" WHERE " . implode(" AND ", $sql_where_price)) : "")
+							. " ORDER BY essp.special_price_id ASC ";
 				$query_price = DB::query($sql_price);
 				foreach($sql_params_price as $param_key => $param_value) {
 					$query_price->param($param_key, $param_value);
