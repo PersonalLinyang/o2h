@@ -172,18 +172,21 @@ $(function(){
 					html.push('<option value="" class="placeholder">-请选择-</option>');
 					$.ajax({
 						type: "POST",
-						url: '/admin/add_customer/hotel_type_list/',
-						data: {page: 'add_customer'},
+						url: '/admin/api_hotel_type_list/',
+						data: {page: 'edit_customer'},
 						dataType: "json",
-						success: function(hotel_type_list) {
-							var html_select = [];
-							$.each(hotel_type_list,function(index,val){
-								html_select.push('');
-								html_select.push('<option value="' + val.hotel_type_id + '">');
-									html_select.push(val.hotel_type_name);
-								html_select.push('</option>');
-							});
-							$('#sel-hotel-type-' + row).append(html_select.join(''));
+						success: function(result) {
+							if(result.result) {
+								hotel_type_list = result.hotel_type_list;
+								var html_select = [];
+								$.each(hotel_type_list,function(index,val){
+									html_select.push('');
+									html_select.push('<option value="' + val.hotel_type_id + '">');
+										html_select.push(val.hotel_type_name);
+									html_select.push('</option>');
+								});
+								$('#sel-hotel-type-' + row).append(html_select.join(''));
+							}
 						},
 						error: function(XMLHttpRequest, textStatus, errorThrown) {
 							console.log("XMLHttpRequest : " + XMLHttpRequest.status);
@@ -198,18 +201,21 @@ $(function(){
 					html.push('<option value="" class="placeholder">-请选择-</option>');
 					$.ajax({
 						type: "POST",
-						url: '/admin/add_customer/room_type_list/',
-						data: {page: 'add_customer'},
+						url: '/admin/api_room_type_list/',
+						data: {page: 'edit_customer'},
 						dataType: "json",
-						success: function(room_type_list) {
-							var html_select = [];
-							$.each(room_type_list,function(index,val){
-								html_select.push('');
-								html_select.push('<option value="' + val.room_type_id + '">');
-									html_select.push(val.room_type_name);
-								html_select.push('</option>');
-							});
-							$('#sel-room-type-' + row).append(html_select.join(''));
+						success: function(result) {
+							if(result.result) {
+								room_type_list = result.room_type_list;
+								var html_select = [];
+								$.each(room_type_list,function(index,val){
+									html_select.push('');
+									html_select.push('<option value="' + val.room_type_id + '">');
+										html_select.push(val.room_type_name);
+									html_select.push('</option>');
+								});
+								$('#sel-room-type-' + row).append(html_select.join(''));
+							}
 						},
 						error: function(XMLHttpRequest, textStatus, errorThrown) {
 							console.log("XMLHttpRequest : " + XMLHttpRequest.status);
@@ -250,17 +256,20 @@ $(function(){
 					html.push('<option value="" class="placeholder">-请选择-</option>');
 					$.ajax({
 						type: "POST",
-						url: '/admin/add_customer/customer_cost_type_list/',
-						data: {page: 'add_customer'},
+						url: '/admin/api_customer_cost_type_list/',
+						data: {page: 'edit_customer'},
 						dataType: "json",
-						success: function(customer_cost_type_list) {
-							var html_select = [];
-							$.each(customer_cost_type_list,function(index,val){
-								html_select.push('<option value="' + val.customer_cost_type_id + '">');
-									html_select.push(val.customer_cost_type_name);
-								html_select.push('</option>');
-							});
-							$('#sel-customer-cost-type-' + row).append(html_select.join(''));
+						success: function(result) {
+							if(result.result) {
+								customer_cost_type_list = result.customer_cost_type_list;
+								var html_select = [];
+								$.each(customer_cost_type_list,function(index,val){
+									html_select.push('<option value="' + val.customer_cost_type_id + '">');
+										html_select.push(val.customer_cost_type_name);
+									html_select.push('</option>');
+								});
+								$('#sel-customer-cost-type-' + row).append(html_select.join(''));
+							}
 						},
 						error: function(XMLHttpRequest, textStatus, errorThrown) {
 							console.log("XMLHttpRequest : " + XMLHttpRequest.status);

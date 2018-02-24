@@ -2,12 +2,12 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>顾客信息登录 - O2H管理系统</title>
+	<title><?php echo $page_title; ?> - O2H管理系统</title>
 	<?php echo Asset::css('pc/admin/common.css'); ?>
-	<?php echo Asset::css('pc/admin/customer/edit_customer.css'); ?>
+	<?php echo Asset::css('pc/admin/business/customer/edit_customer.css'); ?>
 	<?php echo Asset::js('common/jquery-1.9.1.min.js'); ?>
 	<?php echo Asset::js('pc/admin/common.js'); ?>
-	<?php echo Asset::js('pc/admin/customer/edit_customer.js'); ?>
+	<?php echo Asset::js('pc/admin/business/customer/edit_customer.js'); ?>
 </head>
 <body class="body-common">
 	<?php echo $header; ?>
@@ -17,7 +17,7 @@
 		<?php endif; ?>
 		
 		<div class="content-main">
-			<h1>顾客信息登录</h1>
+			<h1><?php echo $page_title; ?></h1>
 			<form method="post" action="" class="content-form" enctype="multipart/form-data">
 				<table class="tb-content-form">
 					<tr>
@@ -329,12 +329,12 @@
 						<td colspan="2">
 							<ul class="button-group">
 								<li class="button-yes btn-form-submit">添加</li>
-								<li class="button-no"><a href="/admin/customer_list/">取消</a></li>
+								<li class="button-no"><a href="<?php echo $return_page_url; ?>">取消</a></li>
 							</ul>
 						</td>
 					</tr>
 				</table>
-				<input type="hidden" name="page" value="add_customer" />
+				<input type="hidden" name="page" value="<?php echo $form_page_index; ?>" />
 			</form>
 		</div>
 	</div>

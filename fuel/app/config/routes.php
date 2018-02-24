@@ -40,16 +40,22 @@ return array(
 	'admin/delete_hotel_checked'     => 'admin/service/hotel/deletehotel/deletehotelchecked',
 	
 	//酒店类别管理
-	'admin/hotel_type_list'                    => 'admin/service/hoteltype/hoteltypelist',
-	'admin/add_hotel_type'                     => 'admin/service/hoteltype/addhoteltype',
+	'admin/hotel_type_list'                    => 'admin/service/hoteltype/hoteltypelist/index',
+	'admin/add_hotel_type'                     => 'admin/service/hoteltype/addhoteltype/index',
 	'admin/modify_hotel_type/(:hotel_type_id)' => 'admin/service/hoteltype/modifyhoteltype/index/$1',
 	'admin/delete_hotel_type'                  => 'admin/service/hoteltype/deletehoteltype/index',
+	
+	//酒店类别相关接口
+	'admin/api_hotel_type_list'      => 'admin/service/hoteltype/hoteltypelist/apihoteltypelist',
 	
 	//房型管理
 	'admin/room_type_list'                   => 'admin/service/roomtype/roomtypelist/index',
 	'admin/add_room_type'                    => 'admin/service/roomtype/addroomtype/index',
 	'admin/modify_room_type/(:room_type_id)' => 'admin/service/roomtype/modifyroomtype/index/$1',
 	'admin/delete_room_type'                 => 'admin/service/roomtype/deleteroomtype/index',
+	
+	//房型相关接口
+	'admin/api_room_type_list'      => 'admin/service/roomtype/roomtypelist/apiroomtypelist',
 	
 	//餐饮管理
 	'admin/restaurant_list'                    => 'admin/service/restaurant/restaurantlist/index',
@@ -64,8 +70,8 @@ return array(
 	'admin/delete_restaurant_checked'          => 'admin/service/restaurant/deleterestaurant/deleterestaurantchecked',
 	
 	//餐饮类别管理
-	'admin/restaurant_type_list'                         => 'admin/service/restauranttype/restauranttypelist',
-	'admin/add_restaurant_type'                          => 'admin/service/restauranttype/addrestauranttype',
+	'admin/restaurant_type_list'                         => 'admin/service/restauranttype/restauranttypelist/index',
+	'admin/add_restaurant_type'                          => 'admin/service/restauranttype/addrestauranttype/index',
 	'admin/modify_restaurant_type/(:restaurant_type_id)' => 'admin/service/restauranttype/modifyrestauranttype/index/$1',
 	'admin/delete_restaurant_type'                       => 'admin/service/restauranttype/deleterestauranttype/index',
 	
@@ -82,11 +88,13 @@ return array(
 	'admin/delete_route_checked'     => 'admin/service/route/deleteroute/deleteroutechecked',
 	
 	//顾客管理
-	'admin/add_customer'                         => 'admin/customer/addcustomer',
-	'admin/add_customer/customer_cost_type_list' => 'admin/customer/addcustomer/customercosttypelist',
-	'admin/add_customer/hotel_type_list'         => 'admin/customer/addcustomer/hoteltypelist',
-	'admin/add_customer/room_type_list'          => 'admin/customer/addcustomer/roomtypelist',
-	'admin/customer_detail/(:customer_id)'       => 'admin/customer/customerdetail/index/$1',
+	'admin/customer_list'                        => 'admin/business/customer/customerlist/index',
+	'admin/customer_list/(:page)'                => 'admin/business/customer/customerlist/index/$1',
+	'admin/customer_detail/(:customer_id)'       => 'admin/business/customer/customerdetail/index/$1',
+	'admin/add_customer'                         => 'admin/business/customer/addcustomer',
+	
+	//成本项目相关接口
+	'admin/api_customer_cost_type_list'      => 'admin/business/customercosttype/customercosttypelist/apicustomercosttypelist',
 	
 	//系统权限管理
 	'admin/permission_list'                  => 'admin/user/permission/permissionlist/index',

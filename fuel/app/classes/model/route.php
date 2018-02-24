@@ -335,7 +335,7 @@ class Model_Route extends Model
 							$route_id_list[] = intval($route['route_id']);
 						}
 						
-						//景点详情信息获取
+						//旅游路线详细日程获取
 						if(isset($params['detail_flag'])) {
 							$sql_detail = "SELECT * FROM e_route_detail WHERE route_id IN :route_id_list ORDER BY route_id ASC, route_detail_day ASC";
 							$query_detail = DB::query($sql_detail);
@@ -376,6 +376,50 @@ class Model_Route extends Model
 			}
 			
 			return false;
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	/*
+	 * 按条件获得旅游路线简易列表
+	 */
+	public static function SelectRouteSimpleList($params) {
+		try {
+			$sql_where = array();
+			$sql_params = array();
+			$sql_order_column = "created_at";
+			$sql_order_method = "desc";
+			
+			//检索条件处理
+			foreach($params as $param_key => $param_value) {
+				switch($param_key) {
+					case 'route_status':
+						if(count($param_value)) {
+							$sql_where[] = " tr.route_status IN :route_status_list ";
+							$sql_params['route_status_list'] = $param_value;
+						}
+						break;
+					case 'active_only':
+						$sql_where[] = " ts.delete_flag = 0 ";
+						break;
+					default:
+						break;
+				}
+			}
+			
+			//符合条件的旅游路线简易列表获取
+			$sql = "SELECT tr.route_id, ts.route_name "
+				. "FROM t_route tr "
+				. (count($sql_where) ? (" WHERE " . implode(" AND ", $sql_where)) : "")
+				. "ORDER BY " . $sql_order_column . " " . $sql_order_method;
+			$query = DB::query($sql);
+			foreach($sql_params as $param_key => $param_value) {
+				$query->param($param_key, $param_value);
+			}
+			$result = $query->execute()->as_array();
+			
+			return $result;
 		} catch (Exception $e) {
 			return false;
 		}
@@ -694,83 +738,22 @@ class Model_Route extends Model
 		}
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/*
-	 * 获取全部旅游路线简易信息列表
+	 * 检查旅游路线ID是否存在
 	 */
-	public static function GetRouteSimpleListAll() {
-		$sql = "SELECT route_id, route_name FROM t_route WHERE route_status = 1";
-		$query = DB::query($sql);
-		$result = $query->execute()->as_array();
-		
-		return $result;
-	}
-	
-	/*
-	 * 获取全部有效公开旅游路线简易信息列表
-	 */
-	public static function GetRouteSimpleListActive() {
-		$sql = "SELECT route_id, route_name FROM t_route WHERE delete_flag = 0 AND route_status = 1";
-		$query = DB::query($sql);
-		$result = $query->execute()->as_array();
-		
-		return $result;
-	}
-	
-	/*
-	 * 检查旅游路线ID是否有效公开
-	 */
-	public static function CheckActiveRouteId($route_id) {
-		$sql = "SELECT * FROM t_user WHERE route_id = :route_id AND delete_flag = 0 AND route_status = 1";
-		$query = DB::query($sql);
-		$query->param('route_id', $route_id);
-		$result = $query->execute()->as_array();
-		
-		if(count($result)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	/*
-	 * 根据ID检查路线是否存在
-	 */
-	public static function CheckRouteExistByRouteId($route_id) {
-		if(!is_numeric($route_id)) {
-			return false;
-		}
-		
-		$sql_route = "SELECT route_id FROM t_route WHERE route_id = :route_id ";
-		$query_route = DB::query($sql_route);
-		$query_route->param('route_id', $route_id);
-		$result_route = $query_route->execute()->as_array();
-		
-		if(count($result_route) == 1) {
-			return true;
-		} else {
+	public static function CheckRouteIdExist($route_id, $active_check = 0) {
+		try {
+			$sql = "SELECT route_id FROM t_route WHERE route_id = :route_id " . ($active_check ? " AND delete_flag = 0 " : "");
+			$query = DB::query($sql);
+			$query->param('route_id', $route_id);
+			$result = $query->execute()->as_array();
+			
+			if(count($result)) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception $e) {
 			return false;
 		}
 	}
