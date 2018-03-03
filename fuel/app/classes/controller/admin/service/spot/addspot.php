@@ -38,7 +38,7 @@ class Controller_Admin_Service_Spot_Addspot extends Controller_Admin_App
 				}
 				
 				//获取地区列表
-				$data['area_list'] = Model_Area::GetAreaList(array('active_only' => true));
+				$data['area_list'] = Model_Area::SelectAreaList(array('active_only' => true));
 				//获取景点类型列表
 				$data['spot_type_list'] = Model_SpotType::SelectSpotTypeList(array('active_only' => true));
 				

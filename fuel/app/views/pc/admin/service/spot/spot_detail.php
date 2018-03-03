@@ -75,7 +75,7 @@
 				<?php endif; ?>
 			</p>
 			<h3>景点详情</h3>
-			<?php foreach($spot_info['spot_detail_list'] as $detail_info): ?>
+			<?php foreach($spot_info['spot_detail_list'] as $detail_key => $detail_info): ?>
 			<table class="tb-content-detail">
 				<tr>
 					<th>景点详情名</th>
@@ -91,7 +91,7 @@
 						<p>共计<span class="strong"><?php echo count($detail_info['image_list']); ?></span>张图片</p>
 						<div class="image-list">
 							<?php foreach($detail_info['image_list'] as $image_key => $image_id): ?>
-							<div class="image-block<?php echo $image_key == 0 ? ' main' : '';?>">
+							<div class="image-block<?php echo ($detail_key == 0 && $image_key == 0) ? ' main' : '';?>">
 								<img src="/assets/img/pc/upload/spot/<?php echo $spot_info['spot_id']; ?>/<?php echo $detail_info['spot_detail_id']; ?>/<?php echo $image_id; ?>_thumb.jpg" 
 									alt="<?php echo $spot_info['spot_name']; ?>-<?php echo $detail_info['spot_detail_name']; ?>-<?php echo $image_id; ?>" />
 							</div>

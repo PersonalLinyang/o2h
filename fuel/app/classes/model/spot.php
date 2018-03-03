@@ -11,9 +11,9 @@ class Model_Spot extends Model
 		try {
 			//添加景点
 			$sql_spot = "INSERT INTO t_spot(spot_name, spot_area, spot_type, free_flag, spot_price, spot_status, "
-						. "delete_flag, created_at, created_by, modified_at, modified_by) "
+						. "main_image, delete_flag, created_at, created_by, modified_at, modified_by) "
 						. "VALUES(:spot_name, :spot_area, :spot_type, :free_flag, :spot_price, :spot_status, "
-						. "0, :created_at, :created_by, :modified_at, :modified_by)";
+						. ":main_image, 0, :created_at, :created_by, :modified_at, :modified_by)";
 			$query_spot = DB::query($sql_spot);
 			$query_spot->param('spot_name', $params['spot_name']);
 			$query_spot->param('spot_area', $params['spot_area']);
@@ -21,6 +21,14 @@ class Model_Spot extends Model
 			$query_spot->param('free_flag', $params['free_flag']);
 			$query_spot->param('spot_price', $params['spot_price']);
 			$query_spot->param('spot_status', $params['spot_status']);
+			$main_image = '';
+			if(count($params['spot_detail_list'])) {
+				$detail_main = $params['spot_detail_list'][0];
+				if(count($detail_main['image_list'])) {
+					$main_image = $detail_main['spot_detail_id'] . '/' . $detail_main['image_list'][0]['image_id'];
+				}
+			}
+			$query_spot->param('main_image', $main_image);
 			$time_now = date('Y-m-d H:i:s', time());
 			$query_spot->param('created_at', $time_now);
 			$query_spot->param('created_by', $params['created_by']);
@@ -133,8 +141,8 @@ class Model_Spot extends Model
 		try {
 			//更新景点
 			$sql_spot = "UPDATE t_spot "
-						. "SET spot_name=:spot_name, spot_area=:spot_area, spot_type=:spot_type, free_flag=:free_flag, "
-						. "spot_price=:spot_price, spot_status=:spot_status, modified_at=:modified_at, modified_by=:modified_by "
+						. "SET spot_name=:spot_name, spot_area=:spot_area, spot_type=:spot_type, free_flag=:free_flag, spot_price=:spot_price, "
+						. "spot_status=:spot_status, main_image=:main_image, modified_at=:modified_at, modified_by=:modified_by "
 						. "WHERE spot_id=:spot_id";
 			$query_spot = DB::query($sql_spot);
 			$query_spot->param('spot_id', $params['spot_id']);
@@ -144,6 +152,14 @@ class Model_Spot extends Model
 			$query_spot->param('free_flag', $params['free_flag']);
 			$query_spot->param('spot_price', $params['spot_price']);
 			$query_spot->param('spot_status', $params['spot_status']);
+			$main_image = '';
+			if(count($params['spot_detail_list'])) {
+				$detail_main = $params['spot_detail_list'][0];
+				if(count($detail_main['image_list'])) {
+					$main_image = $detail_main['spot_detail_id'] . '/' . $detail_main['image_list'][0]['image_id'];
+				}
+			}
+			$query_spot->param('main_image', $main_image);
 			$query_spot->param('modified_at', date('Y-m-d H:i:s', time()));
 			$query_spot->param('modified_by', $params['modified_by']);
 			$result_spot = $query_spot->execute();

@@ -38,7 +38,7 @@ class Controller_Admin_Service_Restaurant_Addrestaurant extends Controller_Admin
 				}
 				
 				//获取地区列表
-				$data['area_list'] = Model_Area::GetAreaList(array('active_only' => true));
+				$data['area_list'] = Model_Area::SelectAreaList(array('active_only' => true));
 				//获取餐饮店类型列表
 				$data['restaurant_type_list'] = Model_RestaurantType::SelectRestaurantTypeList(array('active_only' => true));
 				

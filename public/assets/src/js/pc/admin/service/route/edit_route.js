@@ -108,7 +108,7 @@ $(function(){
 							html.push('<ul class="ul-spot-list" id="ul-spot-list-' + detail_day + '">');
 								$.ajax({
 									type: "POST",
-									url: '/admin/api_simple_spot_list/',
+									url: '/interface/admin/api_simple_spot_list/',
 									data: {page: 'edit_route'},
 									dataType: "json",
 									success: function(result) {

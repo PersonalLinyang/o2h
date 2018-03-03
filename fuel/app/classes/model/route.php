@@ -401,7 +401,7 @@ class Model_Route extends Model
 						}
 						break;
 					case 'active_only':
-						$sql_where[] = " ts.delete_flag = 0 ";
+						$sql_where[] = " tr.delete_flag = 0 ";
 						break;
 					default:
 						break;
@@ -409,7 +409,7 @@ class Model_Route extends Model
 			}
 			
 			//符合条件的旅游路线简易列表获取
-			$sql = "SELECT tr.route_id, ts.route_name "
+			$sql = "SELECT tr.route_id, tr.route_name "
 				. "FROM t_route tr "
 				. (count($sql_where) ? (" WHERE " . implode(" AND ", $sql_where)) : "")
 				. "ORDER BY " . $sql_order_column . " " . $sql_order_method;
@@ -442,6 +442,13 @@ class Model_Route extends Model
 			if(isset($params['active_only'])) {
 				if($params['active_only']) {
 					$sql_where[] = " tr.delete_flag = 0 ";
+				}
+			}
+			//路线状态限定
+			if(isset($params['active_only'])) {
+				if(count($params['active_only'])) {
+					$sql_where[] = " tr.route_status IN :route_status_list ";
+					$sql_params['route_status_list'] = $param_value;
 				}
 			}
 			

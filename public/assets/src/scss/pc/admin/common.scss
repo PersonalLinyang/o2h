@@ -31,6 +31,7 @@ input[type="text"] {
 	padding-bottom: 2px;
 	font-size: 16px;
 	box-sizing: border-box;
+	outline: none;
 	
 	/* 文字输入(只读) */
 	&.readonly {
@@ -52,6 +53,7 @@ input[type="password"] {
 	padding-bottom: 2px;
 	font-size: 16px;
 	box-sizing: border-box;
+	outline: none;
 }
 
 /* 文字输入(多行) */
@@ -66,6 +68,7 @@ textarea {
 	padding-right: 10px;
 	padding-top: 2px;
 	padding-bottom: 2px;
+	outline: none;
 }
 
 /* 文字输入 */
@@ -80,6 +83,7 @@ input[type="number"] {
 	padding-bottom: 2px;
 	font-size: 16px;
 	box-sizing: border-box;
+	outline: none;
 }
 
 /* 下拉选择 */
@@ -93,6 +97,7 @@ select {
 	padding-left: 10px;
 	padding-right: 10px;
 	font-size: 16px;
+	outline: none;
 	
 	option {
 		color: #000000;

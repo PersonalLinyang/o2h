@@ -46,7 +46,7 @@ class Controller_Admin_Service_Restaurant_Importrestaurant extends Controller_Ad
 					$login_user_id = $_SESSION['login_user']['id'];
 					
 					//地区列表
-					$area_list = Model_Area::GetAreaList(array('active_only' => true));
+					$area_list = Model_Area::SelectAreaList(array('active_only' => true));
 					foreach($area_list as $area) {
 						$area_master_list[$area['area_name']] = $area['area_id'];
 					}
