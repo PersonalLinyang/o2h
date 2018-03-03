@@ -121,26 +121,4 @@ class Controller_Admin_Service_Roomtype_Roomtypelist extends Controller_Admin_Ap
 		}
 	}
 
-	/**
-	 * 获取房型列表
-	 * @access  public
-	 * @return  Response
-	 */
-	public function action_apiroomtypelist($page = null)
-	{
-		$result = array('result' => false, 'room_type_list' => array());
-		try {
-			$allow_page_list = array('edit_customer');
-			
-			if(isset($_POST['page'])) {
-				if(in_array($_POST['page'], $allow_page_list)) {
-					$room_type_list = Model_Roomtype::SelectRoomTypeList(array('active_only' => true));
-					$result = array('result' => true, 'room_type_list' => $room_type_list);
-				}
-			}
-		} catch (Exception $e) {
-		}
-		return json_encode($result);
-	}
-
 }

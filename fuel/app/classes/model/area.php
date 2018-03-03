@@ -4,7 +4,7 @@ class Model_Area extends Model
 {
 
 	//获得符合特定条件的地区列表
-	public static function GetAreaList($params) {
+	public static function SelectAreaList($params) {
 		try{
 			$sql_where = array();
 			$sql_params = array();

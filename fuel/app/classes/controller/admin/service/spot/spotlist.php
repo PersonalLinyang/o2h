@@ -32,7 +32,7 @@ class Controller_Admin_Service_Spot_Spotlist extends Controller_Admin_App
 				//获取自身用户ID
 				$data['user_id_self'] = $_SESSION['login_user']['id'];
 				//获取地区列表
-				$data['area_list'] = Model_Area::GetAreaList(array('active_only' => true));
+				$data['area_list'] = Model_Area::SelectAreaList(array('active_only' => true));
 				//获取景点类型列表
 				$data['spot_type_list'] = Model_SpotType::SelectSpotTypeList(array('active_only' => true));
 				//是否具备景点编辑权限
@@ -229,28 +229,6 @@ class Controller_Admin_Service_Spot_Spotlist extends Controller_Admin_App
 			//发生系统异常
 			return Response::forge(View::forge($this->template . '/admin/error/system_error', $data, false));
 		}
-	}
-
-	/**
-	 * 获取景点列表
-	 * @access  public
-	 * @return  Response
-	 */
-	public function action_apisimplespotlist($page = null)
-	{
-		$result = array('result' => false, 'spot_list' => array());
-		try {
-			$allow_page_list = array('edit_route');
-			
-			if(isset($_POST['page'])) {
-				if(in_array($_POST['page'], $allow_page_list)) {
-					$spot_list = Model_Spot::SelectSpotSimpleList(array('active_only' => true, 'spot_status' => array(1)));
-					$result = array('result' => true, 'spot_list' => $spot_list);
-				}
-			}
-		} catch (Exception $e) {
-		}
-		return json_encode($result);
 	}
 
 }

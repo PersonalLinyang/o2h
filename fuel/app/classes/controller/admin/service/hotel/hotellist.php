@@ -32,7 +32,7 @@ class Controller_Admin_Service_Hotel_Hotellist extends Controller_Admin_App
 				//获取自身用户ID
 				$data['user_id_self'] = $_SESSION['login_user']['id'];
 				//获取地区列表
-				$data['area_list'] = Model_Area::GetAreaList(array('active_only' => true));
+				$data['area_list'] = Model_Area::SelectAreaList(array('active_only' => true));
 				//获取酒店类型列表
 				$data['hotel_type_list'] = Model_HotelType::SelectHotelTypeList(array('active_only' => true));
 				//获取房型列表

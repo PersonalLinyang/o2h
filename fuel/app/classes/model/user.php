@@ -108,24 +108,6 @@ class Model_User extends Model
 			return false;
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	/*
-	 * 获取全部在职用户简易信息列表
-	 */
-	public static function GetUserSimpleListActive() {
-		$sql = "SELECT user_id, user_name FROM t_user Where delete_flag = 0 ORDER BY user_id";
-		$query = DB::query($sql);
-		$result = $query->execute()->as_array();
-		
-		return $result;
-	}
 
 }
 

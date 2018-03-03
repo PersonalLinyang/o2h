@@ -172,7 +172,7 @@ $(function(){
 					html.push('<option value="" class="placeholder">-请选择-</option>');
 					$.ajax({
 						type: "POST",
-						url: '/admin/api_hotel_type_list/',
+						url: '/interface/admin/api_hotel_type_list/',
 						data: {page: 'edit_customer'},
 						dataType: "json",
 						success: function(result) {
@@ -201,7 +201,7 @@ $(function(){
 					html.push('<option value="" class="placeholder">-请选择-</option>');
 					$.ajax({
 						type: "POST",
-						url: '/admin/api_room_type_list/',
+						url: '/interface/admin/api_room_type_list/',
 						data: {page: 'edit_customer'},
 						dataType: "json",
 						success: function(result) {
@@ -256,7 +256,7 @@ $(function(){
 					html.push('<option value="" class="placeholder">-请选择-</option>');
 					$.ajax({
 						type: "POST",
-						url: '/admin/api_customer_cost_type_list/',
+						url: '/interface/admin/api_customer_cost_type_list/',
 						data: {page: 'edit_customer'},
 						dataType: "json",
 						success: function(result) {

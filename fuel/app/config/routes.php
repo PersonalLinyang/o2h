@@ -18,9 +18,6 @@ return array(
 	'admin/delete_spot'            => 'admin/service/spot/deletespot/index',
 	'admin/delete_spot_checked'    => 'admin/service/spot/deletespot/deletespotchecked',
 	
-	//景点相关接口
-	'admin/api_simple_spot_list'      => 'admin/service/spot/spotlist/apisimplespotlist',
-	
 	//景点类别管理
 	'admin/spot_type_list'                   => 'admin/service/spottype/spottypelist/index',
 	'admin/add_spot_type'                    => 'admin/service/spottype/addspottype/index',
@@ -45,17 +42,11 @@ return array(
 	'admin/modify_hotel_type/(:hotel_type_id)' => 'admin/service/hoteltype/modifyhoteltype/index/$1',
 	'admin/delete_hotel_type'                  => 'admin/service/hoteltype/deletehoteltype/index',
 	
-	//酒店类别相关接口
-	'admin/api_hotel_type_list'      => 'admin/service/hoteltype/hoteltypelist/apihoteltypelist',
-	
 	//房型管理
 	'admin/room_type_list'                   => 'admin/service/roomtype/roomtypelist/index',
 	'admin/add_room_type'                    => 'admin/service/roomtype/addroomtype/index',
 	'admin/modify_room_type/(:room_type_id)' => 'admin/service/roomtype/modifyroomtype/index/$1',
 	'admin/delete_room_type'                 => 'admin/service/roomtype/deleteroomtype/index',
-	
-	//房型相关接口
-	'admin/api_room_type_list'      => 'admin/service/roomtype/roomtypelist/apiroomtypelist',
 	
 	//餐饮管理
 	'admin/restaurant_list'                    => 'admin/service/restaurant/restaurantlist/index',
@@ -92,9 +83,6 @@ return array(
 	'admin/customer_list/(:page)'                => 'admin/business/customer/customerlist/index/$1',
 	'admin/customer_detail/(:customer_id)'       => 'admin/business/customer/customerdetail/index/$1',
 	'admin/add_customer'                         => 'admin/business/customer/addcustomer',
-	
-	//成本项目相关接口
-	'admin/api_customer_cost_type_list'      => 'admin/business/customercosttype/customercosttypelist/apicustomercosttypelist',
 	
 	//系统权限管理
 	'admin/permission_list'                  => 'admin/user/permission/permissionlist/index',
