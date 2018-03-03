@@ -1,0 +1,704 @@
+/* 滑动form区域 */
+.form-slide {
+	width: 1100px;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+	z-index: 1000;
+	top: -60px;
+	margin-bottom: -60px;
+	border-radius: 20px;
+	box-shadow: rgba(0,0,0,0.5) 0px 2px 10px, 
+		inset rgba(255,255,255,0.25) 0px 1px 0px, 
+		inset rgba(0,0,0,0.25) 0px 0px 0px, 
+		inset rgba(255,255,255,0.03) 0px 20px 0px, 
+		inset rgba(0,0,0,0.15) 0px -20px 20px, 
+		inset rgba(255,255,255,0.05) 0px 20px 40px;
+}
+
+/* 滑动form区域 标题部分 */
+.form-title {
+	width: 1100px;
+	height: 100px;
+	border-top-right-radius: 20px;
+	border-top-left-radius: 20px;
+	background-repeat: no-repeat;
+	background-position-x: 900px;
+	background-position-y: -10px;
+	background-color: #0027A4;
+}
+
+/* 滑动form区域 标题部分 12角星 */
+.form-title-burst {
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	text-align: center;
+	transform:rotate(-15deg);
+	left: 80px;
+	background: radial-gradient(circle, #FEFFDB, #FFF000);
+	background: -moz-radial-gradient(circle, #FEFFDB, #FFF000);
+	background: -o-radial-gradient(circle, #FEFFDB, #FFF000);
+	background: -webkit-radial-gradient(circle, #FEFFDB, #FFF000);
+	user-select: none;
+	cursor: default;
+
+	p {
+		position: absolute;
+		z-index: 1000;
+		font-size: 18px;
+		line-height: 30px;
+		padding-left: 14px;
+		padding-top: 5px;
+		color: #FF0000;
+		font-weight: bold;
+		text-shadow: rgba(244,201,0,0.9) 0px 1px 2px;
+
+		span {
+			font-size: 30px;
+			line-height: 30px;
+			margin-right: 5px;
+			font-family: fantasy;
+			vertical-align: bottom;
+		}
+	}
+
+	&:before, &:after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100px;
+		width: 100px;
+		background: radial-gradient(circle, #FEFFDB, #FFF000);
+		background: -moz-radial-gradient(circle, #FEFFDB, #FFF000);
+		background: -o-radial-gradient(circle, #FEFFDB, #FFF000);
+		background: -webkit-radial-gradient(circle, #FEFFDB, #FFF000);
+	}
+
+	&:before {
+		-webkit-transform: rotate(30deg);
+		-moz-transform: rotate(30deg);
+		-ms-transform: rotate(30deg);
+		-o-transform: rotate(30deg);
+		transform: rotate(30deg);
+	}
+
+	&:after {
+		-webkit-transform: rotate(60deg);
+		-moz-transform: rotate(60deg);
+		-ms-transform: rotate(60deg);
+		-o-transform: rotate(60deg);
+		transform: rotate(60deg);
+	}
+}
+
+/* 滑动form区域 标题部分 主题文字 */
+.form-title-text {
+	font-size: 40px;
+	font-weight: bold;
+	color: #FFFFFF;
+	padding-left: 280px;
+	padding-top: 20px;
+	letter-spacing: 6px;
+	text-shadow: rgba(0,0,0,0.9) 0px 1px 2px;
+	user-select: none;
+	cursor: default;
+}
+
+/* 滑动form区域 本体部分 */
+.form-inner {
+	width: 1000px;
+	padding-left: 45px;
+	padding-right: 45px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	border-bottom-right-radius: 20px;
+	border-bottom-left-radius: 20px;
+	border-left-width: 5px;
+	border-right-width: 5px;
+	border-bottom-width: 5px;
+	border-top-width: 0;
+	border-style: solid;
+	background-color: #FFFFFF;
+	border-color: #0027A4;
+	color: #0027A4;
+}
+
+/* 滑动form区域 本体部分 顶端文字 */
+.form-head-text {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+/* 滑动form区域 本体部分 步骤列表 */
+.ul-form-head-step {
+	margin-top: 15px;
+	margin-bottom: 15px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0;
+	list-style-type: none;
+	overflow: hidden;
+	width: 780px;
+
+	li {
+		float: left;
+		position: relative;
+		line-height: 30px;
+		margin-right: 50px;
+		width: 150px;
+		height: 30px;
+		border-width: 2px;
+		border-style: solid;
+		border-radius: 5px;
+		text-align: center;
+		font-weight: bold;
+		user-select: none;
+		cursor: default;
+		border-color: #A4A4A4;
+		color: #A4A4A4;
+		border-color: #0027A4;
+		color: #0027A4;
+
+		p {
+			width: 60px;
+			float: left;
+			font-family: fantasy;
+			color: #FFFFFF;
+			text-align: center;
+			font-weight: normal;
+			background-color: #A4A4A4;
+			background-color: #0027A4;
+		}
+
+		&:after {
+			content: "・・・";
+			position: absolute;
+			right: -35px;
+			font-size: 40px;
+			letter-spacing: -26px;
+			line-height: 26px;
+			color: #D8D8D8;
+		}
+
+		&:last-child {
+			margin-right: 0;
+
+			&:after {
+				content: "";
+			}
+		}
+	}
+}
+
+/* 滑动form区域 本体部分 表单 */
+.form-body {
+	width: 1000px;
+	overflow: hidden;
+}
+.form-body-slide {
+	width: 4000px;
+	position: relative;
+}
+.form-body-step {
+	float: left;
+	width: 1000px;
+}
+.form-body-main {
+	height: 400px;
+}
+.form-body-content {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.form-body-row {
+	overflow: hidden;
+}
+.form-body-half {
+	float: left;
+	width: 459px;
+
+	&:first-child {
+		border-right: 2px dashed #D8D8D8;
+	}
+}
+
+/* 问题 */
+.question {
+	font-weight: bold;
+	padding-top: 6px;
+	padding-bottom: 6px;
+}
+
+/* 回答区域 */
+.div-for-answer {
+	overflow: hidden;
+	padding-bottom: 5px;
+	line-height: 32px;
+}
+
+/* 单选按钮 */
+.lbl-for-radio {
+	margin-left: 5px;
+	margin-right: 15px;
+	background-color: #0027A4;
+}
+
+/* 勾选按钮 */
+.lbl-for-check {
+	float: left;
+	background: #0027A4;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+/* 下拉菜单 */
+select {
+	margin-right: 5px;
+	margin-left: 5px;
+	border-color: #0027A4;
+	color: #0027A4;
+}
+
+/* 数字 */
+.minus-for-number, .plus-for-number {
+	background-color: #0027A4;
+}
+.minus-for-number {
+	margin-left: 5px;
+}
+.plus-for-number {
+	margin-right: 5px;
+}
+.num-number {
+	width: 60px;
+	border-color: #0027A4;
+	color: #0027A4;
+}
+
+/* 文本输入框(单行) */
+input[type="text"] {
+	width: 200px;
+	margin-left: 5px;
+	margin-right: 5px;
+	border-color: #0027A4;
+	color: #0027A4;
+}
+
+/* 文本输入框(多行) */
+textarea {
+	border-color: #0027A4;
+}
+
+/* 标签区域 */
+.div-for-tab {
+	overflow: hidden;
+	padding-top: 5px;
+	user-select: none;
+	height: 33px;
+	padding-left: 5px;
+}
+/* 标签按钮 */
+.lbl-for-tab {
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	margin-right: -5px;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+	border-top: 1px solid #A4A4A4;
+	border-left: 1px solid #A4A4A4;
+	border-right: 1px solid #A4A4A4;
+	font-weight: bold;
+	line-height: 30px;
+	background-color: #DBDBDB;
+	color: #FFFFFF;
+	text-shadow: rgba(0,0,0,0.9) 0px 1px 2px;
+	cursor: pointer;
+
+	&.active {
+		padding-left: 35px;
+		padding-right: 35px;
+		background-color: #0027A4;
+		border-color: #0027A4;
+	}
+}
+/* 标签内容 */
+.div-content-tab {
+	position: relative;
+	width: 942px;
+	height: 300px;
+	margin-left: 5px;
+	border-width: 4px;
+	border-style: solid;
+	border-top-right-radius: 8px;
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+	display: none;
+	border-color: #0027A4;
+
+	&.active {
+		display: block;
+	}
+}
+
+/* 赴日时间 */
+.sel-start-at-year{
+	width: 90px;
+}
+.sel-start-at-month{
+	width: 70px;
+}
+.sel-start-at-day{
+	width: 70px;
+}
+
+/* 选择路线 */
+.div-for-sel-route-id {
+	background: #0027A4;
+}
+.p-for-sel-route-id {
+	font-weight: bold;
+	width: 120px;
+	float: left;
+	color: #FFFFFF;
+	line-height: 35px;
+	margin-top: 5px;
+	margin-bottom: 3px;
+	margin-left: 15px;
+}
+.sel-route-id {
+	margin-top: 3px;
+	margin-bottom: 5px;
+	width: 300px;
+	box-shadow: none;
+}
+
+/* 旅行成员表 */
+.tb-people-num {
+	text-align: center;
+}
+
+/* 选择路线滚动区域 */
+.div-scroll-route-info {
+	display: none;
+	overflow-y: auto;
+	max-height: 234px;
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-bottom: 10px;
+	margin-top: 2px;
+}
+
+/* 路线标题 */
+.route-title {
+	font-size: 25px;
+	font-weight: bold;
+	padding-left: 20px;
+	margin-top: 10px;
+}
+
+/* 路线价格 */
+.route-price {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	font-weight: bold;
+
+	.price {
+		font-size: 25px;
+		color: #FAAC58;
+	}
+}
+
+/* 路线描述 */
+.route-description {
+	padding-bottom: 10px;
+}
+
+/* 景点列表 */
+.spot-list {
+	span {
+		padding-left: 20px;
+		color: #FF0000;
+	}
+
+	a {
+		display: inline-block;
+		position: relative;
+		background: #5882FA;
+		color: #FFFFFF;
+		text-decoration: none;
+		padding-bottom: 1px;
+		padding-left: 15px;
+		padding-right: 10px;
+		border-top-right-radius: 3px;
+		border-bottom-right-radius: 3px;
+		margin-top: 2px;
+		margin-bottom: 2px;
+		margin-left: 20px;
+
+		&:before {
+			content: "";
+			position: absolute;
+			border-top: 11px solid transparent;
+			border-bottom: 11px solid transparent;
+			border-right: 8px solid #5882FA;
+			top: 0;
+			left: -8px;
+		}
+
+		&:after {
+			content: "";
+			position: absolute;
+			width: 4px;
+			height: 4px;
+			border-radius: 2px;
+			background: #FFFFFF;
+			top: 9px;
+			left: -2px;
+		}
+	}
+}
+
+/* 查看路线详情链接 */
+.route-detail-link {
+	text-align: right;
+	padding-top: 8px;
+	padding-right: 100px;
+
+	a {
+		text-decoration: none;
+		color: #5882FA;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+//景点检索区域
+.div-for-spot-search {
+	overflow: hidden;
+	background:	#0027A4;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 20px;
+	position: relative;
+	
+	&:before {
+		content: " ";
+		width: 12px;
+		height: 12px;
+		border: 2px solid #C1C1C1;
+		border-radius: 8px;
+		position: absolute;
+		top: 13px;
+		left: 280px;
+	}
+	
+	&:after {
+		content: " ";
+		width: 0px;
+		height: 0px;
+		border-top: 1px solid #C1C1C1;
+		border-bottom: 1px solid #C1C1C1;
+		border-left: 5px solid #C1C1C1;
+		border-right: 5px solid #C1C1C1;
+		position: absolute;
+		top: 28px;
+		left: 291px;
+		transform: rotate(45deg);
+	}
+}
+
+//景点检索输入
+input[type="text"].txt-spot-search {
+	width: 290px;
+	border-radius: 19px;
+	box-shadow: none;
+	float: left;
+}
+
+//查看已选中的景点启动按钮
+.btn-checked-spot {
+	float: right;
+	width: 128px;
+	text-align: center;
+	color: #5882FA;
+	background:	#FFFFFF;
+	border: 1px solid #0027A4;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-top: 4px;
+	margin-right: 20px;
+	border-radius: 13px;
+	cursor: pointer;
+
+	&.active {
+		color: #FFFFFF;
+		background: #0027A4;
+		border-color: #FFFFFF;
+	}
+}
+
+/* 选择景点滚动区域 */
+.div-scroll-spot-list {
+	overflow-y: auto;
+	height: 122px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+/* 已选中景点区域 */
+.div-checked-spot {
+	display: none;
+	position: absolute;
+	top: 47px;
+	left: 0;
+	width: 932px;
+	height: 148px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+	background: #FFFFFF;
+	z-index: 999;
+}
+
+/* 其他希望景点输入区 */
+.div-for-spot-hope-other {
+	background:	#0027A4;
+	font-weight: bold;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	padding-left: 30px;
+	color: #FFFFFF;
+}
+
+/* 其他希望景点输入框 */
+.txt-spot-hope-other {
+	height: 58px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 20px;
+	padding-right: 20px;
+	border-width: 0;
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+	box-shadow: none;
+}
+
+//景点地区筛选选择
+.li-area-spot-search {
+	float: left;
+	border-bottom: 2px solid #0027A4;
+	width: 118px;
+	text-align: center;
+	user-select: none;
+	cursor: pointer;
+
+	&.active {
+		background:	#0027A4;
+		color: #FFFFFF;
+	}
+
+	&:first-child, &:last-child {
+		width: 117px;
+	}
+}
+
+/* 饮食方面忌讳 */
+input[type="text"].txt-dinner-demand {
+	width: 900px;
+}
+
+/* 预定酒店表格 */
+#div-hotel-reserve-area {
+	display: none;
+
+	select {
+		width: 120px;
+	}
+
+	.num-number {
+		width: 40px;
+	}
+
+	input[type="text"] {
+		width: 194px;
+	}
+
+	.btn-hotel-reserve {
+		background: #0027A4;
+		width: 25px;
+		height: 25px;
+		border-radius: 5px;
+		text-align: center;
+		font-size: 25px;
+		font-weight: bold;
+		line-height: 23px;
+		color: #FFFFFF;
+		margin-left: 6px;
+		user-select: none;
+		cursor: pointer;
+	}
+
+	.td-button {
+		width: 35px;
+	}
+	.td-select {
+		width: 130px;
+	}
+	.td-number {
+		width: 125px;
+	}
+	.td-comment {
+		width: 204px;
+	}
+
+	.div-scroll {
+		height: 196px;
+		overflow-y: auto;
+		border: 2px solid #0027A4;
+
+		tr {
+			height: 45px;
+		}
+	}
+}
+
+/* Step4表格 */
+#form-body-step-4 {
+	th, td {
+		padding-bottom: 5px;
+	}
+
+	input[type="text"] {
+		width: 100%;
+	}
+
+	textarea {
+		height: 126px;
+		width: 930px;
+	}
+}
+
+/* 返回按钮 */
+.btn-return {
+	background: #DF0101;
+}
+
+/* 下一步按钮 */
+.btn-next.active {
+	background: #01DF01;
+}

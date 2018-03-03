@@ -30,6 +30,15 @@ $(function(){
 		$('[data-for="' + name + '"]').removeClass("active");
 		$(this).addClass('active');
 	});
+	
+	//点选按钮点击事件
+	$('.lbl-for-check').click(function(){
+		if($(this).hasClass('active')) {
+			$(this).removeClass('active');
+		} else {
+			$(this).addClass('active');
+		}
+	});
 
 	//标签点击事件
 	$('.lbl-for-tab').click(function(){
@@ -37,5 +46,29 @@ $(function(){
 		var index = $(this).attr('data-index');
 		$('[data-for="' + name + '"]').removeClass("active");
 		$('[data-index="' + index + '"]').addClass('active');
+	});
+
+	//数字按钮点击事件
+	$('.minus-for-number').click(function(){
+		var name = $(this).attr('data-for');
+		var value_now = $('#' + name).val();
+		if(!value_now) {
+			value_now = 0;
+		}
+		if(value_now >= 1) {
+			value_now = parseInt(value_now) - 1;
+		}
+		$('#' + name).val(value_now);
+	});
+
+	//数字按钮点击事件
+	$('.plus-for-number').click(function(){
+		var name = $(this).attr('data-for');
+		var value_now = $('#' + name).val();
+		if(!value_now) {
+			value_now = 0;
+		}
+		value_now = parseInt(value_now) + 1;
+		$('#' + name).val(value_now);
 	});
 });

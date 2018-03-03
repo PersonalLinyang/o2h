@@ -1,0 +1,144 @@
+/* 主图区域 */
+.mainv-area {
+	background-color: #9EBFF4;
+	height: 460px;
+	min-width: 1100px;
+	user-select: none;
+	cursor: default;
+	position: relative;
+}
+
+.mainv-text {
+	position: absolute;
+	top: 150px;
+	left: 50%;
+	margin-left: -540px;
+	background: rgba(0, 50, 130, 0.4);;
+	color: #FFFFFF;
+	font-size: 25px;
+	font-weight: bold;
+	text-align: center;
+	padding: 20px;
+	border-radius: 10px;
+	z-index: 2000;
+}
+
+.mainv-image {
+	position: absolute;
+	top: 32px;
+	left: 50%;
+	margin-left: 110px;
+	z-index: 1000;
+}
+
+/* 调用滑动表单 */
+@import "index/slide_form";
+
+/* Mission区域 */
+.mission-area {
+	position: relative;
+	height: 550px;
+	margin-top: -100px;
+
+	/* 图片部分 */
+	.div-image {
+		position: absolute;
+		right: 50%;
+		height: 550px;
+		overflow: hidden;
+		width: 50%;
+	}
+
+	/* 内容部分 */
+	.div-content {
+		position: absolute;
+		top: 40px;
+		left: 50%;
+		width: 500px;
+		text-align: center;
+	}
+	.p-item {
+		font-weight: bold;
+		font-size: 22px;
+		text-align: right;
+		padding-right: 100px;
+		margin-top: 35px;
+	}
+	.p-sub-title {
+		font-weight: bold;
+		font-size: 18px;
+		margin-top: 20px;
+		text-align: center;
+	}
+	.p-title {
+		font-weight: bold;
+		font-size: 24px;
+		letter-spacing: 2px;
+		margin-top: 10px;
+		text-align: center;
+	}
+	.p-content {
+		line-height: 30px;
+		letter-spacing: 1px;
+		margin-top: 10px;
+		text-align: center;
+	}
+}
+
+/* Project区域 */
+.project-area {
+	position: relative;
+	height: 550px;
+
+	/* 图片部分 */
+	.div-image {
+		position: absolute;
+		left: 50%;
+		height: 550px;
+		overflow: hidden;
+		width: 50%;
+
+		img {
+			float: right;
+		}
+	}
+
+	/* Project区域 内容部分 */
+	.div-content {
+		position: absolute;
+		right: 50%;
+		width: 500px;
+	}
+	.p-item {
+		font-weight: bold;
+		font-size: 22px;
+		padding-left: 100px;
+		margin-top: 20px;
+	}
+	.p-title {
+		font-weight: bold;
+		font-size: 24px;
+		letter-spacing: 2px;
+		text-align: center;
+		margin-top: 20px;
+
+		span {
+			letter-spacing: 0;
+		}
+	}
+	.p-sub-title {
+		font-weight: bold;
+		font-size: 20px;
+		letter-spacing: 2px;
+		text-align: center;
+		margin-top: 20px;
+
+		span {
+			letter-spacing: 0;
+		}
+	}
+	.p-content {
+		letter-spacing: 1px;
+		margin-top: 10px;
+	}
+}
