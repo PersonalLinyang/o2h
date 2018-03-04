@@ -433,22 +433,25 @@ class Model_Route extends Model
 			$sql_where = array();
 			$sql_params = array();
 			
-			//旅游路线ID限定
-			if(isset($params['route_id'])) {
-				$sql_where[] = " tr.route_id = :route_id ";
-				$sql_params['route_id'] = $params['route_id'];
-			}
-			//有效性限定
-			if(isset($params['active_only'])) {
-				if($params['active_only']) {
-					$sql_where[] = " tr.delete_flag = 0 ";
-				}
-			}
-			//路线状态限定
-			if(isset($params['active_only'])) {
-				if(count($params['active_only'])) {
-					$sql_where[] = " tr.route_status IN :route_status_list ";
-					$sql_params['route_status_list'] = $param_value;
+			foreach($params as $param_key => $param_value) {
+				switch($param_key) {
+					case 'route_id':
+						if(count($param_value)) {
+							$sql_where[] = " tr.route_id = :route_id ";
+							$sql_params['route_id'] = $param_value;
+						}
+						break;
+					case 'route_status':
+						if(count($param_value)) {
+							$sql_where[] = " tr.route_status IN :route_status_list ";
+							$sql_params['route_status_list'] = $param_value;
+						}
+						break;
+					case 'active_only':
+						$sql_where[] = " tr.delete_flag = 0 ";
+						break;
+					default:
+						break;
 				}
 			}
 			
@@ -457,7 +460,7 @@ class Model_Route extends Model
 					. "FROM t_route tr " 
 					. "LEFT JOIN t_user tuc ON tr.created_by = tuc.user_id " 
 					. "LEFT JOIN t_user tum ON tr.modified_by = tum.user_id " 
-							. (count($sql_where) ? (" WHERE " . implode(" AND ", $sql_where)) : "");
+					. (count($sql_where) ? (" WHERE " . implode(" AND ", $sql_where)) : "");
 			$query_route = DB::query($sql_route);
 			foreach($sql_params as $param_key => $param_value) {
 				$query_route->param($param_key, $param_value);
