@@ -7,11 +7,17 @@
 	}
 }
 
-/* 负责人检索区域 点选按钮 */
-.lbl-for-radio-staff {
-	border: 0;
+/* 设定其他权限表头 */
+.div-search-header {
+	overflow: hidden;
+	
+	p {
+		float: left;
+		width: 100px;
+	}
 }
 
+/* form */
 .content-form {
 	/* 日期下拉选择 */
 	.date {
@@ -27,6 +33,32 @@
 		&:last-child {
 			margin-right: 0;
 		}
+	}
+	
+	/* 主负责人点选按钮 */
+	.lbl-for-radio-staff {
+		border: 0;
+	}
+	
+	/* 设定其他权限点选按钮 */
+	.lbl-for-radio-permission {
+		border: 0;
+		padding-left: 0;
+		padding-right: 0;
+		width: 80px;
+		
+		&:before {
+			left: 25px;
+		}
+	}
+	
+	/* 设定其他权限点选按钮代替区域 */
+	.lbl-for-shadow-permission {
+		margin-right: 20px;
+		display: inline-block;
+		float: left;
+		width: 80px;
+		user-select: none;
 	}
 }
 
@@ -137,9 +169,11 @@
 }
 
 /* 实际成本表格 */
-.th-customer-cost {
-	text-align: right;
-	padding-right: 30px;
+.tb-customer-cost {
+	.th-customer-cost {
+		text-align: right;
+		padding-right: 30px;
+	}
 	
 	.th-type {
 		width: 140px;
@@ -167,5 +201,233 @@
 	
 	.th-total {
 		text-align: right;
+	}
+}
+
+/* 日程设计输入框 */
+.schedule-block {
+	width: 100%;
+	margin-bottom: 5px;
+	background: #E1D2B3;
+	border: 2px solid #713E00;
+	border-radius: 5px;
+	padding: 10px;
+	box-sizing: border-box;
+}
+
+/* 详细日程表格 */
+.tb-schedule-detail {
+	width: 100%;
+	
+	.th-time {
+		width: 222px;
+	}
+	
+	.th-type {
+		width: 140px;
+	}
+	
+	.th-desc {
+		width: auto;
+	}
+	
+	td {
+		.sel-schedule-time {
+			width: 96px;
+		}
+		
+		.btn-delete {
+			background: #D5B797;
+		}
+	}
+}
+
+/* 日程设计删除按钮 */
+.btn-schedule-delete {
+	margin-top : 15px;
+	margin-bottom: 5px;
+	margin-left: auto;
+	margin-right: auto;
+	color: #8A0808;
+	font-size: 16px;
+	width: 180px;
+	height: 26px;
+	text-align: center;
+	line-height: 26px;
+	background: #F6CECE;
+	border-radius: 15px;
+	border: 2px solid #FE2E2E;
+	cursor: pointer;
+}
+
+/* 日程设计添加按钮 */
+#schedule-add {
+	width: 100%;
+	background: #E1D2B3;
+	box-sizing: border-box;
+	border: 2px solid #713E00;
+	border-radius: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 25px;
+	cursor: pointer;
+	text-align: center;
+	position: relative;
+	
+	&:before {
+		content: "+";
+		width: 20px;
+		height: 20px;
+		border: 2px dashed #713E00;
+		border-radius: 12px;
+		position: absolute;
+		top: 4px;
+		left: 50%;
+		margin-left: -80px;
+		font-size: 22px;
+		line-height: 18px;
+	}
+}
+
+/* 日程设计用户搜索区 选中用户列表 */
+.ul-schedule-staff-selected {
+	padding-left: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	overflow: hidden;
+	
+	li {
+		background: #D5B797;
+		display: table;
+		overflow: hidden;
+		float: left;
+		padding-left: 10px;
+		padding-right: 10px;
+		border-radius: 25px;
+		border: 1px solid #713E00;
+		margin-bottom: 3px;
+		margin-left: 8px;
+	}
+	
+	.btn-user-unselect {
+		float: right;
+		margin-left: 5px;
+		cursor: pointer;
+		user-select: none;
+	}
+}
+
+/* 日程设计用户搜索区 输入框 */
+.div-schedule-staff-search {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 20px;
+	border-top: 2px solid #713E00;
+	border-left: 2px solid #713E00;
+	border-right: 2px solid #713E00;
+	border-bottom: 1px solid #713E00;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	background: #D5B797;
+	position: relative;
+	
+	&:before {
+		content: " ";
+		width: 12px;
+		height: 12px;
+		border: 2px solid #C1C1C1;
+		border-radius: 8px;
+		position: absolute;
+		top: 10px;
+		left: 280px;
+	}
+	
+	&:after {
+		content: " ";
+		width: 0px;
+		height: 0px;
+		border-top: 1px solid #C1C1C1;
+		border-bottom: 1px solid #C1C1C1;
+		border-left: 5px solid #C1C1C1;
+		border-right: 5px solid #C1C1C1;
+		position: absolute;
+		top: 25px;
+		left: 291px;
+		transform: rotate(45deg);
+	}
+}
+
+.content-form .div-schedule-staff-search .txt-schedule-staff-search {
+	width: 300px;
+	border-radius: 15px;
+	border-width: 1px;
+}
+
+/* 日程设计用户搜索区 用户列表 */
+.ul-schedule-staff-list {
+	padding-left: 0;
+	margin-top: 0;
+	height: 150px;
+	overflow-y: scroll;
+	border: 2px solid ;
+	border-bottom: 2px solid #713E00;
+	border-left: 2px solid #713E00;
+	border-right: 2px solid #713E00;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	
+	li {
+		border-bottom: 1px solid #713E00;
+		overflow: hidden;
+		background: #EBCF89;
+		padding-left: 10px;
+		padding-top: 3px;
+		padding-bottom: 3px;
+		margin-right: 10px;
+		line-height: 20px;
+	}
+	
+	.btn-user-select {
+		width: 18px;
+		height: 18px;
+		border: 1px solid #713E00;
+		float: left;
+		position: relative;
+		cursor: pointer;
+		margin-right: 5px;
+		
+		&:before {
+			content: " ";
+			border-left: 6px solid transparent;
+			border-right: 6px solid transparent;
+			border-bottom: 6px solid #713E00;
+			position: absolute;
+			top: 3px;
+			left: 3px;
+		}
+		
+		&:after {
+			content: " ";
+			border-left: 2px solid #713E00;
+			border-right: 2px solid #713E00;
+			border-bottom: 6px solid #713E00;
+			position: absolute;
+			top: 9px;
+			left: 7px;
+		}
+		
+		&:hover {
+			background: #713E00;
+			
+			&:before {
+				border-bottom: 6px solid #EBCF89;
+			}
+			
+			&:after {
+				border-left: 2px solid #EBCF89;
+				border-right: 2px solid #EBCF89;
+				border-bottom: 6px solid #EBCF89;
+			}
+		}
 	}
 }

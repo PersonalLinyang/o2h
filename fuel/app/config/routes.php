@@ -88,7 +88,10 @@ return array(
 	'admin/customer_list'                        => 'admin/business/customer/customerlist/index',
 	'admin/customer_list/(:page)'                => 'admin/business/customer/customerlist/index/$1',
 	'admin/customer_detail/(:customer_id)'       => 'admin/business/customer/customerdetail/index/$1',
-	'admin/add_customer'                         => 'admin/business/customer/addcustomer',
+	'admin/add_customer'                         => 'admin/business/customer/addcustomer/index',
+	'admin/modify_customer/(:customer_id)'       => 'admin/business/customer/modifycustomer/index/$1',
+	'admin/modify_customer_status'               => 'admin/business/customer/modifycustomer/modifycustomerstatus',
+	'admin/modify_customer_delete'               => 'admin/business/customer/modifycustomer/modifycustomerdelete',
 	
 	//系统权限管理
 	'admin/permission_list'                  => 'admin/user/permission/permissionlist/index',

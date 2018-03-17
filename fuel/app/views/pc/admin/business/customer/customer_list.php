@@ -214,12 +214,6 @@
 				</p>
 				<table class="tb-content-list">
 					<tr>
-						<?php if($delete_able_flag): ?>
-						<th class="th-delete"></th>
-						<?php endif; ?>
-						<?php if($modify_able_flag): ?>
-						<th class="th-modify"></th>
-						<?php endif; ?>
 						<th class="th-name">姓名</th>
 						<th class="th-status">当前状态</th>
 						<th class="th-source">顾客来源</th>
@@ -232,20 +226,6 @@
 					</tr>
 					<?php foreach($customer_list as $customer): ?>
 					<tr>
-						<?php if($delete_able_flag): ?>
-						<td>
-							<?php if($user_id_self == $customer['staff_id'] || (empty($customer['staff_id']) && $delete_new_able_flag) || $delete_any_able_flag): ?>
-							<p class="btn-controller btn-delete" data-value="<?php echo $customer['customer_id']; ?>" data-name="<?php echo $customer['customer_name']; ?>">削除</p>
-							<?php endif; ?>
-						</td>
-						<?php endif; ?>
-						<?php if($modify_able_flag): ?>
-						<td>
-							<?php if($user_id_self == $customer['staff_id'] || (empty($customer['staff_id']) && $modify_new_able_flag) || $modify_any_able_flag): ?>
-							<p class="btn-controller btn-modify"><a href="/admin/modify_customer/<?php echo $customer['customer_id']; ?>/">修改</a></p>
-							<?php endif; ?>
-						</td>
-						<?php endif; ?>
 						<td><a href="/admin/customer_detail/<?php echo $customer['customer_id']; ?>/"><?php echo $customer['customer_name']; ?></a></td>
 						<td><?php echo $customer['customer_status_name']; ?></td>
 						<td><?php echo $customer['customer_source_name']; ?></td>
@@ -304,27 +284,6 @@
 				对不起，未能查找到符合筛选条件的顾客信息<br/>
 				请确认筛选条件后重新进行筛选排序
 			</p>
-		</div>
-		<?php endif; ?>
-		
-		<?php if($delete_able_flag): ?>
-		<div class="popup-shadow"></div>
-		
-		<div class="popup-delete popup">
-			<div class="popup-title">删除顾客确认</div>
-			<div class="popup-content center">
-				<p>顾客一经删除将无法还原，<br/>当顾客被删除时，不具备查看已删除顾客信息权限的用户将无法查看该顾客的个人信息，<br/>确定要删除顾客信息-「<span class="popup-delete-name"></span>」吗？</p>
-			</div>
-			<div class="popup-controller">
-				<form action="/admin/delete_hotel/" method="post" id="form-delete">
-					<input type="hidden" id="input-id" name="delete_id" value />
-					<input type="hidden" name="page" value="hotel_list" />
-				</form>
-				<ul class="button-group">
-					<li class="button-yes" id="popup-delete-yes">确定</li>
-					<li class="button-no" id="popup-delete-no">取消</li>
-				</ul>
-			</div>
 		</div>
 		<?php endif; ?>
 	</div>

@@ -124,8 +124,6 @@ class Controller_Admin_Business_Customer_Customerlist extends Controller_Admin_A
 					'page' => $page,
 					'num_per_page' => $num_per_page,
 					'view_permission' => $view_permission,
-					'publish_flag' => true,
-					'editor_flag' => true,
 				);
 				if(!$data['view_deleted_able_flag']) {
 					$params_select['active_only'] = true;

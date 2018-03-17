@@ -187,7 +187,6 @@ class Controller_Admin_Service_Route_Modifyroute extends Controller_Admin_App
 						
 						//输入内容检查
 						$result_check = Model_Route::CheckEditRoute($param_update);
-						var_dump($param_update);
 						if($result_check['result'] && $data['input_main_image'] && file_exists(DOCROOT . $data['input_main_image'])) {
 							//更新旅游路线信息
 							$result_update = Model_Route::UpdateRoute($param_update);

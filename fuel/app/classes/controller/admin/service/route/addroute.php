@@ -145,7 +145,6 @@ class Controller_Admin_Service_Route_AddRoute extends Controller_Admin_App
 						
 						//输入内容检查
 						$result_check = Model_Route::CheckEditRoute($param_insert);
-						var_dump($result_check);
 						if($result_check['result'] && $data['input_main_image'] && file_exists(DOCROOT . $data['input_main_image'])) {
 							//添加旅游路线
 							$result_insert = Model_Route::InsertRoute($param_insert);
