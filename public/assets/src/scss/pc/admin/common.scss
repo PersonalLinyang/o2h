@@ -95,7 +95,6 @@ select {
 	padding-top: 1px;
 	padding-bottom: 1px;
 	padding-left: 10px;
-	padding-right: 10px;
 	font-size: 16px;
 	outline: none;
 	
@@ -860,6 +859,13 @@ input[type="file"] {
 	}
 }
 
+/* 内容主题一览类表格 内嵌表格 */
+.tb-content-inner {
+	border: 2px solid #713E00;
+	border-collapse: collapse;
+	margin: 0 auto;
+}
+
 /* 内容主体分页导航 */
 .ul-list-pager {
 	font-size: 0px;
@@ -1116,14 +1122,31 @@ input[type="file"] {
 			max-height: 200px;
 			max-width: 100%;
 		}
+	}
+	
+	a {
+		color: #713E00;
+		font-weight: bold;
+		text-decoration: none;
 		
-		a {
-			color: #713E00;
-			font-weight: bold;
-			text-decoration: none;
+		&:hover {
+			text-decoration: underline;
+		}
+		
+		//页面滑动链接
+		&.link-scroll {
+			font-size: 14px;
+			font-weight: normal;
+			padding: 0 10px;
+			background: #D5B797;
+			border-radius: 10px;
+			margin-left: 30px;
 			
 			&:hover {
-				text-decoration: underline;
+				color: #EEE2C4;
+				font-weight: bold;
+				text-decoration: none;
+				background: #713E00;
 			}
 		}
 	}

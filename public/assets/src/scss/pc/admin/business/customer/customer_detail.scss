@@ -1,0 +1,101 @@
+/* 酒店预约详情表格 */
+.tb-hotel-reserve{
+	/* 项目 */
+	.th-type {
+		width: 160px;
+	}
+	
+	/* 简述 */
+	.th-comment {
+		width: auto;
+	}
+	.td-comment {
+		text-align: left;
+		padding: 0 15px;
+	}
+	
+	/* 数字 */
+	.th-number {
+		width: 100px;
+	}
+}
+
+/* 日程设计表格 */
+.tb-schedule {
+	margin-top: 10px;
+	
+	&:first-child {
+		maring-top: 0;
+	}
+	
+	.th-date {
+		font-size: 18px;
+	}
+	
+	.td-info {
+		border: 0;
+		background: #E1D2B3;
+	}
+	
+	.p-staff {
+		width: 450px;
+		margin: 0 auto;
+		text-align: right;
+		padding-right: 50px;
+		padding-left: 500px;
+	}
+}
+
+/* 日程设计内嵌表格 */
+.tb-schedule-inner {
+	width: 1000px;
+	
+	&:last-child {
+		margin-bottom: 10px;
+	}
+	
+	td {
+		background: #EEE2C4;
+	}
+	
+	/* 时间 */
+	.th-time {
+		width: 140px;
+	}
+	
+	/* 类型 */
+	.th-type {
+		width: 140px;
+	}
+	
+	/* 内容 */
+	.th-desc {
+		width: auto;
+	}
+	.td-desc {
+		text-align: left;
+		padding: 0 15px;
+	}
+}
+
+/* 实际成本明细表格 */
+.tb-customer-cost{
+	/* 项目 */
+	.th-type {
+		width: 140px;
+	}
+	
+	/* 简述 */
+	.th-desc {
+		width: auto;
+	}
+	.td-desc {
+		text-align: left;
+		padding: 0 15px;
+	}
+	
+	/* 数字 */
+	.th-number {
+		width: 140px;
+	}
+}

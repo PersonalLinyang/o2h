@@ -156,6 +156,317 @@ class Model_Customer extends Model
 	}
 	
 	/*
+	 * 更新顾客
+	 */
+	public static function UpdateCustomer($params) {
+		try {
+			//更新顾客信息
+			$sql_customer = "UPDATE t_customer "
+						. "SET customer_name=:customer_name, customer_status=:customer_status, customer_source=:customer_source, customer_gender=:customer_gender, "
+						. "customer_age=:customer_age, travel_reason=:travel_reason, staff_id=:staff_id, men_num=:men_num, women_num=:women_num, children_num=:children_num, "
+						. "travel_days=:travel_days, start_at_year=:start_at_year, start_at_month=:start_at_month, start_at_day=:start_at_day, route_id=:route_id, "
+						. "budget_base=:budget_base, budget_total=:budget_total, form_flag=:form_flag, first_flag=:first_flag, spot_hope_flag=:spot_hope_flag, "
+						. "spot_hope_other=:spot_hope_other, hotel_reserve_flag=:hotel_reserve_flag, cost_budget=:cost_budget, turnover=:turnover, cost_total=:cost_total, "
+						. "dinner_demand=:dinner_demand, airplane_num=:airplane_num, customer_email=:customer_email, customer_tel=:customer_tel, customer_wechat=:customer_wechat, "
+						. "customer_qq=:customer_qq, comment=:comment, modified_at=:modified_at, modified_by=:modified_by "
+						. "WHERE customer_id=:customer_id";
+			$query_customer = DB::query($sql_customer);
+			$query_customer->param('customer_id', $params['customer_id']);
+			$query_customer->param('customer_name', $params['customer_name']);
+			$query_customer->param('customer_status', $params['customer_status']);
+			$query_customer->param('customer_source', $params['customer_source']);
+			$query_customer->param('customer_gender', $params['customer_gender']);
+			$query_customer->param('customer_age', $params['customer_age']);
+			$query_customer->param('travel_reason', $params['travel_reason']);
+			$query_customer->param('staff_id', $params['staff_id']);
+			$query_customer->param('men_num', $params['men_num']);
+			$query_customer->param('women_num', $params['women_num']);
+			$query_customer->param('children_num', $params['children_num']);
+			$query_customer->param('travel_days', $params['travel_days']);
+			$query_customer->param('start_at_year', $params['start_at_year']);
+			$query_customer->param('start_at_month', $params['start_at_month']);
+			$query_customer->param('start_at_day', $params['start_at_day']);
+			$query_customer->param('route_id', $params['route_id']);
+			$query_customer->param('budget_base', $params['budget_base']);
+			$query_customer->param('budget_total', $params['budget_total']);
+			$query_customer->param('form_flag', $params['form_flag']);
+			$query_customer->param('first_flag', $params['first_flag']);
+			$query_customer->param('spot_hope_flag', $params['spot_hope_flag']);
+			$query_customer->param('spot_hope_other', $params['spot_hope_other']);
+			$query_customer->param('hotel_reserve_flag', $params['hotel_reserve_flag']);
+			$query_customer->param('cost_budget', $params['cost_budget']);
+			$query_customer->param('turnover', $params['turnover']);
+			$query_customer->param('cost_total', $params['cost_total']);
+			$query_customer->param('dinner_demand', $params['dinner_demand']);
+			$query_customer->param('airplane_num', $params['airplane_num']);
+			$query_customer->param('customer_email', $params['customer_email']);
+			$query_customer->param('customer_tel', $params['customer_tel']);
+			$query_customer->param('customer_wechat', $params['customer_wechat']);
+			$query_customer->param('customer_qq', $params['customer_qq']);
+			$query_customer->param('comment', $params['comment']);
+			$query_customer->param('modified_at', date('Y-m-d H:i:s', time()));
+			$query_customer->param('modified_by', $params['modified_by']);
+			$result_customer = $query_customer->execute();
+			
+			if(isset($params['spot_hope_list'])) {
+				//删除原有目标景点
+				$sql_spot_delete = "DELETE FROM r_customer_spot WHERE customer_id=:customer_id";
+				$query_spot_delete = DB::query($sql_spot_delete);
+				$query_spot_delete->param('customer_id', $params['customer_id']);
+				$result_spot_delete = $query_spot_delete->execute();
+				
+				//添加目标景点
+				$sql_values_spot = array();
+				$sql_params_spot = array();
+				foreach($params['spot_hope_list'] as $param_key => $spot_id) {
+					$sql_values_spot[] = "(:customer_id, :spot_id_" . $param_key . ")";
+					$sql_params_spot['spot_id_' . $param_key] = $spot_id;
+				}
+				
+				if(count($sql_values_spot)) {
+					$sql_spot = "INSERT INTO r_customer_spot(customer_id, spot_id) VALUES" . implode(",", $sql_values_spot);
+					$query_spot = DB::query($sql_spot);
+					$query_spot->param('customer_id', $params['customer_id']);
+					foreach($sql_params_spot as $param_key => $param_value) {
+						$query_spot->param($param_key, $param_value);
+					}
+					$result_spot = $query_spot->execute();
+				}
+			}
+			
+			if(isset($params['spot_hope_list'])) {
+				//删除原有酒店预约
+				$sql_hotel_delete = "DELETE FROM e_hotel_reserve WHERE customer_id=:customer_id";
+				$query_hotel_delete = DB::query($sql_hotel_delete);
+				$query_hotel_delete->param('customer_id', $params['customer_id']);
+				$result_hotel_delete = $query_hotel_delete->execute();
+				
+				//添加酒店预约
+				$sql_values_hotel = array();
+				$sql_params_hotel = array();
+				foreach($params['hotel_reserve_list'] as $param_key => $hotel_reserve) {
+					$sql_values_hotel[] = "(:customer_id, :row_id_" . $param_key . ", :hotel_type_" . $param_key . ", :room_type_" . $param_key . ", " 
+										. ":people_num_" . $param_key . ", :room_num_" . $param_key . ", :day_num_" . $param_key . ", :comment_" . $param_key . ")";
+					$sql_params_hotel['row_id_' . $param_key] = $param_key;
+					$sql_params_hotel['hotel_type_' . $param_key] = $hotel_reserve['hotel_type'] ? $hotel_reserve['hotel_type'] : null;
+					$sql_params_hotel['room_type_' . $param_key] = $hotel_reserve['room_type'] ? $hotel_reserve['room_type'] : null;
+					$sql_params_hotel['people_num_' . $param_key] = $hotel_reserve['people_num'] ? $hotel_reserve['people_num'] : null;
+					$sql_params_hotel['room_num_' . $param_key] = $hotel_reserve['room_num'] ? $hotel_reserve['room_num'] : null;
+					$sql_params_hotel['day_num_' . $param_key] = $hotel_reserve['day_num'] ? $hotel_reserve['day_num'] : null;
+					$sql_params_hotel['comment_' . $param_key] = $hotel_reserve['comment'] ? $hotel_reserve['comment'] : null;
+				}
+				
+				if(count($sql_values_hotel)) {
+					$sql_hotel = "INSERT INTO e_hotel_reserve(customer_id, row_id, hotel_type, room_type, people_num, room_num, day_num, comment) VALUES" . implode(",", $sql_values_hotel);
+					$query_hotel = DB::query($sql_hotel);
+					$query_hotel->param('customer_id', $params['customer_id']);
+					foreach($sql_params_hotel as $param_key => $param_value) {
+						$query_hotel->param($param_key, $param_value);
+					}
+					$result_hotel = $query_hotel->execute();
+				}
+			}
+			
+			if(isset($params['customer_cost_list'])) {
+				//删除原有实际成本
+				$sql_cost_delete = "DELETE FROM e_customer_cost WHERE customer_id=:customer_id";
+				$query_cost_delete = DB::query($sql_cost_delete);
+				$query_cost_delete->param('customer_id', $params['customer_id']);
+				$result_cost_delete = $query_cost_delete->execute();
+				
+				//添加实际成本
+				$sql_values_cost = array();
+				$sql_params_cost = array();
+				foreach($params['customer_cost_list'] as $param_key => $customer_cost) {
+					$sql_values_cost[] = "(:customer_id, :row_id_" . $param_key . ", :customer_cost_type_" . $param_key . ", :customer_cost_desc_" . $param_key . ", " 
+										. ":customer_cost_day_" . $param_key . ", :customer_cost_people_" . $param_key . ", :customer_cost_each_" . $param_key . ", " 
+										. ":customer_cost_total_" . $param_key . ")";
+					$sql_params_cost['row_id_' . $param_key] = $param_key;
+					$sql_params_cost['customer_cost_type_' . $param_key] = $customer_cost['customer_cost_type'] ? $customer_cost['customer_cost_type'] : null;
+					$sql_params_cost['customer_cost_desc_' . $param_key] = $customer_cost['customer_cost_desc'] ? $customer_cost['customer_cost_desc'] : null;
+					$sql_params_cost['customer_cost_day_' . $param_key] = $customer_cost['customer_cost_day'] ? $customer_cost['customer_cost_day'] : null;
+					$sql_params_cost['customer_cost_people_' . $param_key] = $customer_cost['customer_cost_people'] ? $customer_cost['customer_cost_people'] : null;
+					$sql_params_cost['customer_cost_each_' . $param_key] = $customer_cost['customer_cost_each'] ? $customer_cost['customer_cost_each'] : null;
+					$sql_params_cost['customer_cost_total_' . $param_key] = $customer_cost['customer_cost_total'] ? $customer_cost['customer_cost_total'] : null;
+				}
+				
+				if(count($sql_values_cost)) {
+					$sql_cost = "INSERT INTO e_customer_cost(customer_id, row_id, customer_cost_type, customer_cost_desc, customer_cost_day, customer_cost_people, customer_cost_each, customer_cost_total)"
+								. " VALUES" . implode(",", $sql_values_cost);
+					$query_cost = DB::query($sql_cost);
+					$query_cost->param('customer_id', $params['customer_id']);
+					foreach($sql_params_cost as $param_key => $param_value) {
+						$query_cost->param($param_key, $param_value);
+					}
+					$result_cost = $query_cost->execute();
+				}
+			}
+			
+			if(isset($params['viewer_list'])) {
+				//删除原有阅览者
+				$sql_viewer_delete = "DELETE FROM r_customer_viewer WHERE customer_id=:customer_id";
+				$query_viewer_delete = DB::query($sql_viewer_delete);
+				$query_viewer_delete->param('customer_id', $params['customer_id']);
+				$result_viewer_delete = $query_viewer_delete->execute();
+				
+				//添加阅览者
+				$sql_values_viewer = array();
+				$sql_params_viewer = array();
+				foreach($params['viewer_list'] as $param_key => $user_id) {
+					$sql_values_viewer[] = "(:customer_id, :user_id_" . $param_key . ")";
+					$sql_params_viewer['user_id_' . $param_key] = $user_id;
+				}
+				
+				if(count($sql_values_viewer)) {
+					$sql_viewer = "INSERT INTO r_customer_viewer(customer_id, user_id) VALUES" . implode(",", $sql_values_viewer);
+					$query_viewer = DB::query($sql_viewer);
+					$query_viewer->param('customer_id', $params['customer_id']);
+					foreach($sql_params_viewer as $param_key => $param_value) {
+						$query_viewer->param($param_key, $param_value);
+					}
+					$result_viewer = $query_viewer->execute();
+				}
+			}
+			
+			if(isset($params['editor_list'])) {
+				//删除原有编辑者
+				$sql_editor_delete = "DELETE FROM r_customer_editor WHERE customer_id=:customer_id";
+				$query_editor_delete = DB::query($sql_editor_delete);
+				$query_editor_delete->param('customer_id', $params['customer_id']);
+				$result_editor_delete = $query_editor_delete->execute();
+				
+				//添加编辑者
+				$sql_values_editor = array();
+				$sql_params_editor = array();
+				foreach($params['editor_list'] as $param_key => $user_id) {
+					$sql_values_editor[] = "(:customer_id, :user_id_" . $param_key . ")";
+					$sql_params_editor['user_id_' . $param_key] = $user_id;
+				}
+				
+				if(count($sql_values_editor)) {
+					$sql_editor = "INSERT INTO r_customer_editor(customer_id, user_id) VALUES" . implode(",", $sql_values_editor);
+					$query_editor = DB::query($sql_editor);
+					$query_editor->param('customer_id', $params['customer_id']);
+					foreach($sql_params_editor as $param_key => $param_value) {
+						$query_editor->param($param_key, $param_value);
+					}
+					$result_editor = $query_editor->execute();
+				}
+			}
+			
+			if(isset($params['schedule_list'])) {
+				//删除日程
+				$sql_rus_delete = "DELETE FROM r_user_schedule WHERE schedule_id IN (SELECT schedule_id FROM r_customer_schedule WHERE customer_id=:customer_id)";
+				$query_rus_delete = DB::query($sql_rus_delete);
+				$query_rus_delete->param('customer_id', $params['customer_id']);
+				$result_rus_delete = $query_rus_delete->execute();
+				
+				$sql_schedule_delete = "DELETE FROM t_schedule WHERE schedule_id IN (SELECT schedule_id FROM r_customer_schedule WHERE customer_id=:customer_id)";
+				$query_schedule_delete = DB::query($sql_schedule_delete);
+				$query_schedule_delete->param('customer_id', $params['customer_id']);
+				$result_schedule_delete = $query_schedule_delete->execute();
+				
+				$sql_rcs_delete = "DELETE FROM r_customer_schedule WHERE customer_id=:customer_id";
+				$query_rcs_delete = DB::query($sql_rcs_delete);
+				$query_rcs_delete->param('customer_id', $params['customer_id']);
+				$result_rcs_delete = $query_rcs_delete->execute();
+				
+				//添加日程
+				foreach($params['schedule_list'] as $schedule) {
+					foreach($schedule['schedule_detail_list'] as $schedule_detail) {
+						$sql_schedule = "INSERT INTO t_schedule(start_at, end_at, schedule_type, schedule_desc, created_at, created_by, modified_at, modified_by) "
+									. "VALUES(:start_at, :end_at, :schedule_type, :schedule_desc, :created_at, :created_by, :modified_at, :modified_by)";
+						$query_schedule = DB::query($sql_schedule);
+						$query_schedule->param('start_at', $schedule['schedule_date'] . ' ' . $schedule_detail['start_at'] . ':00');
+						$query_schedule->param('end_at',  $schedule['schedule_date'] . ' ' . $schedule_detail['end_at'] . ':00');
+						$query_schedule->param('schedule_type', $schedule_detail['schedule_type']);
+						$query_schedule->param('schedule_desc', $schedule_detail['schedule_desc']);
+						$query_schedule->param('created_at', date('Y-m-d H:i:s', time()));
+						$query_schedule->param('created_by', $params['modified_by']);
+						$query_schedule->param('modified_at', date('Y-m-d H:i:s', time()));
+						$query_schedule->param('modified_by', $params['modified_by']);
+						$result_schedule = $query_schedule->execute();
+						
+						if($result_schedule) {
+							//新日程ID
+							$schedule_id = intval($result_schedule[0]);
+							
+							//添加顾客日程
+							$sql_rcs = "INSERT INTO r_customer_schedule(customer_id, schedule_id) VALUES(:customer_id, :schedule_id)";
+							$query_rcs = DB::query($sql_rcs);
+							$query_rcs->param('customer_id', $params['customer_id']);
+							$query_rcs->param('schedule_id', $schedule_id);
+							$result_rcs = $query_rcs->execute();
+							
+							//添加用户日程
+							$sql_values_rus = array();
+							$sql_params_rus = array();
+							foreach($schedule['schedule_user_list'] as $param_key => $user_id) {
+								$sql_values_rus[] = "(:user_id_" . $param_key . ", :schedule_id)";
+								$sql_params_rus['user_id_' . $param_key] = $user_id;
+							}
+							
+							if(count($sql_values_rus)) {
+								$sql_rus = "INSERT INTO r_user_schedule(user_id, schedule_id) VALUES" . implode(",", $sql_values_rus);
+								$query_rus = DB::query($sql_rus);
+								$query_rus->param('schedule_id', $schedule_id);
+								foreach($sql_params_rus as $param_key => $param_value) {
+									$query_rus->param($param_key, $param_value);
+								}
+								$result_rus = $query_rus->execute();
+							}
+						}
+					}
+				}
+			}
+			
+			return true;
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	/*
+	 * 更新顾客状态
+	 */
+	public static function UpdateCustomerStatus($params) {
+		try {
+			$next_status = Model_Customerstatus::SelectNextCustomerStatus($params['customer_status']);
+			
+			if($next_status) {
+				$sql = "UPDATE t_customer SET customer_status = :customer_status WHERE customer_id = :customer_id";
+				$query = DB::query($sql);
+				$query->param('customer_id', $params['customer_id']);
+				$query->param('customer_status', $next_status['customer_status_id']);
+				$result = $query->execute();
+				
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	/*
+	 * 更新顾客状态为失效
+	 */
+	public static function UpdateCustomerDelete($params) {
+		try {
+			$sql = "UPDATE t_customer SET customer_status = :customer_status WHERE customer_id = :customer_id";
+			$query = DB::query($sql);
+			$query->param('customer_id', $params['customer_id']);
+			$query->param('customer_status', $params['customer_status']);
+			$result = $query->execute();
+			
+			return true;
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+	
+	/*
 	 * 按条件获得顾客列表
 	 */
 	public static function SelectCustomerList($params, $select_user_id = null) {
@@ -451,6 +762,30 @@ class Model_Customer extends Model
 				$result_cost = $query_cost->execute()->as_array();
 				$result['customer_cost_list'] = $result_cost;
 				
+				//获取阅览者
+				$sql_viewer = "SELECT tu.user_id, tu.user_name FROM t_user tu WHERE tu.user_id IN (SELECT user_id FROM r_customer_viewer WHERE customer_id = :customer_id)";
+				$query_viewer = DB::query($sql_viewer);
+				$query_viewer->param('customer_id', $result['customer_id']);
+				$result['viewer_list'] = $query_viewer->execute()->as_array();
+				
+				//获取编辑者
+				$sql_editor = "SELECT tu.user_id, tu.user_name FROM t_user tu WHERE tu.user_id IN (SELECT user_id FROM r_customer_editor WHERE customer_id = :customer_id)";
+				$query_editor = DB::query($sql_editor);
+				$query_editor->param('customer_id', $result['customer_id']);
+				$result['editor_list'] = $query_editor->execute()->as_array();
+				
+				//获取日程
+				$sql_schedule = "SELECT ts.*, mst.schedule_type_name, rus.user_id, tu.user_name " 
+							. "FROM (SELECT * FROM t_schedule WHERE schedule_id IN (SELECT schedule_id FROM r_customer_schedule WHERE customer_id = :customer_id)) ts " 
+							. "LEFT JOIN (SELECT * FROM r_user_schedule WHERE schedule_id IN (SELECT schedule_id FROM r_customer_schedule WHERE customer_id = :customer_id)) rus " 
+							. "ON ts.schedule_id = rus.schedule_id " 
+							. "LEFT JOIN t_user tu ON tu.user_id = rus.user_id " 
+							. "LEFT JOIN m_schedule_type mst ON mst.schedule_type_id = ts.schedule_type " 
+							. "ORDER BY ts.start_at, ts.schedule_id ASC";
+				$query_schedule = DB::query($sql_schedule);
+				$query_schedule->param('customer_id', $result['customer_id']);
+				$result['schedule_list'] = $query_schedule->execute()->as_array();
+				
 				return $result;
 			} else {
 				return false;
@@ -461,7 +796,7 @@ class Model_Customer extends Model
 	}
 
 	/*
-	 * 添加顾客前添加信息查验
+	 * 编辑顾客前信息查验
 	 */
 	public static function CheckEditCustomer($params) {
 		$result = array(
@@ -822,6 +1157,145 @@ class Model_Customer extends Model
 			if(mb_strlen($params['airplane_num']) > 20) {
 				$result['result'] = false;
 				$result['error'][] = 'long_airplane_num';
+			}
+		}
+		
+		//联系方式
+		if(empty($params['customer_email']) && empty($params['customer_tel']) && empty($params['customer_wechat']) && empty($params['customer_qq'])) {
+			$result['result'] = false;
+			$result['error'][] = 'empty_customer_contact';
+		}
+		
+		//电子邮箱
+		if(!empty($params['customer_email'])) {
+			if(mb_strlen($params['customer_email']) > 200) {
+				$result['result'] = false;
+				$result['error'][] = 'long_customer_email';
+			}
+		}
+		
+		//联系电话
+		if(!empty($params['customer_tel'])) {
+			if(mb_strlen($params['customer_tel']) > 20) {
+				$result['result'] = false;
+				$result['error'][] = 'long_customer_tel';
+			}
+		}
+		
+		//微信号
+		if(!empty($params['customer_wechat'])) {
+			if(mb_strlen($params['customer_wechat']) > 20) {
+				$result['result'] = false;
+				$result['error'][] = 'long_customer_wechat';
+			}
+		}
+		
+		//QQ号
+		if(!empty($params['customer_qq'])) {
+			if(mb_strlen($params['customer_qq']) > 20) {
+				$result['result'] = false;
+				$result['error'][] = 'long_customer_qq';
+			}
+		}
+		
+		//日程设计
+		if(isset($params['schedule_list'])) {
+			if(!is_array($params['schedule_list'])) {
+				$result['result'] = false;
+				$result['error'][] = 'noarray_schedule_list';
+			} elseif(count($params['schedule_list'])) {
+				$schedule_time_list = array();
+				foreach($params['schedule_list'] as $schedule) {
+					//日程日期
+					if(empty($schedule['schedule_date'])) {
+						$result['result'] = false;
+						$result['error'][] = 'empty_schedule_date';
+					} elseif(!preg_match('/^\d{4}\/\d{1,2}\/\d{1,2}$/', $schedule['schedule_date'])) {
+						$result['result'] = false;
+						$result['error'][] = 'format_schedule_date';
+					} else {
+						list($year, $month, $day) = explode('/', $schedule['schedule_date']);
+						if(!checkdate(intval($month), intval($day), intval($year))) {
+							$result['result'] = false;
+							$result['error'][] = 'error_schedule_date';
+						}
+					}
+					
+					//日程负责人
+					if(!is_array($schedule['schedule_user_list'])) {
+						$result['result'] = false;
+						$result['error'][] = 'noarray_schedule_user_list';
+					} elseif(!count($schedule['schedule_user_list'])) {
+						$result['result'] = false;
+						$result['error'][] = 'empty_schedule_user_list';
+					} else {
+						$user_list = Model_User::SelectUserSimpleList(array('user_id_list' => $schedule['schedule_user_list'], 'user_type_except' => array(1), 'active_only' => true));
+						if(count($user_list) != count($schedule['schedule_user_list'])) {
+							$result['result'] = false;
+							$result['error'][] = 'error_schedule_user_list';
+						}
+					}
+					
+					//详细日程
+					if(!is_array($schedule['schedule_detail_list'])) {
+						$result['result'] = false;
+						$result['error'][] = 'noarray_schedule_detail_list';
+					} elseif(!count($schedule['schedule_detail_list'])) {
+						$result['result'] = false;
+						$result['error'][] = 'empty_schedule_detail_list';
+					} else {
+						foreach($schedule['schedule_detail_list'] as $schedule_detail) {
+							//详细日程时间
+							if(empty($schedule_detail['start_at']) || empty($schedule_detail['end_at'])) {
+								$result['result'] = false;
+								$result['error'][] = 'empty_schedule_time';
+							} elseif($schedule_detail['start_at'] >= $schedule_detail['end_at']) {
+								$result['result'] = false;
+								$result['error'][] = 'error_schedule_time';
+							} elseif(isset($schedule_time_list[$schedule['schedule_date']])) {
+								foreach($schedule_time_list[$schedule['schedule_date']] as $schedule_time) {
+									if($schedule_detail['start_at'] < $schedule_time['end_at'] && $schedule_time['start_at'] < $schedule_detail['end_at']) {
+										$result['result'] = false;
+										$result['error'][] = 'dup_self_schedule_time';
+										break;
+									} else {
+										$schedule_time_list[$schedule['schedule_date']][] = array('start_at' => $schedule_detail['start_at'], 'end_at' => $schedule_detail['end_at']);
+									}
+								}
+							} else {
+								$schedule_time_list[$schedule['schedule_date']] = array(array('start_at' => $schedule_detail['start_at'], 'end_at' => $schedule_detail['end_at']));
+								
+								if(is_array($schedule['schedule_user_list']) && count($schedule['schedule_user_list']) && $params['customer_id']) {
+									foreach($schedule['schedule_user_list'] as $schedule_user_id) {
+										if(Model_Schedule::CheckScheduleDuplication($schedule_user_id, $schedule_detail['start_at'], $schedule_detail['end_at'], $params['customer_id'])) {
+											$result['result'] = false;
+											$result['error'][] = 'dup_user_schedule_time';
+											break;
+										}
+									}
+								}
+							}
+							
+							//详细日程类型
+							if(empty($schedule_detail['schedule_type'])) {
+								$result['result'] = false;
+								$result['error'][] = 'empty_schedule_type';
+							} elseif(!is_numeric($schedule_detail['schedule_type']) || !is_int($schedule_detail['schedule_type'] + 0)) {
+								$result['result'] = false;
+								$result['error'][] = 'noint_schedule_type';
+							} elseif(!Model_Scheduletype::CheckScheduleTypeIdExist($schedule_detail['schedule_type'], 1)) {
+								$result['result'] = false;
+								$result['error'][] = 'noexist_schedule_type';
+							}
+							
+							//详细日程内容
+							if(empty($schedule_detail['schedule_desc'])) {
+								$result['result'] = false;
+								$result['error'][] = 'empty_schedule_desc';
+							}
+						}
+					}
+				}
 			}
 		}
 		

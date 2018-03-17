@@ -146,4 +146,10 @@ $(function(){
 			$(this).css({'color': '#000000'});
 		}
 	});
+	
+	//通过链接实现页面滑动到制定位置
+	$('.link-scroll').click(function() {
+		var target_id = $(this).attr('href');
+		$("html,body").animate({scrollTop:$(target_id).offset().top});
+	});
 });

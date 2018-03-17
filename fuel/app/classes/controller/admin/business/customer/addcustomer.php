@@ -36,6 +36,10 @@ class Controller_Admin_Business_Customer_Addcustomer extends Controller_Admin_Ap
 						$data['return_page_url'] = $_SERVER['HTTP_REFERER'];
 					}
 				}
+				//获取当前负责人
+				$data['staff_id_now'] = '';
+				//获取顾客状态
+				$data['customer_status_now'] = '';
 				
 				//获取旅游目的列表
 				$travel_reason_list = Model_Travelreason::SelectTravelReasonList(array('active_only' => true));
@@ -44,7 +48,7 @@ class Controller_Admin_Business_Customer_Addcustomer extends Controller_Admin_Ap
 				$customer_source_list = Model_Customersource::SelectCustomerSourceList(array('active_only' => true));
 				$data['customer_source_list'] = $customer_source_list ? $customer_source_list : array();
 				//获取用户列表
-				$user_list = Model_User::SelectUserSimpleList(array('active_only' => true, 'sort_column' => 'user_name'));
+				$user_list = Model_User::SelectUserSimpleList(array('active_only' => true, 'user_type_except' => array(1), 'sort_column' => 'user_name'));
 				$data['user_list'] = $user_list ? $user_list : array();
 				//获取旅游路线列表
 				$route_list = Model_Route::SelectRouteSimpleList(array('active_only' => true, 'route_status' => array(1)));
@@ -61,6 +65,10 @@ class Controller_Admin_Business_Customer_Addcustomer extends Controller_Admin_Ap
 				//获取用户成本类别列表
 				$customer_cost_type_list = Model_Customercosttype::SelectCustomerCostTypeList(array('active_only' => true));
 				$data['customer_cost_type_list'] = $customer_cost_type_list ? $customer_cost_type_list : array();
+				//获取具备编辑任意顾客信息权限的用户列表
+				$data['edit_able_id_list'] = array(); 
+				//获取具备查看任意顾客信息权限的用户列表
+				$data['view_able_id_list'] = array(); 
 				
 				//form控件默认值设定
 				$data['input_customer_name'] = '';
@@ -90,8 +98,14 @@ class Controller_Admin_Business_Customer_Addcustomer extends Controller_Admin_Ap
 				$data['input_customer_cost_list'] = array();
 				$data['input_dinner_demand'] = '';
 				$data['input_airplane_num'] = '';
+				$data['input_customer_email'] = '';
+				$data['input_customer_tel'] = '';
+				$data['input_customer_wechat'] = '';
+				$data['input_customer_qq'] = '';
 				$data['input_cost_total'] = '';
 				$data['input_comment'] = '';
+				$data['input_viewer_id_list'] = array();
+				$data['input_editor_id_list'] = array();
 				
 				if(isset($_POST['page'])) {
 					$error_message_list = array();
@@ -119,13 +133,17 @@ class Controller_Admin_Business_Customer_Addcustomer extends Controller_Admin_Ap
 						$data['input_budget_total'] = isset($_POST['budget_total']) ? trim($_POST['budget_total']) : '';
 						$data['input_first_flag'] = isset($_POST['first_flag']) ? trim($_POST['first_flag']) : '';
 						$data['input_spot_hope_flag'] = isset($_POST['spot_hope_flag']) ? trim($_POST['spot_hope_flag']) : '';
-						$data['input_spot_hope_list'] = isset($_POST['route_spot_hope_list']) ? (is_array($_POST['route_spot_hope_list']) ? $_POST['route_spot_hope_list'] : array()) : array();
+						$data['input_spot_hope_list'] = isset($_POST['spot_hope_list']) ? (is_array($_POST['spot_hope_list']) ? $_POST['spot_hope_list'] : array()) : array();
 						$data['input_spot_hope_other'] = isset($_POST['spot_hope_other']) ? trim($_POST['spot_hope_other']) : '';
 						$data['input_hotel_reserve_flag'] = isset($_POST['hotel_reserve_flag']) ? trim($_POST['hotel_reserve_flag']) : '';
 						$data['input_cost_budget'] = isset($_POST['cost_budget']) ? trim($_POST['cost_budget']) : '';
 						$data['input_turnover'] = isset($_POST['turnover']) ? trim($_POST['turnover']) : '';
 						$data['input_dinner_demand'] = isset($_POST['dinner_demand']) ? trim($_POST['dinner_demand']) : '';
 						$data['input_airplane_num'] = isset($_POST['airplane_num']) ? trim($_POST['airplane_num']) : '';
+						$data['input_customer_email'] = isset($_POST['customer_email']) ? trim($_POST['customer_email']) : $data['input_customer_email'];
+						$data['input_customer_tel'] = isset($_POST['customer_tel']) ? trim($_POST['customer_tel']) : $data['input_customer_tel'];
+						$data['input_customer_wechat'] = isset($_POST['customer_wechat']) ? trim($_POST['customer_wechat']) : $data['input_customer_wechat'];
+						$data['input_customer_qq'] = isset($_POST['customer_qq']) ? trim($_POST['customer_qq']) : $data['input_customer_qq'];
 						$data['input_comment'] = isset($_POST['comment']) ? trim($_POST['comment']) : '';
 						//form控件值设定 酒店预约
 						if(isset($_POST['hotel_reserve_row'])) {
@@ -203,6 +221,10 @@ class Controller_Admin_Business_Customer_Addcustomer extends Controller_Admin_Ap
 							'cost_total' => $data['input_cost_total'],
 							'dinner_demand' => $data['input_dinner_demand'],
 							'airplane_num' => $data['input_airplane_num'],
+							'customer_email' => $data['input_customer_email'],
+							'customer_tel' => $data['input_customer_tel'],
+							'customer_wechat' => $data['input_customer_wechat'],
+							'customer_qq' => $data['input_customer_qq'],
 							'comment' => $data['input_comment'],
 							'created_at' => date('Y-m-d H:i:s', time()),
 							'created_by' => $_SESSION['login_user']['id'],
@@ -328,6 +350,21 @@ class Controller_Admin_Business_Customer_Addcustomer extends Controller_Admin_Ap
 										break;
 									case 'long_airplane_num':
 										$error_message_list[] = '航班号不能超过20字';
+										break;
+									case 'empty_customer_contact':
+										$error_message_list[] = '请至少留下顾客的一种联系方式';
+										break;
+									case 'long_customer_email':
+										$error_message_list[] = '电子邮箱不能超过200字';
+										break;
+									case 'long_customer_tel':
+										$error_message_list[] = '联系电话不能超过20字';
+										break;
+									case 'long_customer_wechat':
+										$error_message_list[] = '微信号不能超过20字';
+										break;
+									case 'long_customer_qq':
+										$error_message_list[] = 'QQ号不能超过20字';
 										break;
 									default:
 										$error_message_list[] = '发生系统错误,请重新尝试添加';
