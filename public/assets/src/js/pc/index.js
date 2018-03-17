@@ -181,12 +181,19 @@ $(function(){
 						route_info_area.find('.route-description').html(route.route_description);
 						var html_spot = [];
 						$.each(route.spot_list, function(index, val){
-							html_spot.push('<a href="/spot/' + val.spot_id + '/">' + val.spot_name + '</a>');
+							html_spot.push('<a href="/spot/' + val.spot_id + '/" class="link-spot-of-route-' + route.route_id + '">' + val.spot_name + '</a>');
 						});
 						route_info_area.find('.p-spot-list-route').html(html_spot.join(''));
 						route_info_area.find('.detail-link a').attr('href', '/route/' + route.route_id + '/');
 						route_info_area.fadeIn();
 						route_info_area.scrollTop(0);
+
+						//绑定景点链接
+						$('.link-spot-of-route-' + route.route_id).click(function(){
+							var href = $(this).attr('href');
+							window.open(href, '', 'width=850,height=500,scrollbars=yes,resizable=yes'); 
+							return false;
+						});
 					}
 				},
 				error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -302,6 +309,13 @@ $(function(){
 				$('.p-spot-list-checked').html('');
 			}
 			$('.p-spot-list-checked').append('<a href="/spot/' + spot_id + '/" class="link-spot-checked" id="link-spot-checked-' + spot_id + '">' + spot_name + '</a>');
+
+			//绑定景点链接
+			$('#link-spot-checked-' + spot_id).click(function(){
+				var href = $(this).attr('href');
+				window.open(href, '', 'width=850,height=500,scrollbars=yes,resizable=yes'); 
+				return false;
+			});
 		}
 	});
 

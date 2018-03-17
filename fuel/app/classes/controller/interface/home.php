@@ -64,7 +64,7 @@ class Controller_Interface_Home extends Controller_App
 			if(isset($_POST['page'])) {
 				if(in_array($_POST['page'], $allow_page_list)) {
 					if(isset($_POST['route_id'])) {
-						$route = Model_Route::SelectRoute(array('route_id' => $_POST['route_id'], 'route_status' => 1, 'active_only' => true));
+						$route = Model_Route::SelectRoute(array('route_id' => $_POST['route_id'], 'route_status' => array(1), 'active_only' => true));
 						if($route) {
 							$spot_list = array();
 							foreach($route['detail_list'] as $detail) {
