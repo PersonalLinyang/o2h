@@ -1,0 +1,1 @@
+$(function(){$(".btn-approval-status").click(function(){$(".popup-shadow").show();$(".popup-approval-status").fadeIn()});$("#popup-approval-status-yes").click(function(){$("#form-approval-status").submit()});$("#popup-approval-status-no").click(function(){$(".popup-shadow").hide();$(".popup-approval-status").hide()})});

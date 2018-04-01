@@ -79,13 +79,46 @@ return array(
 	'admin/delete_route_checked'     => 'admin/service/route/deleteroute/deleteroutechecked',
 	
 	//顾客管理
-	'admin/customer_list'                        => 'admin/business/customer/customerlist/index',
-	'admin/customer_list/(:page)'                => 'admin/business/customer/customerlist/index/$1',
-	'admin/customer_detail/(:customer_id)'       => 'admin/business/customer/customerdetail/index/$1',
-	'admin/add_customer'                         => 'admin/business/customer/addcustomer/index',
-	'admin/modify_customer/(:customer_id)'       => 'admin/business/customer/modifycustomer/index/$1',
-	'admin/modify_customer_status'               => 'admin/business/customer/modifycustomer/modifycustomerstatus',
-	'admin/modify_customer_delete'               => 'admin/business/customer/modifycustomer/modifycustomerdelete',
+	'admin/customer_list'                  => 'admin/business/customer/customerlist/index',
+	'admin/customer_list/(:page)'          => 'admin/business/customer/customerlist/index/$1',
+	'admin/customer_detail/(:customer_id)' => 'admin/business/customer/customerdetail/index/$1',
+	'admin/add_customer'                   => 'admin/business/customer/addcustomer/index',
+	'admin/modify_customer/(:customer_id)' => 'admin/business/customer/modifycustomer/index/$1',
+	'admin/modify_customer_status'         => 'admin/business/customer/modifycustomer/modifycustomerstatus',
+	'admin/modify_customer_delete'         => 'admin/business/customer/modifycustomer/modifycustomerdelete',
+	
+	//收入管理
+	'admin/income_list'                => 'admin/financial/income/incomelist/index',
+	'admin/income_list/(:page)'        => 'admin/financial/income/incomelist/index/$1',
+	'admin/income_detail/(:income_id)' => 'admin/financial/income/incomedetail/index/$1',
+	'admin/add_income'                 => 'admin/financial/income/addincome/index',
+	'admin/modify_income/(:income_id)' => 'admin/financial/income/modifyincome/index/$1',
+	'admin/modify_income_status'       => 'admin/financial/income/modifyincome/modifyapprovalstatus',
+	'admin/export_income'              => 'admin/financial/income/exportincome/index',
+	'admin/delete_income'              => 'admin/financial/income/deleteincome/index',
+	'admin/delete_income_checked'      => 'admin/financial/income/deleteincome/deleteincomechecked',
+	
+	//收入项目管理
+	'admin/income_type_list'                     => 'admin/financial/incometype/incometypelist/index',
+	'admin/add_income_type'                      => 'admin/financial/incometype/addincometype/index',
+	'admin/modify_income_type/(:income_type_id)' => 'admin/financial/incometype/modifyincometype/index/$1',
+	'admin/delete_income_type'                   => 'admin/financial/incometype/deleteincometype/index',
+	
+	//支出管理
+	'admin/cost_list'                => 'admin/financial/cost/costlist/index',
+	'admin/cost_list/(:page)'        => 'admin/financial/cost/costlist/index/$1',
+	'admin/cost_detail/(:cost_id)' => 'admin/financial/cost/costdetail/index/$1',
+	'admin/add_cost'                 => 'admin/financial/cost/addcost/index',
+	'admin/modify_cost/(:cost_id)' => 'admin/financial/cost/modifycost/index/$1',
+	'admin/export_cost'              => 'admin/financial/cost/exportcost/index',
+	'admin/delete_cost'              => 'admin/financial/cost/deletecost/index',
+	'admin/delete_cost_checked'      => 'admin/financial/cost/deletecost/deletecostchecked',
+	
+	//支出项目管理
+	'admin/cost_type_list'                     => 'admin/financial/costtype/costtypelist/index',
+	'admin/add_cost_type'                      => 'admin/financial/costtype/addcosttype/index',
+	'admin/modify_cost_type/(:cost_type_id)' => 'admin/financial/costtype/modifycosttype/index/$1',
+	'admin/delete_cost_type'                   => 'admin/financial/costtype/deletecosttype/index',
 	
 	//系统权限管理
 	'admin/permission_list'                  => 'admin/user/permission/permissionlist/index',

@@ -92,10 +92,12 @@ class Model_Restaurant extends Model
 	 */
 	public static function UpdateRestaurantStatus($params) {
 		try {
-			$sql = "UPDATE t_restaurant SET restaurant_status = :restaurant_status WHERE restaurant_id = :restaurant_id";
+			$sql = "UPDATE t_restaurant SET restaurant_status = :restaurant_status, modified_at=:modified_at, modified_by=:modified_by WHERE restaurant_id = :restaurant_id";
 			$query = DB::query($sql);
 			$query->param('restaurant_id', $params['restaurant_id']);
 			$query->param('restaurant_status', $params['restaurant_status']);
+			$query->param('modified_at', date('Y-m-d H:i:s', time()));
+			$query->param('modified_by', $params['modified_by']);
 			$result = $query->execute();
 			
 			return true;
@@ -390,7 +392,7 @@ class Model_Restaurant extends Model
 					$result['error'][] = 'error_restaurant_id';
 				} elseif($params['self_only']) {
 					foreach($result_select['restaurant_list'] as $restaurant_select) {
-						if($restaurant_select['delete_by'] != $restaurant_select) {
+						if($params['delete_by'] != $restaurant_select['created_by']) {
 							$result['result'] = false;
 							$result['error'][] = 'error_creator';
 							break;

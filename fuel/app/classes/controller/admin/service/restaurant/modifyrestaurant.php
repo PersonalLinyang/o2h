@@ -187,6 +187,7 @@ class Controller_Admin_Service_Restaurant_Modifyrestaurant extends Controller_Ad
 							$params_update = array(
 								'restaurant_id' => $restaurant_id,
 								'restaurant_status' => $_POST['modify_value'],
+								'modified_by' => $_SESSION['login_user']['id'],
 							);
 							
 							$result_check = Model_Restaurant::CheckUpdateRestaurantStatus($params_update);

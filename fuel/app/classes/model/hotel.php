@@ -138,10 +138,12 @@ class Model_Hotel extends Model
 	 */
 	public static function UpdateHotelStatus($params) {
 		try {
-			$sql = "UPDATE t_hotel SET hotel_status = :hotel_status WHERE hotel_id = :hotel_id";
+			$sql = "UPDATE t_hotel SET hotel_status = :hotel_status, modified_at=:modified_at, modified_by=:modified_by WHERE hotel_id = :hotel_id";
 			$query = DB::query($sql);
 			$query->param('hotel_id', $params['hotel_id']);
 			$query->param('hotel_status', $params['hotel_status']);
+			$query->param('modified_at', date('Y-m-d H:i:s', time()));
+			$query->param('modified_by', $params['modified_by']);
 			$result = $query->execute();
 			
 			return true;
@@ -484,7 +486,7 @@ class Model_Hotel extends Model
 					$result['error'][] = 'error_hotel_id';
 				} elseif($params['self_only']) {
 					foreach($result_select['hotel_list'] as $hotel_select) {
-						if($hotel_select['delete_by'] != $hotel_select) {
+						if($params['delete_by'] != $hotel_select['created_by']) {
 							$result['result'] = false;
 							$result['error'][] = 'error_creator';
 							break;

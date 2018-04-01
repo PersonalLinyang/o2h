@@ -3,7 +3,7 @@
  * 添加旅游路线页
  */
 
-class Controller_Admin_Service_Route_AddRoute extends Controller_Admin_App
+class Controller_Admin_Service_Route_Addroute extends Controller_Admin_App
 {
 
 	/**

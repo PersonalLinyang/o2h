@@ -158,10 +158,12 @@ class Model_Route extends Model
 	 */
 	public static function UpdateRouteStatus($params) {
 		try {
-			$sql = "UPDATE t_route SET route_status = :route_status WHERE route_id = :route_id";
+			$sql = "UPDATE t_route SET route_status = :route_status, modified_at=:modified_at, modified_by=:modified_by WHERE route_id = :route_id";
 			$query = DB::query($sql);
 			$query->param('route_id', $params['route_id']);
 			$query->param('route_status', $params['route_status']);
+			$query->param('modified_at', date('Y-m-d H:i:s', time()));
+			$query->param('modified_by', $params['modified_by']);
 			$result = $query->execute();
 			
 			return true;
@@ -691,7 +693,7 @@ class Model_Route extends Model
 					$result['error'][] = 'error_route_id';
 				} elseif($params['self_only']) {
 					foreach($result_select['route_list'] as $route_select) {
-						if($route_select['delete_by'] != $route_select) {
+						if($params['delete_by'] != $route_select['created_by']) {
 							$result['result'] = false;
 							$result['error'][] = 'error_creator';
 							break;

@@ -482,6 +482,7 @@ class Controller_Admin_Service_Spot_Modifyspot extends Controller_Admin_App
 							$params_update = array(
 								'spot_id' => $spot_id,
 								'spot_status' => $_POST['modify_value'],
+								'modified_by' => $_SESSION['login_user']['id'],
 							);
 							
 							$result_check = Model_Spot::CheckUpdateSpotStatus($params_update);

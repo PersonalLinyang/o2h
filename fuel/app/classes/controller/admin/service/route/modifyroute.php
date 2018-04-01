@@ -349,6 +349,7 @@ class Controller_Admin_Service_Route_Modifyroute extends Controller_Admin_App
 							$params_update = array(
 								'route_id' => $route_id,
 								'route_status' => $_POST['modify_value'],
+								'modified_by' => $_SESSION['login_user']['id'],
 							);
 							
 							$result_check = Model_Route::CheckUpdateRouteStatus($params_update);

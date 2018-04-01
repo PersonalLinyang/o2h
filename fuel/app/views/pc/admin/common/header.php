@@ -62,6 +62,15 @@
 					<a class="main-navi-link">财务管理</a>
 					<div class="header-sub-navi">
 						<ul>
+							<?php if(in_array('14', $login_user_permission['sub_group'])) : ?>
+							<li><a href="/admin/financial_list/" class="sub-navi-link">公司账面管理</a></li>
+							<?php endif; ?>
+							<?php if(in_array('15', $login_user_permission['sub_group'])) : ?>
+							<li><a href="/admin/income_list/" class="sub-navi-link">收入管理</a></li>
+							<?php endif; ?>
+							<?php if(in_array('16', $login_user_permission['sub_group'])) : ?>
+							<li><a href="/admin/cost_list/" class="sub-navi-link">支出管理</a></li>
+							<?php endif; ?>
 <!--
 							<li><a href="/admin/" class="sub-navi-link">手动进账登记</a></li>
 							<li><a href="/admin/" class="sub-navi-link">手动出账登记</a></li>

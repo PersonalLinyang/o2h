@@ -464,7 +464,7 @@ $(function(){
 		
 		html.push('<tr>');
 			html.push('<td>');
-				html.push('<p class="btn-delete" id="btn-delete-customer-cost-type-' + row + '">－</p>');
+				html.push('<p class="btn-delete" id="btn-delete-customer-cost-' + row + '">－</p>');
 				html.push('<input type="hidden" name="customer_cost_row[]" value="' + row + '" />');
 			html.push('</td>');
 			html.push('<td>');
@@ -509,7 +509,7 @@ $(function(){
 		bind_cost_total_calculation($('#txt-customer-cost-each-' + row));
 		bind_customer_cost_type_change($('#sel-customer-cost-type-' + row));
 		bind_select_placeholder($('#sel-customer-cost-type-' + row));
-		bind_delete_row($('#btn-delete-customer-cost-type-' + row));
+		bind_delete_row($('#btn-delete-customer-cost-' + row));
 		
 		new_row = parseInt(row) + 1;
 		$('#tb-customer-cost').attr('data-row', new_row);

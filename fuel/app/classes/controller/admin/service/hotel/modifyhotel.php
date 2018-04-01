@@ -190,6 +190,7 @@ class Controller_Admin_Service_Hotel_Modifyhotel extends Controller_Admin_App
 							$params_update = array(
 								'hotel_id' => $hotel_id,
 								'hotel_status' => $_POST['modify_value'],
+								'modified_by' => $_SESSION['login_user']['id'],
 							);
 							
 							$result_check = Model_Hotel::CheckUpdateHotelStatus($params_update);

@@ -227,8 +227,10 @@
 						-
 						<?php else : ?>
 						<?php echo $customer_info['cost_total']; ?> 日元
+						<?php if(count($customer_info['customer_cost_list'])) : ?>
 						<a href="#h3-customer-cost" class="link-scroll">查看实际成本明细</a>
-						<?php endif; ?>
+						<?php endif; //count($customer_info['customer_cost_list']) ?>
+						<?php endif; //is_null($customer_info['cost_total']) ?>
 					</td>
 				</tr>
 				<tr>

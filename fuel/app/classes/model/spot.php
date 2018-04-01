@@ -241,10 +241,12 @@ class Model_Spot extends Model
 	 */
 	public static function UpdateSpotStatus($params) {
 		try {
-			$sql = "UPDATE t_spot SET spot_status = :spot_status WHERE spot_id = :spot_id";
+			$sql = "UPDATE t_spot SET spot_status = :spot_status, modified_at = :modified_at, modified_by = :modified_by WHERE spot_id = :spot_id";
 			$query = DB::query($sql);
 			$query->param('spot_id', $params['spot_id']);
 			$query->param('spot_status', $params['spot_status']);
+			$query->param('modified_at', date('Y-m-d H:i:s', time()));
+			$query->param('modified_by', $params['modified_by']);
 			$result = $query->execute();
 			
 			return true;
@@ -776,7 +778,7 @@ class Model_Spot extends Model
 					$result['error'][] = 'error_spot_id';
 				} elseif($params['self_only']) {
 					foreach($result_select['spot_list'] as $spot_select) {
-						if($spot_select['delete_by'] != $spot_select) {
+						if($params['delete_by'] != $spot_select['created_by']) {
 							$result['result'] = false;
 							$result['error'][] = 'error_creator';
 							break;
