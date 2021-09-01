@@ -1,0 +1,174 @@
+/*
+ * 景点详情页样式
+ */
+
+ body {
+ 	min-width: 800px;
+ }
+
+/* 主题区域 */
+.div-content-area {
+	width: 750px;
+	margin: 0 auto;
+}
+
+/* 景点主标题区域 */
+.div-spot-title {
+	background: #0027A4;
+	background-image: url('/assets/img/pc/common/btn-menu-route.png');
+	background-repeat: no-repeat;
+	background-position: 20px 0;
+	color: #FFFFFF;
+	font-size: 28px;
+	font-weight: bold;
+	letter-spacing: 6px;
+	text-align: center;
+	text-shadow: rgba(0,0,0,0.9) 0px 1px 2px;
+	padding: 10px 20px 10px 72px;
+	margin-top: 15px;
+	border-radius: 10px;
+	box-shadow: rgba(0,0,0,0.5) 0px 2px 10px, 
+		inset rgba(255,255,255,0.25) 0px 1px 0px, 
+		inset rgba(0,0,0,0.25) 0px 0px 0px, 
+		inset rgba(255,255,255,0.03) 0px 20px 0px, 
+		inset rgba(0,0,0,0.15) 0px -20px 20px, 
+		inset rgba(255,255,255,0.05) 0px 20px 40px;
+}
+
+/* 景点详情标题区域 */
+.div-detail-title {
+	background: rgba(255,255,255,0.6);
+	font-size: 18px;
+	box-shadow: -50px 0 50px -10px #9EBFF4 inset;
+	font-weight: bold;
+	border-left: 5px solid #0027A4;
+	border-top-left-radius: 7px;
+	border-bottom-left-radius: 7px;
+	color: #0027A4;
+	padding: 5px 120px 5px 15px;
+	margin-top: 15px;
+	display: inline-block;
+	max-width: 450px;
+}
+
+/* 景点详情内容区域 */
+.div-detail-content {
+	background:	rgba(255,255,255,0.6);
+	border-radius: 10px;
+	padding: 15px;
+	color: #0027A4;
+	margin-top: 10px;
+
+	&:last-child {
+		margin-bottom: 20px;
+	}
+}
+
+.div-image-detail {
+	height: 390px;
+	overflow: hidden;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.div-btn-image {
+	width: 60px;
+	height: 390px;
+	float: left;
+}
+
+.div-img-detail {
+	width: 600px;
+	height: 390px;
+	float: left;
+	overflow: hidden;
+}
+
+.btn-image {
+	position: relative;
+	width: 26px;
+	height: 60px;
+	margin-top: 150px;
+	margin-left: 15px;
+	margin-right: 15px;
+	background: #E6E6E6;
+	border: 2px solid #A4A4A4;
+	border-radius: 5px;
+	box-shadow: rgba(0,0,0,0.5) 0px 2px 5px, 
+		inset rgba(255,255,255,0.25) 0px 1px 0px, 
+		inset rgba(0,0,0,0.25) 0px 0px 0px, 
+		inset rgba(255,255,255,0.03) 0px 2px 0px, 
+		inset rgba(0,0,0,0.15) 0px -2px 2px, 
+		inset rgba(255,255,255,0.05) 0px 2px 2px;
+	cursor: pointer;
+
+	&:hover {
+		box-shadow: none;
+		border-color: #BDBDBD;
+	}
+
+	&:before {
+		content: " ";
+		position: absolute;
+		top: 20px;
+		left: 7px;
+		width: 0;
+		height: 0;
+		border-top: 12px solid transparent;
+		border-bottom: 12px solid transparent;
+	}
+
+	&:after {
+		content: " ";
+		position: absolute;
+		top: 22px;
+		left: 8px;
+		width: 0;
+		height: 0;
+		border-top: 10px solid transparent;
+		border-bottom: 10px solid transparent;
+	}
+}
+
+.btn-image-prev {
+	&:before {
+		border-right: 12px solid #A4A4A4;
+	}
+
+	&:after {
+		border-right: 10px solid #0027A4;
+	}
+}
+
+.btn-image-next {
+	&:before {
+		border-left: 12px solid #A4A4A4;
+	}
+
+	&:after {
+		border-left: 10px solid #0027A4;
+	}
+}
+
+.ul-img-detail {
+	overflow: hidden;
+	position: relative;
+
+	li {
+		width: 600px;
+		float: left;
+	}
+}
+
+.div-img-detail-cell {
+	width: 600px;
+	height: 390px;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.img-detail {
+	max-width: 600px;
+	max-height: 390px;
+}

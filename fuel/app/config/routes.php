@@ -3,6 +3,12 @@ return array(
 	'_root_'  => 'index',  // The default route
 	'_404_'   => '404',    // The main 404 route
 
+	//景点详情页
+	'spot/(:spot_id)' => 'spot/spotdetail/index/$1',
+
+	//个人专属
+	'member' => 'member/index',
+
 	//管理画面
 	'admin' => 'admin/index',
 	

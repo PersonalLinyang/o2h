@@ -1,0 +1,208 @@
+/* 内容主题区域 */
+.content-area {
+	width: 1036px;
+	margin-left: auto;
+	margin-right: auto;
+	overflow: hidden;
+}
+
+/* 表单区域 */
+.div-form-area {
+	position: relative;
+	float: left;
+	width: 500px;
+	border-width: 4px;
+	border-style: solid;
+	padding-bottom: 30px;
+	border-radius: 10px;
+	box-shadow: rgba(0,0,0,0.5) 0px 2px 5px, 
+				inset rgba(255,255,255,0.25) 0px 1px 0px, 
+				inset rgba(0,0,0,0.25) 0px 0px 0px, 
+				inset rgba(255,255,255,0.03) 0px 8px 0px, 
+				inset rgba(0,0,0,0.15) 0px -8px 8px, 
+				inset rgba(255,255,255,0.05) 0px 8px 8px;
+}
+.div-form-area:before {
+	content: " ";
+	position: absolute;
+	top: -39px;
+	background-color: #F2F2F2;
+	width: 70px;
+	height: 70px;
+	border-bottom-width: 4px;
+	border-bottom-style: solid;
+	border-left: 4px solid transparent;
+	border-right: 4px solid transparent;
+	border-radius: 39px;
+}
+
+/* 表单区域 引导文 */
+.div-form-area .p-guide {
+	width: 340px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	padding-top: 4px;
+	padding-bottom: 8px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	margin-bottom: 30px;
+	font-size: 18px;
+	font-weight: bold;
+	color: #FFFFFF;
+	user-select: none;
+	cursor: default;
+	text-shadow: rgba(0,0,0,0.9) 0px 1px 2px;
+	box-shadow: rgba(0,0,0,0.5) 0px 2px 5px, 
+				inset rgba(255,255,255,0.25) 0px 1px 0px, 
+				inset rgba(0,0,0,0.25) 0px 0px 0px, 
+				inset rgba(255,255,255,0.03) 0px 8px 0px, 
+				inset rgba(0,0,0,0.15) 0px -8px 8px, 
+				inset rgba(255,255,255,0.05) 0px 8px 8px;
+}
+
+/* 表单区域 标题 */
+.div-form-area .p-title {
+	font-size: 24px;
+	font-weight: bold;
+	padding-left: 80px;
+	text-shadow: rgba(0,0,0,0.3) 0px 1px 2px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	user-select: none;
+	cursor: default;
+}
+.div-form-area .p-title.p-title-right {
+	padding-right: 80px;
+	text-align: right;
+}
+
+/* 表单区域 警告 */
+.div-form-area .p-warning {
+	min-height: 20px;
+	font-size: 14px;
+	color: #FF0000;
+	padding-left: 60px;
+}
+
+/* 表单区域 表单 */
+.div-form-area form {
+	width: 400px;
+	margin-bottom: 10px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* 登陆区域 */
+.div-login-area {
+	border-color: #04B404;
+	background-color: #EFFBEF;
+}
+.div-login-area:before {
+	right: -41px;
+	border-bottom-color: #04B404;
+	transform: rotate(45deg);
+}
+
+/* 登陆区域 引导文 */
+.div-login-area .p-guide {
+	background-color: #04B404;
+}
+
+/* 登陆区域 标题 */
+.div-login-area .p-title {
+	color: #04B404;
+}
+
+/* 登陆区域 表单 */
+.div-login-area #form-login {
+	margin-top: 20px;
+}
+.div-login-area #form-login input {
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 15px;
+	border-color: #04B404;
+}
+
+/* 登陆区域 表单 忘记密码按钮 */
+.div-login-area .btn-noactive {
+	background: #DF0101;
+}
+
+/* 登陆区域 表单 登录按钮 */
+.div-login-area .btn-login.active {
+	background: #01DF01;
+}
+
+/* 注册区域 */
+.div-access-area {
+	margin-left: 20px;
+	border-color: #0174DF;
+	background-color: #EFEFFB;
+}
+.div-access-area:before {
+	left: -41px;
+	border-bottom-color: #0174DF;
+	transform: rotate(-45deg);
+}
+
+/* 注册区域 引导文 */
+.div-access-area .p-guide {
+	background-color: #0174DF;
+}
+
+/* 注册区域 标题 */
+.div-access-area .p-title {
+	color: #0174DF;
+}
+
+/* 注册区域 必填项目 */
+.div-form-area .p-must {
+	height: 20px;
+	font-weight: bold;
+	color: #0174DF;
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+/* 注册区域 表单 表格 */
+.div-form-area #form-access table {
+	width: 100%;
+}
+.div-form-area #form-access table th {
+	text-align: left;
+	vertical-align: top;
+	padding-left: 10px;
+	padding-top: 10px;
+	color: #0174DF;
+}
+.div-form-area #form-access table td {
+	color: #0174DF;
+	padding-top: 7px;
+	padding-bottom: 7px;
+}
+
+/* 注册区域 表格 单选按钮 */
+.div-form-area #form-access .lbl-for-radio {
+	background-color: #0174DF;
+}
+
+/* 注册区域 表格 单选按钮 */
+.div-form-area #form-access input[type="text"], 
+.div-form-area #form-access input[type="password"] {
+	border-color: #0174DF;
+}
+
+/* 注册区域 表格 单选按钮 */
+.div-form-area #form-access select {
+	margin-right: 4px;
+	width: 100%;
+	border-color: #0174DF;
+}
+
+/* 注册区域 表单 注册按钮 */
+.div-access-area .btn-access.active {
+	background: #0040FF;
+}
